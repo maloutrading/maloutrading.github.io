@@ -263,14 +263,14 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
   .gallery{grid-template-columns:1fr;gap:1.2rem;max-width:420px;margin-left:auto;margin-right:auto}
 }
 
-#long .wrap{max-width:1360px}
-.longs{display:flex;flex-direction:column;gap:4.5rem;margin:3rem 0 0}
-.long-idea{position:relative;display:grid;grid-template-columns:minmax(300px,1fr) 1.25fr;gap:3.6rem;
-  align-items:center;padding:clamp(2rem,4vw,3.6rem);border-radius:calc(var(--r) + 6px);
+.longs{display:flex;flex-direction:column;gap:3.4rem;margin:2.6rem 0 0;position:relative;
+  left:50%;transform:translateX(-50%);width:min(1380px,94vw)}
+.long-idea{position:relative;display:grid;grid-template-columns:minmax(340px,1.7fr) 1fr;gap:3.4rem;
+  align-items:center;padding:clamp(1.4rem,2.6vw,2.4rem) clamp(2rem,4vw,3.4rem);border-radius:calc(var(--r) + 6px);
   border:1px solid var(--line);overflow:hidden;
   background:linear-gradient(165deg,color-mix(in srgb,var(--accent,var(--gold)) 6%,var(--card)),var(--card));
-  box-shadow:0 30px 70px rgba(0,0,0,.36)}
-.long-idea::before{content:"";position:absolute;top:0;left:clamp(2rem,4vw,3.6rem);right:clamp(2rem,4vw,3.6rem);
+  box-shadow:0 28px 64px rgba(0,0,0,.34)}
+.long-idea::before{content:"";position:absolute;top:0;left:clamp(2rem,4vw,3.4rem);right:clamp(2rem,4vw,3.4rem);
   height:2px;border-radius:2px;opacity:.85;
   background:linear-gradient(90deg,transparent,var(--silber),var(--weiss),var(--accent,var(--gold)),
     var(--weiss),var(--silber),transparent);
@@ -283,17 +283,17 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
   box-shadow:0 16px 38px rgba(0,0,0,.34),inset 0 1px 0 color-mix(in srgb,var(--weiss) 18%,transparent)}
 .long-chart::after{content:"";position:absolute;inset:0;border-radius:13px;pointer-events:none;
   background:linear-gradient(135deg,color-mix(in srgb,var(--weiss) 12%,transparent),transparent 44%)}
-.long-chart iframe{width:100%;aspect-ratio:16/10;border:0;border-radius:8px;display:block}
-.long-thesis{position:relative;z-index:1;text-align:center;font-family:var(--serif);font-weight:300;
-  text-transform:none;color:var(--ink);font-size:clamp(1.4rem,2.5vw,2.1rem);line-height:1.32}
-.long-thesis .name{display:block;width:fit-content;margin:0 auto 1.4rem;font-family:var(--body);font-style:italic;
-  font-size:.86rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent,var(--gold));
-  padding:0 .1rem .6rem;
+.long-chart iframe{width:100%;aspect-ratio:21/9;border:0;border-radius:8px;display:block}
+.long-thesis{position:relative;z-index:1;text-align:center;color:var(--ink)}
+.long-thesis .name{display:block;width:fit-content;margin:0 auto 1.2rem;font-family:var(--body);font-style:italic;
+  font-size:.84rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent,var(--gold));
+  padding:0 .1rem .55rem;
   border-bottom:1px solid color-mix(in srgb,var(--accent,var(--gold)) 45%,transparent)}
-.long-thesis .claim{display:block;font-style:italic}
+.long-thesis .claim{display:block;font-family:var(--body);font-weight:300;font-synthesis:none;font-style:italic;
+  font-size:clamp(1.1rem,1.9vw,1.5rem);line-height:1.42;color:var(--ink)}
 @media(max-width:760px){
-  .long-idea{grid-template-columns:1fr;gap:1.8rem;padding:1.8rem}
-  .long-chart{max-width:460px;margin:0 auto;width:100%}
+  .long-idea{grid-template-columns:1fr;gap:1.6rem;padding:1.6rem}
+  .long-chart iframe{aspect-ratio:16/10}
 }
 
 .lead-in{font-size:clamp(1.1rem,2.2vw,1.35rem);color:var(--silber);
@@ -366,6 +366,11 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
 .member-say{text-transform:none;font-style:italic;color:var(--ink);text-align:center;
   font-size:clamp(1.3rem,2.8vw,1.8rem);margin:0;flex:1;display:flex;align-items:center;justify-content:center}
 .member+.member{margin-top:2.8rem;padding-top:2.8rem;border-top:1px solid var(--line)}
+.socials{display:flex;justify-content:center;gap:1.6rem;margin:3.6rem 0 0;
+  padding-top:2.4rem;border-top:1px solid var(--line)}
+.socials a{color:var(--muted);display:inline-flex;transition:color .3s,transform .3s}
+.socials a:hover{color:var(--gold);transform:translateY(-2px)}
+.socials svg{width:22px;height:22px;display:block}
 @media(max-width:560px){
   .member{grid-template-columns:1fr;gap:1.3rem}
   .member .portrait{max-width:220px;margin:0 auto}
@@ -534,6 +539,18 @@ footer button:hover::after{transform:scaleX(1)}
         <h3 class="keepcase">Claude</h3>
         <p class="member-say keepcase">„Stets bemüht.“</p>
       </div>
+    </div>
+
+    <div class="socials" aria-label="profile benjamin suermann">
+      <a href="https://github.com/maloutrading" target="_blank" rel="noopener" aria-label="github">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.5-.3-5.2-1.3-5.2-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.8 18 5.1 18 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+      </a>
+      <a href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&amp;searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener" aria-label="wikifolio">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 3h2v18H3V3zm4 10h2v8H7v-8zm4-6h2v14h-2V7zm4 3h2v11h-2V10zm4-5h2v16h-2V5z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/benjamin-suermann-107062316" target="_blank" rel="noopener" aria-label="linkedin">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.2V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>
+      </a>
     </div>
   </div>
 </section>
