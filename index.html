@@ -85,6 +85,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 #zitate{--accent:var(--gold)}
 #trade{--accent:var(--tuerkis)}
 #news{--accent:var(--kupfer)}
+#news .wrap{max-width:1280px}
 #impressum,#datenschutz{--accent:var(--holz)}
 .wrap{max-width:var(--w);margin:0 auto;padding:0 1.7rem}
 .text{max-width:var(--wt)}
@@ -232,17 +233,26 @@ ul.posts .date{font-style:italic;font-size:.82rem;letter-spacing:.06em;
 .legal p,.legal li{text-transform:none}
 section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
 
-.zitat{padding:6.5rem 0 0}
+.zitat{padding:5rem 0 0;display:flex;flex-direction:column;align-items:center;text-align:center}
+.rib-intro+.zitat{padding-top:0}
 #zitate .zitate-wrap>.tag{margin-bottom:1.4rem}
 .zitat-line{font-family:var(--body);font-weight:300;font-synthesis:none;font-style:italic;color:var(--ink);
   text-transform:none;font-size:clamp(1.2rem,2.3vw,1.55rem);line-height:1.35;margin:0}
 .zitat-author{text-transform:none;color:var(--muted);font-style:italic;font-weight:300;
   font-size:.85em;white-space:nowrap}
-.zitat-rule{border:0;height:1px;width:min(520px,88%);margin:1.2rem 0 0;border-radius:2px;opacity:.9;
-  background:linear-gradient(90deg,transparent,var(--silber),var(--weiss),var(--grau),
-    color-mix(in srgb,var(--marine) 55%,#000),var(--grau),var(--weiss),var(--silber),transparent);
+/* vintage divider — warm metallic sheen with a centered diamond ornament */
+.zitat-rule{position:relative;border:0;height:1px;width:min(460px,84%);margin:1.8rem auto 0;border-radius:2px;opacity:.95;
+  background:linear-gradient(90deg,transparent,
+    color-mix(in srgb,var(--kupfer) 60%,transparent),var(--gold),
+    color-mix(in srgb,var(--weiss) 80%,var(--gold)),var(--gold),
+    color-mix(in srgb,var(--kupfer) 60%,transparent),transparent);
   background-size:230% 100%;animation:zsheen 16s linear infinite;
-  transform:scaleX(1);transform-origin:left}
+  transform:scaleX(1);transform-origin:center;
+  box-shadow:0 1px 6px color-mix(in srgb,var(--gold) 22%,transparent)}
+.zitat-rule::after{content:"";position:absolute;left:50%;top:50%;
+  width:7px;height:7px;transform:translate(-50%,-50%) rotate(45deg);
+  background:linear-gradient(135deg,var(--weiss),var(--gold) 55%,var(--kupfer));
+  box-shadow:0 0 0 3px var(--bg,#12102a),0 2px 8px color-mix(in srgb,var(--gold) 40%,transparent)}
 @keyframes zsheen{from{background-position:0 0}to{background-position:-230% 0}}
 
 .showcase{position:relative;margin:11rem 0 0;padding:clamp(1.6rem,3.2vw,2.8rem);
@@ -278,22 +288,34 @@ picture{display:contents}
 .song-artist{color:var(--silber);font-style:italic;text-transform:none;font-size:1rem;margin:0}
 .spotify-foot{margin:2.4rem 0 0;text-align:center}
 .spotify-me{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;
-  font-style:italic;font-size:.86rem;text-transform:none;padding:.5rem .95rem;border-radius:999px;
+  font-style:italic;font-size:1.02rem;text-transform:none;padding:.55rem 1.1rem;border-radius:999px;
   border:1px solid transparent;transition:color .3s,border-color .3s}
 .spotify-me svg{width:16px;height:16px}
 .spotify-me:hover{color:#1DB954;border-color:color-mix(in srgb,#1DB954 40%,transparent)}
 @media(max-width:900px){.song-grid{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
 
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem;margin:0;position:relative;
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2.8rem;margin:clamp(4rem,8vw,7rem) 0 0;position:relative;
   left:50%;transform:translateX(-50%);width:min(1180px,94vw)}
-.gallery figure{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;border-radius:12px;
-  border:1px solid color-mix(in srgb,var(--silber) 40%,var(--line));background:var(--card);
-  box-shadow:0 20px 50px rgba(0,0,0,.36)}
-.gallery figure::after{content:"";position:absolute;inset:7px;border-radius:7px;pointer-events:none;z-index:2;
-  border:1px solid color-mix(in srgb,var(--weiss) 22%,transparent);
-  box-shadow:inset 0 0 0 1px color-mix(in srgb,#000 16%,transparent)}
-.gallery img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.3,1)}
-.gallery figure:hover img{transform:scale(1.05)}
+/* dark brushed-grey glossy frame, dynamic modern lift */
+.gallery figure{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;border-radius:16px;padding:12px;
+  background:linear-gradient(150deg,#43434e,#191921 42%,#2b2b35 68%,#121217);
+  box-shadow:0 28px 62px rgba(0,0,0,.52),
+    inset 0 1px 0 color-mix(in srgb,#fff 15%,transparent),
+    inset 0 -2px 7px rgba(0,0,0,.55);
+  transition:transform .55s cubic-bezier(.2,.7,.3,1),box-shadow .55s;will-change:transform}
+.gallery img{display:block;width:100%;height:100%;object-fit:cover;border-radius:8px;
+  box-shadow:0 6px 20px rgba(0,0,0,.5),0 0 0 1px rgba(0,0,0,.55);
+  transition:transform .7s cubic-bezier(.2,.7,.3,1)}
+.gallery figure::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:16px;
+  background:linear-gradient(125deg,rgba(255,255,255,.16) 0%,transparent 32%,transparent 66%,rgba(255,255,255,.07) 100%);
+  opacity:.65;transition:opacity .55s}
+.gallery figure:hover{transform:translateY(-12px) scale(1.02);
+  box-shadow:0 44px 88px rgba(0,0,0,.6),
+    inset 0 1px 0 color-mix(in srgb,#fff 22%,transparent),
+    0 0 0 1px color-mix(in srgb,var(--gold) 32%,transparent),
+    0 0 40px color-mix(in srgb,var(--gold) 16%,transparent)}
+.gallery figure:hover img{transform:scale(1.07)}
+.gallery figure:hover::after{opacity:1}
 @media(max-width:640px){
   .gallery{grid-template-columns:1fr;gap:1.4rem;width:min(430px,92vw)}
   .zitat{padding:2.6rem 0 0}
@@ -349,15 +371,15 @@ picture{display:contents}
 .rib-lead{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.05rem,2.2vw,1.3rem);margin:1rem auto 0;max-width:52ch}
 .member-invite{text-transform:none;font-style:italic;color:var(--silber);margin:.4rem 0 0;max-width:46ch}
 .homage{display:flex;flex-direction:column;align-items:center;text-align:center;
-  max-width:var(--wt);margin:clamp(4.4rem,7vw,6rem) auto 0;
-  padding:clamp(4rem,6.5vw,5.6rem) 0 0;border-top:1px solid var(--line)}
+  max-width:var(--wt);margin:calc(clamp(4.4rem,7vw,6rem) + 2.4cm) auto 0;
+  padding:calc(clamp(4rem,6.5vw,5.6rem) + 2cm) 0 0;border-top:1px solid var(--line)}
 .homage-portrait{width:206px;height:206px;border-radius:50%;overflow:hidden;
   border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);
   box-shadow:0 14px 36px rgba(0,0,0,.32),0 0 0 6px color-mix(in srgb,var(--gold) 7%,transparent)}
 .homage-portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .homage-kicker{display:block;margin:1.4rem 0 .35rem;font-style:italic;font-size:.72rem;
   letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
-.homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.1rem);margin:1.4rem 0 0}
+.homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.1rem);margin:2.6rem 0 0}
 
 /* ── trade ── */
 .trade-quotes{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin:0 0 clamp(3rem,6vw,4.4rem)}
@@ -419,25 +441,48 @@ picture{display:contents}
 .rep-abo{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem 1.6rem;
   border:1px solid var(--gold-line);border-radius:var(--r);padding:1.2rem 1.6rem;margin:1.4rem 0 1.4rem;
   background:linear-gradient(160deg,color-mix(in srgb,var(--gold) 9%,var(--card)),var(--card))}
-.rep-note{flex:1 1 18rem;margin:0;color:var(--ink);font-style:italic;text-transform:none;font-size:1.02rem;
+.rep-note{flex:1 1 18rem;margin:0;color:var(--ink);font-style:italic;font-weight:700;text-transform:none;font-size:1.16rem;
   line-height:1.45;text-align:center;background:color-mix(in srgb,var(--tuerkis) 8%,var(--card));
   border:1px solid color-mix(in srgb,var(--tuerkis) 24%,var(--line));
-  border-radius:16px 16px 16px 4px;padding:.85rem 1.15rem}
-.rep-note b{color:var(--tuerkis);font-weight:400;font-style:normal}
+  border-radius:16px 16px 16px 4px;padding:.95rem 1.3rem}
+.rep-note b{color:var(--tuerkis);font-weight:700;font-style:normal}
 .rep-cta{flex:0 0 auto;background:var(--tuerkis);color:var(--marine);text-decoration:none;white-space:nowrap;
-  padding:.8rem 1.5rem;border-radius:14px;font-style:italic;
+  padding:.95rem 1.85rem;border-radius:14px;font-style:italic;font-size:1.1rem;font-weight:600;
   transition:transform .3s,box-shadow .3s}
 .rep-cta:hover{transform:translateY(-2px);color:var(--marine);
   box-shadow:0 8px 24px color-mix(in srgb,var(--tuerkis) 40%,transparent)}
 .rep-tag{text-align:left;font-style:italic;letter-spacing:.2em;text-transform:uppercase;
   color:var(--silber);opacity:.65;font-size:.72rem;margin:0 0 .5rem .2rem}
-.report-block{border:1px solid var(--gold-line);border-radius:var(--r);
-  padding:clamp(1.6rem,4vw,3rem);margin:0;
-  background:linear-gradient(165deg,color-mix(in srgb,var(--gold) 4%,var(--card)),var(--card));
-  box-shadow:0 20px 60px rgba(0,0,0,.28)}
-.rep-col{max-width:68ch;margin:0 auto}
-.art{padding:1.6rem 0;border-top:1px solid var(--line);text-transform:none}
-.art:first-child{border-top:0;padding-top:.6rem}
+/* vintage broadsheet — warm aged-paper feel, wide multi-column to cut scroll */
+.report-block{position:relative;overflow:hidden;border:1px solid var(--gold-line);border-radius:var(--r);
+  padding:clamp(2rem,4vw,3.6rem);margin:0;
+  background:
+    radial-gradient(120% 80% at 16% 6%,color-mix(in srgb,var(--gold) 9%,transparent),transparent 55%),
+    radial-gradient(120% 90% at 88% 94%,color-mix(in srgb,var(--kupfer) 10%,transparent),transparent 55%),
+    linear-gradient(168deg,color-mix(in srgb,var(--gold) 6%,var(--card)),var(--card) 58%,color-mix(in srgb,var(--marine) 34%,var(--card)));
+  box-shadow:0 20px 60px rgba(0,0,0,.32),
+    inset 0 0 0 1px color-mix(in srgb,var(--gold) 13%,transparent),
+    inset 0 0 130px rgba(0,0,0,.34)}
+/* faint aged fibre grain */
+.report-block::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background:
+    repeating-linear-gradient(0deg,transparent 0 3px,color-mix(in srgb,var(--gold) 4%,transparent) 3px 4px),
+    repeating-linear-gradient(90deg,transparent 0 3px,rgba(0,0,0,.035) 3px 4px);
+  mix-blend-mode:overlay}
+/* gold masthead rule across the top */
+.report-block::after{content:"";position:absolute;top:0;left:clamp(2rem,4vw,3.6rem);right:clamp(2rem,4vw,3.6rem);height:3px;
+  opacity:.75;background:linear-gradient(90deg,transparent,var(--gold),var(--kupfer),var(--gold),transparent)}
+.rep-col{max-width:none;margin:0;position:relative;z-index:1;
+  column-count:2;column-gap:clamp(2.4rem,4vw,3.8rem);
+  column-rule:1px solid color-mix(in srgb,var(--gold) 22%,var(--line))}
+.rep-col>*{break-inside:avoid}
+.art{padding:1.5rem 0;border-top:1px solid color-mix(in srgb,var(--gold) 16%,var(--line));text-transform:none}
+.art:first-child{border-top:0;padding-top:.2rem}
+/* editorial drop cap on the lead story */
+.art:first-child>p:nth-of-type(1)::first-letter{float:left;font-family:var(--serif);font-weight:400;
+  font-size:3.2rem;line-height:.78;padding:.12rem .5rem 0 0;color:var(--gold)}
+.poem{column-span:all}
+@media(max-width:820px){.rep-col{column-count:1}}
 .art h4{margin:0 0 .5rem;font-family:var(--serif);font-weight:300;font-size:1.32rem;text-transform:none}
 .art-num{display:inline-flex;align-items:center;justify-content:center;width:1.7em;height:1.7em;
   margin-right:.6rem;border-radius:50%;border:1px solid var(--accent,var(--gold));
@@ -616,11 +661,11 @@ footer button:hover::after{transform:scaleX(1)}
   </div>
   <div class="wrap reveal zitate-wrap">
     <div class="rib-intro" style="--accent:var(--tuerkis)"><span class="rib-kicker keepcase">Wieso, weshalb, warum?</span><h2 class="rib-title keepcase">idee</h2></div>
-    <div class="gallery"><figure class="g0"><picture><source srcset="pics/pic0.webp" type="image/webp"><img src="pics/pic0.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g1"><picture><source srcset="pics/pic1.webp" type="image/webp"><img src="pics/pic1.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g2"><picture><source srcset="pics/pic2.webp" type="image/webp"><img src="pics/pic2.jpeg" alt="" loading="lazy" decoding="async"></picture></figure></div>
     <div class="zitat"><p class="zitat-line">„Never lie to yourself.“ <span class="zitat-author">— Eliud Kipchoge</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Ich habe den Ball, ich passe den Ball.“ <span class="zitat-author">— Pep Guardiola</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Everybody gets what they want out of the market.“ <span class="zitat-author">— Ed Seykota</span></p><hr class="zitat-rule"></div>
-    <div class="showcase spotify-box"><div class="song-grid"><article class="song-card" style="--accent:var(--gold)"><a class="song-cover" href="https://open.spotify.com/track/4S8ixccYDPJJD4vPthHg5f" target="_blank" rel="noopener" aria-label="Our Smoother Part — Le Hutin auf spotify hören"><picture><source srcset="pics/cov_smoother.webp" type="image/webp"><img src="pics/cov_smoother.jpg" alt="Our Smoother Part — Le Hutin" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">Our Smoother Part</h3><p class="song-artist keepcase">Le Hutin</p></article><article class="song-card" style="--accent:var(--tuerkis)"><a class="song-cover" href="https://open.spotify.com/track/2a5u4ZejTXWuKefIwVt420" target="_blank" rel="noopener" aria-label="L'hiver — Tour-Maubourg auf spotify hören"><picture><source srcset="pics/cov_lhiver.webp" type="image/webp"><img src="pics/cov_lhiver.jpg" alt="L'hiver — Tour-Maubourg" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">L'hiver</h3><p class="song-artist keepcase">Tour-Maubourg</p></article><article class="song-card" style="--accent:var(--kupfer)"><a class="song-cover" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener" aria-label="Emotions Unlocked — Mike WiLL Made-It auf spotify hören"><picture><source srcset="pics/cov_emotions.webp" type="image/webp"><img src="pics/cov_emotions.jpg" alt="Emotions Unlocked — Mike WiLL Made-It" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">Emotions Unlocked</h3><p class="song-artist keepcase">Mike WiLL Made-It</p></article></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>auf spotify folgen · @benny.suermann</a></div></div>
+    <div class="showcase spotify-box"><div class="song-grid"><article class="song-card" style="--accent:var(--gold)"><a class="song-cover" href="https://open.spotify.com/track/4S8ixccYDPJJD4vPthHg5f" target="_blank" rel="noopener" aria-label="Our Smoother Part — Le Hutin auf spotify hören"><picture><source srcset="pics/cov_smoother.webp" type="image/webp"><img src="pics/cov_smoother.jpg" alt="Our Smoother Part — Le Hutin" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a></article><article class="song-card" style="--accent:var(--tuerkis)"><a class="song-cover" href="https://open.spotify.com/track/2a5u4ZejTXWuKefIwVt420" target="_blank" rel="noopener" aria-label="L'hiver — Tour-Maubourg auf spotify hören"><picture><source srcset="pics/cov_lhiver.webp" type="image/webp"><img src="pics/cov_lhiver.jpg" alt="L'hiver — Tour-Maubourg" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a></article><article class="song-card" style="--accent:var(--kupfer)"><a class="song-cover" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener" aria-label="Emotions Unlocked — Mike WiLL Made-It auf spotify hören"><picture><source srcset="pics/cov_emotions.webp" type="image/webp"><img src="pics/cov_emotions.jpg" alt="Emotions Unlocked — Mike WiLL Made-It" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a></article></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>auf spotify folgen</a></div></div>
+    <div class="gallery"><figure class="g0"><picture><source srcset="pics/pic0.webp" type="image/webp"><img src="pics/pic0.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g1"><picture><source srcset="pics/pic1.webp" type="image/webp"><img src="pics/pic1.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g2"><picture><source srcset="pics/pic2.webp" type="image/webp"><img src="pics/pic2.jpeg" alt="" loading="lazy" decoding="async"></picture></figure></div>
   </div>
 </section>
 
