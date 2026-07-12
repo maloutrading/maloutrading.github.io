@@ -257,34 +257,26 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
   background:linear-gradient(90deg,transparent,#1DB954,#5fe39b,#1DB954,transparent);
   background-size:230% 100%;animation:zsheen 14s linear infinite}
 picture{display:contents}
-.song-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.7rem;margin:0}
-.song-card{position:relative;display:flex;flex-direction:column;overflow:hidden;
-  padding:1.55rem 1.5rem 1.4rem;border-radius:16px;
-  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 22%,var(--line));
-  background:linear-gradient(168deg,color-mix(in srgb,var(--accent,var(--gold)) 9%,var(--card)),var(--card) 62%);
-  box-shadow:0 12px 34px rgba(0,0,0,.28);
+.song-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.8rem,3.4vw,2.8rem);margin:0}
+.song-card{display:flex;flex-direction:column;text-align:center}
+.song-cover{position:relative;display:block;aspect-ratio:1;border-radius:14px;overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 30%,var(--line));
+  box-shadow:0 14px 38px rgba(0,0,0,.32);
   transition:transform .45s cubic-bezier(.2,.7,.3,1),box-shadow .45s,border-color .45s}
-.song-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:linear-gradient(180deg,var(--accent,var(--gold)),transparent)}
-.song-card:hover{transform:translateY(-5px);
-  border-color:color-mix(in srgb,var(--accent,var(--gold)) 55%,var(--line));
-  box-shadow:0 20px 48px color-mix(in srgb,var(--accent,var(--gold)) 20%,rgba(0,0,0,.34))}
-.song-wm{position:absolute;top:-.5rem;right:.5rem;font-family:var(--serif);font-size:5.4rem;
-  line-height:1;color:var(--accent,var(--gold));opacity:.07;pointer-events:none;user-select:none}
-.song-no{font-family:var(--serif);font-size:.82rem;letter-spacing:.22em;
-  color:var(--accent,var(--gold));text-transform:none}
-.song-tag{display:block;margin:.55rem 0 0;font-style:italic;font-size:.72rem;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--muted)}
-.song-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.35rem,2.5vw,1.85rem);
-  line-height:1.12;margin:.35rem 0 .12rem;text-transform:none}
-.song-artist{color:var(--silber);font-style:italic;text-transform:none;font-size:.98rem;margin:0}
-.song-note{color:var(--muted);font-style:italic;text-transform:none;font-size:.9rem;line-height:1.55;
-  margin:.75rem 0 1.15rem}
-.song-embed{margin-top:auto;border-radius:12px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.3)}
-.song-embed iframe{display:block;width:100%;height:152px;border:0}
-.song-empty{display:flex;align-items:center;justify-content:center;height:152px;
-  border:1px dashed var(--line);color:var(--muted);font-style:italic;text-transform:none;background:var(--card)}
-.spotify-foot{margin:1.9rem 0 0;text-align:center}
+.song-art{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .7s cubic-bezier(.2,.7,.3,1)}
+.song-cover:hover{transform:translateY(-5px);
+  border-color:color-mix(in srgb,var(--accent,var(--gold)) 62%,var(--line));
+  box-shadow:0 22px 52px color-mix(in srgb,var(--accent,var(--gold)) 22%,rgba(0,0,0,.4))}
+.song-cover:hover .song-art{transform:scale(1.06)}
+.song-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;
+  background:color-mix(in srgb,var(--marine) 42%,transparent);transition:opacity .4s}
+.song-cover:hover .song-play,.song-cover:focus-visible .song-play{opacity:1}
+.song-play svg{width:48px;height:48px;color:#1DB954;filter:drop-shadow(0 4px 14px rgba(0,0,0,.55))}
+.song-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.2rem,2.3vw,1.55rem);
+  line-height:1.15;margin:1.15rem 0 .18rem;text-transform:none}
+.song-artist{color:var(--silber);font-style:italic;text-transform:none;font-size:1rem;margin:0}
+.spotify-foot{margin:2.4rem 0 0;text-align:center}
 .spotify-me{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;
   font-style:italic;font-size:.86rem;text-transform:none;padding:.5rem .95rem;border-radius:999px;
   border:1px solid transparent;transition:color .3s,border-color .3s}
@@ -359,7 +351,7 @@ picture{display:contents}
 .homage{display:flex;flex-direction:column;align-items:center;text-align:center;
   max-width:var(--wt);margin:clamp(4.4rem,7vw,6rem) auto 0;
   padding:clamp(4rem,6.5vw,5.6rem) 0 0;border-top:1px solid var(--line)}
-.homage-portrait{width:172px;height:172px;border-radius:50%;overflow:hidden;
+.homage-portrait{width:206px;height:206px;border-radius:50%;overflow:hidden;
   border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);
   box-shadow:0 14px 36px rgba(0,0,0,.32),0 0 0 6px color-mix(in srgb,var(--gold) 7%,transparent)}
 .homage-portrait img{width:100%;height:100%;object-fit:cover;display:block}
@@ -628,7 +620,7 @@ footer button:hover::after{transform:scaleX(1)}
     <div class="zitat"><p class="zitat-line">„Never lie to yourself.“ <span class="zitat-author">— Eliud Kipchoge</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Ich habe den Ball, ich passe den Ball.“ <span class="zitat-author">— Pep Guardiola</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Everybody gets what they want out of the market.“ <span class="zitat-author">— Ed Seykota</span></p><hr class="zitat-rule"></div>
-    <div class="showcase spotify-box"><div class="song-grid"><article class="song-card" style="--accent:var(--gold)"><span class="song-wm" aria-hidden="true">01</span><h3 class="song-title keepcase">L'hiver</h3><p class="song-artist keepcase">Tour-Maubourg</p><div class="song-embed"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/2a5u4ZejTXWuKefIwVt420?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></article><article class="song-card" style="--accent:var(--tuerkis)"><span class="song-wm" aria-hidden="true">02</span><h3 class="song-title keepcase">Our Smoother Part</h3><p class="song-artist keepcase">Le Hutin</p><div class="song-embed"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/4S8ixccYDPJJD4vPthHg5f?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></article><article class="song-card" style="--accent:var(--kupfer)"><span class="song-wm" aria-hidden="true">03</span><h3 class="song-title keepcase">Emotions Unlocked</h3><p class="song-artist keepcase">Mike WiLL Made-It</p><div class="song-embed"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/7BBabm9KfG4w7huuwmEMAs?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></article></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>auf spotify folgen · @benny.suermann</a></div></div>
+    <div class="showcase spotify-box"><div class="song-grid"><article class="song-card" style="--accent:var(--gold)"><a class="song-cover" href="https://open.spotify.com/track/4S8ixccYDPJJD4vPthHg5f" target="_blank" rel="noopener" aria-label="Our Smoother Part — Le Hutin auf spotify hören"><picture><source srcset="pics/cov_smoother.webp" type="image/webp"><img src="pics/cov_smoother.jpg" alt="Our Smoother Part — Le Hutin" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">Our Smoother Part</h3><p class="song-artist keepcase">Le Hutin</p></article><article class="song-card" style="--accent:var(--tuerkis)"><a class="song-cover" href="https://open.spotify.com/track/2a5u4ZejTXWuKefIwVt420" target="_blank" rel="noopener" aria-label="L'hiver — Tour-Maubourg auf spotify hören"><picture><source srcset="pics/cov_lhiver.webp" type="image/webp"><img src="pics/cov_lhiver.jpg" alt="L'hiver — Tour-Maubourg" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">L'hiver</h3><p class="song-artist keepcase">Tour-Maubourg</p></article><article class="song-card" style="--accent:var(--kupfer)"><a class="song-cover" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener" aria-label="Emotions Unlocked — Mike WiLL Made-It auf spotify hören"><picture><source srcset="pics/cov_emotions.webp" type="image/webp"><img src="pics/cov_emotions.jpg" alt="Emotions Unlocked — Mike WiLL Made-It" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">Emotions Unlocked</h3><p class="song-artist keepcase">Mike WiLL Made-It</p></article></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>auf spotify folgen · @benny.suermann</a></div></div>
   </div>
 </section>
 
