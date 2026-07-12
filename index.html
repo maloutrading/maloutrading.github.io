@@ -17,13 +17,16 @@
   --gold:#C0A364; --tuerkis:#979284; --kupfer:#898B9C;
   --holz:#6BA793; --grau:#221e34;
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
-  --line:color-mix(in srgb,var(--silber) 24%,var(--marine));
-  --gold-line:color-mix(in srgb,var(--gold) 55%,transparent);
+  --line:#757189;
+  --gold-line:rgba(192,163,100,.55);
   --serif:"EB Garamond",Georgia,"Times New Roman",serif;
   --body:"EB Garamond",Georgia,"Times New Roman",serif;
   --r:16px; --w:1020px; --wt:64ch;
 }
 *{box-sizing:border-box}
+button,input,select,textarea{font-family:inherit}
+img,svg,video{vertical-align:middle}
+a,button{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 html{scroll-behavior:smooth;
   scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--gold) 55%,var(--marine)) transparent}
@@ -84,6 +87,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 #zitate{--accent:var(--gold)}
 #about{--accent:var(--holz)}
 #long{--accent:var(--kupfer)}
+#wiki{--accent:var(--tuerkis)}
 #impressum,#datenschutz{--accent:var(--holz)}
 .wrap{max-width:var(--w);margin:0 auto;padding:0 1.5rem}
 .text{max-width:var(--wt)}
@@ -96,7 +100,7 @@ header::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;po
   background:linear-gradient(90deg,transparent,var(--silber),var(--weiss),var(--gold),var(--weiss),var(--silber),transparent);
   background-size:230% 100%;animation:sheen 9s linear infinite}
 header.solid{background:color-mix(in srgb,var(--marine) 88%,black);
-  backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
 header.away{opacity:0;transform:translateY(-100%);pointer-events:none}
 body.home header{opacity:0;transform:translateY(-100%);pointer-events:none}
 .nav{max-width:var(--w);margin:0 auto;padding:.9rem 1.5rem;display:flex;
@@ -120,6 +124,8 @@ nav.tabs button[data-t="zitate"].active{background:var(--gold);color:var(--marin
 nav.tabs button[data-t="about"].active{background:var(--holz);color:var(--weiss)}
 nav.tabs button[data-t="long"]:hover{color:var(--kupfer)}
 nav.tabs button[data-t="long"].active{background:var(--kupfer);color:var(--weiss)}
+nav.tabs button[data-t="wiki"]:hover{color:var(--tuerkis)}
+nav.tabs button[data-t="wiki"].active{background:var(--tuerkis);color:var(--marine)}
 @media(max-width:640px){
   .nav{padding:.7rem 1rem}
   nav.tabs{flex-wrap:nowrap;overflow-x:auto;max-width:100%;
@@ -157,6 +163,7 @@ main section.tab.show{display:block}
 .menu button:nth-child(2){--accent:var(--gold)}
 .menu button:nth-child(3){--accent:var(--tuerkis)}
 .menu button:nth-child(4){--accent:var(--kupfer)}
+.menu button:nth-child(5){--accent:var(--tuerkis)}
 .menu button{position:relative;display:block;background:none;border:0;
   border-top:1px solid var(--line);cursor:pointer;color:var(--ink);font:inherit;
   text-transform:lowercase;font-size:.82rem;letter-spacing:.16em;padding:.7rem .1rem;
@@ -318,6 +325,23 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
 .attrib{text-align:center;margin:2.4rem 0 0;color:var(--muted);font-style:italic;font-size:.8rem;text-transform:none;opacity:.8}
 .attrib a{color:var(--muted)}
 .attrib a:hover{color:var(--gold)}
+.wiki-hero{text-align:center;max-width:var(--wt);margin:1rem auto 0}
+.wiki-kicker{display:block;font-style:italic;font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 .8rem}
+.wiki-name{font-size:clamp(2.4rem,6vw,3.6rem);margin:0}
+.wiki-tag{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.05rem,2.2vw,1.3rem);margin:1rem auto 2rem;max-width:52ch}
+.wiki-cta{display:inline-block;background:var(--tuerkis);color:var(--marine);text-decoration:none;padding:.95rem 2.2rem;border-radius:999px;font-style:italic;font-size:1.05rem;transition:transform .3s,box-shadow .3s}
+.wiki-cta:hover{transform:translateY(-2px);color:var(--marine);box-shadow:0 10px 30px color-mix(in srgb,var(--tuerkis) 40%,transparent)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin:4.5rem 0 0}
+.kpi{padding:1.7rem 1.2rem;text-align:center;border:1px solid var(--line);border-top:2px solid var(--accent,var(--gold));border-radius:var(--r);background:linear-gradient(160deg,color-mix(in srgb,var(--tuerkis) 5%,var(--card)),var(--card))}
+.kpi-v{display:block;font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);color:var(--ink)}
+.kpi-l{display:block;margin-top:.5rem;font-size:.8rem;letter-spacing:.05em;color:var(--muted);text-transform:none}
+.wiki-chart{margin:2.6rem 0 0;height:clamp(220px,32vw,360px);border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(160deg,color-mix(in srgb,var(--tuerkis) 5%,var(--card)),var(--card));display:flex;align-items:center;justify-content:center}
+.wiki-chart-note{color:var(--muted);font-style:italic;text-transform:none;font-size:.9rem;opacity:.7}
+.wiki-notes{list-style:none;padding:0;margin:3.4rem auto 0;max-width:var(--wt)}
+.wiki-notes li{padding:.95rem 0;border-bottom:1px solid var(--line);color:var(--silber);text-transform:none;line-height:1.6}
+.wiki-notes li::before{content:"\2192";color:var(--accent,var(--gold));margin-right:.7rem}
+.wiki-notes li:last-child{border-bottom:0}
+@media(max-width:720px){.kpis{grid-template-columns:1fr 1fr;gap:1rem}}
 .lead-in{font-size:clamp(1.1rem,2.2vw,1.35rem);color:var(--silber);
   font-style:italic;max-width:var(--wt);margin:.4rem 0 1.8rem}
 
@@ -344,7 +368,9 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
 .art{padding:1.6rem 0;border-top:1px solid var(--line);text-transform:none}
 .art:first-child{border-top:0;padding-top:.6rem}
 .art h4{margin:0 0 .5rem;font-family:var(--serif);font-weight:300;font-size:1.32rem;text-transform:none}
-.art-num{color:var(--accent,var(--gold));margin-right:.55rem}
+.art-num{display:inline-flex;align-items:center;justify-content:center;width:1.7em;height:1.7em;
+  margin-right:.6rem;border-radius:50%;border:1px solid var(--accent,var(--gold));
+  color:var(--accent,var(--gold));font-size:.7em;font-style:normal;vertical-align:middle;flex:0 0 auto}
 .art p{margin:.35rem 0}
 .art-ctx{color:var(--silber);font-size:.98rem;line-height:1.72}
 .art-flag{color:var(--kupfer);font-style:italic;font-size:.86rem;white-space:nowrap}
@@ -452,6 +478,7 @@ footer button:hover::after{transform:scaleX(1)}
       <button data-t="zitate" onclick="show('zitate')">idee</button>
       <button data-t="news" onclick="show('news')">news</button>
       <button data-t="long" onclick="show('long')">long</button>
+      <button data-t="wiki" onclick="show('wiki')">wiki</button>
     </nav>
   </div>
 </header>
@@ -469,6 +496,7 @@ footer button:hover::after{transform:scaleX(1)}
           <button onclick="show('zitate')">idee</button>
           <button onclick="show('news')">news</button>
           <button onclick="show('long')">long</button>
+          <button onclick="show('wiki')">wiki</button>
         </nav>
       </div>
     </div>
@@ -492,7 +520,7 @@ footer button:hover::after{transform:scaleX(1)}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rep-abo"><p class="rep-note">Interesse am täglichen Lagebericht?</p><a class="rep-cta" href="mailto:maloutrading@web.de">anmelden →</a></div><div class="rep-tag">beispielreport</div><div class="report-block"><div class="rep-col"><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">①</span>DNA-Chip schreibt Erbgut</h4><p>Ein Team am Karolinska-Institut baut einen Silizium-Chip, der Dutzende DNA-Stränge zugleich schreibt, allein mit Strom und wasserlöslichen Enzymen.</p><p class="art-ctx">DNA speichert Daten millionenfach dichter als jede Festplatte und hält Jahrtausende. Ein tragbarer Schreiber holt das aus dem Reinraum-Labor in Richtung Alltag — und macht den Bauplan des Lebens zur beschreibbaren Ware.</p><p class="art-src">— Karolinska Institutet</p></article><article class="art" style="--accent:var(--tuerkis)"><h4><span class="art-num">②</span>EU-Regeln bremsen Siri</h4><p>Apple verschiebt neue Sprachassistenz-Funktionen in der EU und nennt das Gesetz über digitale Märkte als Grund.</p><p class="art-ctx">Der Streit klärt eine unbequeme Frage: Kostet Europas Offenheit den Preis, dass neue Technik hier später ankommt? Jede große Plattform beobachtet, ob sich Verzögerung als Druckmittel gegen Regulierung auszahlt.</p><p class="art-src">— Reuters</p></article><article class="art" style="--accent:var(--kupfer)"><h4><span class="art-num">③</span>Pestizid trifft Hummeln im Erbgut</h4><p>Der als sicher geltende Neonikotinoid-Nachfolger Sulfoxaflor stört laut einer Studie schon in Kleinstdosen die Fortpflanzung von Hummeln.</p><p class="art-ctx">Bestäuber sind die stille Infrastruktur der Landwirtschaft. Trägt der Ersatzstoff denselben Schaden unter neuem Namen, verteuert sich Nahrung, lange bevor jemand die Ursache benennt.</p><p class="art-src">— Nature</p></article><article class="art" style="--accent:var(--holz)"><h4><span class="art-num">④</span>Vereinte Nationen ordnen KI</h4><p>In Genf startet ein gemeinsames Gremium von Vereinten Nationen und Fernmeldeunion, das erstmals globale Leitplanken für künstliche Intelligenz erarbeiten soll.</p><p class="art-ctx">Die Weltregionen schreiben gerade unvereinbare KI-Regelbücher. Wer zuerst einen Standard setzt, prägt ihn für alle anderen — der Genfer Tisch kommt spät zu einem Rennen, das längst läuft.</p><p class="art-src">— United Nations</p></article><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">⑤</span>Atlantikströmung stabiler als gedacht</h4><p>Neue Messreihen zur großen Atlantik-Umwälzung finden neben Zeichen der Schwächung auch überraschende Stabilität.</p><p class="art-ctx">Die Strömung hält Europas Winter mild und galt als kippgefährdet. Ist die Datenlage uneiniger als gedacht, verschiebt das eine der lautesten Kipppunkt-Erzählungen der letzten Jahre.</p><p class="art-src">— Woods Hole Oceanographic Institution</p></article><div class="facts"><h3>✦ fakten &amp; relationen</h3><ul><li>Ein einziges Gramm DNA fasst mehr Daten, als alle Festplatten eines durchschnittlichen Menschenlebens je speichern — die dichteste bekannte Form, Information zu bewahren. <span>(European Bioinformatics Institute)</span></li><li>Rund drei Viertel der wichtigsten Nahrungspflanzen hängen von tierischer Bestäubung ab; ohne Bienen und Hummeln bricht ein großer Teil dessen weg, was auf dem Teller landet. <span>(IPBES)</span></li><li>Die Atlantik-Umwälzung verschiebt so viel Wärme, dass London deutlich milder bleibt als Städte auf gleicher Breite im kanadischen Osten — eine unsichtbare Heizung von kontinentalem Ausmaß. <span>(Woods Hole Oceanographic Institution)</span></li></ul></div><div class="rep-sec" style="--accent:var(--tuerkis)"><h3>✎ kritisch gedacht</h3><p>Die Meldung zum DNA-Chip (①) verführt zur Basisraten-Vernachlässigung: dem Reflex, von einem Laborerfolg auf den nahen Alltag zu schließen. Die allermeisten solchen Durchbrüche versanden still auf dem langen Weg aus dem Labor, und über dieses Versanden berichtet niemand. Frag bei jeder Aufbruch-Meldung: Wie viele ähnliche Ankündigungen der letzten Jahre haben es wirklich bis zum Menschen geschafft?</p></div><div class="essay"><h3>⚛ Fourier-Analyse</h3><p>Die Fourier-Analyse ist der Beweis, dass sich jeder noch so wirre Klang aus reinen, einfachen Tönen zusammensetzt — wie sich weißes Licht im Prisma in seine Farben zerlegt. Ein Meeresrauschen, ein Orchester, ein Erdbeben: Alles lässt sich in eine Handvoll verborgener Schwingungen auflösen, jede mit ihrer eigenen Höhe und Stärke. Der geniale Kern ist, dass komplizierte Wirklichkeit nicht kompliziert bleiben muss, wenn man die richtige Sprache findet, sie zu beschreiben. Heute steckt dieses Prinzip in jedem Handy: Es zerlegt deine Stimme in Frequenzen, wirft die unhörbaren weg und funkt nur den Rest — so passt ein Gespräch durch eine schmale Leitung. Auch die Klimaforscher aus Meldung ⑤ suchen in verrauschten Meeresdaten nach solchen verborgenen Rhythmen. Was chaotisch aussieht, ist oft nur eine Summe einfacher Wellen, die niemand einzeln bemerkt hat.</p></div><div class="rep-sec" style="--accent:var(--kupfer)"><h3>⚑ strittige these</h3><p class="these-claim">Die größte Gefahr der künstlichen Intelligenz ist nicht, dass Maschinen zu klug werden, sondern dass wir aufhören, selbst zu denken.</p><p>Die Debatte starrt auf ferne Szenarien einer überlegenen Maschine, doch der wirkliche Wandel läuft leise und schon jetzt: Wer Antworten per Knopfdruck bekommt, übt das mühsame Selberdenken seltener, und was man nicht übt, verkümmert — vom Kopfrechnen bis zum Orientierungssinn. Eine Gesellschaft, die ihr Urteil auslagert, wird nicht durch einen Aufstand der Maschinen verwundbar, sondern durch die eigene Bequemlichkeit.</p><p class="these-contra">dagegen spricht: Jede Technik vom Buchdruck bis zum Taschenrechner galt einmal als geistiger Verfall — und jedes Mal verlagerte sich das Denken nur auf eine höhere Ebene, statt zu verschwinden.</p></div><div class="rep-sec" style="--accent:var(--gold)"><h3>◔ prognosemarkt</h3><p>Von drei politischen Märkten sticht einer heraus: Die Wahrscheinlichkeit einer Waffenruhe in einem laufenden Konflikt ist binnen zwanzig Tagen von 31 auf 58 Prozent gesprungen. Die Menge reagierte auf diplomatische Signale, die in den großen Schlagzeilen erst Tage später auftauchten — ein Lehrstück dafür, wie Wettmärkte gelegentlich schneller sind als die Redaktionen. Sichtbar wird zugleich der Herdentrieb: Der stärkste Sprung kam nicht mit der Nachricht selbst, sondern als die Menge sah, dass alle anderen schon kauften.</p></div><div class="rep-sec" style="--accent:var(--holz)"><h3>↗ im aufwind</h3><p>Die Wikipedia-Aufrufe zum Stichwort Perowskit-Solarzelle schnellen seit gestern nach oben. Auslöser ist eine neue Studie, die für diese Dünnschicht-Zellen einen Wirkungsgrad nahe dem theoretischen Limit meldet. Perowskite gelten als billiger und flexibler als klassisches Silizium; die Aufmerksamkeit zeigt, dass die Öffentlichkeit eine mögliche Wende in der Solartechnik ahnt, bevor die Massenmedien sie ausrufen.</p></div><div class="poem"><span class="mark">❦</span>Der Mensch beschreibt das Leben Korn für Korn,<br>misst Meer und Klang und lagert aus sein Denken;<br>er baut sich Werkzeug, kühl und auserkorn,<br>und muss doch selbst die eigne Hand noch lenken.<br>Im Zweifel, sieh, glimmt still ein Morgenrot.<hr></div></div></div>
+    <div class="rep-abo"><p class="rep-note">Interesse am täglichen Lagebericht?</p><a class="rep-cta" href="mailto:maloutrading@web.de">anmelden →</a></div><div class="rep-tag">beispielreport</div><div class="report-block"><div class="rep-col"><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">1</span>DNA-Chip schreibt Erbgut</h4><p>Ein Team am Karolinska-Institut baut einen Silizium-Chip, der Dutzende DNA-Stränge zugleich schreibt, allein mit Strom und wasserlöslichen Enzymen.</p><p class="art-ctx">DNA speichert Daten millionenfach dichter als jede Festplatte und hält Jahrtausende. Ein tragbarer Schreiber holt das aus dem Reinraum-Labor in Richtung Alltag — und macht den Bauplan des Lebens zur beschreibbaren Ware.</p><p class="art-src">— Karolinska Institutet</p></article><article class="art" style="--accent:var(--tuerkis)"><h4><span class="art-num">2</span>EU-Regeln bremsen Siri</h4><p>Apple verschiebt neue Sprachassistenz-Funktionen in der EU und nennt das Gesetz über digitale Märkte als Grund.</p><p class="art-ctx">Der Streit klärt eine unbequeme Frage: Kostet Europas Offenheit den Preis, dass neue Technik hier später ankommt? Jede große Plattform beobachtet, ob sich Verzögerung als Druckmittel gegen Regulierung auszahlt.</p><p class="art-src">— Reuters</p></article><article class="art" style="--accent:var(--kupfer)"><h4><span class="art-num">3</span>Pestizid trifft Hummeln im Erbgut</h4><p>Der als sicher geltende Neonikotinoid-Nachfolger Sulfoxaflor stört laut einer Studie schon in Kleinstdosen die Fortpflanzung von Hummeln.</p><p class="art-ctx">Bestäuber sind die stille Infrastruktur der Landwirtschaft. Trägt der Ersatzstoff denselben Schaden unter neuem Namen, verteuert sich Nahrung, lange bevor jemand die Ursache benennt.</p><p class="art-src">— Nature</p></article><article class="art" style="--accent:var(--holz)"><h4><span class="art-num">4</span>Vereinte Nationen ordnen KI</h4><p>In Genf startet ein gemeinsames Gremium von Vereinten Nationen und Fernmeldeunion, das erstmals globale Leitplanken für künstliche Intelligenz erarbeiten soll.</p><p class="art-ctx">Die Weltregionen schreiben gerade unvereinbare KI-Regelbücher. Wer zuerst einen Standard setzt, prägt ihn für alle anderen — der Genfer Tisch kommt spät zu einem Rennen, das längst läuft.</p><p class="art-src">— United Nations</p></article><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">5</span>Atlantikströmung stabiler als gedacht</h4><p>Neue Messreihen zur großen Atlantik-Umwälzung finden neben Zeichen der Schwächung auch überraschende Stabilität.</p><p class="art-ctx">Die Strömung hält Europas Winter mild und galt als kippgefährdet. Ist die Datenlage uneiniger als gedacht, verschiebt das eine der lautesten Kipppunkt-Erzählungen der letzten Jahre.</p><p class="art-src">— Woods Hole Oceanographic Institution</p></article><div class="facts"><h3>✦ fakten &amp; relationen</h3><ul><li>Ein einziges Gramm DNA fasst mehr Daten, als alle Festplatten eines durchschnittlichen Menschenlebens je speichern — die dichteste bekannte Form, Information zu bewahren. <span>(European Bioinformatics Institute)</span></li><li>Rund drei Viertel der wichtigsten Nahrungspflanzen hängen von tierischer Bestäubung ab; ohne Bienen und Hummeln bricht ein großer Teil dessen weg, was auf dem Teller landet. <span>(IPBES)</span></li><li>Die Atlantik-Umwälzung verschiebt so viel Wärme, dass London deutlich milder bleibt als Städte auf gleicher Breite im kanadischen Osten — eine unsichtbare Heizung von kontinentalem Ausmaß. <span>(Woods Hole Oceanographic Institution)</span></li></ul></div><div class="rep-sec" style="--accent:var(--tuerkis)"><h3>✎ kritisch gedacht</h3><p>Die Meldung zum DNA-Chip (①) verführt zur Basisraten-Vernachlässigung: dem Reflex, von einem Laborerfolg auf den nahen Alltag zu schließen. Die allermeisten solchen Durchbrüche versanden still auf dem langen Weg aus dem Labor, und über dieses Versanden berichtet niemand. Frag bei jeder Aufbruch-Meldung: Wie viele ähnliche Ankündigungen der letzten Jahre haben es wirklich bis zum Menschen geschafft?</p></div><div class="essay"><h3>⚛ Fourier-Analyse</h3><p>Die Fourier-Analyse ist der Beweis, dass sich jeder noch so wirre Klang aus reinen, einfachen Tönen zusammensetzt — wie sich weißes Licht im Prisma in seine Farben zerlegt. Ein Meeresrauschen, ein Orchester, ein Erdbeben: Alles lässt sich in eine Handvoll verborgener Schwingungen auflösen, jede mit ihrer eigenen Höhe und Stärke. Der geniale Kern ist, dass komplizierte Wirklichkeit nicht kompliziert bleiben muss, wenn man die richtige Sprache findet, sie zu beschreiben. Heute steckt dieses Prinzip in jedem Handy: Es zerlegt deine Stimme in Frequenzen, wirft die unhörbaren weg und funkt nur den Rest — so passt ein Gespräch durch eine schmale Leitung. Auch die Klimaforscher aus Meldung ⑤ suchen in verrauschten Meeresdaten nach solchen verborgenen Rhythmen. Was chaotisch aussieht, ist oft nur eine Summe einfacher Wellen, die niemand einzeln bemerkt hat.</p></div><div class="rep-sec" style="--accent:var(--kupfer)"><h3>⚑ strittige these</h3><p class="these-claim">Die größte Gefahr der künstlichen Intelligenz ist nicht, dass Maschinen zu klug werden, sondern dass wir aufhören, selbst zu denken.</p><p>Die Debatte starrt auf ferne Szenarien einer überlegenen Maschine, doch der wirkliche Wandel läuft leise und schon jetzt: Wer Antworten per Knopfdruck bekommt, übt das mühsame Selberdenken seltener, und was man nicht übt, verkümmert — vom Kopfrechnen bis zum Orientierungssinn. Eine Gesellschaft, die ihr Urteil auslagert, wird nicht durch einen Aufstand der Maschinen verwundbar, sondern durch die eigene Bequemlichkeit.</p><p class="these-contra">dagegen spricht: Jede Technik vom Buchdruck bis zum Taschenrechner galt einmal als geistiger Verfall — und jedes Mal verlagerte sich das Denken nur auf eine höhere Ebene, statt zu verschwinden.</p></div><div class="rep-sec" style="--accent:var(--gold)"><h3>◔ prognosemarkt</h3><p>Von drei politischen Märkten sticht einer heraus: Die Wahrscheinlichkeit einer Waffenruhe in einem laufenden Konflikt ist binnen zwanzig Tagen von 31 auf 58 Prozent gesprungen. Die Menge reagierte auf diplomatische Signale, die in den großen Schlagzeilen erst Tage später auftauchten — ein Lehrstück dafür, wie Wettmärkte gelegentlich schneller sind als die Redaktionen. Sichtbar wird zugleich der Herdentrieb: Der stärkste Sprung kam nicht mit der Nachricht selbst, sondern als die Menge sah, dass alle anderen schon kauften.</p></div><div class="rep-sec" style="--accent:var(--holz)"><h3>↗ im aufwind</h3><p>Die Wikipedia-Aufrufe zum Stichwort Perowskit-Solarzelle schnellen seit gestern nach oben. Auslöser ist eine neue Studie, die für diese Dünnschicht-Zellen einen Wirkungsgrad nahe dem theoretischen Limit meldet. Perowskite gelten als billiger und flexibler als klassisches Silizium; die Aufmerksamkeit zeigt, dass die Öffentlichkeit eine mögliche Wende in der Solartechnik ahnt, bevor die Massenmedien sie ausrufen.</p></div><div class="poem"><span class="mark">❦</span>Der Mensch beschreibt das Leben Korn für Korn,<br>misst Meer und Klang und lagert aus sein Denken;<br>er baut sich Werkzeug, kühl und auserkorn,<br>und muss doch selbst die eigne Hand noch lenken.<br>Im Zweifel, sieh, glimmt still ein Morgenrot.<hr></div></div></div>
   </div>
 </section>
 
@@ -505,6 +533,18 @@ footer button:hover::after{transform:scaleX(1)}
   </div>
   <div class="wrap reveal">
     <div class="longs"><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=TVC%3AGOLD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">gold</span><span class="claim keepcase">Längster Track-Record</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=COINBASE%3AZECUSD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">zcash</span><span class="claim keepcase">Privatsphäre könnte schwierig werden</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=OKX%3AHYPEUSDT&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">hyperliquid</span><span class="claim keepcase">Schaut gut aus</span></div></div></div><p class="attrib">kurse &amp; charts · <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a></p>
+  </div>
+</section>
+
+<section class="tab sub" id="wiki">
+  <div class="topvid" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="metadata">
+      <source src="shortVids/mon.mp4" type="video/mp4">
+    </video>
+    <i class="tint"></i>
+  </div>
+  <div class="wrap reveal">
+    <div class="wiki-hero"><span class="wiki-kicker keepcase">wikifolio</span><h2 class="wiki-name keepcase">alpaca turtle</h2><p class="wiki-tag">regelbasierte trendfolge — geduldig, systematisch, transparent dokumentiert.</p><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">zum wikifolio →</a></div><div class="kpis"><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">performance seit auflage</span></div><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">performance 12 monate</span></div><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">max drawdown</span></div><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">investiertes kapital</span></div></div><div class="wiki-chart"><span class="wiki-chart-note">performance-chart folgt</span></div><ul class="wiki-notes"><li>regelbasiert: klare ein- und ausstiegssignale, keine bauchentscheidungen.</li><li>diversifiziert über aktien-, rohstoff- und krypto-märkte.</li><li>voll transparent — jede handlung ist bei wikifolio nachvollziehbar.</li></ul><p class="attrib">daten &amp; performance · <a href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">wikifolio</a></p>
   </div>
 </section>
 
@@ -686,7 +726,7 @@ document.querySelectorAll('.stage video,.topvid video').forEach(v => {
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
 
-const TITLES = {home:'malou trading', about:'team · malou trading', zitate:'idee · malou trading', long:'long · malou trading'};
+const TITLES = {home:'malou trading', about:'team · malou trading', zitate:'idee · malou trading', long:'long · malou trading', wiki:'wiki · malou trading'};
 function show(id, push){
   if (!document.getElementById(id)) id = 'home';
   document.querySelectorAll('main .tab').forEach(s => s.classList.remove('show'));
