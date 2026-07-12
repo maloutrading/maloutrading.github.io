@@ -350,7 +350,7 @@ picture{display:contents}
 .wiki-tag{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.05rem,2.2vw,1.3rem);margin:1rem auto 2rem;max-width:52ch}
 .wiki-cta{display:inline-block;background:var(--tuerkis);color:var(--marine);text-decoration:none;padding:.95rem 2.2rem;border-radius:999px;font-style:italic;font-size:1.05rem;transition:transform .3s,box-shadow .3s}
 .wiki-cta:hover{transform:translateY(-2px);color:var(--marine);box-shadow:0 10px 30px color-mix(in srgb,var(--tuerkis) 40%,transparent)}
-.rib-intro{text-align:center;max-width:var(--wt);margin:0 auto clamp(2.6rem,5vw,3.8rem)}
+.rib-intro{text-align:center;max-width:var(--wt);margin:0 auto calc(clamp(2.6rem,5vw,3.8rem) + 1.5cm)}
 .rib-kicker{display:block;font-style:italic;font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 .8rem}
 .rib-title{font-size:clamp(2.4rem,6vw,3.6rem);margin:0}
 .rib-title::after{margin-left:auto;margin-right:auto}
@@ -366,8 +366,6 @@ picture{display:contents}
 .homage-kicker{display:block;margin:1.4rem 0 .35rem;font-style:italic;font-size:.72rem;
   letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.1rem);margin:1.4rem 0 0}
-.homage-say{max-width:46ch;margin:1rem auto 0;color:var(--silber);font-style:italic;
-  text-transform:none;line-height:1.7;font-size:1rem}
 
 /* ── trade ── */
 .trade-quotes{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin:0 0 clamp(3rem,6vw,4.4rem)}
@@ -724,8 +722,6 @@ footer button:hover::after{transform:scaleX(1)}
       </div>
       <figcaption class="homage-text">
         <h3 class="homage-name keepcase">Malou</h3>
-        <p class="homage-say keepcase">Ruhe, Geduld und ein wacher Blick — wofür ihr Name steht,
-        ist auch, wie wir investieren wollen. Danke, dass du uns deinen Namen leihst.</p>
       </figcaption>
     </figure>
   </div>
