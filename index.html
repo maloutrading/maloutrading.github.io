@@ -570,6 +570,102 @@ footer button::after{content:"";position:absolute;left:0;right:0;bottom:-2px;hei
   background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s}
 footer button:hover{color:var(--gold)}
 footer button:hover::after{transform:scaleX(1)}
+#main{position:relative;z-index:1;overflow-x:clip}
+footer{position:relative;z-index:1}
+.nebula{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.nebula i{position:absolute;border-radius:50%;filter:blur(64px);opacity:.4;mix-blend-mode:screen;will-change:transform}
+.nebula i:nth-child(1){width:52vw;height:52vw;left:-8vw;top:-12vh;background:radial-gradient(circle,color-mix(in srgb,var(--gold) 34%,transparent),transparent 70%);animation:neb1 34s ease-in-out infinite alternate}
+.nebula i:nth-child(2){width:46vw;height:46vw;right:-6vw;top:16vh;background:radial-gradient(circle,color-mix(in srgb,var(--holz) 34%,transparent),transparent 70%);animation:neb2 44s ease-in-out infinite alternate}
+.nebula i:nth-child(3){width:42vw;height:42vw;left:24vw;bottom:-16vh;background:radial-gradient(circle,color-mix(in srgb,var(--tuerkis) 30%,transparent),transparent 70%);animation:neb3 38s ease-in-out infinite alternate}
+@keyframes neb1{to{transform:translate(8vw,6vh) scale(1.15)}}
+@keyframes neb2{to{transform:translate(-7vw,-5vh) scale(1.1)}}
+@keyframes neb3{to{transform:translate(5vw,-7vh) scale(1.2)}}
+.halo{position:fixed;inset:0;z-index:5;pointer-events:none;mix-blend-mode:screen;opacity:.55;
+  background:radial-gradient(120% 80% at 50% 6%,color-mix(in srgb,var(--gold) 10%,transparent),transparent 58%),
+    radial-gradient(120% 90% at 50% 122%,color-mix(in srgb,var(--holz) 8%,transparent),transparent 58%)}
+.thread{position:fixed;left:max(16px,calc(50% - 600px));top:14vh;bottom:14vh;width:1px;z-index:5;
+  pointer-events:none;background:color-mix(in srgb,var(--gold) 13%,transparent);opacity:0;transition:opacity .6s}
+body:not(.home) .thread{opacity:1}
+.thread i{display:block;width:100%;height:0;background:linear-gradient(180deg,var(--gold),var(--kupfer),var(--holz));
+  box-shadow:0 0 8px color-mix(in srgb,var(--gold) 55%,transparent);transition:height .12s linear}
+@media(max-width:1180px){.thread{display:none}}
+.cur{position:fixed;left:0;top:0;z-index:40;pointer-events:none;opacity:0;will-change:transform;transition:opacity .3s}
+.cur.dot{width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--gold)}
+.cur.ring{width:30px;height:30px;margin:-15px;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);
+  transition:width .3s,height .3s,margin .3s,border-color .3s,opacity .3s}
+.cur.ring.hot{width:54px;height:54px;margin:-27px;border-color:var(--gold)}
+.cur.ring.down{width:22px;height:22px;margin:-11px}
+@media (hover:hover) and (pointer:fine){.gallery figure:hover img{filter:url(#liquid)}}
+
+.rib-intro{position:relative}
+.rib-intro::before{content:attr(data-ghost);position:absolute;left:50%;top:-.4em;transform:translateX(-50%);
+  font-family:var(--serif);font-size:clamp(4.5rem,15vw,11rem);line-height:1;letter-spacing:.03em;white-space:nowrap;
+  color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--weiss) 8%,transparent);
+  opacity:.6;pointer-events:none;z-index:0}
+.rib-intro>*{position:relative;z-index:1}
+.rib-est{margin-top:.5rem;font-size:.92rem;letter-spacing:.2em;opacity:.82}
+.wx{display:inline-block;margin:1.1rem auto 0;font-style:italic;color:var(--holz);font-size:.92rem;letter-spacing:.12em;
+  padding:.34rem .95rem;border:1px solid color-mix(in srgb,var(--holz) 34%,var(--line));border-radius:999px;
+  background:color-mix(in srgb,var(--holz) 8%,transparent)}
+.wx[hidden]{display:none}
+
+#about{position:relative}
+.teambg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.teambg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05)}
+.teambg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,
+  color-mix(in srgb,var(--marine) 60%,transparent),color-mix(in srgb,var(--marine) 80%,transparent))}
+#about .wrap{position:relative;z-index:1}
+
+.song-title{font-family:var(--serif);font-weight:400;font-size:1.02rem;line-height:1.25;margin:.95rem 0 .12rem;
+  text-transform:none;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
+.song-artist{color:var(--silber);font-style:italic;text-transform:none;font-size:.82rem;line-height:1.3;margin:0;overflow-wrap:anywhere}
+.spotify-me{font-size:1.33rem}
+.spotify-me svg{width:21px;height:21px}
+.attrib{font-size:1.04rem}
+
+.gallery{align-items:start;gap:clamp(1.4rem,3vw,2.6rem)}
+.gallery figure{position:relative;aspect-ratio:auto;padding:6px;border-radius:10px;overflow:hidden;
+  background:linear-gradient(150deg,rgba(64,64,78,.55),rgba(18,16,30,.62));
+  border:1px solid color-mix(in srgb,var(--accent,var(--silber)) 30%,rgba(255,255,255,.06));
+  box-shadow:0 14px 34px rgba(0,0,0,.44),inset 0 1px 0 rgba(255,255,255,.12);
+  transition:transform .6s cubic-bezier(.2,.7,.3,1),box-shadow .6s,border-color .6s}
+.gallery .g0{--accent:var(--gold);aspect-ratio:4/5;transform:rotate(-1.6deg)}
+.gallery .g1{--accent:var(--tuerkis);aspect-ratio:5/7;transform:rotate(1.1deg);margin-top:2.4rem}
+.gallery .g2{--accent:var(--holz);aspect-ratio:1/1;transform:rotate(-.7deg);margin-top:1rem}
+.gallery img{border-radius:6px}
+.gallery figure::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:10px;
+  background:linear-gradient(130deg,rgba(255,255,255,.14),transparent 34%,transparent 70%,rgba(255,255,255,.05));
+  opacity:.55;transition:opacity .6s}
+.gallery figure:hover{transform:rotate(0deg) translateY(-10px) scale(1.03);z-index:2;
+  border-color:color-mix(in srgb,var(--accent) 55%,rgba(255,255,255,.1));
+  box-shadow:0 34px 72px rgba(0,0,0,.55),0 0 34px color-mix(in srgb,var(--accent) 22%,transparent)}
+.gallery figure:hover::after{opacity:.9}
+.gallery figure:hover img{transform:scale(1.05)}
+
+#designs{--accent:var(--holz)}
+nav.tabs button[data-t="designs"]:hover{color:var(--holz)}
+nav.tabs button[data-t="designs"].active{background:var(--holz);color:var(--weiss)}
+.lab{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1.1rem,2.6vw,1.9rem);margin-top:clamp(2rem,4vw,3rem)}
+.lab-card{position:relative;display:flex;flex-direction:column;border-radius:16px;overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--silber) 22%,transparent);
+  background:linear-gradient(165deg,rgba(255,255,255,.03),rgba(255,255,255,.006));
+  transition:transform .5s cubic-bezier(.2,.7,.3,1),border-color .5s,box-shadow .5s}
+.lab-card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+  box-shadow:0 26px 60px rgba(0,0,0,.44),0 0 34px color-mix(in srgb,var(--accent) 14%,transparent)}
+.lab-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--grau)}
+.lab-media img,.lab-media video,.lab-media canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.lab-stars{background:radial-gradient(circle at 50% 34%,color-mix(in srgb,var(--marine) 60%,#000),#05040f)}
+.lab-body{padding:clamp(1.2rem,2.6vw,1.7rem)}
+.lab-kick{display:block;font-style:italic;letter-spacing:.16em;text-transform:uppercase;font-size:.7rem;color:var(--accent);margin:0 0 .5rem}
+.lab-title{font-family:var(--serif);font-weight:400;font-size:1.32rem;line-height:1.15;margin:0 0 .5rem;text-transform:none}
+.lab-say{color:var(--silber);font-size:1rem;line-height:1.6;margin:0;text-transform:none}
+.lab-list{margin:.3rem 0 0;padding-left:1.1rem;color:var(--silber);line-height:1.75;text-transform:none}
+.lab-fallback{display:none}
+.lab-apod.nofeed #apodImg{display:none}
+.lab-apod.nofeed .lab-fallback{display:block}
+@media(max-width:720px){.lab{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.nebula i{animation:none}.cur{display:none}.gallery figure:hover img{filter:none}}
 </style>
 </head>
 <body class="home">
@@ -581,6 +677,11 @@ footer button:hover::after{transform:scaleX(1)}
 <div class="grain" aria-hidden="true"></div>
 <div class="crop" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></div>
 <div class="progress" id="prog" aria-hidden="true"></div>
+<div class="nebula" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="halo" aria-hidden="true"></div>
+<div class="thread" aria-hidden="true"><i id="threadfill"></i></div>
+<div class="cur ring" aria-hidden="true"></div><div class="cur dot" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="liquid"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves="2" seed="7" result="n"><animate attributeName="baseFrequency" dur="16s" values="0.008 0.014;0.016 0.009;0.008 0.014" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 
 <div aria-hidden="true" style="position:fixed;left:0;right:0;bottom:0;height:2px;z-index:6;
   pointer-events:none;opacity:.5;background:linear-gradient(90deg,
@@ -590,10 +691,11 @@ footer button:hover::after{transform:scaleX(1)}
   <div class="nav">
     <a class="brand" href="#" onclick="show('home');return false;">malou <em>trading</em></a>
     <nav class="tabs" id="tabs">
-      <button data-t="about" onclick="show('about')">team</button>
       <button data-t="zitate" onclick="show('zitate')">idee</button>
+      <button data-t="about" onclick="show('about')">team</button>
       <button data-t="news" onclick="show('news')">news</button>
       <button data-t="trade" onclick="show('trade')">trade</button>
+      <button data-t="designs" onclick="show('designs')">designs</button>
     </nav>
   </div>
 </header>
@@ -607,10 +709,11 @@ footer button:hover::after{transform:scaleX(1)}
       <div class="left-inner">
         <a class="brand-lg" href="#" onclick="show('home');return false;">malou <em>trading</em></a>
         <nav class="menu">
-          <button onclick="show('about')">team</button>
           <button onclick="show('zitate')">idee</button>
+          <button onclick="show('about')">team</button>
           <button onclick="show('news')">news</button>
           <button onclick="show('trade')">trade</button>
+          <button onclick="show('designs')">designs</button>
         </nav>
       </div>
     </div>
@@ -664,20 +767,19 @@ footer button:hover::after{transform:scaleX(1)}
     <div class="zitat"><p class="zitat-line">„Never lie to yourself.“ <span class="zitat-author">— Eliud Kipchoge</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Ich habe den Ball, ich passe den Ball.“ <span class="zitat-author">— Pep Guardiola</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Everybody gets what they want out of the market.“ <span class="zitat-author">— Ed Seykota</span></p><hr class="zitat-rule"></div>
-    <div class="showcase spotify-box"><div class="song-grid"><article class="song-card" style="--accent:var(--gold)"><a class="song-cover" href="https://open.spotify.com/track/4S8ixccYDPJJD4vPthHg5f" target="_blank" rel="noopener" aria-label="Our Smoother Part — Le Hutin auf spotify hören"><picture><source srcset="pics/cov_smoother.webp" type="image/webp"><img src="pics/cov_smoother.jpg" alt="Our Smoother Part — Le Hutin" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a></article><article class="song-card" style="--accent:var(--tuerkis)"><a class="song-cover" href="https://open.spotify.com/track/2a5u4ZejTXWuKefIwVt420" target="_blank" rel="noopener" aria-label="L'hiver — Tour-Maubourg auf spotify hören"><picture><source srcset="pics/cov_lhiver.webp" type="image/webp"><img src="pics/cov_lhiver.jpg" alt="L'hiver — Tour-Maubourg" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a></article><article class="song-card" style="--accent:var(--kupfer)"><a class="song-cover" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener" aria-label="Emotions Unlocked — Mike WiLL Made-It auf spotify hören"><picture><source srcset="pics/cov_emotions.webp" type="image/webp"><img src="pics/cov_emotions.jpg" alt="Emotions Unlocked — Mike WiLL Made-It" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a></article></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>auf spotify folgen</a></div></div>
+    <div class="showcase spotify-box"><div class="song-grid"><article class="song-card" style="--accent:var(--gold)"><a class="song-cover" href="https://open.spotify.com/track/4S8ixccYDPJJD4vPthHg5f" target="_blank" rel="noopener" aria-label="Our Smoother Part — Le Hutin auf spotify hören"><picture><source srcset="pics/cov_smoother.webp" type="image/webp"><img src="pics/cov_smoother.jpg" alt="Our Smoother Part — Le Hutin" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">Our Smoother Part</h3><p class="song-artist keepcase">Le Hutin</p></article><article class="song-card" style="--accent:var(--tuerkis)"><a class="song-cover" href="https://open.spotify.com/track/2a5u4ZejTXWuKefIwVt420" target="_blank" rel="noopener" aria-label="L'hiver — Tour-Maubourg auf spotify hören"><picture><source srcset="pics/cov_lhiver.webp" type="image/webp"><img src="pics/cov_lhiver.jpg" alt="L'hiver — Tour-Maubourg" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">L'hiver</h3><p class="song-artist keepcase">Tour-Maubourg</p></article><article class="song-card" style="--accent:var(--kupfer)"><a class="song-cover" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener" aria-label="Emotions Unlocked — Mike WiLL Made-It auf spotify hören"><picture><source srcset="pics/cov_emotions.webp" type="image/webp"><img src="pics/cov_emotions.jpg" alt="Emotions Unlocked — Mike WiLL Made-It" class="song-art" loading="lazy" decoding="async"></picture><span class="song-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg></span></a><h3 class="song-title keepcase">Emotions Unlocked</h3><p class="song-artist keepcase">Mike WiLL Made-It</p></article></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>auf spotify folgen</a></div></div>
     <div class="gallery"><figure class="g0"><picture><source srcset="pics/pic0.webp" type="image/webp"><img src="pics/pic0.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g1"><picture><source srcset="pics/pic1.webp" type="image/webp"><img src="pics/pic1.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g2"><picture><source srcset="pics/pic2.webp" type="image/webp"><img src="pics/pic2.jpeg" alt="" loading="lazy" decoding="async"></picture></figure></div>
   </div>
 </section>
 
 <section class="tab sub" id="about">
-  <div class="topvid" aria-hidden="true">
+  <div class="teambg" aria-hidden="true">
     <video autoplay muted loop playsinline preload="metadata">
       <source src="shortVids/ham.mp4" type="video/mp4">
     </video>
-    <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--gold)"><span class="rib-kicker keepcase">Das Orchester</span><h2 class="rib-title keepcase">team</h2><p class="rib-lead">wir machen code, designs &amp; investments</p></div>
+    <div class="rib-intro" style="--accent:var(--gold)" data-ghost="ORCHESTER"><span class="rib-kicker keepcase">Das Orchester</span><h2 class="rib-title keepcase">team</h2><p class="rib-lead">wir machen code, designs &amp; investments</p><p class="rib-lead rib-est keepcase">malou trading — est. 2024</p><div class="wx keepcase" id="wx" hidden></div></div>
     <div class="member">
       <figure class="portrait noimg">
         <picture>
@@ -761,6 +863,29 @@ footer button:hover::after{transform:scaleX(1)}
         <h3 class="homage-name keepcase">Malou</h3>
       </figcaption>
     </figure>
+  </div>
+</section>
+
+<section class="tab sub" id="designs">
+  <div class="wrap reveal">
+    <div class="rib-intro" style="--accent:var(--holz)" data-ghost="LABOR"><span class="rib-kicker keepcase">Ideen-Labor</span><h2 class="rib-title keepcase">designs</h2><p class="rib-lead">experimente, ansichten, spektakel — was diese seite noch werden kann.</p></div>
+    <div class="lab">
+      <article class="lab-card lab-apod" style="--accent:var(--gold)">
+        <div class="lab-media"><img id="apodImg" alt="" loading="lazy" decoding="async"><canvas class="lab-fallback" aria-hidden="true"></canvas></div>
+        <div class="lab-body"><span class="lab-kick keepcase">✦ himmelsfenster · nasa</span><h3 class="lab-title keepcase" id="apodTitle">Bild des Tages</h3><p class="lab-say keepcase" id="apodText">Ein neues Bild aus dem Kosmos, jeden Tag — direkt von der NASA.</p></div>
+      </article>
+      <article class="lab-card" style="--accent:var(--tuerkis)">
+        <div class="lab-media lab-stars"><canvas id="constel" aria-hidden="true"></canvas></div>
+        <div class="lab-body"><span class="lab-kick keepcase">✧ sternenbilder</span><h3 class="lab-title keepcase">Nachthimmel</h3><p class="lab-say keepcase">Ein lebendiges Sternenfeld — denkbar als Kulisse für die ganze Seite.</p></div>
+      </article>
+      <article class="lab-card" style="--accent:var(--holz)">
+        <div class="lab-media lab-vid"><video muted loop playsinline preload="none"><source src="shortVids/ham.mp4" type="video/mp4"></video></div>
+        <div class="lab-body"><span class="lab-kick keepcase">⚓ der hafen lebt</span><h3 class="lab-title keepcase">Hamburg, in Bewegung</h3><p class="lab-say keepcase">Boote, Elbe, Licht — echte Live-Ansichten als atmender Hintergrund.</p></div>
+      </article>
+      <article class="lab-card lab-note" style="--accent:var(--kupfer)">
+        <div class="lab-body"><span class="lab-kick keepcase">＋ auf der werkbank</span><h3 class="lab-title keepcase">Weitere Ideen</h3><ul class="lab-list keepcase"><li>Polarlicht-Barometer am oberen Rand</li><li>Ticker-Herzschlag aus Live-Kursen</li><li>Malou als scrollende Begleiterin</li><li>Report, der sich selbst schreibt</li></ul></div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -849,6 +974,7 @@ footer button:hover::after{transform:scaleX(1)}
 
 <script>
 const hd = document.getElementById('hd'), prog = document.getElementById('prog'),
+      tf = document.getElementById('threadfill'),
       body = document.body, docEl = document.documentElement;
 let lastY = 0, ticking = false;
 function apply(){
@@ -857,7 +983,9 @@ function apply(){
   hd.classList.toggle('away', !home && y > 200 && y > lastY);
   body.classList.toggle('atbottom', innerHeight + y >= docEl.scrollHeight - 60);
   const denom = docEl.scrollHeight - innerHeight;
-  prog.style.width = (denom > 4 ? Math.min(1, y / denom) * 100 : 0) + '%';
+  const rp = (denom > 4 ? Math.min(1, y / denom) * 100 : 0);
+  prog.style.width = rp + '%';
+  if (tf) tf.style.height = rp + '%';
   lastY = y; ticking = false;
 }
 addEventListener('scroll', () => {
@@ -875,7 +1003,7 @@ document.querySelectorAll('.stage video,.topvid video').forEach(v => {
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
 
-const TITLES = {home:'malou trading', about:'team · malou trading', zitate:'idee · malou trading', trade:'trade · malou trading', news:'news · malou trading'};
+const TITLES = {home:'malou trading', about:'team · malou trading', zitate:'idee · malou trading', trade:'trade · malou trading', news:'news · malou trading', designs:'designs · malou trading'};
 function show(id, push){
   if (!document.getElementById(id)) id = 'home';
   document.querySelectorAll('main .tab').forEach(s => s.classList.remove('show'));
@@ -887,6 +1015,9 @@ function show(id, push){
     on ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current');
   });
   body.classList.toggle('home', id === 'home');
+  el.querySelectorAll('video').forEach(v => { try { v.play(); } catch(e){} });
+  if (id === 'about') initWx();
+  if (id === 'designs') initLab();
   document.title = TITLES[id] || (id + ' · malou trading');
   if (push !== false){ try { history.pushState({id}, '', '#' + id); } catch(e){} }
   scrollTo({top:0});
@@ -894,6 +1025,65 @@ function show(id, push){
   el.querySelectorAll('.reveal').forEach(x => io.observe(x));
 }
 addEventListener('popstate', () => show((location.hash || '#home').slice(1), false));
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let wxDone = 0;
+function wxWord(c){ if(c==null)return'—'; if(c===0)return'klar'; if(c<3)return'heiter'; if(c<45)return'bewölkt'; if(c<50)return'trüb'; if(c<57)return'nebel'; if(c<68)return'regen'; if(c<78)return'schnee'; if(c<83)return'schauer'; return'gewitter'; }
+function initWx(){
+  if(wxDone) return; wxDone = 1;
+  const el = document.getElementById('wx'); if(!el) return;
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=53.55&longitude=9.99&current=temperature_2m,weather_code&timezone=Europe%2FBerlin')
+    .then(r => r.json()).then(d => {
+      const c = d.current || {}, t = Math.round(c.temperature_2m);
+      if(isNaN(t)) throw 0;
+      el.textContent = 'Hamburg · ' + t + '° · ' + wxWord(c.weather_code); el.hidden = false;
+    }).catch(() => { wxDone = 0; });
+}
+function starfield(cv){
+  if(!cv || cv._on) return; cv._on = 1;
+  const x = cv.getContext('2d'), dpr = Math.min(devicePixelRatio||1, 2); let st = [], W, H;
+  function sz(){ const r = cv.getBoundingClientRect(); W = cv.width = Math.max(1, r.width*dpr); H = cv.height = Math.max(1, r.height*dpr);
+    st = []; const n = Math.round(r.width*r.height/2400);
+    for(let i=0;i<n;i++) st.push({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.1+.3)*dpr,a:Math.random(),s:Math.random()*.01+.003,d:Math.random()<.5?1:-1,g:Math.random()<.18}); }
+  function paint(){ x.clearRect(0,0,W,H);
+    for(const p of st){ p.a += p.s*p.d; if(p.a>1){p.a=1;p.d=-1;} else if(p.a<.05){p.a=.05;p.d=1;}
+      x.beginPath(); x.arc(p.x,p.y,p.r,0,6.2832);
+      x.fillStyle = 'rgba(' + (p.g?'201,172,107':'231,225,210') + ',' + (p.a*(p.g?.6:.4)) + ')'; x.fill(); }
+    if(!reduce) requestAnimationFrame(paint); }
+  sz(); addEventListener('resize', sz, {passive:true}); paint();
+}
+let apodDone = 0;
+function initApod(){
+  if(apodDone) return; apodDone = 1;
+  const img = document.getElementById('apodImg'), ti = document.getElementById('apodTitle'),
+        tx = document.getElementById('apodText'), card = document.querySelector('.lab-apod');
+  const fail = () => { if(card) card.classList.add('nofeed'); starfield(card && card.querySelector('.lab-fallback')); };
+  fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&thumbs=true')
+    .then(r => r.ok ? r.json() : Promise.reject()).then(d => {
+      const u = d.media_type === 'image' ? d.url : (d.thumbnail_url || ''); if(!u) return fail();
+      img.onerror = fail; img.src = u; img.alt = d.title || '';
+      if(d.title) ti.textContent = d.title;
+      if(d.explanation) tx.textContent = d.explanation.length > 190 ? d.explanation.slice(0,190) + '…' : d.explanation;
+    }).catch(fail);
+}
+function initLab(){ initApod(); starfield(document.getElementById('constel')); }
+
+(function(){
+  if(reduce || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const ring = document.querySelector('.cur.ring'), dot = document.querySelector('.cur.dot');
+  if(!ring || !dot) return;
+  let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry, on = 0;
+  const hot = 'a,button,.song-cover,.gallery figure,.lab-card,input,textarea,[onclick]';
+  addEventListener('pointermove', e => {
+    tx = e.clientX; ty = e.clientY; dot.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
+    if(!on){ on = 1; ring.style.opacity = dot.style.opacity = '1'; }
+  }, {passive:true});
+  addEventListener('pointerdown', () => ring.classList.add('down'));
+  addEventListener('pointerup', () => ring.classList.remove('down'));
+  addEventListener('pointerover', e => { if(e.target.closest && e.target.closest(hot)) ring.classList.add('hot'); }, {passive:true});
+  addEventListener('pointerout', e => { if(e.target.closest && e.target.closest(hot)) ring.classList.remove('hot'); }, {passive:true});
+  (function loop(){ rx += (tx-rx)*.18; ry += (ty-ry)*.18; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(loop); })();
+})();
 
 show((location.hash || '#home').slice(1), false);
 apply();
