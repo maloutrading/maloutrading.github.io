@@ -375,6 +375,50 @@ picture{display:contents}
 .homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.1rem);margin:1.4rem 0 0}
 .homage-say{max-width:46ch;margin:1rem auto 0;color:var(--silber);font-style:italic;
   text-transform:none;line-height:1.7;font-size:1rem}
+
+/* ── trade ── */
+.trade-quotes{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin:0 0 clamp(3rem,6vw,4.4rem)}
+.trade-quote{position:relative;margin:0;padding:1.7rem 1.6rem 1.5rem 2rem;border-radius:14px;
+  border:1px solid var(--line);background:color-mix(in srgb,var(--card) 55%,transparent)}
+.trade-quote::before{content:"";position:absolute;left:0;top:1.4rem;bottom:1.4rem;width:2px;border-radius:2px;
+  background:linear-gradient(180deg,var(--gold),var(--tuerkis))}
+.trade-quote p{font-family:var(--serif);font-weight:300;font-style:italic;text-transform:none;
+  font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.5;margin:0;color:var(--ink)}
+.trade-quote cite{display:block;margin-top:.9rem;font-style:italic;text-transform:none;
+  color:var(--muted);font-size:.9rem}
+@media(max-width:720px){.trade-quotes{grid-template-columns:1fr}}
+
+.rules{padding:clamp(1.9rem,3.4vw,2.8rem);border-radius:calc(var(--r) + 4px);
+  border:1px solid var(--line);background:color-mix(in srgb,var(--card) 45%,transparent);
+  box-shadow:0 16px 44px rgba(0,0,0,.18)}
+.rules-head{text-align:center;margin:0 0 2rem}
+.rules-kicker{display:block;margin:0 0 .5rem;font-style:italic;font-size:.72rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold)}
+.rules-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.5rem,3vw,2rem);margin:0}
+.rules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.rule{position:relative;text-align:center;padding:1.9rem 1.2rem 1.55rem;border-radius:14px;
+  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 24%,var(--line));
+  background:linear-gradient(168deg,color-mix(in srgb,var(--accent,var(--gold)) 8%,var(--card)),var(--card) 65%);
+  transition:transform .4s cubic-bezier(.2,.7,.3,1),box-shadow .4s}
+.rule:hover{transform:translateY(-4px);
+  box-shadow:0 16px 40px color-mix(in srgb,var(--accent,var(--gold)) 18%,rgba(0,0,0,.3))}
+.rule-no{font-family:var(--serif);font-size:.8rem;letter-spacing:.2em;color:var(--accent,var(--gold))}
+.rule-ico{display:flex;align-items:center;justify-content:center;width:56px;height:56px;
+  margin:.85rem auto .95rem;border-radius:50%;color:var(--accent,var(--gold));
+  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 35%,var(--line));
+  background:color-mix(in srgb,var(--accent,var(--gold)) 7%,transparent)}
+.rule-ico svg{width:27px;height:27px}
+.rule-name{font-family:var(--serif);font-weight:300;font-size:1.15rem;text-transform:none;margin:0}
+.rule-say{color:var(--muted);font-style:italic;text-transform:none;font-size:.86rem;line-height:1.5;margin:.5rem 0 0}
+@media(max-width:720px){.rules-grid{grid-template-columns:1fr}}
+
+.trade-label{display:block;text-align:center;font-style:italic;font-size:.72rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--muted);margin:clamp(3rem,6vw,4.4rem) 0 1.6rem}
+.trade-charts{margin:0}
+.trade-wiki{position:relative;margin:clamp(4rem,8vw,6.5rem) 0 0;padding:clamp(3rem,6vw,4.6rem) 0 0;
+  border-top:1px solid var(--line)}
+.trade-wiki::before{content:"";position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  width:66px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin:4.5rem 0 0}
 .kpi{padding:1.7rem 1.2rem;text-align:center;border:1px solid var(--line);border-top:2px solid var(--accent,var(--gold));border-radius:var(--r);background:linear-gradient(160deg,color-mix(in srgb,var(--tuerkis) 5%,var(--card)),var(--card))}
 .kpi-v{display:block;font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);color:var(--ink)}
@@ -520,6 +564,7 @@ footer button:hover::after{transform:scaleX(1)}
     <nav class="tabs" id="tabs">
       <button data-t="about" onclick="show('about')">team</button>
       <button data-t="zitate" onclick="show('zitate')">idee</button>
+      <button data-t="trade" onclick="show('trade')">trade</button>
       <button data-t="news" onclick="show('news')">news</button>
       <button data-t="long" onclick="show('long')">long</button>
       <button data-t="wiki" onclick="show('wiki')">wiki</button>
@@ -538,6 +583,7 @@ footer button:hover::after{transform:scaleX(1)}
         <nav class="menu">
           <button onclick="show('about')">team</button>
           <button onclick="show('zitate')">idee</button>
+          <button onclick="show('trade')">trade</button>
           <button onclick="show('news')">news</button>
           <button onclick="show('long')">long</button>
           <button onclick="show('wiki')">wiki</button>
@@ -556,6 +602,19 @@ footer button:hover::after{transform:scaleX(1)}
 </section>
 
 <!-- ═══ Unterseite · schmales Video oben, darunter der Inhalt ═══ -->
+<section class="tab sub" id="trade">
+  <div class="topvid" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="metadata">
+      <source src="shortVids/nat2.mp4" type="video/mp4">
+    </video>
+    <i class="tint"></i>
+  </div>
+  <div class="wrap reveal">
+    <div class="rib-intro" style="--accent:var(--gold)"><span class="rib-kicker keepcase">wie wir handeln</span><h2 class="rib-title keepcase">trade</h2></div>
+    <div class="trade-quotes"><blockquote class="trade-quote"><p class="keepcase">„all trading is ultimately discretionary.“</p><cite class="keepcase">— Ed Seykota</cite></blockquote><blockquote class="trade-quote"><p class="keepcase">„there is no investment, there is only speculation.“</p><cite class="keepcase">— Jesse Livermore</cite></blockquote></div><div class="rules"><div class="rules-head"><span class="rules-kicker keepcase">handwerk</span><h3 class="rules-title keepcase">die drei regeln</h3></div><div class="rules-grid"><div class="rule" style="--accent:var(--gold)"><span class="rule-no keepcase">01</span><span class="rule-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><path d="M7.7 7.7 20 17M7.7 16.3 20 7M10 12h2"/></svg></span><h4 class="rule-name keepcase">cut your losses</h4><p class="rule-say">verluste klein halten, bevor sie groß werden.</p></div><div class="rule" style="--accent:var(--tuerkis)"><span class="rule-no keepcase">02</span><span class="rule-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 8.5l3 3 2-1.5 4 4"/><path d="M16.5 11v3h-3"/><path d="M5.6 5.6 18.4 18.4"/></svg></span><h4 class="rule-name keepcase">never average down</h4><p class="rule-say">nie in eine verlustposition nachkaufen.</p></div><div class="rule" style="--accent:var(--kupfer)"><span class="rule-no keepcase">03</span><span class="rule-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5.5-5.5 3.5 3.5L21 6"/><path d="M15.5 6H21v5.5"/></svg></span><h4 class="rule-name keepcase">don't trade against the trend</h4><p class="rule-say">mit dem markt gehen, nicht gegen ihn.</p></div></div></div><span class="trade-label keepcase">positionen</span><div class="trade-charts"><div class="longs"><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=TVC%3AGOLD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">gold</span><span class="claim keepcase">Längster Track-Record</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=COINBASE%3AZECUSD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">zcash</span><span class="claim keepcase">Privatsphäre könnte schwierig werden</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=OKX%3AHYPEUSDT&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">hyperliquid</span><span class="claim keepcase">Schaut gut aus</span></div></div></div><p class="attrib">kurse &amp; charts · <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a></p></div><div class="trade-wiki"><div class="wiki-hero"><span class="wiki-kicker keepcase">wikifolio</span><h2 class="wiki-name keepcase">alpaca turtle</h2><p class="wiki-tag">regelbasierte trendfolge — geduldig, systematisch, transparent dokumentiert.</p><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">zum wikifolio →</a></div><div class="kpis"><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">performance seit auflage</span></div><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">performance 12 monate</span></div><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">max drawdown</span></div><div class="kpi"><span class="kpi-v keepcase">—</span><span class="kpi-l">investiertes kapital</span></div></div><div class="wiki-chart"><span class="wiki-chart-note">performance-chart folgt</span></div><ul class="wiki-notes"><li>regelbasiert: klare ein- und ausstiegssignale, keine bauchentscheidungen.</li><li>diversifiziert über aktien-, rohstoff- und krypto-märkte.</li><li>voll transparent — jede handlung ist bei wikifolio nachvollziehbar.</li></ul><p class="attrib">daten &amp; performance · <a href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">wikifolio</a></p></div>
+  </div>
+</section>
+
 <section class="tab sub" id="news">
   <div class="topvid" aria-hidden="true">
     <video autoplay muted loop playsinline preload="metadata">
@@ -819,7 +878,7 @@ document.querySelectorAll('.stage video,.topvid video').forEach(v => {
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
 
-const TITLES = {home:'malou trading', about:'team · malou trading', zitate:'idee · malou trading', long:'long · malou trading', wiki:'wiki · malou trading'};
+const TITLES = {home:'malou trading', about:'team · malou trading', zitate:'idee · malou trading', trade:'trade · malou trading', news:'news · malou trading', long:'long · malou trading', wiki:'wiki · malou trading'};
 function show(id, push){
   if (!document.getElementById(id)) id = 'home';
   document.querySelectorAll('main .tab').forEach(s => s.classList.remove('show'));
