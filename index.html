@@ -583,12 +583,12 @@ footer{position:relative;z-index:1}
   background:color-mix(in srgb,var(--holz) 8%,transparent)}
 .wx[hidden]{display:none}
 
-#about,#trade,#idee{position:relative}
+#about,#idee{position:relative}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
 .tabbg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,
   color-mix(in srgb,var(--marine) 58%,transparent),color-mix(in srgb,var(--marine) 80%,transparent))}
-#about .wrap,#trade .wrap,#idee .wrap{position:relative;z-index:1}
+#about .wrap,#idee .wrap{position:relative;z-index:1}
 
 .song-title{font-family:var(--serif);font-weight:400;font-size:1.02rem;line-height:1.25;margin:.95rem 0 .12rem;
   text-transform:none;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
@@ -638,7 +638,6 @@ footer{position:relative;z-index:1}
   transform:translate(-50%,-50%) rotate(45deg);background:linear-gradient(135deg,#e6c48c,#7a512b);box-shadow:0 0 0 3px var(--marine)}
 .long-thesis .name{border:0;padding:0;width:auto;margin:0 auto;font-family:var(--serif);font-style:italic;font-weight:400;
   text-transform:none;letter-spacing:.01em;font-size:clamp(2rem,4.2vw,3rem);color:#d3aa72}
-#trade .tabbg::after{background:linear-gradient(180deg,color-mix(in srgb,var(--marine) 42%,transparent),color-mix(in srgb,var(--marine) 68%,transparent))}
 @media(prefers-reduced-motion:reduce){.cur{display:none}}
 </style>
 </head>
@@ -696,10 +695,11 @@ footer{position:relative;z-index:1}
 
 <!-- === Unterseite - schmales Video oben, darunter der Inhalt === -->
 <section class="tab sub" id="trade">
-  <div class="tabbg" aria-hidden="true">
+  <div class="topvid" aria-hidden="true">
     <video autoplay muted loop playsinline preload="none">
       <source src="shortVids/lnd.mp4" type="video/mp4">
     </video>
+    <i class="tint"></i>
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--gold)"><span class="rib-kicker keepcase">Der Realitaetstest</span><h2 class="rib-title keepcase">trade</h2></div>
@@ -727,7 +727,7 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal idee-wrap">
-    <div class="rib-intro" style="--accent:var(--tuerkis)"><span class="rib-kicker keepcase">Wieso, weshalb, warum?</span><h2 class="rib-title keepcase">idee</h2></div>
+    <div class="rib-intro" style="--accent:var(--tuerkis)"><h2 class="rib-title keepcase">idee</h2></div>
     <div class="zitat"><p class="zitat-line">"Never lie to yourself." <span class="zitat-author">- Eliud Kipchoge</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">"Ich habe den Ball, ich passe den Ball." <span class="zitat-author">- Pep Guardiola</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">"Everybody gets what they want out of the market." <span class="zitat-author">- Ed Seykota</span></p><hr class="zitat-rule"></div>
@@ -743,7 +743,7 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--gold)" data-ghost="ORCHESTER"><span class="rib-kicker keepcase">Das Orchester</span><h2 class="rib-title keepcase">team</h2><p class="rib-lead">wir machen code, designs &amp; investments</p><p class="rib-lead rib-est keepcase">malou trading - est. 2024</p><div class="wx keepcase" id="wx" hidden></div></div>
+    <div class="rib-intro" style="--accent:var(--gold)"><h2 class="rib-title keepcase">team</h2><p class="rib-lead">wir machen code, designs &amp; investments</p><p class="rib-lead rib-est keepcase">malou trading - est. 2024</p><div class="wx keepcase" id="wx" hidden></div></div>
     <div class="member">
       <figure class="portrait noimg">
         <picture>
@@ -850,6 +850,11 @@ footer{position:relative;z-index:1}
     <p>Alle Inhalte dieser Website dienen der Dokumentation und Information.
     Sie stellen keine Anlageberatung und keine Aufforderung zum Kauf oder
     Verkauf von Finanzinstrumenten dar.</p>
+    <h3>Quellen und Nachweise</h3>
+    <p>Wetterdaten: Open-Meteo.com, Lizenz CC BY 4.0. Kurse und Charts:
+    TradingView. Musiktitel: Einbindung ueber Spotify; die Rechte an Musik und
+    Titelbildern liegen bei den jeweiligen Rechteinhabern. Schrift: EB Garamond
+    (SIL Open Font License).</p>
   </div>
 </section>
 
