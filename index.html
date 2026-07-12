@@ -264,14 +264,41 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
   height:2px;border-radius:2px;opacity:.9;
   background:linear-gradient(90deg,transparent,#1DB954,#5fe39b,#1DB954,transparent);
   background-size:230% 100%;animation:zsheen 14s linear infinite}
-.tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem;margin:0;direction:rtl}
-.track{direction:ltr;min-width:0}
-.track iframe{display:block;width:100%;height:152px;border:0;border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,.28)}
-.track-empty{display:flex;align-items:center;justify-content:center;height:152px;border-radius:12px;
-  border:1px dashed var(--line);color:var(--muted);font-style:italic;text-transform:none;
-  background:var(--card)}
-@media(max-width:720px){.tracks{grid-template-columns:1fr;direction:ltr}}
+picture{display:contents}
+.song-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.7rem;margin:0}
+.song-card{position:relative;display:flex;flex-direction:column;overflow:hidden;
+  padding:1.55rem 1.5rem 1.4rem;border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 22%,var(--line));
+  background:linear-gradient(168deg,color-mix(in srgb,var(--accent,var(--gold)) 9%,var(--card)),var(--card) 62%);
+  box-shadow:0 12px 34px rgba(0,0,0,.28);
+  transition:transform .45s cubic-bezier(.2,.7,.3,1),box-shadow .45s,border-color .45s}
+.song-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--accent,var(--gold)),transparent)}
+.song-card:hover{transform:translateY(-5px);
+  border-color:color-mix(in srgb,var(--accent,var(--gold)) 55%,var(--line));
+  box-shadow:0 20px 48px color-mix(in srgb,var(--accent,var(--gold)) 20%,rgba(0,0,0,.34))}
+.song-wm{position:absolute;top:-.5rem;right:.5rem;font-family:var(--serif);font-size:5.4rem;
+  line-height:1;color:var(--accent,var(--gold));opacity:.07;pointer-events:none;user-select:none}
+.song-no{font-family:var(--serif);font-size:.82rem;letter-spacing:.22em;
+  color:var(--accent,var(--gold));text-transform:none}
+.song-tag{display:block;margin:.55rem 0 0;font-style:italic;font-size:.72rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--muted)}
+.song-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.35rem,2.5vw,1.85rem);
+  line-height:1.12;margin:.35rem 0 .12rem;text-transform:none}
+.song-artist{color:var(--silber);font-style:italic;text-transform:none;font-size:.98rem;margin:0}
+.song-note{color:var(--muted);font-style:italic;text-transform:none;font-size:.9rem;line-height:1.55;
+  margin:.75rem 0 1.15rem}
+.song-embed{margin-top:auto;border-radius:12px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.3)}
+.song-embed iframe{display:block;width:100%;height:152px;border:0}
+.song-empty{display:flex;align-items:center;justify-content:center;height:152px;
+  border:1px dashed var(--line);color:var(--muted);font-style:italic;text-transform:none;background:var(--card)}
+.spotify-foot{margin:1.9rem 0 0;text-align:center}
+.spotify-me{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;
+  font-style:italic;font-size:.86rem;text-transform:none;padding:.5rem .95rem;border-radius:999px;
+  border:1px solid transparent;transition:color .3s,border-color .3s}
+.spotify-me svg{width:16px;height:16px}
+.spotify-me:hover{color:#1DB954;border-color:color-mix(in srgb,#1DB954 40%,transparent)}
+@media(max-width:900px){.song-grid{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
 
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem;margin:0;position:relative;
   left:50%;transform:translateX(-50%);width:min(1180px,94vw)}
@@ -331,6 +358,23 @@ section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
 .wiki-tag{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.05rem,2.2vw,1.3rem);margin:1rem auto 2rem;max-width:52ch}
 .wiki-cta{display:inline-block;background:var(--tuerkis);color:var(--marine);text-decoration:none;padding:.95rem 2.2rem;border-radius:999px;font-style:italic;font-size:1.05rem;transition:transform .3s,box-shadow .3s}
 .wiki-cta:hover{transform:translateY(-2px);color:var(--marine);box-shadow:0 10px 30px color-mix(in srgb,var(--tuerkis) 40%,transparent)}
+.rib-intro{text-align:center;max-width:var(--wt);margin:0 auto clamp(2.6rem,5vw,3.8rem)}
+.rib-kicker{display:block;font-style:italic;font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 .8rem}
+.rib-title{font-size:clamp(2.4rem,6vw,3.6rem);margin:0}
+.rib-title::after{margin-left:auto;margin-right:auto}
+.rib-lead{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.05rem,2.2vw,1.3rem);margin:1rem auto 0;max-width:52ch}
+.member-invite{text-transform:none;font-style:italic;color:var(--silber);margin:.4rem 0 0;max-width:46ch}
+.homage{display:flex;flex-direction:column;align-items:center;text-align:center;
+  max-width:var(--wt);margin:3.6rem auto 0;padding:3rem 0 0;border-top:1px solid var(--line)}
+.homage-portrait{width:150px;height:150px;border-radius:50%;overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);
+  box-shadow:0 14px 36px rgba(0,0,0,.32),0 0 0 6px color-mix(in srgb,var(--gold) 7%,transparent)}
+.homage-portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.homage-kicker{display:block;margin:1.4rem 0 .35rem;font-style:italic;font-size:.72rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.1rem);margin:0}
+.homage-say{max-width:46ch;margin:1rem auto 0;color:var(--silber);font-style:italic;
+  text-transform:none;line-height:1.7;font-size:1rem}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin:4.5rem 0 0}
 .kpi{padding:1.7rem 1.2rem;text-align:center;border:1px solid var(--line);border-top:2px solid var(--accent,var(--gold));border-radius:var(--r);background:linear-gradient(160deg,color-mix(in srgb,var(--tuerkis) 5%,var(--card)),var(--card))}
 .kpi-v{display:block;font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);color:var(--ink)}
@@ -520,6 +564,7 @@ footer button:hover::after{transform:scaleX(1)}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
+    <div class="rib-intro" style="--accent:var(--kupfer)"><span class="rib-kicker keepcase">täglicher lagebericht</span><h2 class="rib-title keepcase">news</h2><p class="rib-lead">ein beispielreport: nachrichten, ruhig eingeordnet und kritisch geprüft.</p></div>
     <div class="rep-abo"><p class="rep-note">Interesse am täglichen Lagebericht?</p><a class="rep-cta" href="mailto:maloutrading@web.de">anmelden →</a></div><div class="rep-tag">beispielreport</div><div class="report-block"><div class="rep-col"><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">1</span>DNA-Chip schreibt Erbgut</h4><p>Ein Team am Karolinska-Institut baut einen Silizium-Chip, der Dutzende DNA-Stränge zugleich schreibt, allein mit Strom und wasserlöslichen Enzymen.</p><p class="art-ctx">DNA speichert Daten millionenfach dichter als jede Festplatte und hält Jahrtausende. Ein tragbarer Schreiber holt das aus dem Reinraum-Labor in Richtung Alltag — und macht den Bauplan des Lebens zur beschreibbaren Ware.</p><p class="art-src">— Karolinska Institutet</p></article><article class="art" style="--accent:var(--tuerkis)"><h4><span class="art-num">2</span>EU-Regeln bremsen Siri</h4><p>Apple verschiebt neue Sprachassistenz-Funktionen in der EU und nennt das Gesetz über digitale Märkte als Grund.</p><p class="art-ctx">Der Streit klärt eine unbequeme Frage: Kostet Europas Offenheit den Preis, dass neue Technik hier später ankommt? Jede große Plattform beobachtet, ob sich Verzögerung als Druckmittel gegen Regulierung auszahlt.</p><p class="art-src">— Reuters</p></article><article class="art" style="--accent:var(--kupfer)"><h4><span class="art-num">3</span>Pestizid trifft Hummeln im Erbgut</h4><p>Der als sicher geltende Neonikotinoid-Nachfolger Sulfoxaflor stört laut einer Studie schon in Kleinstdosen die Fortpflanzung von Hummeln.</p><p class="art-ctx">Bestäuber sind die stille Infrastruktur der Landwirtschaft. Trägt der Ersatzstoff denselben Schaden unter neuem Namen, verteuert sich Nahrung, lange bevor jemand die Ursache benennt.</p><p class="art-src">— Nature</p></article><article class="art" style="--accent:var(--holz)"><h4><span class="art-num">4</span>Vereinte Nationen ordnen KI</h4><p>In Genf startet ein gemeinsames Gremium von Vereinten Nationen und Fernmeldeunion, das erstmals globale Leitplanken für künstliche Intelligenz erarbeiten soll.</p><p class="art-ctx">Die Weltregionen schreiben gerade unvereinbare KI-Regelbücher. Wer zuerst einen Standard setzt, prägt ihn für alle anderen — der Genfer Tisch kommt spät zu einem Rennen, das längst läuft.</p><p class="art-src">— United Nations</p></article><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">5</span>Atlantikströmung stabiler als gedacht</h4><p>Neue Messreihen zur großen Atlantik-Umwälzung finden neben Zeichen der Schwächung auch überraschende Stabilität.</p><p class="art-ctx">Die Strömung hält Europas Winter mild und galt als kippgefährdet. Ist die Datenlage uneiniger als gedacht, verschiebt das eine der lautesten Kipppunkt-Erzählungen der letzten Jahre.</p><p class="art-src">— Woods Hole Oceanographic Institution</p></article><div class="facts"><h3>✦ fakten &amp; relationen</h3><ul><li>Ein einziges Gramm DNA fasst mehr Daten, als alle Festplatten eines durchschnittlichen Menschenlebens je speichern — die dichteste bekannte Form, Information zu bewahren. <span>(European Bioinformatics Institute)</span></li><li>Rund drei Viertel der wichtigsten Nahrungspflanzen hängen von tierischer Bestäubung ab; ohne Bienen und Hummeln bricht ein großer Teil dessen weg, was auf dem Teller landet. <span>(IPBES)</span></li><li>Die Atlantik-Umwälzung verschiebt so viel Wärme, dass London deutlich milder bleibt als Städte auf gleicher Breite im kanadischen Osten — eine unsichtbare Heizung von kontinentalem Ausmaß. <span>(Woods Hole Oceanographic Institution)</span></li></ul></div><div class="rep-sec" style="--accent:var(--tuerkis)"><h3>✎ kritisch gedacht</h3><p>Die Meldung zum DNA-Chip (1) verführt zur Basisraten-Vernachlässigung: dem Reflex, von einem Laborerfolg auf den nahen Alltag zu schließen. Die allermeisten solchen Durchbrüche versanden still auf dem langen Weg aus dem Labor, und über dieses Versanden berichtet niemand. Frag bei jeder Aufbruch-Meldung: Wie viele ähnliche Ankündigungen der letzten Jahre haben es wirklich bis zum Menschen geschafft?</p></div><div class="essay"><h3>⚛ Fourier-Analyse</h3><p>Die Fourier-Analyse ist der Beweis, dass sich jeder noch so wirre Klang aus reinen, einfachen Tönen zusammensetzt — wie sich weißes Licht im Prisma in seine Farben zerlegt. Ein Meeresrauschen, ein Orchester, ein Erdbeben: Alles lässt sich in eine Handvoll verborgener Schwingungen auflösen, jede mit ihrer eigenen Höhe und Stärke. Der geniale Kern ist, dass komplizierte Wirklichkeit nicht kompliziert bleiben muss, wenn man die richtige Sprache findet, sie zu beschreiben. Heute steckt dieses Prinzip in jedem Handy: Es zerlegt deine Stimme in Frequenzen, wirft die unhörbaren weg und funkt nur den Rest — so passt ein Gespräch durch eine schmale Leitung. Auch die Klimaforscher aus Meldung 5 suchen in verrauschten Meeresdaten nach solchen verborgenen Rhythmen. Was chaotisch aussieht, ist oft nur eine Summe einfacher Wellen, die niemand einzeln bemerkt hat.</p></div><div class="rep-sec" style="--accent:var(--kupfer)"><h3>⚑ strittige these</h3><p class="these-claim">Die größte Gefahr der künstlichen Intelligenz ist nicht, dass Maschinen zu klug werden, sondern dass wir aufhören, selbst zu denken.</p><p>Die Debatte starrt auf ferne Szenarien einer überlegenen Maschine, doch der wirkliche Wandel läuft leise und schon jetzt: Wer Antworten per Knopfdruck bekommt, übt das mühsame Selberdenken seltener, und was man nicht übt, verkümmert — vom Kopfrechnen bis zum Orientierungssinn. Eine Gesellschaft, die ihr Urteil auslagert, wird nicht durch einen Aufstand der Maschinen verwundbar, sondern durch die eigene Bequemlichkeit.</p><p class="these-contra">dagegen spricht: Jede Technik vom Buchdruck bis zum Taschenrechner galt einmal als geistiger Verfall — und jedes Mal verlagerte sich das Denken nur auf eine höhere Ebene, statt zu verschwinden.</p></div><div class="rep-sec" style="--accent:var(--gold)"><h3>◔ prognosemarkt</h3><p>Von drei politischen Märkten sticht einer heraus: Die Wahrscheinlichkeit einer Waffenruhe in einem laufenden Konflikt ist binnen zwanzig Tagen von 31 auf 58 Prozent gesprungen. Die Menge reagierte auf diplomatische Signale, die in den großen Schlagzeilen erst Tage später auftauchten — ein Lehrstück dafür, wie Wettmärkte gelegentlich schneller sind als die Redaktionen. Sichtbar wird zugleich der Herdentrieb: Der stärkste Sprung kam nicht mit der Nachricht selbst, sondern als die Menge sah, dass alle anderen schon kauften.</p></div><div class="rep-sec" style="--accent:var(--holz)"><h3>↗ im aufwind</h3><p>Die Wikipedia-Aufrufe zum Stichwort Perowskit-Solarzelle schnellen seit gestern nach oben. Auslöser ist eine neue Studie, die für diese Dünnschicht-Zellen einen Wirkungsgrad nahe dem theoretischen Limit meldet. Perowskite gelten als billiger und flexibler als klassisches Silizium; die Aufmerksamkeit zeigt, dass die Öffentlichkeit eine mögliche Wende in der Solartechnik ahnt, bevor die Massenmedien sie ausrufen.</p></div><div class="poem"><span class="mark">❦</span>Der Mensch beschreibt das Leben Korn für Korn,<br>misst Meer und Klang und lagert aus sein Denken;<br>er baut sich Werkzeug, kühl und auserkorn,<br>und muss doch selbst die eigne Hand noch lenken.<br>Im Zweifel, sieh, glimmt still ein Morgenrot.<hr></div></div></div>
   </div>
 </section>
@@ -532,6 +577,7 @@ footer button:hover::after{transform:scaleX(1)}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
+    <div class="rib-intro" style="--accent:var(--holz)"><span class="rib-kicker keepcase">langfristige positionen</span><h2 class="rib-title keepcase">long</h2><p class="rib-lead">überzeugungen mit zeithorizont — ideen, die wir über jahre halten.</p></div>
     <div class="longs"><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=TVC%3AGOLD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">gold</span><span class="claim keepcase">Längster Track-Record</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=COINBASE%3AZECUSD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">zcash</span><span class="claim keepcase">Privatsphäre könnte schwierig werden</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=OKX%3AHYPEUSDT&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">hyperliquid</span><span class="claim keepcase">Schaut gut aus</span></div></div></div><p class="attrib">kurse &amp; charts · <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a></p>
   </div>
 </section>
@@ -556,11 +602,12 @@ footer button:hover::after{transform:scaleX(1)}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal zitate-wrap">
-    <div class="gallery"><figure class="g0"><img src="pics/pic0.jpeg" alt="" loading="lazy" decoding="async"></figure><figure class="g1"><img src="pics/pic1.jpeg" alt="" loading="lazy" decoding="async"></figure><figure class="g2"><img src="pics/pic2.jpeg" alt="" loading="lazy" decoding="async"></figure></div>
+    <div class="rib-intro" style="--accent:var(--tuerkis)"><span class="rib-kicker keepcase">was uns leitet</span><h2 class="rib-title keepcase">idee</h2><p class="rib-lead">unsere haltung in bildern, zitaten und klängen.</p></div>
+    <div class="gallery"><figure class="g0"><picture><source srcset="pics/pic0.webp" type="image/webp"><img src="pics/pic0.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g1"><picture><source srcset="pics/pic1.webp" type="image/webp"><img src="pics/pic1.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g2"><picture><source srcset="pics/pic2.webp" type="image/webp"><img src="pics/pic2.jpeg" alt="" loading="lazy" decoding="async"></picture></figure></div>
     <div class="zitat"><p class="zitat-line">„Never lie to yourself.“ <span class="zitat-author">— Eliud Kipchoge</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Ich habe den Ball, ich passe den Ball.“ <span class="zitat-author">— Pep Guardiola</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">„Everybody gets what they want out of the market.“ <span class="zitat-author">— Ed Seykota</span></p><hr class="zitat-rule"></div>
-    <div class="showcase spotify-box"><div class="tracks"><div class="track"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/1tXOHminAM6mmFsEsosfb5?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div><div class="track"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/6QHYEZlm9wyfXfEM1vSu1P?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div><div class="track"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/04ZstZIjwSRoXAGix50GPT?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div></div>
+    <div class="showcase spotify-box"><div class="song-grid"><article class="song-card" style="--accent:var(--gold)"><span class="song-wm" aria-hidden="true">01</span><span class="song-no keepcase">n°01</span><span class="song-tag">deep house · paris</span><h3 class="song-title keepcase">L'hiver</h3><p class="song-artist keepcase">Tour-Maubourg</p><p class="song-note">weite flächen, leiser puls — deep house für den langen atem.</p><div class="song-embed"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/2a5u4ZejTXWuKefIwVt420?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></article><article class="song-card" style="--accent:var(--tuerkis)"><span class="song-wm" aria-hidden="true">02</span><span class="song-no keepcase">n°02</span><span class="song-tag">house · groove</span><h3 class="song-title keepcase">Our Smoother Part</h3><p class="song-artist keepcase">Le Hutin</p><p class="song-note">warm und rund, ein groove, der geduldig trägt.</p><div class="song-embed"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/4S8ixccYDPJJD4vPthHg5f?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></article><article class="song-card" style="--accent:var(--kupfer)"><span class="song-wm" aria-hidden="true">03</span><span class="song-no keepcase">n°03</span><span class="song-tag">hip-hop · feat. eearz</span><h3 class="song-title keepcase">Emotions Unlocked</h3><p class="song-artist keepcase">Mike WiLL Made-It</p><p class="song-note">roher gegenpol — energie, wenn der fokus kippen soll.</p><div class="song-embed"><iframe loading="lazy" data-src="https://open.spotify.com/embed/track/7BBabm9KfG4w7huuwmEMAs?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></article></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>auf spotify folgen · @benny.suermann</a></div></div>
   </div>
 </section>
 
@@ -572,11 +619,16 @@ footer button:hover::after{transform:scaleX(1)}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
+    <div class="rib-intro" style="--accent:var(--gold)"><span class="rib-kicker keepcase">wer dahintersteht</span><h2 class="rib-title keepcase">team</h2><p class="rib-lead">wir machen investments, code und design — malou trading ist ein kleines, unabhängiges projekt, das diese drei welten ruhig zusammenführt.</p></div>
     <div class="member">
       <figure class="portrait noimg">
-        <img src="pics/about.jpg" alt="benjamin suermann"
-             onload="this.closest('.portrait').classList.remove('noimg')"
-             onerror="this.remove()">
+        <picture>
+          <source srcset="pics/about.webp" type="image/webp">
+          <img src="pics/about.jpg" alt="benjamin suermann" width="480" height="600"
+               loading="lazy" decoding="async"
+               onload="this.closest('.portrait').classList.remove('noimg')"
+               onerror="this.remove()">
+        </picture>
         <span class="mono">bs</span>
       </figure>
       <div class="about-text">
@@ -598,9 +650,13 @@ footer button:hover::after{transform:scaleX(1)}
 
     <div class="member">
       <figure class="portrait noimg">
-        <img src="pics/claude.jpg" alt="claude"
-             onload="this.closest('.portrait').classList.remove('noimg')"
-             onerror="this.remove()">
+        <picture>
+          <source srcset="pics/claude.webp" type="image/webp">
+          <img src="pics/claude.jpg" alt="claude" width="480" height="600"
+               loading="lazy" decoding="async"
+               onload="this.closest('.portrait').classList.remove('noimg')"
+               onerror="this.remove()">
+        </picture>
         <span class="mono">c</span>
       </figure>
       <div class="about-text">
@@ -613,6 +669,44 @@ footer button:hover::after{transform:scaleX(1)}
         </div>
       </div>
     </div>
+
+    <div class="member">
+      <figure class="portrait noimg">
+        <picture>
+          <source srcset="pics/hom.webp" type="image/webp">
+          <img src="pics/hom.jpg" alt="du?" width="480" height="600"
+               loading="lazy" decoding="async"
+               onload="this.closest('.portrait').classList.remove('noimg')"
+               onerror="this.remove()">
+        </picture>
+        <span class="mono">du</span>
+      </figure>
+      <div class="about-text">
+        <h3 class="keepcase">Du?</h3>
+        <p class="member-say keepcase">„Hier könnte dein Platz sein.“</p>
+        <p class="member-invite keepcase">Wenn du dich für Finanzen und IT begeisterst, freuen wir uns über deine Bewerbung.</p>
+        <div class="socials" aria-label="bewerbung">
+          <a href="mailto:maloutrading&#64;web.de" aria-label="bewerbung per e-mail">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.2.5 7.8 6 7.8-6H4.2ZM20 7.7l-8 6.1-8-6.1V18h16V7.7Z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <figure class="homage">
+      <div class="homage-portrait">
+        <picture>
+          <source srcset="pics/malou.webp" type="image/webp">
+          <img src="pics/malou.jpeg" alt="malou" width="768" height="1024" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <figcaption class="homage-text">
+        <span class="homage-kicker keepcase">namensgeberin</span>
+        <h3 class="homage-name keepcase">Malou</h3>
+        <p class="homage-say keepcase">Ruhe, Geduld und ein wacher Blick — wofür ihr Name steht,
+        ist auch, wie wir investieren wollen. Danke, dass du uns deinen Namen leihst.</p>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -693,7 +787,8 @@ footer button:hover::after{transform:scaleX(1)}
     <span class="links">
       <button onclick="show('impressum')">impressum</button> ·
       <button onclick="show('datenschutz')">datenschutz</button>
-      <img class="sig" src="pics/syl.jpeg" alt="" aria-hidden="true">
+      <picture><source srcset="pics/syl.webp" type="image/webp">
+        <img class="sig" src="pics/syl.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async"></picture>
     </span>
   </div>
 </footer>
