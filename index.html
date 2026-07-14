@@ -42,7 +42,6 @@ html{scroll-behavior:smooth;
   box-shadow:0 0 8px var(--gold-line);transition:width .12s linear}
 body.home .progress{opacity:0}
 
-
 .stage .corner{position:absolute;width:24px;height:24px;z-index:3;pointer-events:none;
   border:0 solid var(--gold-line);opacity:.85}
 .stage .corner.tl{top:1.1rem;left:1.1rem;border-top-width:1px;border-left-width:1px}
@@ -75,7 +74,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
   display:inline-block}
 
 #team{--accent:var(--holz)}
-#idea{--accent:var(--gold)}
 #trade{--accent:var(--tuerkis)}
 #news{--accent:var(--kupfer)}
 #news .wrap{max-width:1280px}
@@ -174,7 +172,6 @@ main section.tab.show{display:block}
 .crop .bl{bottom:16px;left:16px;border-bottom-width:1px;border-left-width:1px}
 .crop .br{bottom:16px;right:16px;border-bottom-width:1px;border-right-width:1px}
 .reveal.in h2::after{transform:scaleX(1)}
-.reveal.in .zitat-rule{transform:scaleX(1)}
 
 .landing .stage::after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,var(--marine) 0%,transparent 15%),
@@ -192,7 +189,6 @@ main section.tab.show{display:block}
 
 section.tab.sub{padding:0 0 7.5rem}
 section.tab.sub .wrap{padding-top:clamp(4.4rem,7.5vw,7rem)}
-#idea .wrap{padding-top:clamp(4.4rem,7.5vw,7rem)}
 
 section.tab.sub h2::after{content:"";display:block;width:2.4rem;height:3px;
   margin-top:.5rem;border-radius:2px;background:var(--accent,var(--gold));
@@ -223,95 +219,7 @@ ul.posts .date{font-style:italic;font-size:.82rem;letter-spacing:.06em;
 .legal h3{margin-top:2rem;color:var(--silber);text-transform:none}
 .legal p,.legal li{text-transform:none}
 section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
-
-.zitat{padding:5rem 0 0;display:flex;flex-direction:column;align-items:center;text-align:center}
-.rib-intro+.zitat{padding-top:0}
-#idea .idea-wrap>.tag{margin-bottom:1.4rem}
-.zitat-line{font-family:var(--body);font-weight:300;font-synthesis:none;font-style:italic;color:var(--ink);
-  text-transform:none;font-size:clamp(1.2rem,2.3vw,1.55rem);line-height:1.35;margin:0}
-.zitat-author{text-transform:none;color:var(--muted);font-style:italic;font-weight:300;
-  font-size:.85em;white-space:nowrap}
-/* vintage divider - warm metallic sheen with a centered diamond ornament */
-.zitat-rule{position:relative;border:0;height:1px;width:min(460px,84%);margin:1.8rem auto 0;border-radius:2px;opacity:.95;
-  background:linear-gradient(90deg,transparent,
-    color-mix(in srgb,var(--kupfer) 60%,transparent),var(--gold),
-    color-mix(in srgb,var(--weiss) 80%,var(--gold)),var(--gold),
-    color-mix(in srgb,var(--kupfer) 60%,transparent),transparent);
-  background-size:230% 100%;animation:zsheen 16s linear infinite;
-  transform:scaleX(1);transform-origin:center;
-  box-shadow:0 1px 6px color-mix(in srgb,var(--gold) 22%,transparent)}
-.zitat-rule::after{content:"";position:absolute;left:50%;top:50%;
-  width:7px;height:7px;transform:translate(-50%,-50%) rotate(45deg);
-  background:linear-gradient(135deg,var(--weiss),var(--gold) 55%,var(--kupfer));
-  box-shadow:0 0 0 3px var(--bg,#12102a),0 2px 8px color-mix(in srgb,var(--gold) 40%,transparent)}
-@keyframes zsheen{from{background-position:0 0}to{background-position:-230% 0}}
-
-.showcase{position:relative;margin:11rem 0 0;padding:clamp(1.6rem,3.2vw,2.8rem);
-  border-radius:calc(var(--r) + 4px);border:1px solid color-mix(in srgb,var(--line) 60%,transparent);
-  background:color-mix(in srgb,var(--card) 55%,transparent);
-  box-shadow:0 16px 44px rgba(0,0,0,.2)}
-.showcase.spotify-box{border-color:color-mix(in srgb,#1DB954 45%,var(--line));
-  box-shadow:0 16px 44px rgba(0,0,0,.2),0 0 0 1px color-mix(in srgb,#1DB954 20%,transparent),
-    0 0 26px color-mix(in srgb,#1DB954 12%,transparent)}
-.showcase.spotify-box::before{content:"";position:absolute;top:0;left:clamp(1.6rem,3.2vw,2.8rem);right:clamp(1.6rem,3.2vw,2.8rem);
-  height:2px;border-radius:2px;opacity:.9;
-  background:linear-gradient(90deg,transparent,#1DB954,#5fe39b,#1DB954,transparent);
-  background-size:230% 100%;animation:zsheen 14s linear infinite}
 picture{display:contents}
-.song-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.8rem,3.4vw,2.8rem);margin:0}
-.song-card{display:flex;flex-direction:column;text-align:center}
-.song-cover{position:relative;display:block;aspect-ratio:1;border-radius:14px;overflow:hidden;
-  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 30%,var(--line));
-  box-shadow:0 14px 38px rgba(0,0,0,.32);
-  transition:transform .45s cubic-bezier(.2,.7,.3,1),box-shadow .45s,border-color .45s}
-.song-art{width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform .7s cubic-bezier(.2,.7,.3,1)}
-.song-cover:hover{transform:translateY(-5px);
-  border-color:color-mix(in srgb,var(--accent,var(--gold)) 62%,var(--line));
-  box-shadow:0 22px 52px color-mix(in srgb,var(--accent,var(--gold)) 22%,rgba(0,0,0,.4))}
-.song-cover:hover .song-art{transform:scale(1.06)}
-.song-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;
-  background:color-mix(in srgb,var(--marine) 42%,transparent);transition:opacity .4s}
-.song-cover:hover .song-play,.song-cover:focus-visible .song-play{opacity:1}
-.song-play svg{width:48px;height:48px;color:#1DB954;filter:drop-shadow(0 4px 14px rgba(0,0,0,.55))}
-.song-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.2rem,2.3vw,1.55rem);
-  line-height:1.15;margin:1.15rem 0 .18rem;text-transform:none}
-.song-artist{color:var(--silber);font-style:italic;text-transform:none;font-size:1rem;margin:0}
-.spotify-foot{margin:2.4rem 0 0;text-align:center}
-.spotify-me{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;
-  font-style:italic;font-size:1.02rem;text-transform:none;padding:.55rem 1.1rem;border-radius:999px;
-  border:1px solid transparent;transition:color .3s,border-color .3s}
-.spotify-me svg{width:16px;height:16px}
-.spotify-me:hover{color:#1DB954;border-color:color-mix(in srgb,#1DB954 40%,transparent)}
-@media(max-width:900px){.song-grid{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
-
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2.8rem;margin:clamp(4rem,8vw,7rem) 0 0;position:relative;
-  left:50%;transform:translateX(-50%);width:min(1180px,94vw)}
-/* dark brushed-grey glossy frame, dynamic modern lift */
-.gallery figure{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;border-radius:16px;padding:12px;
-  background:linear-gradient(150deg,#43434e,#191921 42%,#2b2b35 68%,#121217);
-  box-shadow:0 28px 62px rgba(0,0,0,.52),
-    inset 0 1px 0 color-mix(in srgb,#fff 15%,transparent),
-    inset 0 -2px 7px rgba(0,0,0,.55);
-  transition:transform .55s cubic-bezier(.2,.7,.3,1),box-shadow .55s;will-change:transform}
-.gallery img{display:block;width:100%;height:100%;object-fit:cover;border-radius:8px;
-  box-shadow:0 6px 20px rgba(0,0,0,.5),0 0 0 1px rgba(0,0,0,.55);
-  transition:transform .7s cubic-bezier(.2,.7,.3,1)}
-.gallery figure::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:16px;
-  background:linear-gradient(125deg,rgba(255,255,255,.16) 0%,transparent 32%,transparent 66%,rgba(255,255,255,.07) 100%);
-  opacity:.65;transition:opacity .55s}
-.gallery figure:hover{transform:translateY(-12px) scale(1.02);
-  box-shadow:0 44px 88px rgba(0,0,0,.6),
-    inset 0 1px 0 color-mix(in srgb,#fff 22%,transparent),
-    0 0 0 1px color-mix(in srgb,var(--gold) 32%,transparent),
-    0 0 40px color-mix(in srgb,var(--gold) 16%,transparent)}
-.gallery figure:hover img{transform:scale(1.07)}
-.gallery figure:hover::after{opacity:1}
-@media(max-width:640px){
-  .gallery{grid-template-columns:1fr;gap:1.4rem;width:min(430px,92vw)}
-  .zitat{padding:2.6rem 0 0}
-  .showcase{margin:4.5rem 0 0}
-}
 
 .longs{display:flex;flex-direction:column;gap:3.4rem;margin:2.6rem 0 0;position:relative;
   left:50%;transform:translateX(-50%);width:min(1380px,94vw)}
@@ -320,13 +228,6 @@ picture{display:contents}
   border:1px solid var(--line);overflow:hidden;
   background:linear-gradient(165deg,color-mix(in srgb,var(--accent,var(--gold)) 6%,var(--card)),var(--card));
   box-shadow:0 28px 64px rgba(0,0,0,.34)}
-.long-idea::before{content:"";position:absolute;top:0;left:clamp(2rem,4vw,3.4rem);right:clamp(2rem,4vw,3.4rem);
-  height:2px;border-radius:2px;opacity:.85;
-  background:linear-gradient(90deg,transparent,var(--silber),var(--weiss),var(--accent,var(--gold)),
-    var(--weiss),var(--silber),transparent);
-  background-size:230% 100%;animation:zsheen 14s linear infinite}
-.long-idea::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(135deg,color-mix(in srgb,var(--weiss) 6%,transparent),transparent 38%)}
 .long-chart{position:relative;padding:6px;border-radius:13px;z-index:1;
   border:1px solid color-mix(in srgb,var(--silber) 34%,var(--line));
   background:linear-gradient(150deg,color-mix(in srgb,var(--weiss) 8%,var(--card)),var(--card));
@@ -359,7 +260,7 @@ picture{display:contents}
 .rib-kicker{display:block;font-style:italic;font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 .8rem}
 .rib-title{font-size:clamp(2.4rem,6vw,3.6rem);margin:0}
 .rib-title::after{margin-left:auto;margin-right:auto}
-.rib-lead{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.05rem,2.2vw,1.3rem);margin:1rem auto 0;max-width:52ch}
+.rib-lead{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.26rem,2.64vw,1.56rem);margin:1rem auto 0;max-width:52ch}
 .member-invite{text-transform:none;font-style:italic;color:var(--silber);margin:.4rem 0 0;max-width:46ch}
 .homage{display:flex;flex-direction:column;align-items:center;text-align:center;
   max-width:var(--wt);margin:calc(clamp(4.4rem,7vw,6rem) + 2.4cm) auto 0;
@@ -577,44 +478,19 @@ footer{position:relative;z-index:1}
   color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--weiss) 8%,transparent);
   opacity:.6;pointer-events:none;z-index:0}
 .rib-intro>*{position:relative;z-index:1}
-.rib-est{margin-top:.5rem;font-size:.92rem;letter-spacing:.2em;opacity:.82}
-.wx{display:inline-block;margin:1.1rem auto 0;font-style:italic;color:var(--holz);font-size:.92rem;letter-spacing:.12em;
+.rib-est{margin-top:.5rem;font-size:1.1rem;letter-spacing:.2em;opacity:.82}
+.wx{display:inline-block;margin:1.1rem auto 0;font-style:italic;color:var(--holz);font-size:1.1rem;letter-spacing:.12em;
   padding:.34rem .95rem;border:1px solid color-mix(in srgb,var(--holz) 34%,var(--line));border-radius:999px;
   background:color-mix(in srgb,var(--holz) 8%,transparent)}
 .wx[hidden]{display:none}
 
-#team,#idea{position:relative}
+#team{position:relative}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
-#idea .tabbg video{filter:none}
 .tabbg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,
   color-mix(in srgb,var(--marine) 58%,transparent),color-mix(in srgb,var(--marine) 80%,transparent))}
-#team .wrap,#idea .wrap{position:relative;z-index:1}
-
-.song-title{font-family:var(--serif);font-weight:400;font-size:1.02rem;line-height:1.25;margin:.95rem 0 .12rem;
-  text-transform:none;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
-.song-artist{color:var(--silber);font-style:italic;text-transform:none;font-size:.82rem;line-height:1.3;margin:0;overflow-wrap:anywhere}
-.spotify-me{font-size:1.33rem}
-.spotify-me svg{width:21px;height:21px}
+#team .wrap{position:relative;z-index:1}
 .attrib{font-size:1.04rem}
-
-.gallery{align-items:start;gap:clamp(1.4rem,3vw,2.6rem)}
-.gallery figure{position:relative;aspect-ratio:auto;padding:3px;border-radius:9px;overflow:hidden;border:0;
-  background:linear-gradient(135deg,#d0ccd6,#6f5236 26%,#e6e2ea 50%,#5a4026 74%,#bdb8c6);
-  background-size:220% 220%;background-position:0% 0%;
-  box-shadow:0 10px 26px rgba(0,0,0,.42);
-  transition:transform .6s cubic-bezier(.2,.7,.3,1),box-shadow .6s,background-position 1s}
-.gallery .g0{aspect-ratio:4/5;transform:rotate(-1.6deg)}
-.gallery .g1{aspect-ratio:5/7;transform:rotate(1.1deg);margin-top:2.4rem}
-.gallery .g2{aspect-ratio:1/1;transform:rotate(-.7deg);margin-top:1rem}
-.gallery img{border-radius:6px}
-.gallery figure::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:9px;
-  background:linear-gradient(130deg,rgba(255,255,255,.28),transparent 32%,transparent 68%,rgba(255,255,255,.1));
-  opacity:.5;transition:opacity .6s}
-.gallery figure:hover{transform:rotate(0deg) translateY(-9px) scale(1.03);z-index:2;background-position:100% 100%;
-  box-shadow:0 30px 62px rgba(0,0,0,.5),0 0 26px rgba(201,180,130,.28)}
-.gallery figure:hover::after{opacity:.95}
-.gallery figure:hover img{transform:scale(1.05)}
 
 .trade-quotes{display:block;text-align:center;max-width:var(--w);margin:0 auto clamp(1rem,2vw,1.6rem)}
 .trade-quote{display:block;margin:.8rem 0;padding:0;border:0;background:none;border-radius:0;
@@ -623,7 +499,6 @@ footer{position:relative;z-index:1}
 .trade-quote cite{display:inline;margin:0;font-style:italic;color:#c08b52;white-space:nowrap;font-size:.9em}
 .trade-div{position:relative;height:16px;width:min(640px,86%);margin:clamp(4.5rem,9vw,7.5rem) auto}
 .news-quote{text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem)}
-.idea-wrap>.zitat:first-child{padding-top:0}
 .trade-div::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;transform:translateY(-50%);
   background:linear-gradient(90deg,transparent 4%,#6b4a2c 22%,#c99a63 42%,#efd39a 50%,#c99a63 58%,#6b4a2c 78%,transparent 96%)}
 .trade-div::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:11px;
@@ -652,8 +527,6 @@ footer{position:relative;z-index:1}
 .rule-name{margin:.7rem 0 .2rem}
 .long-thesis .name{border:0;padding:0;width:auto;margin:0 auto;font-family:var(--serif);font-style:italic;font-weight:400;
   text-transform:none;letter-spacing:.01em;font-size:clamp(2rem,4.2vw,3rem);color:#d3aa72}
-.song-embed{width:100%;height:152px;border:0;border-radius:12px;display:block;background:var(--grau)}
-@media(max-width:900px){.song-embed{height:80px}}
 @media(prefers-reduced-motion:reduce){.cur{display:none}}
 </style>
 </head>
@@ -674,7 +547,6 @@ footer{position:relative;z-index:1}
   <div class="nav">
     <a class="brand" href="#" onclick="show('home');return false;">malou <em>trading</em></a>
     <nav class="tabs" id="tabs">
-      <button data-t="idea" onclick="show('idea')">idea</button>
       <button data-t="team" onclick="show('team')">team</button>
       <button data-t="news" onclick="show('news')">news</button>
       <button data-t="trade" onclick="show('trade')">trade</button>
@@ -691,7 +563,6 @@ footer{position:relative;z-index:1}
       <div class="left-inner">
         <a class="brand-lg" href="#" onclick="show('home');return false;">malou <em>trading</em></a>
         <nav class="menu">
-          <button onclick="show('idea')">idea</button>
           <button onclick="show('team')">team</button>
           <button onclick="show('news')">news</button>
           <button onclick="show('trade')">trade</button>
@@ -735,21 +606,6 @@ footer{position:relative;z-index:1}
   </div>
 </section>
 
-<section class="tab sub" id="idea">
-  <div class="tabbg" aria-hidden="true">
-    <video autoplay muted loop playsinline preload="none">
-      <source src="shortVids/phyw.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="wrap reveal idea-wrap">
-    <div class="zitat"><p class="zitat-line">"Never lie to yourself." <span class="zitat-author">- Eliud Kipchoge</span></p><hr class="zitat-rule"></div>
-<div class="zitat"><p class="zitat-line">"I have the ball, I pass the ball." <span class="zitat-author">- Pep Guardiola</span></p><hr class="zitat-rule"></div>
-<div class="zitat"><p class="zitat-line">"Everybody gets what they want out of the market." <span class="zitat-author">- Ed Seykota</span></p><hr class="zitat-rule"></div>
-    <div class="showcase spotify-box"><div class="song-grid"><iframe class="song-embed" loading="lazy" data-src="https://open.spotify.com/embed/track/2a5u4ZejTXWuKefIwVt420?utm_source=generator&amp;theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen title="spotify"></iframe><iframe class="song-embed" loading="lazy" data-src="https://open.spotify.com/embed/track/4S8ixccYDPJJD4vPthHg5f?utm_source=generator&amp;theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen title="spotify"></iframe><iframe class="song-embed" loading="lazy" data-src="https://open.spotify.com/embed/track/7BBabm9KfG4w7huuwmEMAs?utm_source=generator&amp;theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen title="spotify"></iframe></div><div class="spotify-foot"><a class="spotify-me" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.08-.5 9.72 1.11.3.18.39.57.21.85Zm1.23-2.75a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.49.7.25 1.07Zm.11-2.86C14.83 8.94 9.5 8.76 6.42 9.69a.94.94 0 1 1-.54-1.8c3.54-1.07 9.4-.86 12.7 1.1a.94.94 0 0 1-.98 1.6Z"/></svg>spotify</a></div></div>
-    <div class="gallery"><figure class="g0"><picture><source srcset="pics/pic0.webp" type="image/webp"><img src="pics/pic0.jpeg" alt="" loading="lazy" decoding="async"></picture></figure><figure class="g1"><picture><source srcset="pics/pic1.webp" type="image/webp"><img src="pics/pic1.jpeg" alt="" loading="lazy" decoding="async"></picture></figure></div>
-  </div>
-</section>
-
 <section class="tab sub" id="team">
   <div class="tabbg" aria-hidden="true">
     <video autoplay muted loop playsinline preload="none">
@@ -771,7 +627,7 @@ footer{position:relative;z-index:1}
       </figure>
       <div class="about-text">
         <h3 class="keepcase">Benjamin Suermann</h3>
-        <p class="member-say keepcase">"Moin"</p>
+        <p class="member-say keepcase">"Moin."</p>
         <div class="socials" aria-label="profile benjamin suermann">
           <a href="https://github.com/maloutrading" target="_blank" rel="noopener" aria-label="github">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.5-.3-5.2-1.3-5.2-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.8 18 5.1 18 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
@@ -939,7 +795,7 @@ document.querySelectorAll('.stage video,.topvid video').forEach(v => {
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
 
-const TITLES = {home:'malou trading', team:'team - malou trading', idea:'idea - malou trading', trade:'trade - malou trading', news:'news - malou trading'};
+const TITLES = {home:'malou trading', team:'team - malou trading', trade:'trade - malou trading', news:'news - malou trading'};
 function show(id, push){
   if (!document.getElementById(id)) id = 'home';
   document.querySelectorAll('main .tab').forEach(s => s.classList.remove('show'));
@@ -981,7 +837,7 @@ function initWx(){
   const ring = document.querySelector('.cur.ring'), dot = document.querySelector('.cur.dot');
   if(!ring || !dot) return;
   let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry, on = 0;
-  const hot = 'a,button,.song-cover,.gallery figure,input,textarea,[onclick]';
+  const hot = 'a,button,input,textarea,[onclick]';
   addEventListener('pointermove', e => {
     tx = e.clientX; ty = e.clientY; dot.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
     if(!on){ on = 1; ring.style.opacity = dot.style.opacity = '1'; }
