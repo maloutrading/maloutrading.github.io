@@ -74,7 +74,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 .tag{font-style:italic;font-size:.82rem;letter-spacing:.26em;color:var(--accent,var(--gold));
   display:inline-block}
 
-#about{--accent:var(--holz)}
+#team{--accent:var(--holz)}
 #idea{--accent:var(--gold)}
 #trade{--accent:var(--tuerkis)}
 #news{--accent:var(--kupfer)}
@@ -104,8 +104,8 @@ nav.tabs button{font-family:var(--serif);font-size:.95rem;letter-spacing:.05em;
   border-radius:999px;transition:all .3s;white-space:nowrap;min-height:40px;text-transform:lowercase}
 nav.tabs button:hover{color:var(--gold)}
 nav.tabs button.active{background:var(--gold);color:var(--marine)}
-nav.tabs button[data-t="about"]:hover{color:var(--holz)}
-nav.tabs button[data-t="about"].active{background:var(--holz);color:var(--weiss)}
+nav.tabs button[data-t="team"]:hover{color:var(--holz)}
+nav.tabs button[data-t="team"].active{background:var(--holz);color:var(--weiss)}
 nav.tabs button[data-t="idea"]:hover{color:var(--gold)}
 nav.tabs button[data-t="idea"].active{background:var(--gold);color:var(--marine)}
 nav.tabs button[data-t="trade"]:hover{color:var(--tuerkis)}
@@ -192,7 +192,7 @@ main section.tab.show{display:block}
 
 section.tab.sub{padding:0 0 7.5rem}
 section.tab.sub .wrap{padding-top:clamp(4.4rem,7.5vw,7rem)}
-#idea .wrap{padding-top:clamp(5rem,9vw,8rem)}
+#idea .wrap{padding-top:clamp(4.4rem,7.5vw,7rem)}
 
 section.tab.sub h2::after{content:"";display:block;width:2.4rem;height:3px;
   margin-top:.5rem;border-radius:2px;background:var(--accent,var(--gold));
@@ -202,7 +202,7 @@ section.tab.sub h2::after{content:"";display:block;width:2.4rem;height:3px;
   object-fit:cover;image-rendering:auto}
 #news .topvid video{object-position:center 15%}
 .topvid::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,color-mix(in srgb,var(--marine) 16%,transparent),transparent 40%,transparent 80%,var(--marine))}
+  background:linear-gradient(180deg,color-mix(in srgb,var(--marine) 16%,transparent),transparent 40%)}
 .topvid::before{content:"";position:absolute;inset:1.1rem;pointer-events:none;
   border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 55%,transparent)}
 
@@ -583,12 +583,13 @@ footer{position:relative;z-index:1}
   background:color-mix(in srgb,var(--holz) 8%,transparent)}
 .wx[hidden]{display:none}
 
-#about,#idea{position:relative}
+#team,#idea{position:relative}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
+#idea .tabbg video{filter:none}
 .tabbg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,
   color-mix(in srgb,var(--marine) 58%,transparent),color-mix(in srgb,var(--marine) 80%,transparent))}
-#about .wrap,#idea .wrap{position:relative;z-index:1}
+#team .wrap,#idea .wrap{position:relative;z-index:1}
 
 .song-title{font-family:var(--serif);font-weight:400;font-size:1.02rem;line-height:1.25;margin:.95rem 0 .12rem;
   text-transform:none;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
@@ -620,7 +621,9 @@ footer{position:relative;z-index:1}
   font-style:italic;font-size:clamp(1rem,1.9vw,1.24rem);line-height:1.5;color:var(--weiss);text-transform:none}
 .trade-quote::before{display:none}
 .trade-quote cite{display:inline;margin:0;font-style:italic;color:#c08b52;white-space:nowrap;font-size:.9em}
-.trade-div{position:relative;height:16px;width:min(640px,86%);margin:clamp(2.6rem,5.5vw,4.4rem) auto}
+.trade-div{position:relative;height:16px;width:min(640px,86%);margin:clamp(4.5rem,9vw,7.5rem) auto}
+.news-quote{text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem)}
+.idea-wrap>.zitat:first-child{padding-top:0}
 .trade-div::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;transform:translateY(-50%);
   background:linear-gradient(90deg,transparent 4%,#6b4a2c 22%,#c99a63 42%,#efd39a 50%,#c99a63 58%,#6b4a2c 78%,transparent 96%)}
 .trade-div::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:11px;
@@ -645,8 +648,6 @@ footer{position:relative;z-index:1}
 .long-idea::before,.long-idea::after{content:none}
 .trade-wiki{border-top:0;margin:0;padding:0}
 .trade-wiki::before{content:none}
-.trade-close{text-align:center;max-width:var(--w);margin:clamp(1.4rem,3vw,2.2rem) auto 0}
-.trade-close .trade-quote{color:var(--silber)}
 .rule-say{font-size:clamp(.95rem,1.4vw,1.06rem);line-height:1.62}
 .rule-name{margin:.7rem 0 .2rem}
 .long-thesis .name{border:0;padding:0;width:auto;margin:0 auto;font-family:var(--serif);font-style:italic;font-weight:400;
@@ -674,7 +675,7 @@ footer{position:relative;z-index:1}
     <a class="brand" href="#" onclick="show('home');return false;">malou <em>trading</em></a>
     <nav class="tabs" id="tabs">
       <button data-t="idea" onclick="show('idea')">idea</button>
-      <button data-t="about" onclick="show('about')">team</button>
+      <button data-t="team" onclick="show('team')">team</button>
       <button data-t="news" onclick="show('news')">news</button>
       <button data-t="trade" onclick="show('trade')">trade</button>
     </nav>
@@ -691,7 +692,7 @@ footer{position:relative;z-index:1}
         <a class="brand-lg" href="#" onclick="show('home');return false;">malou <em>trading</em></a>
         <nav class="menu">
           <button onclick="show('idea')">idea</button>
-          <button onclick="show('about')">team</button>
+          <button onclick="show('team')">team</button>
           <button onclick="show('news')">news</button>
           <button onclick="show('trade')">trade</button>
         </nav>
@@ -718,8 +719,7 @@ footer{position:relative;z-index:1}
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--gold)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
-    <div class="trade-quotes"><p class="trade-quote keepcase">"all trading is ultimately discretionary." <cite>- Ed Seykota</cite></p><p class="trade-quote keepcase">"there is no investment, there is only speculation." <cite>- Jesse Livermore</cite></p></div><div class="trade-div" aria-hidden="true"></div><div class="rules"><div class="rules-head"><span class="rules-kicker keepcase">craft</span><h3 class="rules-title keepcase">the three rules</h3></div><div class="rules-grid"><div class="rule" style="--accent:var(--gold)"><span class="rule-no keepcase">01</span><h4 class="rule-name keepcase">cut your losses</h4><p class="rule-say">Losses work diametrically against the speculator: a 10% loss needs about 11% gain just to get back to break-even. A 50% loss already demands a 100% gain for the same. Anyone who does not cut losses consistently runs into trouble sooner or later.</p></div><div class="rule" style="--accent:var(--tuerkis)"><span class="rule-no keepcase">02</span><h4 class="rule-name keepcase">never add to losers</h4><p class="rule-say">Trading can hurt. Never add to a losing position.</p></div><div class="rule" style="--accent:var(--kupfer)"><span class="rule-no keepcase">03</span><h4 class="rule-name keepcase">don't trade against the trend</h4><p class="rule-say">The trend is the speculator's tailwind. Trading against it means swimming against the current - possible, but costly and rarely lasting. Go with the market, not against it; the biggest moves reward those who wait patiently on the right side.</p></div></div></div><div class="trade-div" aria-hidden="true"></div><div class="trade-charts"><span class="trade-label keepcase">A few trades with apparent momentum</span><div class="longs"><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=TVC%3AGOLD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">gold</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=COINBASE%3AZECUSD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">zcash</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=OKX%3AHYPEUSDT&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">hyperliquid</span></div></div></div><p class="attrib"><a href="https://www.tradingview.com" target="_blank" rel="noopener">tradingview</a></p></div><div class="trade-div" aria-hidden="true"></div><div class="trade-wiki"><div class="wiki-hero"><span class="wiki-kicker keepcase">wikifolio</span><h2 class="wiki-name keepcase">alpaca turtle</h2><p class="wiki-tag">rule-based trend following - patient, systematic, transparently documented.</p><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">to the wikifolio -></a></div><div class="kpis"><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">performance since inception</span></div><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">performance 12 months</span></div><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">max drawdown</span></div><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">invested capital</span></div></div><div class="wiki-chart"><span class="wiki-chart-note">performance chart to follow</span></div><ul class="wiki-notes"><li>rule-based: clear entry and exit signals, no gut decisions.</li><li>diversified across equity, commodity and crypto markets.</li><li>fully transparent - every action is traceable on wikifolio.</li></ul><p class="attrib">data &amp; performance - <a href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">wikifolio</a></p></div><div class="trade-div" aria-hidden="true"></div><div class="trade-close"><p class="trade-quote keepcase">"I have always made money when I was sure I was right before I began." <cite>- Jesse Livermore, Reminiscences of a Stock Operator</cite></p></div>
-  </div>
+    <div class="trade-quotes"><p class="trade-quote keepcase">"all trading is ultimately discretionary." <cite>- Ed Seykota</cite></p></div><div class="trade-div" aria-hidden="true"></div><div class="rules"><div class="rules-head"><span class="rules-kicker keepcase">craft</span><h3 class="rules-title keepcase">the three rules</h3></div><div class="rules-grid"><div class="rule" style="--accent:var(--gold)"><span class="rule-no keepcase">01</span><h4 class="rule-name keepcase">cut your losses</h4><p class="rule-say">Losses work diametrically against the speculator: a 10% loss needs about 11% gain just to get back to break-even. A 50% loss already demands a 100% gain for the same. Anyone who does not cut losses consistently runs into trouble sooner or later.</p></div><div class="rule" style="--accent:var(--tuerkis)"><span class="rule-no keepcase">02</span><h4 class="rule-name keepcase">never add to losers</h4><p class="rule-say">Trading can hurt. Never add to a losing position.</p></div><div class="rule" style="--accent:var(--kupfer)"><span class="rule-no keepcase">03</span><h4 class="rule-name keepcase">don't trade against the trend</h4><p class="rule-say">The trend is the speculator's tailwind. Trading against it means swimming against the current - possible, but costly and rarely lasting. Go with the market, not against it; the biggest moves reward those who wait patiently on the right side.</p></div></div></div><div class="trade-div" aria-hidden="true"></div><div class="trade-charts"><span class="trade-label keepcase">A few trades with apparent momentum</span><div class="longs"><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=TVC%3AGOLD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">gold</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=COINBASE%3AZECUSD&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">zcash</span></div></div><div class="long-idea"><div class="long-chart"><iframe loading="lazy" data-src="https://s.tradingview.com/widgetembed/?symbol=OKX%3AHYPEUSDT&interval=D&style=1&theme=light&range=60M&withdateranges=1&hideideas=1&hidesidetoolbar=1&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="long-thesis"><span class="name">hyperliquid</span></div></div></div><p class="attrib"><a href="https://www.tradingview.com" target="_blank" rel="noopener">tradingview</a></p></div><div class="trade-div" aria-hidden="true"></div><div class="trade-wiki"><div class="wiki-hero"><span class="wiki-kicker keepcase">wikifolio</span><h2 class="wiki-name keepcase">alpaca turtle</h2><p class="wiki-tag">rule-based trend following - patient, systematic, transparently documented.</p><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">to the wikifolio -></a></div><div class="kpis"><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">performance since inception</span></div><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">performance 12 months</span></div><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">max drawdown</span></div><div class="kpi"><span class="kpi-v keepcase">-</span><span class="kpi-l">invested capital</span></div></div><div class="wiki-chart"><span class="wiki-chart-note">performance chart to follow</span></div><ul class="wiki-notes"><li>rule-based: clear entry and exit signals, no gut decisions.</li><li>diversified across equity, commodity and crypto markets.</li><li>fully transparent - every action is traceable on wikifolio.</li></ul><p class="attrib">data &amp; performance - <a href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">wikifolio</a></p></div>  </div>
 </section>
 
 <section class="tab sub" id="news">
@@ -730,7 +730,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--kupfer)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div>
+    <div class="rib-intro" style="--accent:var(--kupfer)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="news-quote"><p class="trade-quote keepcase">"The stock market is never obvious. It is designed to fool most of the people, most of the time." <cite>- Jesse Lauriston Livermore</cite></p></div>
     <div class="rep-abo"><p class="rep-note">Interested in the daily briefing?</p><a class="rep-cta" href="mailto:maloutrading@web.de">sign up -></a></div><div class="rep-tag">sample report</div><div class="report-block"><div class="rep-col"><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">1</span>DNA chip writes genetic code</h4><p>A team at the Karolinska Institute is building a silicon chip that writes dozens of DNA strands at once, using only electricity and water-soluble enzymes.</p><p class="art-ctx">DNA stores data millions of times denser than any hard drive and lasts for millennia. A portable writer moves this out of the clean-room lab toward everyday life - turning the blueprint of life into a writable commodity.</p><p class="art-src">- Karolinska Institutet</p></article><article class="art" style="--accent:var(--tuerkis)"><h4><span class="art-num">2</span>EU rules slow down Siri</h4><p>Apple is delaying new voice-assistant features in the EU, citing the Digital Markets Act as the reason.</p><p class="art-ctx">The dispute raises an uncomfortable question: does Europe's openness come at the price of new technology arriving later here? Every big platform is watching whether delay pays off as leverage against regulation.</p><p class="art-src">- Reuters</p></article><article class="art" style="--accent:var(--kupfer)"><h4><span class="art-num">3</span>Pesticide hits bumblebees in the genome</h4><p>Sulfoxaflor, the neonicotinoid successor considered safe, disrupts bumblebee reproduction even in tiny doses, according to a study.</p><p class="art-ctx">Pollinators are the quiet infrastructure of agriculture. If the replacement carries the same harm under a new name, food gets more expensive long before anyone names the cause.</p><p class="art-src">- Nature</p></article><article class="art" style="--accent:var(--holz)"><h4><span class="art-num">4</span>United Nations move to govern AI</h4><p>In Geneva, a joint body of the United Nations and the telecommunications union is launching to draft the first global guardrails for artificial intelligence.</p><p class="art-ctx">The world's regions are currently writing incompatible AI rulebooks. Whoever sets a standard first shapes it for everyone else - the Geneva table arrives late to a race that has long been running.</p><p class="art-src">- United Nations</p></article><article class="art" style="--accent:var(--gold)"><h4><span class="art-num">5</span>Atlantic current more stable than thought</h4><p>New measurement series on the great Atlantic overturning find, alongside signs of weakening, surprising stability as well.</p><p class="art-ctx">The current keeps Europe's winters mild and was thought to be at risk of tipping. If the data is less settled than assumed, that shifts one of the loudest tipping-point narratives of recent years.</p><p class="art-src">- Woods Hole Oceanographic Institution</p></article><div class="facts"><h3>facts &amp; relations</h3><ul><li>A single gram of DNA holds more data than all the hard drives of an average human life could ever store - the densest known way to preserve information. <span>(European Bioinformatics Institute)</span></li><li>Roughly three quarters of the most important food crops depend on animal pollination; without bees and bumblebees, a large part of what lands on the plate falls away. <span>(IPBES)</span></li><li>The Atlantic overturning moves so much heat that London stays markedly milder than cities at the same latitude in eastern Canada - an invisible heater of continental scale. <span>(Woods Hole Oceanographic Institution)</span></li></ul></div><div class="rep-sec" style="--accent:var(--tuerkis)"><h3>critical thinking</h3><p>The DNA-chip story (1) invites base-rate neglect: the reflex of inferring near-term everyday use from a single lab success. The vast majority of such breakthroughs quietly fizzle on the long road out of the lab, and no one reports on that fizzling. With every breakthrough headline, ask: how many similar announcements of recent years actually reached real people?</p></div><div class="essay"><h3>Fourier analysis</h3><p>The Fourier analysis is the proof that every sound, however tangled, is made of pure, simple tones - just as white light splits into its colors in a prism. The rush of the sea, an orchestra, an earthquake: all of it can be resolved into a handful of hidden oscillations, each with its own pitch and strength. The brilliant core is that complicated reality need not stay complicated once you find the right language to describe it. Today this principle sits in every phone: it breaks your voice into frequencies, throws away the inaudible ones and transmits only the rest - so a conversation fits through a narrow line. The climate researchers from story 5 likewise search noisy ocean data for such hidden rhythms. What looks chaotic is often just a sum of simple waves that no one noticed on their own.</p></div><div class="rep-sec" style="--accent:var(--kupfer)"><h3>contested thesis</h3><p class="these-claim">The greatest danger of artificial intelligence is not that machines become too clever, but that we stop thinking for ourselves.</p><p>The debate stares at distant scenarios of a superior machine, yet the real shift is quiet and already underway: whoever gets answers at the push of a button practices hard self-thinking less often, and what you do not practice withers - from mental arithmetic to a sense of direction. A society that outsources its judgment is made vulnerable not by an uprising of machines, but by its own convenience.</p><p class="these-contra">against it: every technology from the printing press to the pocket calculator was once seen as intellectual decay - and each time thinking merely moved to a higher level instead of disappearing.</p></div><div class="rep-sec" style="--accent:var(--gold)"><h3>prediction market</h3><p>Of three political markets, one stands out: the probability of a ceasefire in an ongoing conflict jumped from 31 to 58 percent within twenty days. The crowd reacted to diplomatic signals that surfaced in the big headlines only days later - a lesson in how betting markets are occasionally faster than the newsrooms. At the same time the herd instinct shows: the strongest jump came not with the news itself, but once the crowd saw that everyone else was already buying.</p></div><div class="rep-sec" style="--accent:var(--holz)"><h3>on the rise</h3><p>Wikipedia page views for the term perovskite solar cell have shot up since yesterday. The trigger is a new study reporting an efficiency close to the theoretical limit for these thin-film cells. Perovskites are considered cheaper and more flexible than classic silicon; the attention shows that the public senses a possible turn in solar technology before the mass media proclaim it.</p></div><div class="poem"><span class="mark"></span>Man describes his life grain by grain,<br>measures sea and sound and outsources his thought;<br>he forges his tools, cool and hand-picked,<br>and yet must still guide his own hand.<br>In doubt, behold - a dawn glows quietly.<hr></div></div></div>
   </div>
 </section>
@@ -742,7 +742,6 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal idea-wrap">
-    <div class="rib-intro" style="--accent:var(--tuerkis)"><h2 class="rib-title keepcase">idea</h2></div>
     <div class="zitat"><p class="zitat-line">"Never lie to yourself." <span class="zitat-author">- Eliud Kipchoge</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">"I have the ball, I pass the ball." <span class="zitat-author">- Pep Guardiola</span></p><hr class="zitat-rule"></div>
 <div class="zitat"><p class="zitat-line">"Everybody gets what they want out of the market." <span class="zitat-author">- Ed Seykota</span></p><hr class="zitat-rule"></div>
@@ -751,7 +750,7 @@ footer{position:relative;z-index:1}
   </div>
 </section>
 
-<section class="tab sub" id="about">
+<section class="tab sub" id="team">
   <div class="tabbg" aria-hidden="true">
     <video autoplay muted loop playsinline preload="none">
       <source src="shortVids/ham.mp4" type="video/mp4">
@@ -772,7 +771,7 @@ footer{position:relative;z-index:1}
       </figure>
       <div class="about-text">
         <h3 class="keepcase">Benjamin Suermann</h3>
-        <p class="member-say keepcase">"Hello there."</p>
+        <p class="member-say keepcase">"Moin"</p>
         <div class="socials" aria-label="profile benjamin suermann">
           <a href="https://github.com/maloutrading" target="_blank" rel="noopener" aria-label="github">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.5-.3-5.2-1.3-5.2-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.8 18 5.1 18 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
@@ -793,7 +792,7 @@ footer{position:relative;z-index:1}
       </figure>
       <div class="about-text">
         <h3 class="keepcase">Claude</h3>
-        <p class="member-say keepcase">"Ever diligent."</p>
+        <p class="member-say keepcase">"Der Geraet ist nie muede."</p>
         <div class="socials" aria-label="claude">
           <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener" aria-label="anthropic">
             <svg viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></g></svg>
@@ -940,7 +939,7 @@ document.querySelectorAll('.stage video,.topvid video').forEach(v => {
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
 
-const TITLES = {home:'malou trading', about:'team - malou trading', idea:'idea - malou trading', trade:'trade - malou trading', news:'news - malou trading'};
+const TITLES = {home:'malou trading', team:'team - malou trading', idea:'idea - malou trading', trade:'trade - malou trading', news:'news - malou trading'};
 function show(id, push){
   if (!document.getElementById(id)) id = 'home';
   document.querySelectorAll('main .tab').forEach(s => s.classList.remove('show'));
@@ -953,7 +952,7 @@ function show(id, push){
   });
   body.classList.toggle('home', id === 'home');
   el.querySelectorAll('video').forEach(v => { const p = v.play(); if (p && p.catch) p.catch(() => {}); });
-  if (id === 'about') initWx();
+  if (id === 'team') initWx();
   document.title = TITLES[id] || (id + ' - malou trading');
   if (push !== false){ try { history.pushState({id}, '', '#' + id); } catch(e){} }
   scrollTo(0, 0);
