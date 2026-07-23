@@ -94,7 +94,7 @@ header.away{opacity:0;transform:translateY(-100%);pointer-events:none}
 body.home header{opacity:0;transform:translateY(-100%);pointer-events:none}
 .nav{max-width:var(--w);margin:0 auto;padding:.9rem 1.5rem;display:flex;
   align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.brand{font-family:var(--serif);font-size:1.05rem;text-decoration:none;color:var(--weiss);letter-spacing:.28em;text-transform:uppercase;font-weight:300}
+.brand{font-family:var(--serif);font-size:1.3rem;text-decoration:none;color:var(--weiss);letter-spacing:.03em}
 .brand em{color:inherit;font-style:normal}
 nav.tabs{display:flex;gap:.15rem;flex-wrap:wrap}
 nav.tabs button{font-family:var(--serif);font-size:.95rem;letter-spacing:.05em;
@@ -218,17 +218,18 @@ picture{display:contents}
   margin:calc(clamp(4.4rem,7vw,6rem) + 2.4cm) auto 0;
   padding:calc(clamp(4rem,6.5vw,5.6rem) + 2cm) 0 0;border-top:1px solid var(--line)}
 .homage{display:flex;flex-direction:column;align-items:center;text-align:center;margin:0 0 0 auto}
-.homage-portrait{width:206px;height:206px;border-radius:50%;overflow:hidden;
+.homage-portrait{width:244px;height:244px;border-radius:50%;overflow:hidden;
   border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);
   box-shadow:0 14px 36px rgba(0,0,0,.32),0 0 0 6px color-mix(in srgb,var(--gold) 7%,transparent)}
 .homage-portrait img{width:100%;height:100%;object-fit:cover;display:block}
-.homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.1rem);margin:1.5rem 0 0}
-.spotify-box{flex:1 1 300px;max-width:432px;position:relative;border-radius:18px;padding:1.7rem 1.7rem 1.35rem;
+.homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:1.6rem 0 0}
+.spotify-box{flex:1 1 340px;max-width:488px;position:relative;border-radius:18px;padding:2.1rem 2.1rem 1.65rem;
   background:linear-gradient(158deg,color-mix(in srgb,var(--card) 80%,transparent),color-mix(in srgb,var(--card) 52%,transparent));
-  border:1px solid color-mix(in srgb,#1DB954 24%,var(--line));
-  box-shadow:0 26px 54px -22px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.09);backdrop-filter:blur(9px)}
-.spotify-box::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 42%)}
-.spotify-box>*{position:relative}
+  border:1px solid color-mix(in srgb,#1DB954 26%,var(--line));
+  box-shadow:0 32px 64px -24px rgba(0,0,0,.66),inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(9px)}
+.spotify-box::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 42%)}
+.spotify-box::after{content:"";position:absolute;inset:7px;border:1px solid color-mix(in srgb,#1DB954 20%,transparent);border-radius:13px;pointer-events:none;box-shadow:inset 0 0 22px rgba(29,185,84,.05)}
+.spotify-box>*{position:relative;z-index:1}
 .sp-profile{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:.5rem;padding-top:1rem;
   border-top:1px solid color-mix(in srgb,var(--line) 65%,transparent);
   font-size:.8rem;letter-spacing:.05em;color:var(--muted);text-decoration:none;transition:color .22s}
@@ -247,16 +248,17 @@ picture{display:contents}
 .spotify-track:hover .go{opacity:1;transform:translateX(0)}
 .spotify-track:hover .t b{color:#1DB954}
 @media(max-width:640px){.spotify-box{max-width:none}.homage{margin:1.5rem auto 0}}
-.library{max-width:var(--w);margin:0 auto clamp(3rem,6vw,4.4rem);
-  padding:clamp(2.4rem,5vw,3.6rem) clamp(1.6rem,4vw,3rem) clamp(2.6rem,5vw,3.4rem);
-  border:1px solid color-mix(in srgb,var(--gold) 26%,var(--line));border-radius:18px;
-  background:radial-gradient(130% 90% at 50% -10%,color-mix(in srgb,var(--gold) 8%,transparent),transparent 62%),color-mix(in srgb,var(--card) 72%,transparent)}
-.lib-head{text-align:center;margin:0 0 clamp(2rem,4vw,2.8rem)}
-.lib-title{font-family:var(--serif);font-weight:200;font-size:clamp(1.7rem,3.4vw,2.3rem);letter-spacing:.02em;margin:0;color:var(--ink)}
-.books{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(2.4rem,5vw,3.8rem);align-items:start}
-.book{display:flex;flex-direction:column;align-items:center;text-align:center}
-.book:hover .book-cover{transform:translateY(-6px) rotate(-.6deg);
-  box-shadow:inset 7px 0 8px -6px rgba(0,0,0,.55),inset 0 0 46px rgba(0,0,0,.28),inset 0 0 0 3px color-mix(in srgb,var(--gold) 34%,transparent),0 30px 46px -14px rgba(0,0,0,.6)}
+.library{position:relative;max-width:var(--w);margin:0 auto clamp(3.5rem,7vw,5rem);
+  padding:clamp(3rem,6vw,4.6rem) clamp(2rem,5vw,4rem) clamp(3.4rem,6vw,5rem);
+  border:1px solid color-mix(in srgb,var(--gold) 24%,var(--line));border-radius:3px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 34%,transparent));
+  box-shadow:0 50px 90px -50px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
+.library::before{content:"";position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--gold) 15%,transparent);border-radius:1px;pointer-events:none}
+.library::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:clamp(70px,18%,150px);height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.books{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(2.4rem,5vw,3.8rem);align-items:end;position:relative}
+.books::after{content:"";position:absolute;left:6%;right:6%;bottom:-1.7rem;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--gold) 40%,transparent) 22%,color-mix(in srgb,var(--gold) 40%,transparent) 78%,transparent)}
+.book{position:relative;display:flex;flex-direction:column;align-items:center}
+.book::after{content:"";position:absolute;bottom:-1.15rem;left:50%;transform:translateX(-50%);width:66%;height:13px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);filter:blur(4px);opacity:.65}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
 .solutions{max-width:var(--w);margin:0 auto clamp(2rem,4vw,3rem)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
@@ -292,9 +294,9 @@ picture{display:contents}
 .sol-mini span{display:block;margin-top:.2rem;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .sol-card .wiki-cta{margin-top:1.1rem;align-self:flex-start}
 @media(max-width:640px){.sol-two{grid-template-columns:1fr}.sol-chart{min-height:240px}}
-.sp-art{width:48px;height:48px;border-radius:8px;object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
+.sp-art{width:54px;height:54px;border-radius:9px;object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
 .spotify-track:hover .sp-art{transform:scale(1.05)}
-.book-cover-link{display:block;width:100%;max-width:200px;border-radius:5px;overflow:hidden;box-shadow:0 24px 42px -16px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.18);transition:transform .35s ease,box-shadow .35s ease}
+.book-cover-link{display:block;width:100%;max-width:196px;border-radius:2px;overflow:hidden;box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--gold) 22%,transparent);transition:transform .4s ease,box-shadow .4s ease}
 .book:hover .book-cover-link{transform:translateY(-7px);box-shadow:0 34px 52px -18px rgba(0,0,0,.66),0 0 0 1px rgba(0,0,0,.2)}
 .book-img{display:block;width:100%;height:auto}
 .mag{max-width:680px;margin:0 auto;text-align:left}
@@ -419,8 +421,11 @@ footer{position:relative;z-index:1}
 
 .trade-quotes{display:block;text-align:center;max-width:var(--w);margin:0 auto clamp(1rem,2vw,1.6rem)}
 .trade-quote{display:block;margin:.35rem 0 0;padding:0;border:0;background:none;border-radius:0;
-  font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.5rem,3vw,1.98rem);
-  line-height:1.55;letter-spacing:.04em;word-spacing:.06em;color:var(--weiss);text-transform:none;text-shadow:0 2px 30px rgba(0,0,0,.4)}
+  font-family:"Snell Roundhand","Apple Chancery","Segoe Script",var(--serif);font-weight:400;font-style:italic;font-size:clamp(1.9rem,4.2vw,3rem);
+  line-height:1.35;letter-spacing:.01em;word-spacing:.04em;color:var(--weiss);text-transform:none;text-shadow:0 2px 30px rgba(0,0,0,.45)}
+.trade-quotes,.news-quote{position:relative;overflow:hidden;padding:clamp(2rem,4vw,3rem) clamp(1.6rem,4vw,3.2rem);border:1px solid color-mix(in srgb,var(--gold) 22%,var(--line));border-radius:4px;background:linear-gradient(180deg,rgba(255,255,255,.035),transparent 70%);box-shadow:0 34px 66px -42px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.06)}
+.trade-quotes::after,.news-quote::after{content:"";position:absolute;top:0;bottom:0;left:0;width:55%;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.06) 47%,rgba(192,163,100,.16) 50%,rgba(255,255,255,.06) 53%,transparent 66%);transform:translateX(-170%);animation:sheen 7.5s ease-in-out infinite;pointer-events:none}
+@keyframes sheen{0%,55%{transform:translateX(-170%)}100%{transform:translateX(330%)}}
 .news-quote::before,.trade-quotes::before{content:"\201C";display:block;font-family:var(--serif);font-size:clamp(3.4rem,8vw,5.6rem);line-height:.55;color:color-mix(in srgb,var(--gold) 62%,transparent);margin:0 auto .05rem;text-shadow:0 4px 24px rgba(0,0,0,.4)}
 .trade-quote::before{display:none}
 .trade-quote cite{display:inline;margin:0;font-style:italic;color:#c08b52;white-space:nowrap;font-size:1.06em;letter-spacing:.045em}
@@ -494,7 +499,7 @@ footer{position:relative;z-index:1}
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--gold)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
-    <div class="trade-quotes"><p class="trade-quote keepcase">"All trading is ultimately discretionary." <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="library"><div class="lib-head"><h3 class="lib-title keepcase">books are great</h3></div><div class="books"><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Reminiscences+of+a+Stock+Operator+Edwin+Lefevre" target="_blank" rel="noopener" aria-label="Reminiscences of a Stock Operator"><img class="book-img" src="https://covers.openlibrary.org/b/id/300533-L.jpg" alt="Reminiscences of a Stock Operator" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Market+Wizards+Second+Edition+Jack+Schwager" target="_blank" rel="noopener" aria-label="Market Wizards, Second Edition"><img class="book-img" src="https://covers.openlibrary.org/b/id/6801784-L.jpg" alt="Market Wizards" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Zen+in+the+Art+of+Archery+Eugen+Herrigel" target="_blank" rel="noopener" aria-label="Zen in the Art of Archery"><img class="book-img" src="https://covers.openlibrary.org/b/id/13009981-L.jpg" alt="Zen in the Art of Archery" loading="lazy"></a></article></div></div><div class="divider" aria-hidden="true"></div><div class="solutions">
+    <div class="trade-quotes"><p class="trade-quote keepcase">"All trading is ultimately discretionary." <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="library"><div class="books"><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Reminiscences+of+a+Stock+Operator+Edwin+Lefevre" target="_blank" rel="noopener" aria-label="Reminiscences of a Stock Operator"><img class="book-img" src="https://covers.openlibrary.org/b/id/300533-L.jpg" alt="Reminiscences of a Stock Operator" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Market+Wizards+Second+Edition+Jack+Schwager" target="_blank" rel="noopener" aria-label="Market Wizards, Second Edition"><img class="book-img" src="https://covers.openlibrary.org/b/id/6801784-L.jpg" alt="Market Wizards" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Zen+in+the+Art+of+Archery+Eugen+Herrigel" target="_blank" rel="noopener" aria-label="Zen in the Art of Archery"><img class="book-img" src="https://covers.openlibrary.org/b/id/13009981-L.jpg" alt="Zen in the Art of Archery" loading="lazy"></a></article></div></div><div class="divider" aria-hidden="true"></div><div class="solutions">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
 <div class="sol-head"><h2 class="sol-title keepcase">investment solutions</h2></div>
@@ -547,7 +552,7 @@ footer{position:relative;z-index:1}
     <div class="member">
       <figure class="portrait noimg">
         <picture>
-          <img src="pics/about.jpg" alt="benjamin suermann" width="480" height="556"
+          <img src="pics/hickory.jpeg" alt="benjamin suermann" width="480" height="320" style="object-position:62% 42%"
                loading="lazy" decoding="async"
                onload="this.closest('.portrait').classList.remove('noimg')"
                onerror="this.remove()">
@@ -593,9 +598,9 @@ footer{position:relative;z-index:1}
 
     <div class="team-bottom">
       <div class="spotify-box">
-        <a class="spotify-track" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener">
-          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0287f32427f479a260cd94f8e5" alt="" loading="lazy">
-          <span class="t"><b class="keepcase">Emotions Unlocked</b><small class="keepcase">Mike WiLL Made-It</small></span>
+        <a class="spotify-track" href="https://open.spotify.com/search/Tour-Maubourg%20L%27Hiver" target="_blank" rel="noopener">
+          <img class="sp-art" src="https://i1.sndcdn.com/artworks-lwfriGPaSTCEIYIc-HFpVtA-t500x500.jpg" alt="" loading="lazy">
+          <span class="t"><b class="keepcase">L'Hiver</b><small class="keepcase">Tour-Maubourg</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
         <a class="spotify-track" href="https://open.spotify.com/track/3usbbmpFd1sx1UQQOGgc8A" target="_blank" rel="noopener">
@@ -603,9 +608,9 @@ footer{position:relative;z-index:1}
           <span class="t"><b class="keepcase">Part III</b><small class="keepcase">I Am An Instrument</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
-        <a class="spotify-track" href="https://open.spotify.com/search/Tour-Maubourg%20L%27Hiver" target="_blank" rel="noopener">
-          <img class="sp-art" src="https://i1.sndcdn.com/artworks-lwfriGPaSTCEIYIc-HFpVtA-t500x500.jpg" alt="" loading="lazy">
-          <span class="t"><b class="keepcase">L'Hiver</b><small class="keepcase">Tour-Maubourg</small></span>
+        <a class="spotify-track" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener">
+          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0287f32427f479a260cd94f8e5" alt="" loading="lazy">
+          <span class="t"><b class="keepcase">Emotions Unlocked</b><small class="keepcase">Mike WiLL Made-It</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
         <a class="sp-profile" href="https://open.spotify.com/user/benny.suermann" target="_blank" rel="noopener">
