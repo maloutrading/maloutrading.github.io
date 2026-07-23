@@ -272,17 +272,21 @@ picture{display:contents}
 .homage-kicker{display:block;margin:1.4rem 0 .35rem;font-style:italic;font-size:0.828rem;
   letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.1rem);margin:1.5rem 0 0}
-.spotify-box{flex:1 1 300px;max-width:432px;
-  background:color-mix(in srgb,var(--card) 62%,transparent);border:1px solid var(--line);
-  border-radius:16px;padding:1.5rem 1.6rem 1.25rem;backdrop-filter:blur(6px)}
+.spotify-box{flex:1 1 300px;max-width:432px;position:relative;border-radius:18px;padding:1.7rem 1.7rem 1.35rem;
+  background:linear-gradient(158deg,color-mix(in srgb,var(--card) 80%,transparent),color-mix(in srgb,var(--card) 52%,transparent));
+  border:1px solid color-mix(in srgb,#1DB954 24%,var(--line));
+  box-shadow:0 26px 54px -22px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.09);backdrop-filter:blur(9px)}
+.spotify-box::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 42%)}
+.spotify-box>*{position:relative}
 .sp-mark{display:block;width:26px;height:26px;color:#1DB954;margin:0 0 1.15rem}
 .sp-profile{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:.5rem;padding-top:1rem;
   border-top:1px solid color-mix(in srgb,var(--line) 65%,transparent);
   font-size:.8rem;letter-spacing:.05em;color:var(--muted);text-decoration:none;transition:color .22s}
 .sp-profile svg{width:15px;height:15px;color:var(--muted);flex:none;transition:color .22s}
 .sp-profile:hover{color:#1DB954}.sp-profile:hover svg{color:#1DB954}
-.spotify-track{display:flex;align-items:center;gap:.95rem;padding:.72rem 0;text-decoration:none;
-  border-top:1px solid color-mix(in srgb,var(--line) 65%,transparent)}
+.spotify-track{display:flex;align-items:center;gap:1rem;padding:.8rem .55rem;margin:0 -.55rem;border-radius:11px;text-decoration:none;
+  border-top:1px solid color-mix(in srgb,var(--line) 55%,transparent);transition:background .2s ease}
+.spotify-track:hover{background:color-mix(in srgb,#1DB954 9%,transparent)}
 .spotify-track:first-of-type{border-top:0}
 .spotify-track .sp-play{width:14px;height:14px;color:#1DB954;flex:none;opacity:.85}
 .spotify-track:hover .sp-play{opacity:1}
@@ -382,7 +386,8 @@ picture{display:contents}
 .sol-mini span{display:block;margin-top:.2rem;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .sol-card .wiki-cta{margin-top:1.1rem;align-self:flex-start}
 @media(max-width:640px){.sol-two{grid-template-columns:1fr}.sol-chart{min-height:240px}}
-.sp-art{width:46px;height:46px;border-radius:7px;object-fit:cover;flex:none;box-shadow:0 4px 12px -4px rgba(0,0,0,.5)}
+.sp-art{width:48px;height:48px;border-radius:8px;object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
+.spotify-track:hover .sp-art{transform:scale(1.05)}
 .book-cover-link{display:block;width:100%;max-width:200px;border-radius:5px;overflow:hidden;box-shadow:0 24px 42px -16px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.18);transition:transform .35s ease,box-shadow .35s ease}
 .book:hover .book-cover-link{transform:translateY(-7px);box-shadow:0 34px 52px -18px rgba(0,0,0,.66),0 0 0 1px rgba(0,0,0,.2)}
 .book-img{display:block;width:100%;height:auto}
@@ -405,8 +410,14 @@ picture{display:contents}
 .mag-claim{font-family:var(--serif);font-style:italic;font-size:clamp(1.12rem,2.2vw,1.32rem);line-height:1.5;color:var(--ink);margin:0 0 .9rem}
 .mag-contra{font-size:.92rem;color:var(--muted);font-style:italic;border-left:2px solid var(--line);padding-left:1rem;margin:.9rem 0 0}
 .mag-poem{text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(1.02rem,2vw,1.16rem);line-height:1.95;color:var(--silber);margin:0}
+.mag-mast .mag-reg{display:inline-flex;align-items:center;gap:.4rem;padding:.74rem 1.6rem;border:0;border-radius:100px;background:linear-gradient(135deg,var(--kupfer),color-mix(in srgb,var(--gold) 55%,var(--kupfer)));color:#fff;font-size:.94rem;letter-spacing:.04em;text-decoration:none;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--kupfer) 85%,transparent),inset 0 1px 0 rgba(255,255,255,.28);transition:transform .2s ease,box-shadow .2s ease}
+.mag-mast .mag-reg:hover{transform:translateY(-2px);box-shadow:0 18px 32px -8px color-mix(in srgb,var(--kupfer) 92%,transparent),inset 0 1px 0 rgba(255,255,255,.28)}
+.sol-concept{max-width:940px;margin:clamp(1.4rem,3vw,2rem) auto 0;padding:clamp(1.5rem,3vw,2.1rem) clamp(1.6rem,3.5vw,2.5rem);border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--card) 55%,transparent)}
+.sol-concept h4{font-family:var(--serif);font-weight:400;font-size:clamp(1.12rem,2.2vw,1.34rem);margin:0 0 .7rem;color:var(--ink)}
+.sol-concept p{margin:0;font-size:1rem;line-height:1.78;color:var(--silber)}
+.sol-concept em{color:var(--gold);font-style:italic}
 
-/* -- trade -- */
+
 .trade-quotes{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin:0 0 clamp(3rem,6vw,4.4rem)}
 .trade-quote{position:relative;margin:0;padding:1.7rem 1.6rem 1.5rem 2rem;border-radius:14px;
   border:1px solid var(--line);background:color-mix(in srgb,var(--card) 55%,transparent)}
@@ -478,7 +489,7 @@ picture{display:contents}
   box-shadow:0 8px 24px color-mix(in srgb,var(--tuerkis) 40%,transparent)}
 .rep-tag{text-align:left;font-style:italic;letter-spacing:.2em;text-transform:uppercase;
   color:var(--silber);opacity:.65;font-size:0.828rem;margin:0 0 .5rem .2rem}
-/* vintage broadsheet - warm aged-paper feel, wide multi-column to cut scroll */
+
 .report-block{position:relative;overflow:hidden;border:1px solid var(--gold-line);border-radius:var(--r);
   padding:clamp(2rem,4vw,3.6rem);margin:0;
   background:
@@ -488,13 +499,13 @@ picture{display:contents}
   box-shadow:0 20px 60px rgba(0,0,0,.32),
     inset 0 0 0 1px color-mix(in srgb,var(--gold) 13%,transparent),
     inset 0 0 130px rgba(0,0,0,.34)}
-/* faint aged fibre grain */
+
 .report-block::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
   background:
     repeating-linear-gradient(0deg,transparent 0 3px,color-mix(in srgb,var(--gold) 4%,transparent) 3px 4px),
     repeating-linear-gradient(90deg,transparent 0 3px,rgba(0,0,0,.035) 3px 4px);
   mix-blend-mode:overlay}
-/* gold masthead rule across the top */
+
 .report-block::after{content:"";position:absolute;top:0;left:clamp(2rem,4vw,3.6rem);right:clamp(2rem,4vw,3.6rem);height:3px;
   opacity:.75;background:linear-gradient(90deg,transparent,var(--gold),var(--kupfer),var(--gold),transparent)}
 .rep-col{max-width:none;margin:0;position:relative;z-index:1;
@@ -503,7 +514,7 @@ picture{display:contents}
 .rep-col>*{break-inside:avoid}
 .art{padding:1.5rem 0;border-top:1px solid color-mix(in srgb,var(--gold) 16%,var(--line));text-transform:none}
 .art:first-child{border-top:0;padding-top:.2rem}
-/* editorial drop cap on the lead story */
+
 .art:first-child>p:nth-of-type(1)::first-letter{float:left;font-family:var(--serif);font-weight:400;
   font-size:3.68rem;line-height:.78;padding:.12rem .5rem 0 0;color:var(--gold)}
 .poem{column-span:all}
@@ -626,9 +637,10 @@ footer{position:relative;z-index:1}
 .attrib{font-size:1.196rem}
 
 .trade-quotes{display:block;text-align:center;max-width:var(--w);margin:0 auto clamp(1rem,2vw,1.6rem)}
-.trade-quote{display:block;margin:.8rem 0;padding:0;border:0;background:none;border-radius:0;
-  font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.34rem,2.55vw,1.66rem);
-  line-height:1.65;letter-spacing:.05em;word-spacing:.06em;color:var(--weiss);text-transform:none}
+.trade-quote{display:block;margin:.35rem 0 0;padding:0;border:0;background:none;border-radius:0;
+  font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.5rem,3vw,1.98rem);
+  line-height:1.55;letter-spacing:.04em;word-spacing:.06em;color:var(--weiss);text-transform:none;text-shadow:0 2px 30px rgba(0,0,0,.4)}
+.news-quote::before,.trade-quotes::before{content:"\201C";display:block;font-family:var(--serif);font-size:clamp(3.4rem,8vw,5.6rem);line-height:.55;color:color-mix(in srgb,var(--gold) 62%,transparent);margin:0 auto .05rem;text-shadow:0 4px 24px rgba(0,0,0,.4)}
 .trade-quote::before{display:none}
 .trade-quote cite{display:inline;margin:0;font-style:italic;color:#c08b52;white-space:nowrap;font-size:1.06em;letter-spacing:.045em}
 .divider{position:relative;height:14px;width:min(920px,92%);margin:clamp(4.5rem,9vw,7.5rem) auto}
@@ -702,7 +714,7 @@ footer{position:relative;z-index:1}
 
 <main id="main">
 
-<!-- === LANDING - categories on the left, the large video on the right === -->
+
 <section class="tab show" id="home">
   <div class="landing">
     <div class="left">
@@ -726,7 +738,7 @@ footer{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- === Subpage - narrow video on top, content below === -->
+
 <section class="tab sub" id="trade">
   <div class="topvid" aria-hidden="true">
     <video autoplay muted loop playsinline preload="none">
@@ -736,17 +748,17 @@ footer{position:relative;z-index:1}
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--gold)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
-    <div class="trade-quotes"><p class="trade-quote keepcase">"all trading is ultimately discretionary." <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="library"><div class="lib-head"><span class="lib-kicker keepcase">from the shelf</span><h3 class="lib-title keepcase">three books for the patient speculator</h3><div class="lib-orn" aria-hidden="true">&#10086;</div></div><div class="books"><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Reminiscences+of+a+Stock+Operator+Edwin+Lefevre" target="_blank" rel="noopener" aria-label="Reminiscences of a Stock Operator"><img class="book-img" src="https://covers.openlibrary.org/b/id/300533-L.jpg" alt="Reminiscences of a Stock Operator" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Market+Wizards+Second+Edition+Jack+Schwager" target="_blank" rel="noopener" aria-label="Market Wizards, Second Edition"><img class="book-img" src="https://covers.openlibrary.org/b/id/6801784-L.jpg" alt="Market Wizards" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Zen+in+the+Art+of+Archery+Eugen+Herrigel" target="_blank" rel="noopener" aria-label="Zen in the Art of Archery"><img class="book-img" src="https://covers.openlibrary.org/b/id/419828-L.jpg" alt="Zen in the Art of Archery" loading="lazy"></a></article></div></div><div class="divider" aria-hidden="true"></div><div class="solutions">
+    <div class="trade-quotes"><p class="trade-quote keepcase">"all trading is ultimately discretionary." <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="library"><div class="lib-head"><h3 class="lib-title keepcase">books are great</h3></div><div class="books"><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Reminiscences+of+a+Stock+Operator+Edwin+Lefevre" target="_blank" rel="noopener" aria-label="Reminiscences of a Stock Operator"><img class="book-img" src="https://covers.openlibrary.org/b/id/300533-L.jpg" alt="Reminiscences of a Stock Operator" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Market+Wizards+Second+Edition+Jack+Schwager" target="_blank" rel="noopener" aria-label="Market Wizards, Second Edition"><img class="book-img" src="https://covers.openlibrary.org/b/id/6801784-L.jpg" alt="Market Wizards" loading="lazy"></a></article><article class="book"><a class="book-cover-link" href="https://www.google.com/search?q=Zen+in+the+Art+of+Archery+Eugen+Herrigel" target="_blank" rel="noopener" aria-label="Zen in the Art of Archery"><img class="book-img" src="https://covers.openlibrary.org/b/id/13009981-L.jpg" alt="Zen in the Art of Archery" loading="lazy"></a></article></div></div><div class="divider" aria-hidden="true"></div><div class="solutions">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
-<div class="sol-head"><span class="sol-kicker keepcase">choose your</span><h2 class="sol-title keepcase">investment solutions</h2></div>
-<div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>us momentum algorithmic</label></div>
+<div class="sol-head"><h2 class="sol-title keepcase">investment solutions</h2></div>
+<div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>code based</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki">
-<div class="sol-two"><div class="sol-chart"><iframe loading="lazy" src="https://s.tradingview.com/widgetembed/?symbol=XETR%3ASDXP&interval=W&style=3&theme=light&hideideas=1&hidesidetoolbar=1&hidetoptoolbar=1&range=60M&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="sol-text"><div class="sol-card"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3><p class="sol-card-tag">Rule-based trend following across equities, commodities and crypto - benchmarked to the SDAX.</p></div><div class="sol-card"><div class="sol-mini-row"><div class="sol-mini"><b>-</b><span>since inception</span></div><div class="sol-mini"><b>-</b><span>12 months</span></div><div class="sol-mini"><b>-</b><span>max dd</span></div></div><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">to the wikifolio -></a></div></div></div>
+<div class="sol-two"><div class="sol-chart"><iframe loading="lazy" src="https://s.tradingview.com/widgetembed/?symbol=XETR%3ASDXP&interval=W&style=3&theme=light&hideideas=1&hidesidetoolbar=1&hidetoptoolbar=1&range=60M&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="sol-text"><div class="sol-card"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3><p class="sol-card-tag">Rule-based trend following across equities, commodities and crypto - benchmarked to the SDAX.</p></div><div class="sol-card"><div class="sol-mini-row"><div class="sol-mini"><b>+101%</b><span>since inception</span></div><div class="sol-mini"><b>-2.7%</b><span>12 months</span></div><div class="sol-mini"><b>+11.6%</b><span>p.a.</span></div></div><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">to the wikifolio -></a></div></div></div><div class="sol-concept"><h4>Global macro, the discretionary way</h4><p><em>In the lineage of Livermore, Soros and the great macro traders</em> - Alpaca Turtle reads the world top-down: capital flows, liquidity, the temper of the tape. No single market is home; equities, commodities and crypto are merely instruments through which a conviction is expressed. Positions are taken by judgment, not formula, and pressed only where the odds turn asymmetric - while three unbreakable rules keep every drawdown survivable.</p></div>
 </div>
 <div class="sol-panel sol-p-algo">
-<div class="sol-two"><div class="sol-chart"><iframe loading="lazy" src="https://s.tradingview.com/widgetembed/?symbol=CBOE%3AMTUM&interval=W&style=3&theme=light&hideideas=1&hidesidetoolbar=1&hidetoptoolbar=1&range=60M&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="sol-text"><div class="sol-card"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-card-tag">Systematic, long-only momentum - capturing the US equity risk premium, rebalanced every two weeks.</p></div><div class="sol-card"><div class="sol-mini-row"><div class="sol-mini"><b>11</b><span>holdings</span></div><div class="sol-mini"><b>8</b><span>factors</span></div><div class="sol-mini"><b>bi-weekly</b><span>rebalance</span></div></div><a class="wiki-cta" href="https://alpaca.markets" target="_blank" rel="noopener">built on alpaca -></a></div></div></div>
+<div class="sol-two"><div class="sol-chart"><iframe loading="lazy" src="https://s.tradingview.com/widgetembed/?symbol=CBOE%3AMTUM&interval=W&style=3&theme=light&hideideas=1&hidesidetoolbar=1&hidetoptoolbar=1&range=60M&locale=de" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div><div class="sol-text"><div class="sol-card"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-card-tag">Systematic, long-only momentum - capturing the US equity risk premium, rebalanced every two weeks.</p></div><div class="sol-card"><div class="sol-mini-row"><div class="sol-mini"><b>11</b><span>holdings</span></div><div class="sol-mini"><b>8</b><span>factors</span></div><div class="sol-mini"><b>bi-weekly</b><span>rebalance</span></div></div><a class="wiki-cta" href="https://alpaca.markets" target="_blank" rel="noopener">built on alpaca -></a></div></div></div><div class="sol-concept"><h4>Momentum, executed by machine</h4><p><em>Where discretion ends, the code begins.</em> Code Based harvests the most stubbornly persistent anomaly in markets - momentum, the tendency of winners to keep winning. Every fortnight it scores the entire US market across eight momentum and quality factors and rotates, without emotion or hesitation, into the strongest names. It is the US equity risk premium, distilled to a rules engine and executed at the speed of software.</p></div>
 </div>
 </div>
 </div>  </div>
@@ -760,8 +772,8 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--kupfer)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="news-quote"><p class="trade-quote keepcase">"The stock market is never obvious. It is designed to fool most of the people, most of the time." <cite>- Jesse Lauriston Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
-    <div class="mag"><div class="mag-mast"><span class="tag keepcase">sample report</span><a href="mailto:maloutrading@web.de">subscribe to the daily briefing -></a></div>
+    <div class="rib-intro" style="--accent:var(--kupfer)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="news-quote"><p class="trade-quote keepcase">"There is time to go long, time to go short and time to go fishing." <cite>- Jesse Lauriston Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <div class="mag"><div class="mag-mast"><span class="tag keepcase">sample report</span><a class="mag-reg" href="mailto:maloutrading@web.de">register -></a></div>
 <article class="mag-item"><span class="mag-kicker keepcase">N&deg; 01 - biotech</span><h3 class="mag-head keepcase">DNA chip writes genetic code</h3><p class="mag-body lead">A team at the Karolinska Institute is building a silicon chip that writes dozens of DNA strands at once, using only electricity and water-soluble enzymes.</p><p class="mag-body">DNA stores data millions of times denser than any hard drive and lasts for millennia. A portable writer moves this out of the clean-room lab toward everyday life - turning the blueprint of life into a writable commodity.</p><p class="mag-src">Karolinska Institutet</p></article>
 <article class="mag-item"><span class="mag-kicker keepcase">N&deg; 02 - policy</span><h3 class="mag-head keepcase">EU rules slow down Siri</h3><p class="mag-body lead">Apple is delaying new voice-assistant features in the EU, citing the Digital Markets Act as the reason.</p><p class="mag-body">The dispute raises an uncomfortable question: does Europe's openness come at the price of new technology arriving later here? Every big platform is watching whether delay pays off as leverage against regulation.</p><p class="mag-src">Reuters</p></article>
 <article class="mag-item"><span class="mag-kicker keepcase">N&deg; 03 - environment</span><h3 class="mag-head keepcase">Pesticide hits bumblebees in the genome</h3><p class="mag-body lead">Sulfoxaflor, the neonicotinoid successor considered safe, disrupts bumblebee reproduction even in tiny doses, according to a study.</p><p class="mag-body">Pollinators are the quiet infrastructure of agriculture. If the replacement carries the same harm under a new name, food gets more expensive long before anyone names the cause.</p><p class="mag-src">Nature</p></article>
@@ -835,7 +847,6 @@ footer{position:relative;z-index:1}
 
     <div class="team-bottom">
       <div class="spotify-box">
-        <svg class="sp-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.59 14.44a.62.62 0 0 1-.86.21c-2.35-1.44-5.31-1.76-8.8-.96a.62.62 0 1 1-.28-1.21c3.82-.87 7.09-.5 9.73 1.11.29.18.38.57.21.85Zm1.23-2.73a.78.78 0 0 1-1.07.26c-2.69-1.66-6.79-2.14-9.98-1.17a.78.78 0 1 1-.45-1.49c3.64-1.11 8.16-.58 11.24 1.31.36.22.48.71.26 1.09Zm.1-2.85C14.8 8.96 8.9 8.78 5.53 9.8a.94.94 0 1 1-.54-1.8c3.86-1.17 10.38-.94 14.48 1.49a.94.94 0 0 1-.96 1.62Z"/></svg>
         <a class="spotify-track" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener">
           <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0287f32427f479a260cd94f8e5" alt="" loading="lazy">
           <span class="t"><b>Emotions Unlocked</b><small>Mike WiLL Made-It</small></span>
@@ -870,7 +881,7 @@ footer{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- === Legal - reachable via the footer === -->
+
 <section class="tab sub legal plain" id="impressum">
   <div class="wrap reveal text">
     <h2>Legal Notice</h2>
