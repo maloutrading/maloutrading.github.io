@@ -449,7 +449,15 @@ footer{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.cur{display:none}}.ql{opacity:1}
 @keyframes qScroll{0%{opacity:0;transform:translateY(34px);filter:blur(6px)}24%,76%{opacity:1;transform:none;filter:blur(0)}100%{opacity:0;transform:translateY(-30px);filter:blur(5px)}}
 @supports(animation-timeline:view()){.trade-quote{animation:qScroll linear both;animation-timeline:view();animation-range:cover 5% cover 95%}}
-</style>
+.grain::after{content:"";position:fixed;inset:-6%;z-index:2;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 7s steps(6) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}16%{transform:translate(-2%,1%)}33%{transform:translate(2%,-2%)}50%{transform:translate(-1%,-2%)}66%{transform:translate(2%,1%)}83%{transform:translate(-2%,2%)}}
+.tabbg video,.topvid video,.landing .stage video{animation:kenburns 44s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.1) translate(1.5%,-1.5%)}}
+.folio{position:fixed;left:clamp(1rem,3vw,2.2rem);bottom:clamp(1rem,3vw,1.8rem);z-index:5;pointer-events:none;font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:color-mix(in srgb,var(--gold) 55%,var(--muted));opacity:.72}
+.member .portrait img,.homage-portrait img{filter:grayscale(.3) contrast(1.06) saturate(.82) sepia(.14);transition:filter .5s ease}
+.member:hover .portrait img,.homage:hover .homage-portrait img{filter:none}
+@keyframes titleIn{from{opacity:0;letter-spacing:.36em;transform:translateY(16px)}to{opacity:1;letter-spacing:.02em;transform:none}}
+@supports(animation-timeline:view()){.rib-title{animation:titleIn linear both;animation-timeline:view();animation-range:entry 8% cover 44%}}</style>
 </head>
 <body class="home">
 <a class="skip" href="#main">skip to content</a>
@@ -502,7 +510,7 @@ footer{position:relative;z-index:1}
 </section>
 
 
-<section class="tab sub" id="trade">
+<section class="tab sub grain" id="trade">
   <div class="topvid" aria-hidden="true">
     <video autoplay muted loop playsinline preload="none">
       <source src="shortVids/gen.mp4" type="video/mp4">
@@ -527,7 +535,7 @@ footer{position:relative;z-index:1}
 </div>  </div>
 </section>
 
-<section class="tab sub" id="news">
+<section class="tab sub grain" id="news">
   <div class="topvid" aria-hidden="true">
     <video autoplay muted loop playsinline preload="none">
       <source src="shortVids/col.mp4" type="video/mp4">
@@ -810,5 +818,5 @@ function initWx(){
 show((location.hash || '#home').slice(1), false);
 apply();
 </script>
-</body>
+<div class="folio" aria-hidden="true">MALOU · HAMBURG 53°N · MMXXIV</div></body>
 </html>
