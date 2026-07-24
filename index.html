@@ -26,7 +26,7 @@
   --sans:'Cormorant','Cormorant Garamond',Georgia,serif;
   --accent:var(--sans);
   --body:var(--serif);
-  --r:16px; --w:1020px; --wt:64ch; --wide:min(1180px,92vw);
+  --r:16px; --w:960px; --wt:64ch; --wide:min(1120px,90vw);
 }
 *{box-sizing:border-box}
 button,input,select,textarea{font-family:inherit}
@@ -35,11 +35,11 @@ a,button{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 html{scroll-behavior:smooth;overscroll-behavior-x:none;scrollbar-width:none}
 html::-webkit-scrollbar{width:0;height:0;display:none}
-::selection{background:var(--gold);color:var(--marine)}
+::selection{background:var(--blau);color:var(--marine)}
 
 .progress{position:absolute;left:0;bottom:0;height:2px;width:0;z-index:2;
-  background:linear-gradient(90deg,var(--gold),var(--weiss),var(--gold));
-  box-shadow:0 0 5px color-mix(in srgb,var(--gold) 55%,transparent);transition:width .18s linear}
+  background:linear-gradient(90deg,var(--blau),var(--weiss),var(--blau));
+  box-shadow:0 0 5px color-mix(in srgb,var(--blau) 55%,transparent);transition:width .18s linear}
 body.home .progress{opacity:0}
 
 .stage .corner{position:absolute;width:24px;height:24px;z-index:3;pointer-events:none;
@@ -85,7 +85,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 header{position:fixed;inset:0 0 auto;z-index:20;
   transition:background .5s,box-shadow .5s,opacity .5s,transform .5s}
 header::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
-  background:var(--gold-line)}
+  background:color-mix(in srgb,var(--blau) 55%,transparent)}
 header.solid{background:color-mix(in srgb,var(--marine) 88%,black);opacity:.93;
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
 header.away{opacity:0;transform:translateY(-100%);pointer-events:none}
@@ -98,8 +98,8 @@ nav.tabs{display:flex;gap:.15rem;flex-wrap:wrap}
 nav.tabs button{font-family:var(--serif);font-size:.95rem;letter-spacing:.05em;
   background:none;border:none;cursor:pointer;color:var(--silber);padding:.5rem .95rem;
   border-radius:999px;transition:all .3s;white-space:nowrap;min-height:40px;text-transform:lowercase}
-nav.tabs button:hover{color:var(--gold)}
-nav.tabs button.active{background:var(--gold);color:var(--marine)}
+nav.tabs button:hover{color:var(--blau)}
+nav.tabs button.active{background:var(--blau);color:var(--marine)}
 nav.tabs button[data-t="team"]:hover{color:var(--holz)}
 nav.tabs button[data-t="team"].active{background:var(--holz);color:var(--weiss)}
 nav.tabs button[data-t="trade"]:hover{color:var(--blau)}
@@ -169,7 +169,9 @@ main section.tab.show{display:block}
 .crop .br{bottom:16px;right:16px;border-bottom-width:1px;border-right-width:1px}
 .reveal.in h2::after{transform:scaleX(1)}
 @keyframes titleIn{from{opacity:0;letter-spacing:.42em;transform:translateY(15px);filter:blur(5px)}to{opacity:1;letter-spacing:0;transform:none;filter:blur(0)}}
-.reveal.in .rib-title{animation:titleIn .9s cubic-bezier(.2,.75,.2,1) both}
+.rib-title{--asm:1}
+.rib-title .rl{display:inline-block;will-change:transform;
+  transform:translate(calc(var(--dx,0rem)*(1 - var(--asm))),calc(var(--dy,0rem)*(1 - var(--asm)))) rotate(calc(var(--rot,0deg)*(1 - var(--asm))))}
 
 .landing .stage::after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,var(--marine) 0%,transparent 15%),
@@ -376,8 +378,8 @@ footer{position:relative;border:none;padding:1.05rem 0 1.15rem;color:var(--muted
 body.atbottom footer{opacity:1;transform:none;pointer-events:auto}
 
 footer::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold) 18%,var(--gold) 82%,transparent);
-  opacity:.55;box-shadow:0 0 14px 1px color-mix(in srgb,var(--gold) 45%,transparent)}
+  background:linear-gradient(90deg,transparent,var(--blau) 18%,var(--blau) 82%,transparent);
+  opacity:.55;box-shadow:0 0 14px 1px color-mix(in srgb,var(--blau) 45%,transparent)}
 
 footer .row{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;
   gap:.7rem;font-size:0.851rem;letter-spacing:.05em;white-space:nowrap;
@@ -396,17 +398,17 @@ footer .sig:hover{opacity:1;box-shadow:0 0 0 .5px color-mix(in srgb,var(--weiss)
 footer button{position:relative;background:none;border:none;cursor:pointer;padding:0;
   font:inherit;color:var(--muted);text-decoration:none}
 footer button::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;
-  background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s}
-footer button:hover{color:var(--gold)}
+  background:var(--blau);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+footer button:hover{color:var(--blau)}
 footer button:hover::after{transform:scaleX(1)}
 #main{position:relative;z-index:1;overflow-x:clip}
 footer{position:relative;z-index:1}
 .cur{position:fixed;left:0;top:0;z-index:40;pointer-events:none;opacity:0;will-change:transform;transition:opacity .3s}
-.cur.dot{width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--gold)}
+.cur.dot{width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--blau)}
 .cur.ring{width:24px;height:24px;margin:-12px;border-radius:50%;
-  border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);
+  border:1px solid color-mix(in srgb,var(--blau) 55%,transparent);
   transition:width .3s,height .3s,margin .3s,border-color .3s,opacity .3s}
-.cur.ring.hot{width:44px;height:44px;margin:-22px;border-color:var(--gold)}
+.cur.ring.hot{width:44px;height:44px;margin:-22px;border-color:var(--blau)}
 .cur.ring.down{width:18px;height:18px;margin:-9px}
 
 .rib-intro{position:relative}
@@ -484,7 +486,7 @@ footer{position:relative;z-index:1}
 
 <div aria-hidden="true" style="position:fixed;left:0;right:0;bottom:0;height:2px;z-index:6;
   pointer-events:none;opacity:.5;background:linear-gradient(90deg,
-  var(--gold) 0%,var(--blau) 30%,var(--gruen) 55%,var(--holz) 78%,var(--gold) 100%)"></div>
+  transparent,var(--blau) 22%,var(--weiss) 50%,var(--blau) 78%,transparent)"></div>
 
 <header id="hd">
   <div class="nav">
@@ -755,7 +757,18 @@ function apply(){
   const denom = docEl.scrollHeight - innerHeight;
   const frac = denom > 4 ? Math.min(1, y / denom) : 0;
   prog.style.width = frac * 100 + '%';               // progress bar = header's bottom edge
+  updateRib();
   lastY = y; ticking = false;
+}
+// section title (trade/news/team): letters assemble as it scrolls into the reading zone, fade slightly leaving the top
+function updateRib(){
+  const sec = document.querySelector('main .tab.show'); if(!sec) return;
+  const t = sec.querySelector('.rib-title'); if(!t) return;
+  const vh = innerHeight, r = t.getBoundingClientRect(), c = r.top + r.height/2;
+  let a = (vh - c) / (vh*0.35); a = a<0?0:a>1?1:a;   // scattered below → assembled at 65% vh
+  let f = (vh*0.14 - c) / (vh*0.14); f = f<0?0:f>1?1:f; // fade only near the top edge
+  t.style.setProperty('--asm', a.toFixed(3));
+  t.style.opacity = (1 - 0.5*f).toFixed(3);
 }
 addEventListener('scroll', () => {
   if (!ticking){ requestAnimationFrame(apply); ticking = true; }
@@ -795,6 +808,19 @@ function show(id, push){
 addEventListener('popstate', () => show((location.hash || '#home').slice(1), false));
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduce) document.querySelectorAll('.rib-title').forEach(t => {
+  if(t.dataset.rl) return;
+  const txt = t.textContent, n = txt.length, mid = (n-1)/2; t.textContent = '';
+  for(let i=0;i<n;i++){
+    const s = document.createElement('span'); s.className = 'rl';
+    s.textContent = txt[i] === ' ' ? ' ' : txt[i];
+    s.style.setProperty('--dx', ((i-mid)*0.9).toFixed(2)+'rem');
+    s.style.setProperty('--dy', ((((i*37)%5)-2)*0.5).toFixed(2)+'rem');
+    s.style.setProperty('--rot', (((i*53)%17)-8)+'deg');
+    t.appendChild(s);
+  }
+  t.dataset.rl = '1';
+});
 const fetchT = (u, ms) => Promise.race([fetch(u), new Promise((_, r) => setTimeout(r, ms || 8000))]);
 let wxDone = 0;
 function wxWord(c){ if(c==null)return'-'; if(c===0)return'clear'; if(c<3)return'fair'; if(c<45)return'cloudy'; if(c<50)return'overcast'; if(c<57)return'fog'; if(c<68)return'rain'; if(c<78)return'snow'; if(c<83)return'showers'; return'storm'; }
