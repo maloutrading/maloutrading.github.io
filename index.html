@@ -10,7 +10,10 @@
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E0B24'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23C0A364' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
-<style>
+<style>@font-face{font-family:'Cormorant';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/cormorant-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Spectral';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/spectral-400i.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/spectral-400.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/spectral-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 
 :root{
   --marine:#0E0B24; --weiss:#D4CEC0; --silber:#9691A9;
@@ -19,8 +22,9 @@
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
   --line:#757189;
   --gold-line:rgba(192,163,100,.55);
-  --serif:Georgia,"Times New Roman",Times,serif;
-  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --serif:'Spectral',Georgia,"Times New Roman",serif;
+  --sans:'Cormorant','Cormorant Garamond',Georgia,serif;
+  --accent:var(--sans);
   --body:var(--serif);
   --r:16px; --w:1020px; --wt:64ch; --wide:min(1180px,92vw);
 }
@@ -59,6 +63,7 @@ body{margin:0;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.06;
   letter-spacing:0;text-transform:lowercase}
 h1{font-size:clamp(3.45rem,10.35vw,6.9rem);margin:.12em 0}
+h1,.brand-lg{font-family:var(--accent)}
 h2{font-size:clamp(2.185rem,4.6vw,2.99rem);margin:0 0 .6em}
 h3{font-size:1.495rem;margin:0 0 .45em}
 a{color:var(--tuerkis);text-underline-offset:4px;text-decoration-thickness:1px}
