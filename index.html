@@ -20,7 +20,8 @@
   --line:#757189;
   --gold-line:rgba(192,163,100,.55);
   --serif:"EB Garamond",Georgia,"Times New Roman","Apple Symbols","Segoe UI Symbol","Noto Sans Symbols 2","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",serif;
-  --body:"EB Garamond",Georgia,"Times New Roman","Apple Symbols","Segoe UI Symbol","Noto Sans Symbols 2","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",serif;
+  --sans:"Helvetica Neue",Helvetica,"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"Apple Color Emoji","Segoe UI Emoji",sans-serif;
+  --body:var(--sans);
   --r:16px; --w:1020px; --wt:64ch;
 }
 *{box-sizing:border-box}
@@ -54,12 +55,12 @@ body.home .progress{opacity:0}
 .stage video.ready,.topvid video.ready{opacity:1}
 
 body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:var(--body);font-weight:300;font-size:1.288rem;line-height:1.95;
+  font-family:var(--body);font-weight:400;font-size:1.1rem;line-height:1.7;
   text-transform:lowercase;-webkit-text-size-adjust:100%;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;font-synthesis:none}
-h1,h2,h3{font-family:var(--serif);font-weight:300;line-height:1.08;
-  letter-spacing:.006em;text-transform:lowercase}
+h1,h2,h3{font-family:var(--sans);font-weight:600;line-height:1.04;
+  letter-spacing:-.012em;text-transform:lowercase}
 h1{font-size:clamp(3.45rem,10.35vw,6.9rem);margin:.12em 0}
 h2{font-size:clamp(2.185rem,4.6vw,2.99rem);margin:0 0 .6em}
 h3{font-size:1.495rem;margin:0 0 .45em}
@@ -94,7 +95,7 @@ header.away{opacity:0;transform:translateY(-100%);pointer-events:none}
 body.home header{opacity:0;transform:translateY(-100%);pointer-events:none}
 .nav{max-width:var(--w);margin:0 auto;padding:.9rem 1.5rem;display:flex;
   align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.brand{font-family:var(--serif);font-size:1.3rem;text-decoration:none;color:var(--weiss);letter-spacing:.03em}
+.brand{font-family:var(--sans);font-size:1.2rem;font-weight:600;text-decoration:none;color:var(--weiss);letter-spacing:-.01em}
 .brand em{color:inherit;font-style:normal}
 nav.tabs{display:flex;gap:.15rem;flex-wrap:wrap}
 nav.tabs button{font-family:var(--serif);font-size:.95rem;letter-spacing:.05em;
@@ -210,7 +211,7 @@ picture{display:contents}
 .wiki-cta:hover{transform:translateY(-2px);color:var(--marine);box-shadow:0 10px 30px color-mix(in srgb,var(--tuerkis) 40%,transparent)}
 .rib-intro{text-align:center;max-width:var(--wt);margin:0 auto calc(clamp(2.6rem,5vw,3.8rem) + 2.5cm)}
 .rib-kicker{display:block;font-style:normal;font-size:.7rem;letter-spacing:.44em;text-transform:uppercase;color:var(--muted);margin:0 0 1.5rem}
-.rib-title{font-family:var(--serif);font-weight:200;font-size:clamp(1.8rem,4.2vw,2.9rem);letter-spacing:.02em;line-height:1.05;margin:0}
+.rib-title{font-family:var(--sans);font-weight:600;font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.02em;line-height:1;margin:0}
 .rib-title::after{margin-left:auto;margin-right:auto}
 .rib-lead{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.2rem,2.5vw,1.48rem);margin:1.75rem auto 0;max-width:52ch}
 .team-bottom{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
@@ -265,7 +266,7 @@ picture{display:contents}
 .sol-head::after{content:"";display:block;width:38px;height:1px;margin:1.1rem auto 0;background:color-mix(in srgb,var(--gold) 55%,transparent)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{text-align:center;margin:0 0 clamp(1.6rem,3vw,2.2rem)}
-.sol-title{font-family:var(--serif);font-weight:200;font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:.02em;margin:0;color:var(--ink)}
+.sol-title{font-family:var(--sans);font-weight:600;font-size:clamp(1.6rem,3.4vw,2.4rem);letter-spacing:-.015em;margin:0;color:var(--ink)}
 .sol-toggle{display:flex;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
 .sol-btn{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;white-space:nowrap;user-select:none;
@@ -288,7 +289,7 @@ picture{display:contents}
 .sol-text{display:flex;flex-direction:column;gap:clamp(.9rem,1.8vw,1.2rem)}
 .sol-card{flex:1;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line);border-radius:14px;padding:clamp(1.2rem,2.6vw,1.8rem);background:color-mix(in srgb,var(--card) 60%,transparent)}
 .sol-card .wiki-kicker{margin:0 0 .55rem}
-.sol-card-name{font-family:var(--serif);font-weight:200;font-size:clamp(1.6rem,3.2vw,2.15rem);letter-spacing:.015em;margin:0 0 .7rem;color:var(--ink)}
+.sol-card-name{font-family:var(--sans);font-weight:600;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.015em;margin:0 0 .7rem;color:var(--ink)}
 .sol-card-tag{color:var(--muted);font-size:.98rem;line-height:1.6;margin:0}
 .sol-mini-row{display:flex;gap:clamp(1rem,3vw,1.8rem);flex-wrap:wrap}
 .sol-mini b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;color:var(--ink)}
@@ -307,7 +308,7 @@ picture{display:contents}
 .mag-mast a:hover{color:var(--ink)}
 .mag-item{padding:clamp(1.9rem,4vw,2.6rem) 0;border-top:1px solid var(--line)}
 .mag-kicker{display:block;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--kupfer);margin:0 0 .75rem}
-.mag-head{font-family:var(--serif);font-weight:400;font-size:clamp(1.3rem,2.6vw,1.68rem);line-height:1.28;margin:0 0 .85rem;color:var(--ink)}
+.mag-head{font-family:var(--sans);font-weight:600;font-size:clamp(1.25rem,2.4vw,1.55rem);line-height:1.25;letter-spacing:-.01em;margin:0 0 .85rem;color:var(--ink)}
 .mag-body{font-size:1rem;line-height:1.72;color:var(--silber);margin:0 0 .75rem}
 .mag-body.lead{color:var(--ink)}
 .mag-body:last-child{margin-bottom:0}
