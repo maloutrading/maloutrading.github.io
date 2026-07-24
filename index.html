@@ -37,11 +37,9 @@ html{scroll-behavior:smooth;overscroll-behavior-x:none;scrollbar-width:none}
 html::-webkit-scrollbar{width:0;height:0;display:none}
 ::selection{background:var(--gold);color:var(--marine)}
 
-.progress{position:fixed;top:0;left:0;height:1px;width:0;z-index:30;
-  background:linear-gradient(90deg,var(--kupfer),var(--gold),var(--weiss),var(--gold),var(--tuerkis));
-  background-size:200% 100%;box-shadow:0 0 6px var(--gold),0 0 2px rgba(255,255,255,.7);
-  animation:progloss 4.5s linear infinite;transition:width .12s linear}
-@keyframes progloss{to{background-position:200% 0}}
+.progress{position:absolute;left:0;bottom:0;height:2px;width:0;z-index:2;
+  background:linear-gradient(90deg,var(--gold),var(--weiss),var(--gold));
+  box-shadow:0 0 5px color-mix(in srgb,var(--gold) 55%,transparent);transition:width .18s linear}
 body.home .progress{opacity:0}
 
 .stage .corner{position:absolute;width:24px;height:24px;z-index:3;pointer-events:none;
@@ -88,11 +86,7 @@ header{position:fixed;inset:0 0 auto;z-index:20;
   transition:background .5s,box-shadow .5s,opacity .5s,transform .5s}
 header::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
   background:var(--gold-line)}
-header::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;pointer-events:none;opacity:.72;
-  background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--weiss) 50%,var(--gold) 70%,transparent);
-  background-size:42% 100%;background-repeat:no-repeat;background-position:calc(var(--sc,0)*100%) 0;
-  transition:background-position .12s linear}
-header.solid{background:color-mix(in srgb,var(--marine) 88%,black);
+header.solid{background:color-mix(in srgb,var(--marine) 88%,black);opacity:.93;
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
 header.away{opacity:0;transform:translateY(-100%);pointer-events:none}
 body.home header{opacity:0;transform:translateY(-100%);pointer-events:none}
@@ -477,7 +471,6 @@ footer{position:relative;z-index:1}
   this site needs javascript for navigation.</p></noscript>
 
 <div class="crop" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></div>
-<div class="progress" id="prog" aria-hidden="true"></div>
 <div class="cur ring" aria-hidden="true"></div><div class="cur dot" aria-hidden="true"></div>
 
 <div aria-hidden="true" style="position:fixed;left:0;right:0;bottom:0;height:2px;z-index:6;
@@ -493,6 +486,7 @@ footer{position:relative;z-index:1}
       <button data-t="trade" onclick="show('trade')">trade</button>
     </nav>
   </div>
+  <div class="progress" id="prog" aria-hidden="true"></div>
 </header>
 
 <main id="main">
@@ -754,8 +748,7 @@ function apply(){
   body.classList.toggle('atbottom', innerHeight + y >= docEl.scrollHeight - 60);
   const denom = docEl.scrollHeight - innerHeight;
   const frac = denom > 4 ? Math.min(1, y / denom) : 0;
-  prog.style.width = frac * 100 + '%';
-  hd.style.setProperty('--sc', frac);                // scroll fraction -> border highlight
+  prog.style.width = frac * 100 + '%';               // progress bar = header's bottom edge
   lastY = y; ticking = false;
 }
 addEventListener('scroll', () => {
