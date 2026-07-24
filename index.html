@@ -83,9 +83,10 @@ header{position:fixed;inset:0 0 auto;z-index:20;
   transition:background .5s,box-shadow .5s,opacity .5s,transform .5s}
 header::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
   background:var(--gold-line)}
-header::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;pointer-events:none;opacity:.55;
-  background:linear-gradient(90deg,transparent,var(--silber),var(--weiss),var(--gold),var(--weiss),var(--silber),transparent);
-  background-size:230% 100%;animation:sheen 9s linear infinite}
+header::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;pointer-events:none;opacity:.72;
+  background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--weiss) 50%,var(--gold) 70%,transparent);
+  background-size:42% 100%;background-repeat:no-repeat;background-position:calc(var(--sc,0)*100%) 0;
+  transition:background-position .12s linear}
 header.solid{background:color-mix(in srgb,var(--marine) 88%,black);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
 header.away{opacity:0;transform:translateY(-100%);pointer-events:none}
@@ -168,6 +169,8 @@ main section.tab.show{display:block}
 .crop .bl{bottom:16px;left:16px;border-bottom-width:1px;border-left-width:1px}
 .crop .br{bottom:16px;right:16px;border-bottom-width:1px;border-right-width:1px}
 .reveal.in h2::after{transform:scaleX(1)}
+@keyframes titleIn{from{opacity:0;letter-spacing:.42em;transform:translateY(15px);filter:blur(5px)}to{opacity:1;letter-spacing:0;transform:none;filter:blur(0)}}
+.reveal.in .rib-title{animation:titleIn .9s cubic-bezier(.2,.75,.2,1) both}
 
 .landing .stage::after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,var(--marine) 0%,transparent 15%),
@@ -742,10 +745,12 @@ let lastY = 0, ticking = false;
 function apply(){
   const y = scrollY, home = body.classList.contains('home');
   hd.classList.toggle('solid', y > 40 || !home);
-  hd.classList.toggle('away', !home && y > 200 && y > lastY);
+  hd.classList.remove('away');                       // header stays pinned on scroll
   body.classList.toggle('atbottom', innerHeight + y >= docEl.scrollHeight - 60);
   const denom = docEl.scrollHeight - innerHeight;
-  prog.style.width = (denom > 4 ? Math.min(1, y / denom) * 100 : 0) + '%';
+  const frac = denom > 4 ? Math.min(1, y / denom) : 0;
+  prog.style.width = frac * 100 + '%';
+  hd.style.setProperty('--sc', frac);                // scroll fraction -> border highlight
   lastY = y; ticking = false;
 }
 addEventListener('scroll', () => {
