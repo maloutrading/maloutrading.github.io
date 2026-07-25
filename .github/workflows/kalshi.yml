@@ -1,0 +1,33 @@
+name: kalshi
+
+on:
+  schedule:
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-perf
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install "requests<3" "cryptography>=42"
+      - run: python kalshi.py
+        env:
+          KALSHI_API_KEY_ID: ${{ secrets.KALSHIAPIKEYID }}
+          KALSHI_PRIVATE_KEY: ${{ secrets.KALSHIPRIVATEKEY }}
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add kalshi.json
+          git diff --cached --quiet || (git commit -m "update kalshi.json" && git push)
