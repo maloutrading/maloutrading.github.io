@@ -45,7 +45,7 @@ html::-webkit-scrollbar{width:0;height:0;display:none}
 body.home .progress{opacity:0}
 
 .stage .corner{position:absolute;width:24px;height:24px;z-index:3;pointer-events:none;
-  border:0 solid var(--gold-line);opacity:.85}
+  border:0 solid color-mix(in srgb,var(--blau) 60%,transparent);opacity:.85}
 .stage .corner.tl{top:1.1rem;left:1.1rem;border-top-width:1px;border-left-width:1px}
 .stage .corner.tr{top:1.1rem;right:1.1rem;border-top-width:1px;border-right-width:1px}
 .stage .corner.bl{bottom:1.1rem;left:1.1rem;border-bottom-width:1px;border-left-width:1px}
@@ -129,11 +129,11 @@ main section.tab.show{display:block}
   background:linear-gradient(158deg,color-mix(in srgb,var(--marine) 92%,black),var(--marine))}
 
 .landing .left::after{content:"";position:absolute;top:9%;bottom:9%;right:0;width:1px;
-  background:linear-gradient(180deg,transparent,var(--gold-line),transparent)}
+  background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--silber) 60%,transparent),transparent)}
 
 .left-inner{flex:1;display:grid;grid-template-rows:1fr 1fr;
   align-items:center;width:100%;max-width:none}
-.brand-lg{font-family:var(--serif);font-style:italic;font-weight:300;justify-self:center;text-align:center;
+.brand-lg{font-family:var(--sans);font-style:normal;font-weight:600;justify-self:center;text-align:center;
   font-size:clamp(1.85rem,4.2vw,3.2rem);line-height:1.05;margin:0;letter-spacing:.015em;
   transform:translate(-2.2rem,2.6rem);
   color:var(--weiss);text-decoration:none;
@@ -141,8 +141,8 @@ main section.tab.show{display:block}
 .brand-lg em{font-style:italic;color:inherit}
 .menu{justify-self:start;display:flex;flex-direction:column;gap:0;margin:0 0 0 3rem;
   width:min(13rem,80%)}
-.menu button:nth-child(1){--accent:var(--holz)}
-.menu button:nth-child(2){--accent:var(--gold)}
+.menu button:nth-child(1){--accent:var(--gruen)}
+.menu button:nth-child(2){--accent:var(--silber)}
 .menu button:nth-child(3){--accent:var(--blau)}
 .menu button:nth-child(4){--accent:var(--gruen)}
 .menu button:nth-child(5){--accent:var(--blau)}
@@ -178,7 +178,7 @@ main section.tab.show{display:block}
   background:linear-gradient(90deg,var(--marine) 0%,transparent 15%),
              radial-gradient(ellipse at 62% 42%,transparent 60%,color-mix(in srgb,var(--marine) 16%,transparent))}
 
-.landing .stage::before{content:"";position:absolute;inset:1.1rem;border:1px solid var(--gold-line);
+.landing .stage::before{content:"";position:absolute;inset:1.1rem;border:1px solid color-mix(in srgb,var(--gruen) 55%,transparent);
   z-index:2;pointer-events:none}
 
 @media(max-width:860px){
