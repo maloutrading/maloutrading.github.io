@@ -168,7 +168,6 @@ main section.tab.show{display:block}
 .crop .bl{bottom:16px;left:16px;border-bottom-width:1px;border-left-width:1px}
 .crop .br{bottom:16px;right:16px;border-bottom-width:1px;border-right-width:1px}
 .reveal.in h2::after{transform:scaleX(1)}
-@keyframes titleIn{from{opacity:0;letter-spacing:.42em;transform:translateY(15px);filter:blur(5px)}to{opacity:1;letter-spacing:0;transform:none;filter:blur(0)}}
 .rib-title{--asm:1}
 .rib-title .rl{display:inline-block;will-change:transform;
   transform:translate(calc(var(--dx,0rem)*(1 - var(--asm))),calc(var(--dy,0rem)*(1 - var(--asm)))) rotate(calc(var(--rot,0deg)*(1 - var(--asm))))}
@@ -182,7 +181,7 @@ main section.tab.show{display:block}
 
 @media(max-width:860px){
   .landing{grid-template-columns:1fr;min-height:auto}
-  .landing .stage{min-height:52svh;order:-1}
+  .landing .stage{min-height:62svh;order:-1}
   .landing .left::after{display:none}
   .landing .left{padding:2.6rem 1.5rem 3.6rem}
 }
@@ -193,13 +192,15 @@ section.tab.sub .wrap{max-width:var(--wide);padding-top:clamp(4.4rem,7.5vw,7rem)
 section.tab.sub h2::after{content:"";display:block;width:2.4rem;height:3px;
   margin-top:.5rem;border-radius:2px;background:var(--accent,var(--gold));
   transform:scaleX(1);transform-origin:left}
-.topvid{position:relative;height:58vh;min-height:374px;overflow:hidden;isolation:isolate}
+.topvid{position:relative;height:clamp(460px,74vh,820px);overflow:hidden;isolation:isolate}
 .topvid video,.topvid .poster{position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;image-rendering:auto}
-#news .topvid video{object-position:center 15%}
 #news .topvid video{object-position:center center}
-.topvid::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,color-mix(in srgb,var(--marine) 16%,transparent),transparent 40%)}
+/* breiter, weicher, verwaschener Uebergang: unteres Band der Videos wird geblurrt und schmilzt ins Marine */
+.topvid::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 54%,color-mix(in srgb,var(--marine) 55%,transparent) 80%,var(--marine) 100%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 56%,#000 90%);mask-image:linear-gradient(to bottom,transparent 56%,#000 90%);
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px)}
 .topvid::before{content:"";position:absolute;inset:1.1rem;pointer-events:none;
   border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 55%,transparent)}
 .legal{font-size:1.127rem}
@@ -333,16 +334,6 @@ picture{display:contents}
 .sol-concept em{color:var(--gold);font-style:italic}
 
 
-.trade-quotes{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin:0 0 clamp(3rem,6vw,4.4rem)}
-.trade-quote{position:relative;margin:0;padding:1.7rem 1.6rem 1.5rem 2rem;border-radius:14px;
-  border:1px solid var(--line);background:color-mix(in srgb,var(--card) 55%,transparent)}
-.trade-quote::before{content:"";position:absolute;left:0;top:1.4rem;bottom:1.4rem;width:2px;border-radius:2px;
-  background:linear-gradient(180deg,var(--gold),var(--blau))}
-.trade-quote p{font-family:var(--serif);font-weight:300;font-style:italic;text-transform:none;
-  font-size:clamp(1.3225rem,2.53vw,1.6675rem);line-height:1.5;margin:0;color:var(--ink)}
-.trade-quote cite{display:block;margin-top:.9rem;font-style:italic;text-transform:none;
-  color:var(--muted);font-size:1.035rem}
-@media(max-width:720px){.trade-quotes{grid-template-columns:1fr}}
 .portrait{position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;
   border:1px solid var(--gold-line);background:linear-gradient(150deg,var(--grau),var(--marine))}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
@@ -421,7 +412,7 @@ footer{position:relative;z-index:1}
 
 #team{position:relative}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.tabbg,.topvid,.landing .stage{-webkit-mask-image:linear-gradient(to bottom,#000 66%,transparent 100%);mask-image:linear-gradient(to bottom,#000 66%,transparent 100%)}
+.tabbg,.landing .stage{-webkit-mask-image:linear-gradient(to bottom,#000 56%,transparent 100%);mask-image:linear-gradient(to bottom,#000 56%,transparent 100%)}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
 .tabbg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,
   color-mix(in srgb,var(--marine) 58%,transparent),color-mix(in srgb,var(--marine) 80%,transparent))}
@@ -442,7 +433,6 @@ footer{position:relative;z-index:1}
 .library::after{animation:shelfPulse 6.5s ease-in-out infinite}
 @keyframes goldSheen{0%,58%{transform:translateX(-150%)}100%{transform:translateX(260%)}}
 @keyframes shelfPulse{0%,100%{opacity:.45}50%{opacity:1}}
-@keyframes bookReveal{0%{opacity:0;transform:translateY(42px) scale(.955)}22%,100%{opacity:1;transform:none}}
 .trade-quote::before{display:none}
 .trade-quote cite{display:block;margin:.75rem 0 0;font-style:italic;color:#A8894F;white-space:nowrap;font-size:.9em;letter-spacing:.08em}
 .divider{position:relative;height:14px;width:min(920px,92%);margin:clamp(4.5rem,9vw,7.5rem) auto}
@@ -806,9 +796,9 @@ if(!reduce) document.querySelectorAll('.rib-title').forEach(t => {
   for(let i=0;i<n;i++){
     const s = document.createElement('span'); s.className = 'rl';
     s.textContent = txt[i] === ' ' ? ' ' : txt[i];
-    s.style.setProperty('--dx', ((i-mid)*0.9).toFixed(2)+'rem');
-    s.style.setProperty('--dy', ((((i*37)%5)-2)*0.5).toFixed(2)+'rem');
-    s.style.setProperty('--rot', (((i*53)%17)-8)+'deg');
+    s.style.setProperty('--dx', ((i-mid)*1.25).toFixed(2)+'rem');
+    s.style.setProperty('--dy', ((((i*37)%5)-2)*0.8).toFixed(2)+'rem');
+    s.style.setProperty('--rot', ((((i*53)%17)-8)*1.4).toFixed(1)+'deg');
     t.appendChild(s);
   }
   t.dataset.rl = '1';
