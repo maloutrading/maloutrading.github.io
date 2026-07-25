@@ -214,14 +214,14 @@ section.tab.sub h2::after{content:"";display:block;width:2.4rem;height:3px;
 section.plain .wrap{padding-top:clamp(5.5rem,10vw,7.5rem)}
 picture{display:contents}
 .wiki-kicker{display:block;font-style:italic;font-size:0.92rem;letter-spacing:.32em;text-transform:uppercase;color:var(--pcol,var(--gold));margin:0 0 .8rem}
-.wiki-cta{position:relative;overflow:hidden;display:inline-block;text-decoration:none;color:var(--marine);padding:.95rem 2.2rem;border-radius:999px;font-style:italic;font-size:1.2075rem;
-  background:linear-gradient(135deg,color-mix(in srgb,var(--blau) 82%,#fff),var(--blau) 52%,color-mix(in srgb,var(--blau) 88%,#000));
-  box-shadow:0 7px 20px -7px color-mix(in srgb,var(--blau) 60%,transparent),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -3px 8px -3px rgba(0,0,0,.28);
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),filter .35s var(--ease);animation:ctaPulse 3.4s ease-in-out infinite}
+.wiki-cta{position:relative;overflow:hidden;display:inline-block;text-decoration:none;color:var(--weiss);padding:.95rem 2.2rem;border-radius:999px;font-style:italic;font-size:1.2075rem;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 42%,#000),color-mix(in srgb,var(--silber) 20%,#000) 55%,#0b0b0d);
+  box-shadow:0 8px 22px -8px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 60%,#fff),inset 0 -3px 8px -3px rgba(0,0,0,.5);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),filter .35s var(--ease);}
 .wiki-cta::after{content:"";position:absolute;top:-25%;left:-90%;width:60%;height:150%;pointer-events:none;transform:skewX(-18deg);
   background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.55) 50%,transparent 68%);transition:left .75s var(--ease)}
-.wiki-cta:hover{transform:translateY(-3px) scale(1.035);color:var(--marine);filter:saturate(1.1) brightness(1.05);animation:none;
-  box-shadow:0 18px 44px -10px color-mix(in srgb,var(--blau) 68%,transparent),inset 0 1px 0 rgba(255,255,255,.5)}
+.wiki-cta:hover{transform:translateY(-3px) scale(1.035);color:var(--weiss);filter:brightness(1.12);animation:none;
+  box-shadow:0 18px 44px -10px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 72%,#fff)}
 .wiki-cta:hover::after{left:135%}
 .wiki-cta:active{transform:translateY(-1px) scale(.99)}
 @keyframes ctaPulse{0%,100%{box-shadow:0 7px 20px -7px color-mix(in srgb,var(--blau) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -3px 8px -3px rgba(0,0,0,.28)}50%{box-shadow:0 11px 30px -7px color-mix(in srgb,var(--blau) 72%,transparent),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 8px -3px rgba(0,0,0,.28)}}
@@ -304,14 +304,14 @@ picture{display:contents}
 .sol-chart{border:1px solid color-mix(in srgb,var(--pcol) 42%,transparent);border-radius:var(--r-sm);overflow:hidden;background:color-mix(in srgb,var(--card) 50%,transparent);height:clamp(230px,30vw,300px);display:flex;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 2px 34px -22px color-mix(in srgb,var(--pcol) 55%,transparent)}
 .sol-chart iframe{width:100%;height:100%;border:0;display:block}
 .sol-text{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,2.6vw,2.1rem)}
-.sol-bullets{list-style:none;margin:1.1rem 0 .2rem;padding:0;display:flex;flex-direction:column;gap:.55rem;align-items:stretch}.sol-bullets li{--bcol:var(--pcol,var(--blau));position:relative;overflow:hidden;display:flex;align-items:center;font-style:italic;font-weight:400;font-size:1.02rem;color:var(--marine);text-align:left;padding:.74rem 1.4rem;border-radius:var(--pill);border:1px solid color-mix(in srgb,#fff 26%,var(--bcol));background:linear-gradient(135deg,color-mix(in srgb,var(--bcol) 84%,#fff),var(--bcol) 50%,color-mix(in srgb,var(--bcol) 84%,#000));box-shadow:0 8px 22px -7px color-mix(in srgb,var(--bcol) 66%,transparent),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 8px -3px rgba(0,0,0,.3);transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .3s var(--ease)}
-.sol-bullets li:nth-child(1){--bcol:var(--holz)}
-.sol-bullets li:nth-child(2){--bcol:color-mix(in srgb,var(--holz) 50%,var(--gold))}
-.sol-bullets li:nth-child(3){--bcol:var(--gold)}
+.sol-bullets{list-style:none;margin:1.1rem 0 .2rem;padding:0;display:flex;flex-direction:column;gap:.55rem;align-items:stretch}.sol-bullets li{--bcol:var(--pcol,var(--blau));position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-style:italic;font-weight:400;font-size:1.02rem;color:var(--marine);text-align:center;padding:.74rem 1.4rem;border-radius:var(--pill);border:1px solid color-mix(in srgb,#fff 26%,var(--bcol));background:linear-gradient(135deg,color-mix(in srgb,var(--bcol) 84%,#fff),var(--bcol) 50%,color-mix(in srgb,var(--bcol) 84%,#000));box-shadow:0 8px 22px -7px color-mix(in srgb,var(--bcol) 66%,transparent),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 8px -3px rgba(0,0,0,.3);transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .3s var(--ease)}
+.sol-bullets li:nth-child(1){--bcol:color-mix(in srgb,var(--pcol) 58%,#fff)}
+.sol-bullets li:nth-child(2){--bcol:var(--pcol)}
+.sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 72%,#000)}
 .sol-bullets li::after{content:"";position:absolute;top:-25%;left:-90%;width:60%;height:150%;pointer-events:none;transform:skewX(-18deg);background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.5) 50%,transparent 68%);transition:left .75s var(--ease)}
 .sol-bullets li:hover{transform:translateY(-2px);filter:saturate(1.14) brightness(1.05);box-shadow:0 16px 36px -10px color-mix(in srgb,var(--bcol) 74%,transparent),inset 0 1px 0 rgba(255,255,255,.58)}
 .sol-bullets li:hover::after{left:135%}
-.sol-card .wiki-kicker,.sol-card-name{align-self:flex-start}
+.sol-card .wiki-kicker,.sol-card-name{align-self:center;text-align:center}
 .sol-card{flex:1;display:flex;flex-direction:column;justify-content:center;border:1px solid color-mix(in srgb,var(--pcol,var(--gold)) 42%,transparent);border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 22px -16px color-mix(in srgb,var(--pcol) 55%,transparent);padding:clamp(1.3rem,2.8vw,2rem);background:color-mix(in srgb,var(--card) 45%,transparent)}
 .sol-card .wiki-kicker{margin:0 0 .55rem}
 .sol-card-name{font-family:var(--sans);font-weight:600;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.015em;margin:0 0 .7rem;color:var(--ink)}
@@ -322,8 +322,8 @@ picture{display:contents}
 .sol-card .wiki-cta{margin-top:1.1rem;align-self:flex-start}
 .sol-cta-row{display:flex;flex-direction:column;gap:.6rem;margin-top:1.1rem;align-self:stretch}
 .sol-cta-row .wiki-cta{margin:0;font-size:1.02rem;padding:.8rem 1.5rem;width:100%;display:flex;align-items:center;justify-content:center}
-.wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--blau) 12%,transparent),transparent 70%);border:1px solid color-mix(in srgb,var(--blau) 60%,var(--line));color:var(--blau);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);animation:none}
-.wiki-cta.ghost:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--blau) 24%,transparent),color-mix(in srgb,var(--blau) 8%,transparent));color:var(--blau);box-shadow:0 14px 34px -12px color-mix(in srgb,var(--blau) 50%,transparent),inset 0 1px 0 rgba(255,255,255,.3)}
+.wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 18%,#fff),var(--silber) 55%,color-mix(in srgb,var(--silber) 72%,#000));border:0;color:var(--marine);box-shadow:0 8px 22px -8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.65),inset 0 -3px 8px -3px rgba(0,0,0,.22);animation:none}
+.wiki-cta.ghost:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 8%,#fff),color-mix(in srgb,var(--silber) 82%,#fff) 55%,var(--silber));color:var(--marine);box-shadow:0 14px 34px -12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.75)}
 @media(max-width:640px){.sol-text{grid-template-columns:1fr}.sol-chart{height:230px;margin-inline:0}}
 .sp-art{width:54px;height:54px;border-radius:var(--r-xs);object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
 .spotify-track:hover .sp-art{transform:scale(1.05)}
