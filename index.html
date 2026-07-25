@@ -196,10 +196,10 @@ section.tab.sub .wrap{max-width:var(--wide);padding-top:clamp(4.4rem,7.5vw,7rem)
 section.tab.sub h2::after{content:"";display:block;width:2.4rem;height:3px;
   margin-top:.5rem;border-radius:2px;background:var(--accent,var(--gold));
   transform:scaleX(1);transform-origin:left}
-.topvid{position:relative;height:clamp(460px,74vh,820px);overflow:hidden;isolation:isolate}
+.topvid{position:relative;height:clamp(460px,74vh,820px);overflow:hidden;isolation:isolate;-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 62%,transparent 100%)}
 .topvid video,.topvid .poster{position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;image-rendering:auto}
-#news .topvid video{object-position:center center}
+#news .topvid video{object-position:center 50%}
 /* breiter, weicher, verwaschener Uebergang: unteres Band der Videos wird geblurrt und schmilzt ins Marine */
 .topvid::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,transparent 54%,color-mix(in srgb,var(--marine) 55%,transparent) 80%,var(--marine) 100%);
@@ -487,6 +487,8 @@ footer{position:relative;z-index:1}
 .sol-vid video{width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
 .sol-vid-tint{position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--pcol) 26%,transparent),color-mix(in srgb,var(--marine) 55%,transparent))}
 @media(max-width:640px){.sol-vid{height:150px}}
+
+.topvid::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,color-mix(in srgb,var(--accent,var(--gold)) 13%,transparent) 82%,color-mix(in srgb,var(--bg) 45%,transparent))}
 </style>
 </head>
 <body class="home">
@@ -771,10 +773,17 @@ function apply(){
   const denom = docEl.scrollHeight - innerHeight;
   const frac = denom > 4 ? Math.min(1, y / denom) : 0;
   prog.style.width = frac * 100 + '%';               // progress bar = header's bottom edge
-  updateRib(); updateSolVids();
+  updateRib(); updateSolVids(); updateTopVid();
   lastY = y; ticking = false;
 }
 // section title (trade/news/team): letters assemble as it scrolls into the reading zone, fade slightly leaving the top
+// section-video: sanftes parallax ueber object-position (kein transform -> kein kenburns-konflikt)
+function updateTopVid(){
+  const tv = document.querySelector('main .tab.show .topvid video'); if(!tv) return;
+  const r = tv.parentElement.getBoundingClientRect(); if(!r.height) return;
+  let pgs = -r.top / r.height; pgs = pgs<-1?-1:pgs>1?1:pgs;
+  tv.style.objectPosition = 'center calc(50% + ' + (pgs*7).toFixed(2) + '%)';
+}
 // solutions-videos: wie ein tab im tab — beim Hochscrollen sanft ausfaden
 function updateSolVids(){
   document.querySelectorAll('.sol-vid').forEach(el => {
