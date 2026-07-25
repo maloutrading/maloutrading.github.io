@@ -17,25 +17,25 @@ def env(*names):
     return next((os.environ[n] for n in names if os.environ.get(n)), "")
 
 H = {"APCA-API-KEY-ID": env("ALPACAAPIKEY", "ALPACA_API_KEY"), "APCA-API-SECRET-KEY": env("ALPACAAPISECRET", "ALPACA_API_SECRET")}
-BASE = "https://api.alpaca.markets"
+base = "https://api.alpaca.markets"
 
 def get(path, **params):
-    return requests.get(BASE + path, headers=H, params=params, timeout=30).json()
+    return requests.get(base + path, headers=H, params=params, timeout=30).json()
 
 ph = get("/v2/account/portfolio/history", period="1A", timeframe="1D", extended_hours="false")
 ts, eq = ph.get("timestamp", []), ph.get("equity", [])
 pts = [(t, e) for t, e in zip(ts, eq) if e]
 base = pts[0][1] if pts else 1.0
 
-equity_s, return_s, dd_s, peak = [], [], [], 0.0
+equityS, returnS, ddS, peak = [], [], [], 0.0
 for t, e in pts:
     peak = max(peak, e)
-    equity_s.append([t * 1000, round(e, 2)])
-    return_s.append([t * 1000, round((e / base - 1) * 100, 2)])
-    dd_s.append([t * 1000, round((e / peak - 1) * 100, 2)])
+    equityS.append([t * 1000, round(e, 2)])
+    returnS.append([t * 1000, round((e / base - 1) * 100, 2)])
+    ddS.append([t * 1000, round((e / peak - 1) * 100, 2)])
 
 acct = get("/v2/account")
-equity_now = float(acct.get("equity", 0) or 0)
+equityNow = float(acct.get("equity", 0) or 0)
 positions = get("/v2/positions")
 positions = positions if isinstance(positions, list) else []
 invested = sum(abs(float(p["market_value"])) for p in positions)
@@ -76,26 +76,26 @@ for f in fills:
 wins = [t for t in trades if t > 0]
 losses = [t for t in trades if t <= 0]
 n = len(trades)
-avg_w = sum(wins) / len(wins) if wins else 0
-avg_l = sum(losses) / len(losses) if losses else 0
+avgW = sum(wins) / len(wins) if wins else 0
+avgL = sum(losses) / len(losses) if losses else 0
 
 data = {
     "updated": ph.get("timestamp", [None])[-1],
-    "equity": round(equity_now, 2),
-    "series": {"equity": equity_s, "return": return_s, "drawdown": dd_s},
+    "equity": round(equityNow, 2),
+    "series": {"equity": equityS, "return": returnS, "drawdown": ddS},
     "stats": {
-        "total_return_pct": round((equity_now / base - 1) * 100, 1) if base else 0,
-        "max_drawdown_pct": round(min([d[1] for d in dd_s] or [0]), 1),
+        "total_return_pct": round((equityNow / base - 1) * 100, 1) if base else 0,
+        "max_drawdown_pct": round(min([d[1] for d in ddS] or [0]), 1),
         "trades": n,
         "win_rate_pct": round(len(wins) / n * 100, 1) if n else 0,
-        "avg_win_pct": round(avg_w, 2),
-        "avg_loss_pct": round(avg_l, 2),
-        "payoff": round(avg_w / abs(avg_l), 2) if avg_l else 0,
+        "avg_win_pct": round(avgW, 2),
+        "avg_loss_pct": round(avgL, 2),
+        "payoff": round(avgW / abs(avgL), 2) if avgL else 0,
         "best_pct": round(max(trades), 2) if trades else 0,
         "worst_pct": round(min(trades), 2) if trades else 0,
         "positions": len(positions),
-        "invested_pct": round(invested / equity_now * 100, 1) if equity_now else 0,
+        "invested_pct": round(invested / equityNow * 100, 1) if equityNow else 0,
     },
 }
 Path(__file__).resolve().parent.joinpath("perf.json").write_text(json.dumps(data, separators=(",", ":")))
-print("wrote perf.json:", json.dumps(data["stats"], indent=2), "| series pts:", len(equity_s))
+print("wrote perf.json:", json.dumps(data["stats"], indent=2), "| series pts:", len(equityS))
