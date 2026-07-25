@@ -271,7 +271,7 @@ picture{display:contents}
 .book-author{display:block;font-family:var(--serif);font-style:italic;font-size:.85rem;letter-spacing:.05em;color:var(--accent,var(--gold))}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
 .solutions{--pcol:var(--blau);position:relative;max-width:100%;margin:clamp(2.6rem,5vw,4rem) auto;padding:clamp(4rem,7vw,6.8rem) clamp(2rem,5vw,4.5rem);border:0;border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),color-mix(in srgb,var(--marine) 64%,var(--card));box-shadow:0 50px 100px -60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px -14px color-mix(in srgb,var(--pcol) 14%,transparent);transition:box-shadow .4s var(--ease)}
-.solutions:has(#sol-r-wiki:checked){--pcol:var(--holz)}
+.solutions:has(#sol-r-wiki:checked){--pcol:color-mix(in srgb,var(--weiss) 68%,var(--holz))}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--gruen)}
 .solutions:has(#sol-r-kalshi:checked){--pcol:var(--blau)}
 .solutions::before{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1.5px solid color-mix(in srgb,var(--pcol) 40%,transparent);filter:blur(2px);opacity:.7;pointer-events:none;transition:border-color .4s var(--ease)}
