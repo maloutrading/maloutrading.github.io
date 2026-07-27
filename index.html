@@ -18,7 +18,7 @@
 :root{
   /* ── MASTER COLOURS — single source of truth. Everything else derives from these. ── */
   --marine:#181B3A; --weiss:#D9E1EA; --silber:#8C97A6;
-  --gold:#E9E4D4; --blau:#963A50; --gruen:#C2CAD5; --holz:#9B87D4;
+  --gold:#E9E4D4; --blau:#963A50; --gruen:#B7CFA2; --holz:#9B87D4;
   /* derived neutrals (never a raw hex) */
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
@@ -269,7 +269,7 @@ picture{display:contents}
 .books{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(2.4rem,5vw,3.8rem);align-items:start;position:relative;max-width:1080px;margin-inline:auto}
 .book{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
 .book-name{font-family:var(--serif);font-weight:400;font-size:1.05rem;line-height:1.3;margin:1.4rem 0 .28rem;color:var(--ink);letter-spacing:.01em;max-width:22ch;min-height:2.7em;display:flex;align-items:center;justify-content:center}
-.book-author{display:block;font-family:var(--serif);font-style:italic;font-size:.85rem;letter-spacing:.05em;color:var(--accent,var(--gold))}
+.book-author{display:block;font-family:var(--serif);font-style:italic;font-weight:600;font-size:.85rem;letter-spacing:.05em;color:var(--holz)}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
 .solutions{--pcol:var(--blau);position:relative;max-width:100%;margin:clamp(2.6rem,5vw,4rem) auto;padding:clamp(4rem,7vw,6.8rem) clamp(2rem,5vw,4.5rem);border:0;border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),color-mix(in srgb,var(--marine) 64%,var(--card));box-shadow:0 50px 100px -60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px -14px color-mix(in srgb,var(--pcol) 14%,transparent);transition:box-shadow .4s var(--ease)}
 .solutions:has(#sol-r-wiki:checked){--pcol:var(--holz)}
@@ -492,7 +492,7 @@ footer{position:relative;z-index:1}
 .topvid::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,color-mix(in srgb,var(--accent,var(--gold)) 13%,transparent) 82%,color-mix(in srgb,var(--bg) 45%,transparent))}
 
 .lib-vid{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;-webkit-mask-image:radial-gradient(115% 105% at 50% 48%,#000 42%,transparent 88%);mask-image:radial-gradient(115% 105% at 50% 48%,#000 42%,transparent 88%)}
-.lib-vid video{width:100%;height:100%;object-fit:cover;filter:saturate(.75) brightness(.8) contrast(1.05)}
+.lib-vid video{width:100%;height:100%;object-fit:cover;filter:saturate(.45) grayscale(.25) brightness(.66) contrast(1.12)}
 .lib-vid::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 80% at 50% 50%,color-mix(in srgb,var(--marine) 38%,transparent),color-mix(in srgb,var(--marine) 74%,transparent))}
 .library .books{position:relative;z-index:1}
 
@@ -500,6 +500,8 @@ footer{position:relative;z-index:1}
 .sol-card:has(.sol-bullets) .sol-cta-row{margin:.55rem 0 0;gap:.85rem}
 
 .sol-cta-row .wiki-cta,.sol-cta-row .wiki-cta.ghost,.sol-cta-row .wiki-cta:hover,.sol-cta-row .wiki-cta.ghost:hover{color:color-mix(in srgb,var(--gold) 50%,#fff);font-weight:400;letter-spacing:.025em;text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 12px rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.48)}
+
+.lib-vid::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
 </style>
 </head>
 <body class="home">
