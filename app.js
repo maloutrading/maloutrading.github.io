@@ -267,10 +267,10 @@ function exposureSvg(exp){
 }
 
 function gauge(label, val, max, unit){
-  const v = (typeof val === 'number' && isFinite(val)) ? val : 0;
-  const m = (typeof max === 'number' && isFinite(max) && max > 0) ? max : 1;
-  const pct = Math.max(0, Math.min(100, v / m * 100));
-  return '<div class="g-item"><div class="g-top"><span>' + label + '</span><span>' + v + (unit || '') + ' / ' + m + (unit || '') + '</span></div>' +
+  const hasData = typeof val === 'number' && isFinite(val) && typeof max === 'number' && isFinite(max) && max > 0;
+  const pct = hasData ? Math.max(0, Math.min(100, val / max * 100)) : 0;
+  const text = hasData ? (val + (unit || '') + ' / ' + max + (unit || '')) : '–';
+  return '<div class="g-item"><div class="g-top"><span>' + label + '</span><span>' + text + '</span></div>' +
     '<div class="g-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div></div>';
 }
 function callout(label, t){
