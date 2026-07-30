@@ -284,9 +284,9 @@ function renderAnalytics(containerId, d){
   const el = document.getElementById(containerId); if (!el) return;
   const s = d.stats || {};
   const guardHtml = '<div class="an-row an-guard">' +
-    gauge('day risk used', s.day_risk_used_pct, s.day_risk_max_pct, '%') +
-    gauge('entries today', s.entries_today, s.entries_max, '') +
-    gauge('open positions', s.positions, s.max_positions, '') + '</div>';
+    gauge('open positions', s.positions, s.max_positions, '') +
+    gauge('slots free', s.slots_free, s.max_positions, '') +
+    gauge('drawdown buffer', s.dd_buffer_pct, s.dd_max_pct, '%') + '</div>';
   const calloutHtml = (s.best_trade || s.worst_trade)
     ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade) + callout('worst trade', s.worst_trade) + '</div>' : '';
   const grid = '<div class="an-grid">' +
