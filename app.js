@@ -280,6 +280,32 @@ function callout(label, t){
     '<span class="callout-date">' + escapeHtml(String(t.ts || '').slice(0, 10)) + '</span></div>';
 }
 
+function fmtAge(ms){
+  if (!ms) return '';
+  const s = (Date.now() - ms) / 1000;
+  if (s < 90) return Math.max(0, Math.round(s)) + 's ago';
+  if (s < 5400) return Math.round(s / 60) + 'm ago';
+  if (s < 172800) return Math.round(s / 3600) + 'h ago';
+  return Math.round(s / 86400) + 'd ago';
+}
+
+// live open-book: what each bot holds right now (mirrors the telegram Book) + realized edge
+function bookHtml(d){
+  const b = Array.isArray(d.book) ? d.book : [];
+  const s = d.stats || {};
+  const edge = (typeof s.expectancy_r === 'number')
+    ? '<span class="book-edge">edge ' + (s.expectancy_r >= 0 ? '+' : '') + s.expectancy_r.toFixed(2) + 'R/trade</span>' : '';
+  const head = '<div class="book-head"><h5 class="an-h">open now' + (b.length ? ' (' + b.length + ')' : '') + '</h5>' + edge + '</div>';
+  if (!b.length) return '<div class="an-card book-card">' + head + '<p class="book-empty">flat &mdash; no open positions</p></div>';
+  const rows = b.map(p => {
+    const up = (p.pnl || 0) >= 0;
+    return '<div class="book-row"><span class="book-side ' + (p.side === 'long' ? 'long' : 'short') + '">' +
+      (p.side === 'long' ? 'L' : 'S') + '</span><span class="book-sym">' + escapeHtml(p.sym) + '</span>' +
+      '<span class="book-pnl ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (p.pnl || 0).toFixed(1) + '%</span></div>';
+  }).join('');
+  return '<div class="an-card book-card">' + head + '<div class="book-rows">' + rows + '</div></div>';
+}
+
 function renderAnalytics(containerId, d){
   const el = document.getElementById(containerId); if (!el) return;
   const s = d.stats || {};
@@ -294,7 +320,7 @@ function renderAnalytics(containerId, d){
     '<div class="an-card"><h5 class="an-h">daily returns</h5>' + heatGrid((d.series || {}).equity) + '</div>' +
     '<div class="an-card"><h5 class="an-h">rolling win rate</h5>' + rollingWinSvg(d.trades_detail) + '</div>' +
     '<div class="an-card"><h5 class="an-h">long / short exposure</h5>' + exposureSvg(d.exposure) + '</div>' + '</div>';
-  el.innerHTML = guardHtml + calloutHtml + grid;
+  el.innerHTML = bookHtml(d) + guardHtml + calloutHtml + grid;
 }
 
 function mount(P){
@@ -304,6 +330,12 @@ function mount(P){
     .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
     .then(d => {
       const s = d.stats || {}, G = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+      if (note && d.updated){
+        const fresh = (Date.now() - d.updated) < 2 * 3600 * 1000;
+        const base = (note.dataset.base || note.textContent).replace(/\s*·\s*updated.*$/, '');
+        note.dataset.base = base;
+        note.innerHTML = escapeHtml(base) + ' · <span class="fresh-' + (fresh ? 'ok' : 'stale') + '">updated ' + fmtAge(d.updated) + ' ●</span>';
+      }
       G(P.k + 'Ret', fmtPct(s.total_return_pct));
       G(P.k + 'Win', fmtPlain(s.win_rate_pct, '%'));
       G(P.k + 'Tr', fmtPlain(s.trades, ''));
@@ -340,7 +372,7 @@ function mount(P){
     });
 }
 mount({svg:'perfSvg', sel:'perfSel', title:'perfTitle', note:'perfNote', k:'st', an:'stAn', url:'alpaca.json'});
-mount({svg:'kperfSvg', sel:'kperfSel', title:'kperfTitle', note:null, k:'kst', an:'kstAn', url:'kalshi.json'});
+mount({svg:'kperfSvg', sel:'kperfSel', title:'kperfTitle', note:'kperfNote', k:'kst', an:'kstAn', url:'kalshi.json'});
 mount({svg:'hperfSvg', sel:'hperfSel', title:'hperfTitle', note:'hperfNote', k:'hst', an:'hAn', url:'hyperliquid.json'});
 
 function renderCompare(){
