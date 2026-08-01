@@ -306,6 +306,20 @@ function bookHtml(d){
   return '<div class="an-card book-card">' + head + '<div class="book-rows">' + rows + '</div></div>';
 }
 
+// recent closed trades = the track record (date · ticker · side · R). R-multiple only, no $ (kept private).
+function tradesHtml(d){
+  const t = Array.isArray(d.trades_detail) ? d.trades_detail.slice(-7).reverse() : [];
+  if (!t.length) return '';
+  const rows = t.map(x => {
+    const up = (x.r || 0) >= 0;
+    return '<div class="trade-row"><span class="trade-date">' + escapeHtml(String(x.ts || '').slice(5, 10)) + '</span>' +
+      '<span class="trade-side ' + (x.side === 'long' ? 'long' : 'short') + '">' + (x.side === 'long' ? 'L' : 'S') + '</span>' +
+      '<span class="trade-sym">' + escapeHtml(x.symbol || '') + '</span>' +
+      '<span class="trade-r ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (x.r || 0).toFixed(2) + 'R</span></div>';
+  }).join('');
+  return '<div class="an-card trades-card"><h5 class="an-h">recent trades</h5><div class="trade-rows">' + rows + '</div></div>';
+}
+
 function renderAnalytics(containerId, d){
   const el = document.getElementById(containerId); if (!el) return;
   const s = d.stats || {};
@@ -320,7 +334,9 @@ function renderAnalytics(containerId, d){
     '<div class="an-card"><h5 class="an-h">daily returns</h5>' + heatGrid((d.series || {}).equity) + '</div>' +
     '<div class="an-card"><h5 class="an-h">rolling win rate</h5>' + rollingWinSvg(d.trades_detail) + '</div>' +
     '<div class="an-card"><h5 class="an-h">long / short exposure</h5>' + exposureSvg(d.exposure) + '</div>' + '</div>';
-  el.innerHTML = bookHtml(d) + guardHtml + calloutHtml + grid;
+  const trades = tradesHtml(d);
+  const lead = trades ? '<div class="an-row book-trades">' + bookHtml(d) + trades + '</div>' : bookHtml(d);
+  el.innerHTML = lead + guardHtml + calloutHtml + grid;
 }
 
 function mount(P){
