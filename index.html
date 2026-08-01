@@ -545,6 +545,25 @@ footer{position:relative;z-index:1}
 .an-empty{margin:auto;font-size:.82rem;color:var(--muted);font-style:italic;text-align:center}
 .heat-grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(11px,1fr));gap:3px;align-content:center}
 .heat-cell{aspect-ratio:1;border-radius:2px}
+/* ── live open-book card + data-freshness badge ── */
+.book-card{min-height:0;margin-bottom:clamp(1rem,2.4vw,1.6rem)}
+.book-head{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.book-head .an-h{margin:0}
+.book-edge{font-size:.72rem;color:var(--muted);letter-spacing:.03em;font-family:var(--serif)}
+.book-rows{display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem}
+.book-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.65rem;font-size:.92rem}
+.book-side{font-family:var(--sans);font-size:.64rem;font-weight:600;width:1.2rem;height:1.2rem;display:inline-flex;align-items:center;justify-content:center;border-radius:3px;border:1px solid color-mix(in srgb,var(--muted) 40%,transparent);color:var(--muted)}
+.book-side.long{color:var(--gruen);border-color:color-mix(in srgb,var(--gruen) 50%,transparent)}
+.book-side.short{color:var(--holz);border-color:color-mix(in srgb,var(--holz) 50%,transparent)}
+.book-sym{font-family:var(--sans);color:var(--ink);letter-spacing:.01em}
+.book-pnl{font-family:var(--serif);font-variant-numeric:tabular-nums}
+.book-pnl.up{color:var(--gruen)}
+.book-pnl.dn{color:var(--holz)}
+.book-empty{color:var(--muted);font-size:.85rem;margin:.5rem 0 0;font-style:italic}
+.fresh-ok{color:var(--gruen)}
+.fresh-stale{color:var(--gold)}
+@media(prefers-reduced-motion:no-preference){.fresh-ok{animation:freshPulse 2.6s ease-in-out infinite}}
+@keyframes freshPulse{0%,100%{opacity:1}50%{opacity:.55}}
 @media(max-width:640px){.an-grid{grid-template-columns:1fr}.sol-compare{padding:1.2rem 1.3rem}}
 </style>
 </head>
@@ -629,7 +648,7 @@ footer{position:relative;z-index:1}
 <div class="an-block" id="stAn"></div></div>
 <div class="sol-panel sol-p-kalshi"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/slt.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge in markets that price the future?</h4><p>Maybe follow the cleanest trends before the crowd &mdash; <em>signal, not noise</em></p></div></div>
 <div class="sol-slogan"><p class="sol-philosophy keepcase">One breakout engine, both directions, no exceptions. Event-contract breakouts priced in cents, sized exactly like every other market the engine trades.</p></div>
-<div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="kperfTitle">return</span><select class="perf-sel" id="kperfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="kperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase">live &middot; kalshi</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>event markets</li><li>breakout momentum</li><li>hourly, long &amp; short</li></ul><div class="sol-cta-row"><a class="wiki-cta ghost" href="algo/kalshi.pdf" target="_blank" rel="noopener">strategy (PDF) -></a><a class="wiki-cta" href="algo/kalshi-briefing.pdf" target="_blank" rel="noopener">latest briefing (PDF) -></a></div></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">event markets</span><h3 class="sol-card-name keepcase">kalshi trends</h3></div><div class="perf-stats"><div><b id="kstRet">–</b><span>return</span></div><div><b id="kstWin">–</b><span>win rate</span></div><div><b id="kstTr">–</b><span>trades</span></div><div><b id="kstDD">–</b><span>max dd</span></div><div><b id="kstAW">–</b><span>avg win</span></div><div><b id="kstPO">–</b><span>payoff</span></div></div></div></div></div>
+<div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="kperfTitle">return</span><select class="perf-sel" id="kperfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="kperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="kperfNote">live &middot; kalshi</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>event markets</li><li>breakout momentum</li><li>hourly, long &amp; short</li></ul><div class="sol-cta-row"><a class="wiki-cta ghost" href="algo/kalshi.pdf" target="_blank" rel="noopener">strategy (PDF) -></a><a class="wiki-cta" href="algo/kalshi-briefing.pdf" target="_blank" rel="noopener">latest briefing (PDF) -></a></div></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">event markets</span><h3 class="sol-card-name keepcase">kalshi trends</h3></div><div class="perf-stats"><div><b id="kstRet">–</b><span>return</span></div><div><b id="kstWin">–</b><span>win rate</span></div><div><b id="kstTr">–</b><span>trades</span></div><div><b id="kstDD">–</b><span>max dd</span></div><div><b id="kstAW">–</b><span>avg win</span></div><div><b id="kstPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="kstAn"></div></div>
 </div>
 </div>  </div>
