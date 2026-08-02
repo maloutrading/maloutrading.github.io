@@ -325,8 +325,7 @@ function renderAnalytics(containerId, d){
   const s = d.stats || {};
   const guardHtml = '<div class="an-row an-guard">' +
     gauge('open positions', s.positions, s.max_positions, '') +
-    gauge('slots free', s.slots_free, s.max_positions, '') +
-    gauge('drawdown buffer', s.dd_buffer_pct, s.dd_max_pct, '%') + '</div>';
+    gauge('slots free', s.slots_free, s.max_positions, '') + '</div>';
   const calloutHtml = (s.best_trade || s.worst_trade)
     ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade) + callout('worst trade', s.worst_trade) + '</div>' : '';
   const grid = '<div class="an-grid">' +
