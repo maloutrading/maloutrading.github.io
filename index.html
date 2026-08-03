@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>malou trading</title>
 <meta name="description" content="systematic investing - calm, close to nature, documented.">
-<meta name="theme-color" content="#2222C8">
+<meta name="theme-color" content="#004225">
 <meta property="og:title" content="malou trading">
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232222C8'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23E9E4D4' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23004225'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23E9E4D4' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i1.sndcdn.com https://image-cdn-fa.spotifycdn.com https://covers.openlibrary.org; media-src 'self'; font-src 'self'; frame-src https://s.tradingview.com; connect-src 'self' https://api.open-meteo.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
 <link rel="preload" href="fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
@@ -20,7 +20,7 @@
 
 :root{
   /* ── MASTER COLOURS — single source of truth. Everything else derives from these. ── */
-  --marine:#2222C8; --weiss:#D9E1EA; --silber:#8C97A6;
+  --marine:#004225; --weiss:#D9E1EA; --silber:#8C97A6;
   --gold:#E9E4D4; --blau:#963A50; --gruen:#B7CFA2; --holz:#9B87D4;
   /* derived neutrals (never a raw hex) */
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
@@ -362,6 +362,16 @@ picture{display:contents}
 .mag-facts span{color:var(--muted);font-style:italic}
 .mag-claim{font-family:var(--serif);font-style:italic;font-size:clamp(1.12rem,2.2vw,1.32rem);line-height:1.5;color:var(--ink);margin:0 0 .9rem}
 .mag-contra{font-size:.92rem;color:var(--muted);font-style:italic;border-left:2px solid var(--line);padding-left:1rem;margin:.9rem 0 0}
+.ask{max-width:840px;margin:0 auto clamp(2.2rem,4vw,3.2rem);border:1px solid color-mix(in srgb,var(--gruen) 32%,var(--line));border-radius:var(--r-sm);background:linear-gradient(180deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 34%,transparent));box-shadow:0 16px 34px -12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);transition:box-shadow .35s var(--ease)}
+.ask[open]{box-shadow:0 24px 48px -16px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.09),0 0 44px -12px color-mix(in srgb,var(--gruen) 26%,transparent)}
+.ask summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:1.1rem;flex-wrap:wrap;padding:1.15rem 1.5rem}
+.ask summary::-webkit-details-marker{display:none}
+.ask summary::after{content:"+";margin-left:auto;font-family:var(--mono);font-size:1.05rem;color:var(--gruen);transition:transform .3s var(--ease)}
+.ask[open] summary::after{transform:rotate(45deg)}
+.ask-k{font-style:italic;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gruen)}
+.ask-q{font-family:var(--serif);font-style:italic;font-size:1.12rem;color:var(--ink);text-transform:none}
+.ask p{margin:0;padding:0 1.5rem 1.3rem;max-width:58ch;font-size:1rem;line-height:1.72;color:var(--silber);text-transform:none}
+.ask b{font-family:var(--sans);font-weight:600;color:var(--ink)}
 .mag-poem{text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(1.02rem,2vw,1.16rem);line-height:1.95;color:var(--silber);margin:0}
 .mag-mast .mag-reg{display:inline-flex;align-items:center;gap:.4rem;padding:.74rem 1.6rem;border:0;border-radius:100px;background:linear-gradient(135deg,var(--gruen),color-mix(in srgb,var(--gold) 55%,var(--gruen)));color:#fff;font-size:.94rem;letter-spacing:.04em;text-decoration:none;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--gruen) 85%,transparent),inset 0 1px 0 rgba(255,255,255,.28);transition:transform .2s ease,box-shadow .2s ease}
 .mag-mast .mag-reg:hover{transform:translateY(-2px);box-shadow:0 18px 32px -8px color-mix(in srgb,var(--gruen) 92%,transparent),inset 0 1px 0 rgba(255,255,255,.28)}
@@ -686,6 +696,7 @@ footer{position:relative;z-index:1}
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--gruen)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="news-quote"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <details class="ask"><summary><span class="ask-k keepcase">intel bot</span><span class="ask-q keepcase">Ask me — what is this?</span></summary><p class="keepcase"><b>Intel Bot — Daily Intel &amp; Ideas.</b> A daily news bot. Each morning it curates the day's essential stories, adds one thinking tool, and sends a single report — to give information, transfer knowledge, and stay interesting.</p></details>
     <div class="mag"><div class="mag-mast"><span class="tag keepcase">sample report</span><a class="mag-reg" href="mailto:maloutrading@web.de">sign up -></a></div>
 <div class="mag-date keepcase">07/25/2026</div>
 <article class="mag-item"><span class="mag-kicker keepcase">N&deg; 01</span><h3 class="mag-head keepcase">Houthis hit Saudi tankers</h3><p class="mag-body">The Iran-backed Houthi militia strikes two Saudi oil tankers in the Red Sea, the Encelia and the Layla, with missiles and drones. Earlier the group declares a blockade of Saudi-linked shipping at Bab al-Mandeb, the strait between the Red Sea and the Gulf of Aden. The oil price jumps to 100 dollars a barrel in response. Saudi Arabia effectively loses its western export corridor through the Suez Canal.</p><p class="mag-src">NPR</p></article>
