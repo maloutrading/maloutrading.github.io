@@ -5,21 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>malou trading</title>
 <meta name="description" content="systematic investing - calm, close to nature, documented.">
-<meta name="theme-color" content="#181B3A">
+<meta name="theme-color" content="#2222C8">
 <meta property="og:title" content="malou trading">
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23181B3A'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23E9E4D4' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232222C8'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23E9E4D4' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i1.sndcdn.com https://image-cdn-fa.spotifycdn.com https://covers.openlibrary.org; media-src 'self'; font-src 'self'; frame-src https://s.tradingview.com; connect-src 'self' https://api.open-meteo.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
 <link rel="preload" href="fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBold.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBoldItalic.woff2) format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/PlayfairDisplay-SemiBold.woff2) format('woff2')}
 
 :root{
   /* ── MASTER COLOURS — single source of truth. Everything else derives from these. ── */
-  --marine:#181B3A; --weiss:#D9E1EA; --silber:#8C97A6;
+  --marine:#2222C8; --weiss:#D9E1EA; --silber:#8C97A6;
   --gold:#E9E4D4; --blau:#963A50; --gruen:#B7CFA2; --holz:#9B87D4;
   /* derived neutrals (never a raw hex) */
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
@@ -29,7 +30,7 @@
   --serif:'EB Garamond',Georgia,serif;
   --sans:'EB Garamond',Georgia,serif;
   --mono:ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
-  --accent:var(--sans);
+  --title:'Playfair Display',var(--serif);
   --body:var(--serif);
   --r:18px; --r-xs:12px; --r-sm:16px; --r-md:19px; --r-lg:24px; --pill:999px;
   --ease:cubic-bezier(.2,.75,.2,1);
@@ -68,7 +69,7 @@ body{margin:0;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.06;
   letter-spacing:0}
 h1{font-size:clamp(3.45rem,10.35vw,6.9rem);margin:.12em 0}
-h1,.brand-lg{font-family:var(--accent)}
+h1,.brand-lg{font-family:var(--title)}
 h2{font-size:clamp(2.185rem,4.6vw,2.99rem);margin:0 0 .6em}
 h3{font-size:1.495rem;margin:0 0 .45em}
 a{color:var(--blau);text-underline-offset:4px;text-decoration-thickness:1px}
@@ -138,7 +139,7 @@ main section.tab.show{display:block}
 
 .left-inner{flex:1;display:grid;grid-template-rows:1fr 1fr;
   align-items:center;width:100%;max-width:none}
-.brand-lg{font-family:var(--sans);font-style:normal;font-weight:600;justify-self:center;text-align:center;
+.brand-lg{font-family:var(--title);font-style:normal;font-weight:600;justify-self:center;text-align:center;
   -webkit-text-stroke:.4px color-mix(in srgb,var(--silber) 55%,#fff);text-shadow:0 0 10px color-mix(in srgb,var(--silber) 35%,transparent);
   font-size:clamp(1.85rem,4.2vw,3.2rem);line-height:1.05;margin:0;letter-spacing:.015em;
   transform:translate(-2.2rem,2.6rem);
