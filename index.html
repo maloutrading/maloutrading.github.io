@@ -10,7 +10,7 @@
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312163C'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23E9E4D4' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i1.sndcdn.com https://image-cdn-fa.spotifycdn.com; media-src 'self'; font-src 'self'; frame-src https://s.tradingview.com; connect-src 'self' https://api.open-meteo.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://image-cdn-fa.spotifycdn.com; media-src 'self'; font-src 'self'; frame-src https://s.tradingview.com; connect-src 'self' https://api.open-meteo.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
 <link rel="preload" href="fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
@@ -344,11 +344,6 @@ picture{display:contents}
 .mag{position:relative;max-width:840px;margin:0 auto;text-align:left;padding:clamp(2rem,4vw,3.2rem) clamp(1.8rem,4vw,3.4rem);border:0;border-radius:var(--r-lg);background:linear-gradient(180deg,color-mix(in srgb,#fff 3%,transparent),transparent 40%);box-shadow:0 34px 76px -52px rgba(0,0,0,.7),0 0 54px -8px color-mix(in srgb,var(--accent,var(--gold)) 13%,transparent)}
 .mag-date{text-align:center;color:var(--muted);font-style:italic;font-size:.95rem;letter-spacing:.14em;margin:0 0 clamp(1.8rem,3.4vw,2.6rem)}
 .mag::before{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1.5px solid color-mix(in srgb,var(--accent,var(--gold)) 36%,transparent);filter:blur(4.5px);opacity:.75;pointer-events:none}
-.mag-mast{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-bottom:1.2rem;margin-bottom:1.4rem;border-bottom:2px solid color-mix(in srgb,var(--ink) 42%,transparent)}
-.mag-mast .tag{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
-.mag-mast a{font-size:.9rem;color:var(--gruen);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--gruen) 40%,transparent);padding-bottom:1px}
-.mag-mast a:hover{color:var(--ink)}
-.mag-mast:last-child{padding-bottom:0;margin-bottom:0;border-bottom:0}
 .mag-item{break-inside:avoid;-webkit-column-break-inside:avoid;padding:clamp(1.3rem,2.6vw,1.9rem) 0;border-top:1px solid var(--line)}
 .mag-kicker{display:block;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gruen);margin:0 0 .75rem}
 .mag-head{font-family:var(--sans);font-weight:600;font-size:clamp(1.25rem,2.4vw,1.55rem);line-height:1.25;letter-spacing:-.01em;margin:0 0 .85rem;color:var(--ink)}
@@ -363,19 +358,7 @@ picture{display:contents}
 .mag-facts span{color:var(--muted);font-style:italic}
 .mag-claim{font-family:var(--serif);font-style:italic;font-size:clamp(1.12rem,2.2vw,1.32rem);line-height:1.5;color:var(--ink);margin:0 0 .9rem}
 .mag-contra{font-size:.92rem;color:var(--muted);font-style:italic;border-left:2px solid var(--line);padding-left:1rem;margin:.9rem 0 0}
-.ask{max-width:840px;margin:0 auto clamp(2.2rem,4vw,3.2rem);border:1px solid color-mix(in srgb,var(--gruen) 32%,var(--line));border-radius:var(--r-sm);background:linear-gradient(180deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 34%,transparent));box-shadow:0 16px 34px -12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);transition:box-shadow .35s var(--ease)}
-.ask[open]{box-shadow:0 24px 48px -16px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.09),0 0 44px -12px color-mix(in srgb,var(--gruen) 26%,transparent)}
-.ask summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:1.1rem;flex-wrap:wrap;padding:1.15rem 1.5rem}
-.ask summary::-webkit-details-marker{display:none}
-.ask summary::after{content:"+";margin-left:auto;font-family:var(--mono);font-size:1.05rem;color:var(--gruen);transition:transform .3s var(--ease)}
-.ask[open] summary::after{transform:rotate(45deg)}
-.ask-k{font-style:italic;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gruen)}
-.ask-q{font-family:var(--serif);font-style:italic;font-size:1.12rem;color:var(--ink);text-transform:none}
-.ask p{margin:0;padding:0 1.5rem 1.3rem;max-width:58ch;font-size:1rem;line-height:1.72;color:var(--silber);text-transform:none}
-.ask b{font-family:var(--sans);font-weight:600;color:var(--ink)}
 .mag-poem{text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(1.02rem,2vw,1.16rem);line-height:1.95;color:var(--silber);margin:0}
-.mag-mast .mag-reg{display:inline-flex;align-items:center;gap:.4rem;padding:.74rem 1.6rem;border:0;border-radius:100px;background:linear-gradient(135deg,var(--gruen),color-mix(in srgb,var(--gold) 55%,var(--gruen)));color:#fff;font-size:.94rem;letter-spacing:.04em;text-decoration:none;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--gruen) 85%,transparent),inset 0 1px 0 rgba(255,255,255,.28);transition:transform .2s ease,box-shadow .2s ease}
-.mag-mast .mag-reg:hover{transform:translateY(-2px);box-shadow:0 18px 32px -8px color-mix(in srgb,var(--gruen) 92%,transparent),inset 0 1px 0 rgba(255,255,255,.28)}
 .sol-concept{position:relative;z-index:2;max-width:760px;margin:0;padding:0 clamp(1.2rem,4vw,2.5rem);border:0;background:none;box-shadow:none;text-align:center}
 .sol-concept h4{text-shadow:0 2px 20px rgba(0,0,0,.6),0 1px 3px rgba(0,0,0,.5);font-family:var(--serif);font-weight:300;font-size:clamp(1.3rem,2.7vw,1.85rem);line-height:1.3;letter-spacing:.004em;margin:0 0 .85rem;color:var(--ink)}
 .sol-concept p{margin:0;font-family:var(--serif);font-size:clamp(1rem,1.6vw,1.12rem);line-height:1.75;color:color-mix(in srgb,var(--weiss) 82%,#fff);font-weight:300;text-shadow:0 2px 14px rgba(0,0,0,.6)}
@@ -713,8 +696,18 @@ footer{position:relative;z-index:1}
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--gruen)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="news-quote"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
-    <details class="ask"><summary><span class="ask-k keepcase">intel bot</span><span class="ask-q keepcase">Ask me — what is this?</span></summary><p class="keepcase"><b>Intel Bot.</b> A daily intel report — what is going on, and why it matters.</p></details>
-    <div class="mag"><div class="mag-mast"><span class="tag keepcase">sample report</span><a class="mag-reg" href="mailto:maloutrading@web.de">sign up -></a></div>
+    <div class="mag">
+<!-- auto:report -->
+<div class="mag-date keepcase">08/04/2026</div>
+<p class="mag-claim">Three of today's stories are about walling off: the US regulator FCC bars Chinese robots from the American market, the think tank RAND designs sealed data centres against the theft of AI model weights, and the European Council on Foreign Relations prepares the EU for a confrontational France under Marine Le Pen. Against them stands a study from the University of Pennsylvania: a bean protein that binds HPV in saliva.</p>
+<article class="mag-item"><span class="mag-kicker keepcase">N&deg; 01</span><h3 class="mag-head keepcase">US bars imports of foreign robots</h3><p class="mag-body">The US Federal Communications Commission has since last week banned imports of new foreign robots, among them humanoid, four-legged and wheeled models. A task force convened by the White House justifies the ban with cyber risks to critical infrastructure; it hits China above all, which holds around 85 percent of the world market for humanoid robots. Of some 15,000 humanoids delivered in 2025, more than 5,000 each came from the Chinese makers Unitree and AGIBOT, while Tesla and Figure AI shipped a few hundred or fewer each. US start-ups thereby lose access to cheap Chinese platforms before comparable Western models exist.</p><p class="mag-src">MIT Technology Review &middot; 2 independent sources</p></article>
+<article class="mag-item"><span class="mag-kicker keepcase">N&deg; 02</span><h3 class="mag-head keepcase">Bean chewing gum binds HPV in saliva</h3><p class="mag-body">Researchers at the University of Pennsylvania around Henry Daniell tested the extract of a chewing gum carrying the antiviral protein FRIL from the lablab bean, which clumps virus particles together so they can no longer infect cells. In saliva samples from head and neck cancer patients the HPV load fell by up to 93 percent; adding the peptide protegrin pushed the bacteria Porphyromonas gingivalis and Fusobacterium nucleatum to near zero with a single dose, without harming useful oral bacteria. The data come from samples, not from treated patients; a clinical trial at Penn Medicine is still pending.</p><p class="mag-src">ScienceDaily</p></article>
+<article class="mag-item"><span class="mag-kicker keepcase">N&deg; 03</span><h3 class="mag-head keepcase">RAND designs sealed AI data centres</h3><p class="mag-body">The US think tank RAND presents in its report RR-A4827-1 a concept for so-called Secure Inference Data Centers, special facilities at the highest security level five. These data centres are meant to protect the trained weights of AI models against theft and manipulation by state attackers, using system separation, one-way data diodes and formally verified protocols. The authors around Steven Comer recommend building them for national security and pilot projects only for now, but consider it feasible with today's technology.</p><p class="mag-src">RAND Corporation &middot; unconfirmed</p></article>
+<article class="mag-item"><span class="mag-kicker keepcase">N&deg; 04</span><h3 class="mag-head keepcase">ECFR warns of a Le Pen France</h3><p class="mag-body">The European Council on Foreign Relations, a foreign policy think tank, publishes today the second version of a strategy paper on a possible election victory for Marine Le Pen in 2027. The paper updates an analysis from June 9, 2026, after Le Pen confirmed her candidacy for the French presidency. That became possible because an appeals court shortened her ban from office in early July, letting the head of the Rassemblement National run despite an upheld fraud conviction. The authors expect a confrontational leadership in Paris that wants to unwind substantial parts of French EU integration, and advise EU capitals to form coalitions of the willing that bypass Paris when needed.</p><p class="mag-src">European Council on Foreign Relations</p></article>
+<article class="mag-item"><span class="mag-kicker keepcase">N&deg; 05</span><h3 class="mag-head keepcase">Ministers demand new health financing</h3><p class="mag-body">Nigeria's health minister Muhammad Ali Pate, Indonesia's minister Budi Gunadi Sadikin and Donald Kaberuka, former head of the African Development Bank, declare the end of the donor-driven health model in Project Syndicate. The trigger is the collapse in development aid for health, which fell around 21 percent in 2025 to about 39 billion dollars, the lowest level since 2009, driven above all by a US withdrawal of more than 9 billion dollars. The Global Fund, historically financed by the US to a third, thereby loses its largest backer.</p><p class="mag-src">Project Syndicate</p></article>
+<article class="mag-item"><span class="mag-kicker keepcase">N&deg; 06</span><h3 class="mag-head keepcase">Vienna researchers define bio-metals</h3><p class="mag-body">Researchers at TU Wien and the University of Vienna measured the jaws of the marine bristle worm Perinereis cultrifera and derived from them a new class of material, bio-metals. The jaws consist of structural proteins and ions and carry more metal ions at the tips, which makes them especially hard there. They follow the Nix-Gao effect, in which hardness rises as indentation depth falls, a hallmark of crystalline metals. Under tension, however, they behave unlike classical metals such as copper or silver.</p><p class="mag-src">Nautilus</p></article>
+<div class="mag-item"><span class="mag-kicker keepcase">trends</span><p class="mag-body">On August 12, 2026 a total solar eclipse crosses Greenland, Iceland and northern Spain. For mainland Spain it is the first total eclipse since 1905 and the opening of three eclipses between 2026 and 2028. The moon's shadow cone races across the continent at several thousand kilometres per hour, totality lasts only up to a few minutes at any one place, and exactly this scarcity drives demand. Northern Spain expects millions of visitors along the narrow path, while sales of certified eclipse glasses are already climbing eight days ahead and hotels along the zone are booked out.</p></div>
+<!-- /auto:report -->
 </div>
   </div>
 </section>
@@ -769,9 +762,9 @@ footer{position:relative;z-index:1}
 
     <div class="team-bottom">
       <div class="spotify-box">
-        <a class="spotify-track" href="https://open.spotify.com/search/Tour-Maubourg%20L%27Hiver" target="_blank" rel="noopener">
-          <img class="sp-art" src="https://i1.sndcdn.com/artworks-lwfriGPaSTCEIYIc-HFpVtA-t500x500.jpg" alt="" loading="lazy">
-          <span class="t"><b class="keepcase">L'Hiver</b><small class="keepcase">Tour-Maubourg</small></span>
+        <a class="spotify-track" href="https://open.spotify.com/track/4gldqByzAgQB2TeOjdvyw4" target="_blank" rel="noopener">
+          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0210b2ce4586bad7aae335783e" alt="" loading="lazy">
+          <span class="t"><b class="keepcase">Afon Colhuw</b><small class="keepcase">Huw Marc Bennett</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
         <a class="spotify-track" href="https://open.spotify.com/track/3usbbmpFd1sx1UQQOGgc8A" target="_blank" rel="noopener">
@@ -779,9 +772,9 @@ footer{position:relative;z-index:1}
           <span class="t"><b class="keepcase">Part III</b><small class="keepcase">I Am An Instrument</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
-        <a class="spotify-track" href="https://open.spotify.com/track/7BBabm9KfG4w7huuwmEMAs" target="_blank" rel="noopener">
-          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0287f32427f479a260cd94f8e5" alt="" loading="lazy">
-          <span class="t"><b class="keepcase">Emotions Unlocked</b><small class="keepcase">Mike WiLL Made-It</small></span>
+        <a class="spotify-track" href="https://open.spotify.com/track/4wk9PCZ3ZysvUapP8G86aV" target="_blank" rel="noopener">
+          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02976bc2ace1672ba9400a0662" alt="" loading="lazy">
+          <span class="t"><b class="keepcase">Bario Alto</b><small class="keepcase">Thievery Corporation</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
       </div>
