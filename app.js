@@ -386,17 +386,17 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', sel:'perfSel', title:'perfTitle', note:'perfNote', k:'st', an:'stAn', url:'alpaca.json'});
-mount({svg:'kperfSvg', sel:'kperfSel', title:'kperfTitle', note:'kperfNote', k:'kst', an:'kstAn', url:'kalshi.json'});
-mount({svg:'hperfSvg', sel:'hperfSel', title:'hperfTitle', note:'hperfNote', k:'hst', an:'hAn', url:'hyperliquid.json'});
+mount({svg:'perfSvg', sel:'perfSel', title:'perfTitle', note:'perfNote', k:'st', an:'stAn', url:'json/alpaca.json'});
+mount({svg:'kperfSvg', sel:'kperfSel', title:'kperfTitle', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshi.json'});
+mount({svg:'hperfSvg', sel:'hperfSel', title:'hperfTitle', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquid.json'});
 
 function renderCompare(){
   const svg = document.getElementById('compareSvg'), legend = document.getElementById('compareLegend');
   if (!svg) return;
   const specs = [
-    {url:'alpaca.json', label:'alpaca', color:cv('--gruen')},
-    {url:'hyperliquid.json', label:'hyperliquid', color:cv('--silber')},
-    {url:'kalshi.json', label:'kalshi', color:cv('--blau')},
+    {url:'json/alpaca.json', label:'alpaca', color:cv('--gruen')},
+    {url:'json/hyperliquid.json', label:'hyperliquid', color:cv('--silber')},
+    {url:'json/kalshi.json', label:'kalshi', color:cv('--blau')},
   ];
   Promise.all(specs.map(sp => fetchT(sp.url + '?' + Date.now(), 8000).then(r => r.ok ? r.json() : null).catch(() => null)))
     .then(results => {
