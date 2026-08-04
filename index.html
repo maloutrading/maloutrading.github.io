@@ -21,7 +21,7 @@
 :root{
   /* ── MASTER COLOURS — single source of truth. Everything else derives from these. ── */
   --marine:#15142F; --weiss:#D9E1EA; --silber:#8C97A6;
-  --gold:#E9E4D4; --blau:#963A50; --gruen:#B7CFA2; --holz:#9B87D4;
+  --gold:#E9E4D4; --bronze:#8F6B2F; --gruen:#B7CFA2; --holz:#9B87D4;
   /* derived neutrals (never a raw hex) */
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
@@ -43,7 +43,7 @@ a,button{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 html{scroll-behavior:smooth;overscroll-behavior-x:none;scrollbar-width:none}
 html::-webkit-scrollbar{width:0;height:0;display:none}
-::selection{background:var(--blau);color:var(--marine)}
+::selection{background:var(--bronze);color:var(--marine)}
 
 .progress{position:absolute;left:0;bottom:0;height:2px;width:0;z-index:2;
   background:linear-gradient(90deg,var(--holz),var(--weiss),var(--holz));
@@ -51,7 +51,7 @@ html::-webkit-scrollbar{width:0;height:0;display:none}
 body.home .progress{opacity:0}
 
 .stage .corner{position:absolute;width:24px;height:24px;z-index:3;pointer-events:none;
-  border:0 solid color-mix(in srgb,var(--blau) 60%,transparent);opacity:.85}
+  border:0 solid color-mix(in srgb,var(--bronze) 60%,transparent);opacity:.85}
 .stage .corner.tl{top:1.1rem;left:1.1rem;border-top-width:1px;border-left-width:1px}
 .stage .corner.tr{top:1.1rem;right:1.1rem;border-top-width:1px;border-right-width:1px}
 .stage .corner.bl{bottom:1.1rem;left:1.1rem;border-bottom-width:1px;border-left-width:1px}
@@ -72,7 +72,7 @@ h1{font-size:clamp(3.45rem,10.35vw,6.9rem);margin:.12em 0}
 h1,.brand-lg{font-family:var(--title)}
 h2{font-size:clamp(2.185rem,4.6vw,2.99rem);margin:0 0 .6em}
 h3{font-size:1.495rem;margin:0 0 .45em}
-a{color:var(--blau);text-underline-offset:4px;text-decoration-thickness:1px}
+a{color:var(--bronze);text-underline-offset:4px;text-decoration-thickness:1px}
 a:hover{color:var(--gold)}
 a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
 .skip{position:absolute;left:-999px;top:0;background:var(--gold);color:var(--marine);
@@ -83,7 +83,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
   display:inline-block}
 
 #team{--accent:var(--holz)}
-#trade{--accent:var(--blau)}
+#trade{--accent:var(--bronze)}
 #news{--accent:var(--gruen)}
 #news .wrap{max-width:var(--wide)}
 #impressum,#datenschutz{--accent:var(--holz)}
@@ -106,12 +106,12 @@ nav.tabs{display:flex;gap:.15rem;flex-wrap:wrap}
 nav.tabs button{font-family:var(--serif);font-size:.95rem;letter-spacing:.05em;
   background:none;border:none;cursor:pointer;color:var(--silber);padding:.5rem .95rem;
   border-radius:999px;transition:all .3s;white-space:nowrap;min-height:40px}
-nav.tabs button:hover{color:var(--blau)}
-nav.tabs button.active{background:var(--blau);color:var(--marine)}
+nav.tabs button:hover{color:var(--bronze)}
+nav.tabs button.active{background:var(--bronze);color:var(--marine)}
 nav.tabs button[data-t="team"]:hover{color:var(--holz)}
 nav.tabs button[data-t="team"].active{background:var(--holz);color:var(--weiss)}
-nav.tabs button[data-t="trade"]:hover{color:var(--blau)}
-nav.tabs button[data-t="trade"].active{background:var(--blau);color:var(--marine)}
+nav.tabs button[data-t="trade"]:hover{color:var(--bronze)}
+nav.tabs button[data-t="trade"].active{background:var(--bronze);color:var(--marine)}
 nav.tabs button[data-t="news"]:hover{color:var(--gruen)}
 nav.tabs button[data-t="news"].active{background:var(--gruen);color:var(--weiss)}
 @media(max-width:640px){
@@ -150,9 +150,9 @@ main section.tab.show{display:block}
   width:min(13rem,80%)}
 .menu button:nth-child(1){--accent:var(--gruen)}
 .menu button:nth-child(2){--accent:var(--silber)}
-.menu button:nth-child(3){--accent:var(--blau)}
+.menu button:nth-child(3){--accent:var(--bronze)}
 .menu button:nth-child(4){--accent:var(--gruen)}
-.menu button:nth-child(5){--accent:var(--blau)}
+.menu button:nth-child(5){--accent:var(--bronze)}
 .menu button{position:relative;display:block;background:none;border:0;
   border-top:1px solid var(--line);cursor:pointer;color:var(--ink);font:inherit;
   font-size:.82rem;letter-spacing:.16em;padding:.7rem .1rem;
@@ -228,7 +228,7 @@ picture{display:contents}
   box-shadow:0 18px 44px -10px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 72%,#fff)}
 .wiki-cta:hover::after{left:135%}
 .wiki-cta:active{transform:translateY(-1px) scale(.99)}
-@keyframes ctaPulse{0%,100%{box-shadow:0 7px 20px -7px color-mix(in srgb,var(--blau) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -3px 8px -3px rgba(0,0,0,.28)}50%{box-shadow:0 11px 30px -7px color-mix(in srgb,var(--blau) 72%,transparent),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 8px -3px rgba(0,0,0,.28)}}
+@keyframes ctaPulse{0%,100%{box-shadow:0 7px 20px -7px color-mix(in srgb,var(--bronze) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -3px 8px -3px rgba(0,0,0,.28)}50%{box-shadow:0 11px 30px -7px color-mix(in srgb,var(--bronze) 72%,transparent),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 8px -3px rgba(0,0,0,.28)}}
 .rib-intro{text-align:center;max-width:var(--wt);margin:0 auto calc(clamp(2.6rem,5vw,3.8rem) + 2.5cm)}
 .rib-kicker{display:block;font-style:normal;font-size:.7rem;letter-spacing:.44em;text-transform:uppercase;color:var(--muted);margin:0 0 1.5rem}
 .rib-title{font-family:var(--sans);font-weight:600;font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.02em;line-height:1;margin:0}
@@ -274,11 +274,11 @@ picture{display:contents}
 .book-name{font-family:var(--serif);font-weight:400;font-size:1.05rem;line-height:1.3;margin:1.4rem 0 .28rem;color:var(--ink);letter-spacing:.01em;max-width:22ch;min-height:2.7em;display:flex;align-items:center;justify-content:center}
 .book-author{display:block;font-family:var(--serif);font-style:italic;font-weight:600;font-size:.85rem;letter-spacing:.05em;color:var(--holz)}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
-.solutions{--pcol:var(--blau);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1.5px solid color-mix(in srgb,var(--pcol) 34%,transparent);border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),color-mix(in srgb,var(--marine) 64%,var(--card));box-shadow:0 50px 100px -60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px -14px color-mix(in srgb,var(--pcol) 14%,transparent);transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
+.solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1.5px solid color-mix(in srgb,var(--pcol) 34%,transparent);border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),color-mix(in srgb,var(--marine) 64%,var(--card));box-shadow:0 50px 100px -60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px -14px color-mix(in srgb,var(--pcol) 14%,transparent);transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
 .solutions:has(#sol-r-wiki:checked){--pcol:var(--holz)}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--gruen)}
 .solutions:has(#sol-r-hl:checked){--pcol:var(--silber)}
-.solutions:has(#sol-r-kalshi:checked){--pcol:var(--blau)}
+.solutions:has(#sol-r-kalshi:checked){--pcol:var(--bronze)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;transform:translateY(-50%);pointer-events:none}
 .sol-title{max-width:calc(100% - 2rem);padding:0 clamp(1.5rem,3.6vw,3rem);background:linear-gradient(180deg,var(--bg) 50%,color-mix(in srgb,var(--marine) 64%,var(--card)) 50%) center/100% 3px no-repeat;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.45rem,2.9vw,2.15rem);letter-spacing:.02em;line-height:1.2;margin:0;color:var(--ink);text-shadow:0 2px 24px rgba(0,0,0,.4)}
@@ -291,7 +291,7 @@ picture{display:contents}
 #sol-r-algo:checked ~ .sol-toggle label[for="sol-r-algo"],
 #sol-r-hl:checked ~ .sol-toggle label[for="sol-r-hl"],
 #sol-r-kalshi:checked ~ .sol-toggle label[for="sol-r-kalshi"]{color:var(--ink);
-  background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 26%,var(--card)),color-mix(in srgb,var(--blau) 16%,var(--card)));
+  background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 26%,var(--card)),color-mix(in srgb,var(--bronze) 16%,var(--card)));
   box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 6px -3px rgba(0,0,0,.3)}
 #sol-r-wiki:checked ~ .sol-toggle label[for="sol-r-wiki"] .sol-dot,
 #sol-r-algo:checked ~ .sol-toggle label[for="sol-r-algo"] .sol-dot,
@@ -308,7 +308,7 @@ picture{display:contents}
 .sol-chart{border:1px solid color-mix(in srgb,var(--pcol) 42%,transparent);border-radius:var(--r-sm);overflow:hidden;background:color-mix(in srgb,var(--card) 50%,transparent);height:clamp(230px,30vw,300px);display:flex;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 2px 34px -22px color-mix(in srgb,var(--pcol) 55%,transparent)}
 .sol-chart iframe{width:100%;height:100%;border:0;display:block}
 .sol-text{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,2.6vw,2.1rem)}
-.sol-bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.85rem;align-items:stretch;width:100%}.sol-bullets li{--bcol:var(--pcol,var(--blau));position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-start;font-family:var(--sans);font-style:italic;font-weight:400;letter-spacing:.025em;font-size:1.12rem;color:color-mix(in srgb,var(--gold) 50%,#fff);text-align:left;width:100%;min-height:3.3rem;padding:.7rem 1.4rem .7rem clamp(2rem,16%,4.5rem);text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 12px rgba(255,255,255,.32);border-radius:var(--pill);border:1px solid color-mix(in srgb,#fff 34%,var(--bcol));background:radial-gradient(120% 90% at 30% 0%,rgba(255,255,255,.2),transparent 42%),linear-gradient(135deg,color-mix(in srgb,var(--bcol) 72%,#222),color-mix(in srgb,var(--bcol) 82%,#000) 46%,color-mix(in srgb,var(--bcol) 55%,#000));box-shadow:0 0 12px -6px color-mix(in srgb,var(--bcol) 45%,transparent),0 6px 18px -8px color-mix(in srgb,var(--bcol) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -3px 8px -3px rgba(0,0,0,.4);transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .3s var(--ease)}
+.sol-bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.85rem;align-items:stretch;width:100%}.sol-bullets li{--bcol:var(--pcol,var(--bronze));position:relative;overflow:hidden;display:flex;align-items:center;justify-content:flex-start;font-family:var(--sans);font-style:italic;font-weight:400;letter-spacing:.025em;font-size:1.12rem;color:color-mix(in srgb,var(--gold) 50%,#fff);text-align:left;width:100%;min-height:3.3rem;padding:.7rem 1.4rem .7rem clamp(2rem,16%,4.5rem);text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 12px rgba(255,255,255,.32);border-radius:var(--pill);border:1px solid color-mix(in srgb,#fff 34%,var(--bcol));background:radial-gradient(120% 90% at 30% 0%,rgba(255,255,255,.2),transparent 42%),linear-gradient(135deg,color-mix(in srgb,var(--bcol) 72%,#222),color-mix(in srgb,var(--bcol) 82%,#000) 46%,color-mix(in srgb,var(--bcol) 55%,#000));box-shadow:0 0 12px -6px color-mix(in srgb,var(--bcol) 45%,transparent),0 6px 18px -8px color-mix(in srgb,var(--bcol) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -3px 8px -3px rgba(0,0,0,.4);transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .3s var(--ease)}
 .sol-bullets li:nth-child(1){--bcol:color-mix(in srgb,var(--pcol) 58%,#fff);--bcol:oklch(from var(--pcol) 74% calc(c*2.1 + .05) calc(h - 16))}
 .sol-bullets li:nth-child(2){--bcol:var(--pcol);--bcol:oklch(from var(--pcol) 63% calc(c*2.5 + .07) calc(h + 26))}
 .sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 72%,#000);--bcol:oklch(from var(--pcol) 80% calc(c*1.8 + .04) calc(h + 8))}
@@ -355,10 +355,6 @@ picture{display:contents}
 .mag-claim{font-family:var(--serif);font-style:italic;font-size:clamp(1.12rem,2.2vw,1.32rem);line-height:1.5;color:var(--ink);margin:0 0 .9rem}
 .mag-contra{font-size:.92rem;color:var(--muted);font-style:italic;border-left:2px solid var(--line);padding-left:1rem;margin:.9rem 0 0}
 .mag-poem{text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(1.02rem,2vw,1.16rem);line-height:1.95;color:var(--silber);margin:0}
-.sol-concept{position:relative;z-index:2;max-width:760px;margin:0;padding:0 clamp(1.2rem,4vw,2.5rem);border:0;background:none;box-shadow:none;text-align:center}
-.sol-concept h4{text-shadow:0 2px 20px rgba(0,0,0,.6),0 1px 3px rgba(0,0,0,.5);font-family:var(--serif);font-weight:300;font-size:clamp(1.3rem,2.7vw,1.85rem);line-height:1.3;letter-spacing:.004em;margin:0 0 .85rem;color:var(--ink)}
-.sol-concept p{margin:0;font-family:var(--serif);font-size:clamp(1rem,1.6vw,1.12rem);line-height:1.75;color:color-mix(in srgb,var(--weiss) 82%,#fff);font-weight:300;text-shadow:0 2px 14px rgba(0,0,0,.6)}
-.sol-concept em{color:var(--pcol,var(--gold));font-style:italic}
 
 
 .portrait{position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;
@@ -392,8 +388,8 @@ footer{position:relative;border:none;padding:1.05rem 0 1.15rem;color:var(--muted
 body.atbottom footer{opacity:1;transform:none;pointer-events:auto}
 
 footer::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--blau) 18%,var(--blau) 82%,transparent);
-  opacity:.55;box-shadow:0 0 14px 1px color-mix(in srgb,var(--blau) 45%,transparent)}
+  background:linear-gradient(90deg,transparent,var(--bronze) 18%,var(--bronze) 82%,transparent);
+  opacity:.55;box-shadow:0 0 14px 1px color-mix(in srgb,var(--bronze) 45%,transparent)}
 
 footer .row{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;
   gap:.7rem;font-size:0.851rem;letter-spacing:.05em;white-space:nowrap;
@@ -412,17 +408,17 @@ footer .sig:hover{opacity:1;box-shadow:0 0 0 .5px color-mix(in srgb,var(--weiss)
 footer button{position:relative;background:none;border:none;cursor:pointer;padding:0;
   font:inherit;color:var(--muted);text-decoration:none}
 footer button::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;
-  background:var(--blau);transform:scaleX(0);transform-origin:left;transition:transform .3s}
-footer button:hover{color:var(--blau)}
+  background:var(--bronze);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+footer button:hover{color:var(--bronze)}
 footer button:hover::after{transform:scaleX(1)}
 #main{position:relative;z-index:1;overflow-x:clip}
 footer{position:relative;z-index:1}
 .cur{position:fixed;left:0;top:0;z-index:40;pointer-events:none;opacity:0;will-change:transform;transition:opacity .3s}
-.cur.dot{width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--blau)}
+.cur.dot{width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--bronze)}
 .cur.ring{width:24px;height:24px;margin:-12px;border-radius:50%;
-  border:1px solid color-mix(in srgb,var(--blau) 55%,transparent);
+  border:1px solid color-mix(in srgb,var(--bronze) 55%,transparent);
   transition:width .3s,height .3s,margin .3s,border-color .3s,opacity .3s}
-.cur.ring.hot{width:44px;height:44px;margin:-22px;border-color:var(--blau)}
+.cur.ring.hot{width:44px;height:44px;margin:-22px;border-color:var(--bronze)}
 .cur.ring.down{width:18px;height:18px;margin:-9px}
 
 .rib-intro{position:relative}
@@ -605,7 +601,7 @@ footer{position:relative;z-index:1}
 
 <div aria-hidden="true" style="position:fixed;left:0;right:0;bottom:0;height:2px;z-index:6;
   pointer-events:none;opacity:.5;background:linear-gradient(90deg,
-  transparent,var(--blau) 22%,var(--weiss) 50%,var(--blau) 78%,transparent)"></div>
+  transparent,var(--bronze) 22%,var(--weiss) 50%,var(--bronze) 78%,transparent)"></div>
 
 <header id="hd">
   <div class="nav">
@@ -654,7 +650,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--blau)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
+    <div class="rib-intro" style="--accent:var(--bronze)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
     <div class="trade-quotes"><p class="trade-quote keepcase"><span class="ql" style="--i:0">A</span><span class="ql" style="--i:1">l</span><span class="ql" style="--i:2">l</span> <span class="ql" style="--i:3">t</span><span class="ql" style="--i:4">r</span><span class="ql" style="--i:5">a</span><span class="ql" style="--i:6">d</span><span class="ql" style="--i:7">i</span><span class="ql" style="--i:8">n</span><span class="ql" style="--i:9">g</span> <span class="ql" style="--i:10">i</span><span class="ql" style="--i:11">s</span> <span class="ql" style="--i:12">u</span><span class="ql" style="--i:13">l</span><span class="ql" style="--i:14">t</span><span class="ql" style="--i:15">i</span><span class="ql" style="--i:16">m</span><span class="ql" style="--i:17">a</span><span class="ql" style="--i:18">t</span><span class="ql" style="--i:19">e</span><span class="ql" style="--i:20">l</span><span class="ql" style="--i:21">y</span> <span class="ql" style="--i:22">d</span><span class="ql" style="--i:23">i</span><span class="ql" style="--i:24">s</span><span class="ql" style="--i:25">c</span><span class="ql" style="--i:26">r</span><span class="ql" style="--i:27">e</span><span class="ql" style="--i:28">t</span><span class="ql" style="--i:29">i</span><span class="ql" style="--i:30">o</span><span class="ql" style="--i:31">n</span><span class="ql" style="--i:32">a</span><span class="ql" style="--i:33">r</span><span class="ql" style="--i:34">y</span><span class="ql" style="--i:35">.</span> <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
@@ -663,18 +659,18 @@ footer{position:relative;z-index:1}
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi</label></div>
 <div class="sol-body">
-<div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/tig.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge in today&rsquo;s competitive landscape?</h4><p>Maybe look where AI cannot yet imitate you well &mdash; <em>your discretion</em></p></div></div>
+<div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/tig.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
 <div class="sol-slogan"><span class="sol-tag keepcase">the hand &middot; wikifolio</span><p class="sol-philosophy keepcase"><b>One discretionary hand, global macro, no automation.</b>Currencies, rates and commodities held by conviction &mdash; long, short and leveraged only where the thesis earns the risk.</p></div>
 <div class="sol-two"><div class="sol-chart"><iframe loading="lazy" src="https://s.tradingview.com/widgetembed/?symbol=AMEX%3ADBMF&interval=W&style=3&theme=light&hideideas=1&hidesidetoolbar=1&hidetoptoolbar=1&range=60M&locale=de" frameborder="0" scrolling="no" allowtransparency="true" sandbox="allow-scripts allow-same-origin allow-popups" referrerpolicy="strict-origin-when-cross-origin" title="DBMF weekly chart"></iframe></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>global macro</li><li>discretionary</li><li>long, short, leveraged</li></ul><div class="sol-cta-row"><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">to the wikifolio -></a></div></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3></div><div class="perf-stats"><div><b>+101%</b><span>since inception</span></div><div><b>-2.7%</b><span>12 months</span></div><div><b>+11.6%</b><span>p.a.</span></div></div></div></div></div></div>
-<div class="sol-panel sol-p-hl"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/wha.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge when markets never close?</h4><p>Maybe ride the cleanest trends, around the clock &mdash; <em>momentum never sleeps</em></p></div></div>
+<div class="sol-panel sol-p-hl"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/wha.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
 <div class="sol-slogan"><span class="sol-tag keepcase">the engine &middot; hyperliquid</span><p class="sol-philosophy keepcase"><b>One breakout engine, both directions, no exceptions.</b>Perpetual futures traded long and short around the clock, every entry a concentrated ticket riding one factor &mdash; volatility-adjusted momentum.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="hperfTitle">return</span><select class="perf-sel" id="hperfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="hperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="hperfNote">live · hyperliquid</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>perpetual futures</li><li>algorithmic</li><li>long &amp; short, around the clock</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">perpetual futures</span><h3 class="sol-card-name keepcase">hyperliquid trends</h3></div><div class="perf-stats"><div><b id="hstRet">–</b><span>return</span></div><div><b id="hstWin">–</b><span>win rate</span></div><div><b id="hstTr">–</b><span>trades</span></div><div><b id="hstDD">–</b><span>max dd</span></div><div><b id="hstAW">–</b><span>avg win</span></div><div><b id="hstPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="hAn"></div></div>
-<div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/moe.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge once emotion leaves the trade?</h4><p>Maybe let the machine ride momentum &mdash; <em>winners keep winning</em></p></div></div>
+<div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/moe.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
 <div class="sol-slogan"><span class="sol-tag keepcase">the engine &middot; alpaca</span><p class="sol-philosophy keepcase"><b>One breakout engine, both directions, no exceptions.</b>US equities traded long and short overnight &mdash; never held through a full session, never left unprotected.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="perfTitle">return</span><select class="perf-sel" id="perfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>us stocks</li><li>algorithmic</li><li>long &amp; short, overnight swing</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="stAn"></div></div>
-<div class="sol-panel sol-p-kalshi"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/slt.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge in markets that price the future?</h4><p>Maybe follow the cleanest trends before the crowd &mdash; <em>signal, not noise</em></p></div></div>
+<div class="sol-panel sol-p-kalshi"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/slt.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
 <div class="sol-slogan"><span class="sol-tag keepcase">the engine &middot; kalshi</span><p class="sol-philosophy keepcase"><b>One breakout engine, both directions, no exceptions.</b>Event-contract breakouts priced in cents, sized exactly like every other market the engine trades.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="kperfTitle">return</span><select class="perf-sel" id="kperfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="kperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="kperfNote">live &middot; kalshi</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>event markets</li><li>breakout momentum</li><li>hourly, long &amp; short</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">event markets</span><h3 class="sol-card-name keepcase">kalshi trends</h3></div><div class="perf-stats"><div><b id="kstRet">–</b><span>return</span></div><div><b id="kstWin">–</b><span>win rate</span></div><div><b id="kstTr">–</b><span>trades</span></div><div><b id="kstDD">–</b><span>max dd</span></div><div><b id="kstAW">–</b><span>avg win</span></div><div><b id="kstPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="kstAn"></div></div>
