@@ -284,8 +284,8 @@ picture{display:contents}
 .solutions::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:clamp(80px,20%,180px);height:2px;background:linear-gradient(90deg,transparent,var(--pcol),transparent)}
 .sol-head{position:relative}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
-.sol-head{text-align:center;margin:0 0 clamp(1.6rem,3vw,2.2rem)}
-.sol-title{font-family:var(--mono);font-weight:500;font-size:clamp(.72rem,1.5vw,.9rem);letter-spacing:.34em;text-transform:uppercase;margin:0;color:var(--muted)}
+.sol-head{text-align:center;margin:clamp(-3rem,-4vw,-1.6rem) 0 clamp(1.8rem,3.2vw,2.6rem)}
+.sol-title{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(2rem,4.4vw,3.1rem);letter-spacing:.004em;line-height:1.15;margin:0;color:var(--ink);text-shadow:0 2px 24px rgba(0,0,0,.4)}
 .sol-toggle{display:flex;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
 .sol-btn{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;white-space:nowrap;user-select:none;
@@ -524,14 +524,6 @@ footer{position:relative;z-index:1}
 .lib-vid::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
 
 /* ── trading markets: cross-bot comparison, per-panel slogan, live analytics — shared design language ── */
-.sol-compare{max-width:960px;margin:0 auto clamp(2rem,4vw,2.8rem);padding:clamp(1.2rem,2.6vw,1.8rem) clamp(1.3rem,2.8vw,2rem);border:1px solid color-mix(in srgb,var(--pcol) 26%,var(--line));border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 42%,transparent);transition:border-color .4s var(--ease)}
-.compare-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.4rem;margin-bottom:.6rem}
-.compare-kicker{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.compare-note{font-size:.7rem;letter-spacing:.06em;color:var(--muted)}
-.compare-svg{width:100%;height:clamp(120px,18vw,190px)}
-.compare-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.7rem;font-size:.8rem;color:var(--muted)}
-.compare-item{display:inline-flex;align-items:center;gap:.4rem}
-.compare-item i{width:9px;height:9px;border-radius:50%;display:inline-block}
 
 /* engine plaque: one per market, same shell, small type, accent edge */
 .sol-slogan{position:relative;max-width:64ch;margin:0 auto;padding:1.15rem 1.6rem 1.25rem 1.9rem;border:1px solid color-mix(in srgb,var(--pcol) 30%,var(--line));border-radius:var(--r-sm);background:linear-gradient(155deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 26%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 50px -42px color-mix(in srgb,var(--pcol) 70%,transparent);overflow:hidden;transition:border-color .4s var(--ease)}
@@ -697,7 +689,6 @@ footer{position:relative;z-index:1}
 <input class="sol-radio" type="radio" name="sol" id="sol-r-hl">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-kalshi">
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
-<div class="sol-compare"><div class="compare-head"><span class="compare-kicker keepcase">all strategies</span><span class="compare-note keepcase">return, normalized to 100 since live start</span></div><svg class="compare-svg" id="compareSvg" viewBox="0 0 600 190" preserveAspectRatio="none" aria-hidden="true"></svg><div class="compare-legend" id="compareLegend"></div></div>
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/tig.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge in today&rsquo;s competitive landscape?</h4><p>Maybe look where AI cannot yet imitate you well &mdash; <em>your discretion</em></p></div></div>
@@ -731,6 +722,7 @@ footer{position:relative;z-index:1}
     <div class="rib-intro" style="--accent:var(--gruen)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="news-quote"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
     <details class="ask"><summary><span class="ask-k keepcase">intel bot</span><span class="ask-q keepcase">Ask me — what is this?</span></summary><p class="keepcase"><b>Intel Bot.</b> A daily intel report — what is going on, and why it matters.</p></details>
     <div class="mag"><div class="mag-mast"><span class="tag keepcase">sample report</span><a class="mag-reg" href="mailto:maloutrading@web.de">sign up -></a></div>
+<!-- auto:report -->
 <div class="mag-date keepcase">08/04/2026</div>
 <p class="mag-claim">Three of today's stories are about walling off: the US regulator FCC bars Chinese robots from the American market, the think tank RAND designs sealed data centres against the theft of AI model weights, and the European Council on Foreign Relations prepares the EU for a confrontational France under Marine Le Pen. Against them stands a study from the University of Pennsylvania: a bean protein that binds HPV in saliva.</p>
 <article class="mag-item"><span class="mag-kicker keepcase">N&deg; 01</span><h3 class="mag-head keepcase">US bars imports of foreign robots</h3><p class="mag-body">The US Federal Communications Commission has since last week banned imports of new foreign robots, among them humanoid, four-legged and wheeled models. A task force convened by the White House justifies the ban with cyber risks to critical infrastructure; it hits China above all, which holds around 85 percent of the world market for humanoid robots. Of some 15,000 humanoids delivered in 2025, more than 5,000 each came from the Chinese makers Unitree and AGIBOT, while Tesla and Figure AI shipped a few hundred or fewer each. US start-ups thereby lose access to cheap Chinese platforms before comparable Western models exist.</p><p class="mag-src">MIT Technology Review &middot; 2 independent sources</p></article>
@@ -740,6 +732,7 @@ footer{position:relative;z-index:1}
 <article class="mag-item"><span class="mag-kicker keepcase">N&deg; 05</span><h3 class="mag-head keepcase">Ministers demand new health financing</h3><p class="mag-body">Nigeria's health minister Muhammad Ali Pate, Indonesia's minister Budi Gunadi Sadikin and Donald Kaberuka, former head of the African Development Bank, declare the end of the donor-driven health model in Project Syndicate. The trigger is the collapse in development aid for health, which fell around 21 percent in 2025 to about 39 billion dollars, the lowest level since 2009, driven above all by a US withdrawal of more than 9 billion dollars. The Global Fund, historically financed by the US to a third, thereby loses its largest backer.</p><p class="mag-src">Project Syndicate</p></article>
 <article class="mag-item"><span class="mag-kicker keepcase">N&deg; 06</span><h3 class="mag-head keepcase">Vienna researchers define bio-metals</h3><p class="mag-body">Researchers at TU Wien and the University of Vienna measured the jaws of the marine bristle worm Perinereis cultrifera and derived from them a new class of material, bio-metals. The jaws consist of structural proteins and ions and carry more metal ions at the tips, which makes them especially hard there. They follow the Nix-Gao effect, in which hardness rises as indentation depth falls, a hallmark of crystalline metals. Under tension, however, they behave unlike classical metals such as copper or silver.</p><p class="mag-src">Nautilus</p></article>
 <div class="mag-item"><span class="mag-kicker keepcase">trends</span><p class="mag-body">On August 12, 2026 a total solar eclipse crosses Greenland, Iceland and northern Spain. For mainland Spain it is the first total eclipse since 1905 and the opening of three eclipses between 2026 and 2028. The moon's shadow cone races across the continent at several thousand kilometres per hour, totality lasts only up to a few minutes at any one place, and exactly this scarcity drives demand. Northern Spain expects millions of visitors along the narrow path, while sales of certified eclipse glasses are already climbing eight days ahead and hotels along the zone are booked out.</p></div>
+<!-- /auto:report -->
 </div>
   </div>
 </section>
