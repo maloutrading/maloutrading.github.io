@@ -264,13 +264,6 @@ function exposureSvg(exp){
     '<path d="' + path(shorts) + '" fill="none" stroke="var(--holz)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>';
 }
 
-function capacity(used, max){
-  if (!(typeof max === 'number' && isFinite(max) && max > 0)) return '';
-  const u = Math.max(0, Math.min(max, typeof used === 'number' && isFinite(used) ? used : 0));
-  const pips = Array.from({length: max}, (_, i) => '<i class="' + (i < u ? 'on' : '') + '"></i>').join('');
-  return '<div class="cap"><div class="cap-pips">' + pips + '</div>' +
-    '<div class="cap-txt"><b>' + (typeof used === 'number' && isFinite(used) ? used : 0) + '</b> of ' + max + ' slots working<span>' + (max - u ? (max - u) + ' idle' : 'fully deployed') + '</span></div></div>';
-}
 function callout(label, t){
   if (!t || typeof t.r !== 'number') return '';
   return '<div class="callout"><span class="callout-label">' + label + '</span><b>' + escapeHtml(t.symbol) + '</b>' +
@@ -321,7 +314,6 @@ function tradesHtml(d){
 function renderAnalytics(containerId, d){
   const el = document.getElementById(containerId); if (!el) return;
   const s = d.stats || {};
-  const guardHtml = capacity(s.positions, s.max_positions);
   const calloutHtml = (s.best_trade || s.worst_trade)
     ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade) + callout('worst trade', s.worst_trade) + '</div>' : '';
   const grid = '<div class="an-grid">' +
@@ -331,7 +323,7 @@ function renderAnalytics(containerId, d){
     '<div class="an-card"><h5 class="an-h">long / short exposure</h5>' + exposureSvg(d.exposure) + '</div>' + '</div>';
   const trades = tradesHtml(d);
   const lead = trades ? '<div class="an-row book-trades">' + bookHtml(d) + trades + '</div>' : bookHtml(d);
-  el.innerHTML = lead + guardHtml + calloutHtml + grid;
+  el.innerHTML = lead + calloutHtml + grid;
 }
 
 function mount(P){
@@ -385,34 +377,6 @@ function mount(P){
 mount({svg:'perfSvg', sel:'perfSel', title:'perfTitle', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
 mount({svg:'kperfSvg', sel:'kperfSel', title:'kperfTitle', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshiMarkets/kalshi.json'});
 mount({svg:'hperfSvg', sel:'hperfSel', title:'hperfTitle', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquidMarkets/hyperliquid.json'});
-
-function renderCompare(){
-  const svg = document.getElementById('compareSvg'), legend = document.getElementById('compareLegend');
-  if (!svg) return;
-  const specs = [
-    {url:'json/alpacaMarkets/alpaca.json', label:'alpaca', color:cv('--gruen')},
-    {url:'json/hyperliquidMarkets/hyperliquid.json', label:'hyperliquid', color:cv('--silber')},
-    {url:'json/kalshiMarkets/kalshi.json', label:'kalshi', color:cv('--blau')},
-  ];
-  Promise.all(specs.map(sp => fetchT(sp.url + '?' + Date.now(), 8000).then(r => r.ok ? r.json() : null).catch(() => null)))
-    .then(results => {
-      const series = specs.map((sp, i) => ({...sp, pts: sanitizeSeries(((results[i] || {}).series || {}).return || [])}));
-      const valid = series.filter(sp => sp.pts.length >= 2);
-      if (!valid.length){ svg.innerHTML = ''; if (legend) legend.textContent = 'data unavailable'; return; }
-      const allY = valid.flatMap(sp => sp.pts.map(p => p[1])), allX = valid.flatMap(sp => sp.pts.map(p => p[0]));
-      let y0 = Math.min(...allY, 0), y1 = Math.max(...allY, 0), x0 = Math.min(...allX), x1 = Math.max(...allX);
-      if (y0 === y1){ y0 -= 1; y1 += 1; } if (x0 === x1){ x0 -= 1; x1 += 1; }
-      const W = 600, H = 190, pad = 6;
-      const X = x => pad + (x - x0) / (x1 - x0) * (W - 2 * pad);
-      const Y = y => H - pad - (y - y0) / (y1 - y0) * (H - 2 * pad);
-      const zero = (y0 < 0 && y1 > 0) ? '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(0).toFixed(1) + '" y2="' + Y(0).toFixed(1) + '" stroke="var(--line)" stroke-dasharray="3 4"/>' : '';
-      const paths = valid.map(sp => '<path d="' + sp.pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ') +
-        '" fill="none" stroke="' + sp.color + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>').join('');
-      svg.innerHTML = zero + paths;
-      if (legend) legend.innerHTML = valid.map(sp => '<span class="compare-item"><i style="background:' + sp.color + '"></i>' + sp.label + '</span>').join('');
-    });
-}
-renderCompare();
 
 document.querySelectorAll('.sol-radio').forEach(r => {
   r.addEventListener('change', () => {
