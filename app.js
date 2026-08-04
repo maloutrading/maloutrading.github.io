@@ -189,37 +189,27 @@ function fmtPlain(v, suf){ return (typeof v === 'number' && isFinite(v)) ? v + (
 function cv(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || name; }
 function svgEmpty(msg){ return '<p class="an-empty">' + msg + '</p>'; }
 
-function lineSvg(pts, color, zeroLine){
-  if (pts.length < 2) return svgEmpty('not enough history yet');
-  const W = 300, H = 140, pad = 5;
-  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
-  let x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
-  if (x0 === x1){ x0 -= 1; x1 += 1; } if (y0 === y1){ y0 -= 1; y1 += 1; }
-  const X = x => pad + (x - x0) / (x1 - x0) * (W - 2 * pad);
-  const Y = y => H - pad - (y - y0) / (y1 - y0) * (H - 2 * pad);
-  const d = pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
-  const zero = (zeroLine && y0 < 0 && y1 > 0)
-    ? '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(0).toFixed(1) + '" y2="' + Y(0).toFixed(1) + '" stroke="var(--line)" stroke-dasharray="2 3"/>' : '';
-  return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg">' + zero +
-    '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>';
-}
-
 function rHistSvg(trades){
   const rs = (trades || []).map(t => t.r).filter(v => typeof v === 'number' && isFinite(v));
   if (rs.length < 3) return svgEmpty('not enough closed trades yet');
-  const mn = Math.min(...rs, -1), mx = Math.max(...rs, 1), n = 8, w = (mx - mn) / n || 1;
+  const lo = Math.min(...rs), hi = Math.max(...rs);
+  const mn = Math.min(lo, -1), mx = Math.max(hi, 1), n = 8, w = (mx - mn) / n || 1;
   const bins = new Array(n).fill(0);
   rs.forEach(v => { let i = Math.floor((v - mn) / w); if (i >= n) i = n - 1; if (i < 0) i = 0; bins[i]++; });
-  const W = 300, H = 140, pad = 5, axis = 14, maxC = Math.max(...bins, 1), bw = (W - 2 * pad) / n;
-  let bars = '';
-  for (let i = 0; i < n; i++){
-    const h = (bins[i] / maxC) * (H - 2 * pad - axis), x = pad + i * bw, y = H - pad - axis - h;
-    const mid = mn + w * (i + 0.5), col = mid >= 0 ? 'var(--gruen)' : 'var(--holz)';
-    bars += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + Math.max(1, bw - 2).toFixed(1) + '" height="' + Math.max(0, h).toFixed(1) + '" fill="' + col + '" rx="1.5"/>';
-  }
-  const zeroX = pad + ((0 - mn) / (mx - mn || 1)) * (W - 2 * pad);
-  return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg">' + bars +
-    '<line x1="' + zeroX.toFixed(1) + '" x2="' + zeroX.toFixed(1) + '" y1="' + pad + '" y2="' + (H - pad - axis) + '" stroke="var(--line)" stroke-dasharray="2 3"/></svg>';
+  const maxC = Math.max(...bins, 1);
+  const avg = rs.reduce((a, b) => a + b, 0) / rs.length;
+  const wins = rs.filter(v => v > 0).length;
+  const bars = bins.map((c, i) => {
+    const a = mn + w * i, b = a + w;
+    return '<i class="rh-col ' + (a + w / 2 >= 0 ? 'up' : 'dn') + '" title="' + a.toFixed(2) + 'R to ' + b.toFixed(2) + 'R · ' + c + ' trades">' +
+      '<b>' + (c || '') + '</b><u style="height:' + (c / maxC * 100).toFixed(1) + '%"></u></i>';
+  }).join('');
+  const zeroPct = ((0 - mn) / (mx - mn || 1)) * 100;
+  return '<div class="rh"><div class="rh-bars"><em class="rh-zero" style="left:' + zeroPct.toFixed(1) + '%"></em>' + bars + '</div>' +
+    '<div class="rh-axis"><span>' + mn.toFixed(1) + 'R</span><span class="rh-zero-tag" style="left:' + zeroPct.toFixed(1) + '%">0</span><span>+' + mx.toFixed(1) + 'R</span></div>' +
+    '<div class="rh-foot"><span><b>' + rs.length + '</b> trades</span><span><b class="' + (avg >= 0 ? 'up' : 'dn') + '">' + (avg >= 0 ? '+' : '') + avg.toFixed(2) + 'R</b> avg</span>' +
+    '<span><b class="up">+' + hi.toFixed(2) + 'R</b> best</span><span><b class="dn">' + lo.toFixed(2) + 'R</b> worst</span>' +
+    '<span><b>' + wins + '</b> / ' + (rs.length - wins) + ' win&nbsp;·&nbsp;loss</span></div></div>';
 }
 
 function heatGrid(eqSeries){
@@ -243,13 +233,21 @@ function heatGrid(eqSeries){
 function rollingWinSvg(trades){
   const list = (trades || []).filter(t => typeof t.r === 'number' && isFinite(t.r));
   if (list.length < 6) return svgEmpty('not enough closed trades yet');
-  const W = Math.max(5, Math.min(10, Math.floor(list.length / 2)));
-  const pts = [];
-  for (let i = W - 1; i < list.length; i++){
-    const win = list.slice(i - W + 1, i + 1).filter(t => t.r > 0).length;
-    pts.push([i, win / W * 100]);
-  }
-  return lineSvg(pts, cv('--gruen'), false);
+  const win = Math.max(5, Math.min(10, Math.floor(list.length / 2)));
+  const vals = [];
+  for (let i = win - 1; i < list.length; i++) vals.push(list.slice(i - win + 1, i + 1).filter(t => t.r > 0).length / win * 100);
+  const now = vals[vals.length - 1], avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+  const W = 300, H = 120, pad = 5;
+  const X = i => pad + (vals.length > 1 ? i / (vals.length - 1) : 0) * (W - 2 * pad);
+  const Y = v => H - pad - v / 100 * (H - 2 * pad);
+  const d = vals.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+  return '<div class="rw"><div class="rw-nums"><span><b class="' + (now >= 50 ? 'up' : 'dn') + '">' + Math.round(now) + '%</b>now</span>' +
+    '<span><b>' + Math.round(avg) + '%</b>average</span><span><b>' + Math.round(Math.min(...vals)) + '&ndash;' + Math.round(Math.max(...vals)) + '%</b>range</span>' +
+    '<span><b>' + win + '</b>trade window</span></div>' +
+    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg">' +
+    '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(50).toFixed(1) + '" y2="' + Y(50).toFixed(1) + '" stroke="var(--line)" stroke-dasharray="2 3"/>' +
+    '<path d="' + d + '" fill="none" stroke="' + cv('--gruen') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
+    '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div></div>';
 }
 
 function exposureSvg(exp){
@@ -266,12 +264,12 @@ function exposureSvg(exp){
     '<path d="' + path(shorts) + '" fill="none" stroke="var(--holz)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>';
 }
 
-function gauge(label, val, max, unit){
-  const hasData = typeof val === 'number' && isFinite(val) && typeof max === 'number' && isFinite(max) && max > 0;
-  const pct = hasData ? Math.max(0, Math.min(100, val / max * 100)) : 0;
-  const text = hasData ? (val + (unit || '') + ' / ' + max + (unit || '')) : '–';
-  return '<div class="g-item"><div class="g-top"><span>' + label + '</span><span>' + text + '</span></div>' +
-    '<div class="g-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div></div>';
+function capacity(used, max){
+  if (!(typeof max === 'number' && isFinite(max) && max > 0)) return '';
+  const u = Math.max(0, Math.min(max, typeof used === 'number' && isFinite(used) ? used : 0));
+  const pips = Array.from({length: max}, (_, i) => '<i class="' + (i < u ? 'on' : '') + '"></i>').join('');
+  return '<div class="cap"><div class="cap-pips">' + pips + '</div>' +
+    '<div class="cap-txt"><b>' + (typeof used === 'number' && isFinite(used) ? used : 0) + '</b> of ' + max + ' slots working<span>' + (max - u ? (max - u) + ' idle' : 'fully deployed') + '</span></div></div>';
 }
 function callout(label, t){
   if (!t || typeof t.r !== 'number') return '';
@@ -323,9 +321,7 @@ function tradesHtml(d){
 function renderAnalytics(containerId, d){
   const el = document.getElementById(containerId); if (!el) return;
   const s = d.stats || {};
-  const guardHtml = '<div class="an-row an-guard">' +
-    gauge('open positions', s.positions, s.max_positions, '') +
-    gauge('slots free', s.slots_free, s.max_positions, '') + '</div>';
+  const guardHtml = capacity(s.positions, s.max_positions);
   const calloutHtml = (s.best_trade || s.worst_trade)
     ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade) + callout('worst trade', s.worst_trade) + '</div>' : '';
   const grid = '<div class="an-grid">' +

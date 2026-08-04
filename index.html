@@ -533,18 +533,48 @@ footer{position:relative;z-index:1}
 .compare-item{display:inline-flex;align-items:center;gap:.4rem}
 .compare-item i{width:9px;height:9px;border-radius:50%;display:inline-block}
 
-.sol-slogan{text-align:center;max-width:54ch;margin:0 auto}
-.sol-philosophy{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.5rem,3.4vw,2.15rem);line-height:1.3;letter-spacing:.002em;color:var(--ink);margin:0;text-shadow:0 2px 20px rgba(0,0,0,.35)}
+/* engine plaque: one per market, same shell, small type, accent edge */
+.sol-slogan{position:relative;max-width:64ch;margin:0 auto;padding:1.15rem 1.6rem 1.25rem 1.9rem;border:1px solid color-mix(in srgb,var(--pcol) 30%,var(--line));border-radius:var(--r-sm);background:linear-gradient(155deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 26%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 50px -42px color-mix(in srgb,var(--pcol) 70%,transparent);overflow:hidden;transition:border-color .4s var(--ease)}
+.sol-slogan::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--pcol),transparent)}
+.sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 13%,transparent),transparent 68%);pointer-events:none}
+.sol-tag{position:relative;display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:color-mix(in srgb,var(--pcol) 70%,var(--ink));margin-bottom:.5rem}
+.sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.86rem,1.15vw,1rem);line-height:1.68;letter-spacing:.004em;color:color-mix(in srgb,var(--ink) 82%,transparent);margin:0;text-align:left}
+.sol-philosophy b{display:block;margin-bottom:.35rem;font-family:var(--sans);font-style:normal;font-weight:500;font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
 
 .an-block{display:flex;flex-direction:column;gap:clamp(1.4rem,2.6vw,2rem);width:100%}
 .an-row{display:flex;flex-wrap:wrap;gap:clamp(1rem,2.4vw,1.6rem)}
-.an-guard .g-item{flex:1 1 160px}
 .an-callouts{width:100%}
-.g-item{display:flex;flex-direction:column;gap:.4rem}
-.g-top{display:flex;justify-content:space-between;font-size:.78rem;letter-spacing:.04em;color:var(--muted)}
-.g-top span:last-child{color:var(--ink);font-variant-numeric:tabular-nums}
-.g-bar{height:5px;border-radius:99px;background:color-mix(in srgb,var(--pcol) 14%,var(--line));overflow:hidden}
-.g-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--pcol),color-mix(in srgb,var(--pcol) 60%,var(--gold)))}
+/* capacity: slots as pips — filled = working, hollow = idle */
+.cap{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.cap-pips{display:flex;gap:.5rem}
+.cap-pips i{width:.62rem;height:.62rem;border-radius:50%;border:1px solid color-mix(in srgb,var(--pcol) 45%,var(--line))}
+.cap-pips i.on{background:var(--pcol);box-shadow:0 0 10px -2px var(--pcol);border-color:var(--pcol)}
+.cap-txt{font-size:.78rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+.cap-txt b{color:var(--ink);font-family:var(--sans);font-weight:600}
+.cap-txt span{margin-left:.5rem;font-style:italic;opacity:.7}
+/* R-multiple histogram: counts on the bars, R scale below, tally underneath */
+.rh{flex:1;display:flex;flex-direction:column;gap:.35rem;min-height:0}
+.rh-bars{position:relative;flex:1;display:flex;align-items:flex-end;gap:2px;min-height:78px}
+.rh-col{position:relative;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:.15rem;height:100%}
+.rh-col b{font-family:var(--mono);font-size:.62rem;color:var(--muted);font-weight:400;line-height:1}
+.rh-col u{width:100%;min-height:1px;border-radius:2px 2px 0 0;text-decoration:none;background:color-mix(in srgb,var(--gruen) 70%,transparent)}
+.rh-col.dn u{background:color-mix(in srgb,var(--holz) 70%,transparent)}
+.rh-zero{position:absolute;top:0;bottom:0;width:1px;background:repeating-linear-gradient(180deg,var(--line) 0 2px,transparent 2px 5px)}
+.rh-axis{position:relative;display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.02em}
+.rh-zero-tag{position:absolute;transform:translateX(-50%)}
+.rh-foot{display:flex;flex-wrap:wrap;gap:.15rem .85rem;font-size:.66rem;letter-spacing:.03em;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--line) 70%,transparent);padding-top:.4rem}
+.rh-foot b{font-family:var(--mono);font-weight:400;color:var(--ink);margin-right:.25rem;font-variant-numeric:tabular-nums}
+.rh-foot b.up,.rw-nums b.up{color:var(--gruen)}
+.rh-foot b.dn,.rw-nums b.dn{color:var(--holz)}
+/* rolling win rate: headline numbers + fixed 0–100 scale */
+.rw{flex:1;display:flex;flex-direction:column;gap:.5rem;min-height:0}
+.rw-nums{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;font-size:.64rem;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
+.rw-nums span{display:flex;align-items:baseline;gap:.3rem}
+.rw-nums b{font-family:var(--mono);font-weight:400;font-size:.92rem;color:var(--ink);letter-spacing:0;text-transform:none}
+.rw-plot{position:relative;flex:1;min-height:86px;padding-right:2.1rem}
+.rw-plot .an-svg{min-height:86px}
+.rw-t{position:absolute;right:0;font-family:var(--mono);font-style:normal;font-size:.6rem;color:var(--muted);transform:translateY(-50%)}
+.rw-t[style*="top:0"],.rw-t[style*="bottom"]{transform:none}
 .callout{flex:1 1 220px;display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.2rem;border-radius:var(--r-sm);border:1px solid color-mix(in srgb,var(--pcol) 32%,transparent);background:color-mix(in srgb,var(--card) 45%,transparent)}
 .callout-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .callout b{font-family:var(--sans);font-size:1.15rem;color:var(--ink)}
@@ -671,17 +701,18 @@ footer{position:relative;z-index:1}
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/tig.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge in today&rsquo;s competitive landscape?</h4><p>Maybe look where AI cannot yet imitate you well &mdash; <em>your discretion</em></p></div></div>
+<div class="sol-slogan"><span class="sol-tag keepcase">the hand &middot; wikifolio</span><p class="sol-philosophy keepcase"><b>One discretionary hand, global macro, no automation.</b>Currencies, rates and commodities held by conviction &mdash; long, short and leveraged only where the thesis earns the risk.</p></div>
 <div class="sol-two"><div class="sol-chart"><iframe loading="lazy" src="https://s.tradingview.com/widgetembed/?symbol=AMEX%3ADBMF&interval=W&style=3&theme=light&hideideas=1&hidesidetoolbar=1&hidetoptoolbar=1&range=60M&locale=de" frameborder="0" scrolling="no" allowtransparency="true" sandbox="allow-scripts allow-same-origin allow-popups" referrerpolicy="strict-origin-when-cross-origin" title="DBMF weekly chart"></iframe></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>global macro</li><li>discretionary</li><li>long, short, leveraged</li></ul><div class="sol-cta-row"><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">to the wikifolio -></a></div></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3></div><div class="perf-stats"><div><b>+101%</b><span>since inception</span></div><div><b>-2.7%</b><span>12 months</span></div><div><b>+11.6%</b><span>p.a.</span></div></div></div></div></div></div>
 <div class="sol-panel sol-p-hl"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/wha.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge when markets never close?</h4><p>Maybe ride the cleanest trends, around the clock &mdash; <em>momentum never sleeps</em></p></div></div>
-<div class="sol-slogan"><p class="sol-philosophy keepcase">One breakout engine, both directions, no exceptions. Perpetual futures traded long and short around the clock, every entry a concentrated ticket riding one factor &mdash; volatility-adjusted momentum.</p></div>
+<div class="sol-slogan"><span class="sol-tag keepcase">the engine &middot; hyperliquid</span><p class="sol-philosophy keepcase"><b>One breakout engine, both directions, no exceptions.</b>Perpetual futures traded long and short around the clock, every entry a concentrated ticket riding one factor &mdash; volatility-adjusted momentum.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="hperfTitle">return</span><select class="perf-sel" id="hperfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="hperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="hperfNote">live · hyperliquid</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>perpetual futures</li><li>algorithmic</li><li>long &amp; short, around the clock</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">perpetual futures</span><h3 class="sol-card-name keepcase">hyperliquid trends</h3></div><div class="perf-stats"><div><b id="hstRet">–</b><span>return</span></div><div><b id="hstWin">–</b><span>win rate</span></div><div><b id="hstTr">–</b><span>trades</span></div><div><b id="hstDD">–</b><span>max dd</span></div><div><b id="hstAW">–</b><span>avg win</span></div><div><b id="hstPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="hAn"></div></div>
 <div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/moe.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge once emotion leaves the trade?</h4><p>Maybe let the machine ride momentum &mdash; <em>winners keep winning</em></p></div></div>
-<div class="sol-slogan"><p class="sol-philosophy keepcase">One breakout engine, both directions, no exceptions. US equities traded long and short overnight &mdash; never held through a full session, never left unprotected.</p></div>
+<div class="sol-slogan"><span class="sol-tag keepcase">the engine &middot; alpaca</span><p class="sol-philosophy keepcase"><b>One breakout engine, both directions, no exceptions.</b>US equities traded long and short overnight &mdash; never held through a full session, never left unprotected.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="perfTitle">return</span><select class="perf-sel" id="perfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>us stocks</li><li>algorithmic</li><li>long &amp; short, overnight swing</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="stAn"></div></div>
 <div class="sol-panel sol-p-kalshi"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/slt.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i><div class="sol-concept"><h4>Where to find an edge in markets that price the future?</h4><p>Maybe follow the cleanest trends before the crowd &mdash; <em>signal, not noise</em></p></div></div>
-<div class="sol-slogan"><p class="sol-philosophy keepcase">One breakout engine, both directions, no exceptions. Event-contract breakouts priced in cents, sized exactly like every other market the engine trades.</p></div>
+<div class="sol-slogan"><span class="sol-tag keepcase">the engine &middot; kalshi</span><p class="sol-philosophy keepcase"><b>One breakout engine, both directions, no exceptions.</b>Event-contract breakouts priced in cents, sized exactly like every other market the engine trades.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase" id="kperfTitle">return</span><select class="perf-sel" id="kperfSel" aria-label="metric"><option value="return">return (%)</option><option value="drawdown">drawdown (%)</option></select></div><svg class="perf-svg" id="kperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="kperfNote">live &middot; kalshi</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>event markets</li><li>breakout momentum</li><li>hourly, long &amp; short</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">event markets</span><h3 class="sol-card-name keepcase">kalshi trends</h3></div><div class="perf-stats"><div><b id="kstRet">–</b><span>return</span></div><div><b id="kstWin">–</b><span>win rate</span></div><div><b id="kstTr">–</b><span>trades</span></div><div><b id="kstDD">–</b><span>max dd</span></div><div><b id="kstAW">–</b><span>avg win</span></div><div><b id="kstPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="kstAn"></div></div>
 </div>
