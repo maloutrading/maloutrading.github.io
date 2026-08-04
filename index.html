@@ -536,14 +536,6 @@ footer{position:relative;z-index:1}
 .an-block{display:flex;flex-direction:column;gap:clamp(1.4rem,2.6vw,2rem);width:100%}
 .an-row{display:flex;flex-wrap:wrap;gap:clamp(1rem,2.4vw,1.6rem)}
 .an-callouts{width:100%}
-/* capacity: slots as pips — filled = working, hollow = idle */
-.cap{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-.cap-pips{display:flex;gap:.5rem}
-.cap-pips i{width:.62rem;height:.62rem;border-radius:50%;border:1px solid color-mix(in srgb,var(--pcol) 45%,var(--line))}
-.cap-pips i.on{background:var(--pcol);box-shadow:0 0 10px -2px var(--pcol);border-color:var(--pcol)}
-.cap-txt{font-size:.78rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
-.cap-txt b{color:var(--ink);font-family:var(--sans);font-weight:600}
-.cap-txt span{margin-left:.5rem;font-style:italic;opacity:.7}
 /* R-multiple histogram: counts on the bars, R scale below, tally underneath */
 .rh{flex:1;display:flex;flex-direction:column;gap:.35rem;min-height:0}
 .rh-bars{position:relative;flex:1;display:flex;align-items:flex-end;gap:2px;min-height:78px}
@@ -620,7 +612,7 @@ footer{position:relative;z-index:1}
 .fresh-stale{color:var(--gold)}
 @media(prefers-reduced-motion:no-preference){.fresh-ok{animation:freshPulse 2.6s ease-in-out infinite}}
 @keyframes freshPulse{0%,100%{opacity:1}50%{opacity:.55}}
-@media(max-width:640px){.an-grid{grid-template-columns:1fr}.sol-compare{padding:1.2rem 1.3rem}}
+@media(max-width:640px){.an-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="home">
@@ -684,9 +676,9 @@ footer{position:relative;z-index:1}
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--blau)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
     <div class="trade-quotes"><p class="trade-quote keepcase"><span class="ql" style="--i:0">A</span><span class="ql" style="--i:1">l</span><span class="ql" style="--i:2">l</span> <span class="ql" style="--i:3">t</span><span class="ql" style="--i:4">r</span><span class="ql" style="--i:5">a</span><span class="ql" style="--i:6">d</span><span class="ql" style="--i:7">i</span><span class="ql" style="--i:8">n</span><span class="ql" style="--i:9">g</span> <span class="ql" style="--i:10">i</span><span class="ql" style="--i:11">s</span> <span class="ql" style="--i:12">u</span><span class="ql" style="--i:13">l</span><span class="ql" style="--i:14">t</span><span class="ql" style="--i:15">i</span><span class="ql" style="--i:16">m</span><span class="ql" style="--i:17">a</span><span class="ql" style="--i:18">t</span><span class="ql" style="--i:19">e</span><span class="ql" style="--i:20">l</span><span class="ql" style="--i:21">y</span> <span class="ql" style="--i:22">d</span><span class="ql" style="--i:23">i</span><span class="ql" style="--i:24">s</span><span class="ql" style="--i:25">c</span><span class="ql" style="--i:26">r</span><span class="ql" style="--i:27">e</span><span class="ql" style="--i:28">t</span><span class="ql" style="--i:29">i</span><span class="ql" style="--i:30">o</span><span class="ql" style="--i:31">n</span><span class="ql" style="--i:32">a</span><span class="ql" style="--i:33">r</span><span class="ql" style="--i:34">y</span><span class="ql" style="--i:35">.</span> <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions">
-<input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
+<input class="sol-radio" type="radio" name="sol" id="sol-r-wiki">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
-<input class="sol-radio" type="radio" name="sol" id="sol-r-hl">
+<input class="sol-radio" type="radio" name="sol" id="sol-r-hl" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-kalshi">
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi</label></div>
