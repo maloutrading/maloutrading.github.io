@@ -206,6 +206,7 @@ section.tab.sub h2:not(.sol-title)::after{content:"";display:block;width:2.4rem;
 .topvid video,.topvid .poster{position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;image-rendering:auto}
 #news .topvid video{object-position:center 50%}
+#trade .topvid video{object-position:center 62%}
 .topvid::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,transparent 54%,color-mix(in srgb,var(--marine) 55%,transparent) 80%,var(--marine) 100%);
   -webkit-mask-image:linear-gradient(to bottom,transparent 56%,#000 90%);mask-image:linear-gradient(to bottom,transparent 56%,#000 90%);
@@ -483,6 +484,7 @@ footer{position:relative;z-index:1}
 .perf-stats span{display:block;margin-top:.12rem;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .sol-vid{order:-2;position:relative;height:clamp(260px,36vw,400px);border-radius:var(--r-sm);overflow:hidden;display:flex;align-items:center;justify-content:center;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 99%);mask-image:linear-gradient(180deg,#000 45%,transparent 99%)}
 .sol-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
+.sol-p-hl .sol-vid video{object-position:center 68%}
 .sol-vid-tint{position:absolute;inset:0;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--marine) 68%,transparent))}
 @media(max-width:640px){.sol-vid{height:150px}}
 
