@@ -198,7 +198,7 @@ main section.tab.show{display:block}
 section.tab.sub{padding:0 0 7.5rem}
 section.tab.sub .wrap{max-width:var(--wide);padding-top:clamp(4.4rem,7.5vw,7rem)}
 
-section.tab.sub h2::after{content:"";display:block;width:2.4rem;height:3px;
+section.tab.sub h2:not(.sol-title)::after{content:"";display:block;width:2.4rem;height:3px;
   margin-top:.5rem;border-radius:2px;background:var(--accent,var(--gold));
   transform:scaleX(1);transform-origin:left}
 .topvid{position:relative;height:clamp(460px,74vh,820px);overflow:hidden;isolation:isolate;-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 62%,transparent 100%)}
