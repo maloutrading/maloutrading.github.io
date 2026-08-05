@@ -21,7 +21,7 @@
 :root{
   /* ── MASTER COLOURS — single source of truth. Everything else derives from these. ── */
   --marine:#15142F; --weiss:#D9E1EA; --silber:#8C97A6;
-  --gold:#E9E4D4; --bronze:#8F6B2F; --gruen:#B7CFA2; --holz:#9B87D4;
+  --gold:#E9E4D4; --bronze:#8F6B2F; --gruen:#B7CFA2; --holz:#9B87D4; --wiki:#95C11F;
   /* derived neutrals (never a raw hex) */
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
@@ -275,7 +275,7 @@ picture{display:contents}
 .book-author{display:block;font-family:var(--serif);font-style:italic;font-weight:600;font-size:.85rem;letter-spacing:.05em;color:var(--holz)}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
 .solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1.5px solid color-mix(in srgb,var(--pcol) 34%,transparent);border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),color-mix(in srgb,var(--marine) 64%,var(--card));box-shadow:0 50px 100px -60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px -14px color-mix(in srgb,var(--pcol) 14%,transparent);transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
-.solutions:has(#sol-r-wiki:checked){--pcol:var(--holz)}
+.solutions:has(#sol-r-wiki:checked){--pcol:var(--wiki)}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--gruen)}
 .solutions:has(#sol-r-hl:checked){--pcol:var(--silber)}
 .solutions:has(#sol-r-kalshi:checked){--pcol:var(--bronze)}
@@ -667,7 +667,7 @@ footer{position:relative;z-index:1}
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/tig.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
-<div class="sol-slogan"><span class="sol-tag keepcase">the hand &middot; wikifolio</span><p class="sol-philosophy keepcase"><b>One discretionary hand, global macro, no automation.</b>Currencies, rates and commodities held by conviction &mdash; long, short and leveraged only where the thesis earns the risk.</p></div>
+<div class="sol-slogan"><span class="sol-tag keepcase">the hand &middot; wikifolio</span><p class="sol-philosophy keepcase"><b>Pure discretionary macro &mdash; inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota.</b>Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
 <div class="sol-two"><div class="sol-chart"><iframe loading="lazy" src="https://s.tradingview.com/widgetembed/?symbol=AMEX%3ADBMF&interval=W&style=3&theme=light&hideideas=1&hidesidetoolbar=1&hidetoptoolbar=1&range=60M&locale=de" frameborder="0" scrolling="no" allowtransparency="true" sandbox="allow-scripts allow-same-origin allow-popups" referrerpolicy="strict-origin-when-cross-origin" title="DBMF weekly chart"></iframe></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>global macro</li><li>discretionary</li><li>long, short, leveraged</li></ul><div class="sol-cta-row"><a class="wiki-cta" href="https://www.wikifolio.com/de/de/w/wf000arrcc?src=search_top&searchTerm=alpaca%20turtle%20" target="_blank" rel="noopener">to the wikifolio -></a></div></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3></div><div class="perf-stats"><div><b>+101%</b><span>since inception</span></div><div><b>-2.7%</b><span>12 months</span></div><div><b>+11.6%</b><span>p.a.</span></div></div></div></div></div></div>
 <div class="sol-panel sol-p-hl"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/wha.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
 <div class="sol-slogan"><span class="sol-tag keepcase">the engine &middot; hyperliquid</span><p class="sol-philosophy keepcase"><b>One breakout engine, both directions, no exceptions.</b>Perpetual futures traded long and short around the clock, every entry a concentrated ticket riding one factor &mdash; volatility-adjusted momentum.</p></div>
@@ -683,7 +683,7 @@ footer{position:relative;z-index:1}
 <div class="an-block" id="kstAn"></div></div>
 </div>
 </div>  </div>
-<p class="markets-legal keepcase"><b>High risk of loss.</b> Trading crypto perpetuals, equities and event contracts is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
+<p class="markets-legal keepcase"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
 </section>
 
 <section class="tab sub" id="news">
@@ -811,8 +811,7 @@ footer{position:relative;z-index:1}
     <h3>Important note &ndash; no investment advice</h3>
     <p>All content serves documentation and information only and reflects the results of a private
     proprietary trading account. It is no investment advice, investment brokerage, asset management
-    or solicitation to buy or sell financial instruments. Trading crypto perpetuals, equities and
-    event contracts is highly risky and can lead to total loss.</p>
+    or solicitation to buy or sell financial instruments. Trading financial instruments is highly risky and can lead to total loss.</p>
     <h3>Sources and credits</h3>
     <p>Weather data: Open-Meteo.com (CC BY 4.0). Prices and charts: TradingView. Music tracks:
     embedded via Spotify; the rights to the music and cover images belong to the respective
