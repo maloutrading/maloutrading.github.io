@@ -21,7 +21,8 @@
 :root{
   /* ── MASTER COLOURS — single source of truth. Everything else derives from these. ── */
   --marine:#15142F; --weiss:#D9E1EA; --silber:#8C97A6;
-  --gold:#E9E4D4; --bronze:#8F6B2F; --gruen:#B7CFA2; --holz:#9B87D4; --wiki:#95C11F;
+  --gold:#E9E4D4; --bronze:#8F6B2F; --gruen:#B7CFA2; --holz:#9B87D4;
+  --wiki:#95C11F; --hl:#50D2C1; --alp:#FCD72B; --kal:#4DE4B2;
   /* derived neutrals (never a raw hex) */
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
@@ -274,11 +275,11 @@ picture{display:contents}
 .book-name{font-family:var(--serif);font-weight:400;font-size:1.05rem;line-height:1.3;margin:1.4rem 0 .28rem;color:var(--ink);letter-spacing:.01em;max-width:22ch;min-height:2.7em;display:flex;align-items:center;justify-content:center}
 .book-author{display:block;font-family:var(--serif);font-style:italic;font-weight:600;font-size:.85rem;letter-spacing:.05em;color:var(--holz)}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
-.solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1.5px solid color-mix(in srgb,var(--pcol) 34%,transparent);border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),color-mix(in srgb,var(--marine) 64%,var(--card));box-shadow:0 50px 100px -60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px -14px color-mix(in srgb,var(--pcol) 14%,transparent);transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
+.solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:2.5px solid color-mix(in srgb,var(--pcol) 60%,transparent);border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),color-mix(in srgb,var(--marine) 64%,var(--card));box-shadow:0 50px 100px -60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px -14px color-mix(in srgb,var(--pcol) 14%,transparent);transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
 .solutions:has(#sol-r-wiki:checked){--pcol:var(--wiki)}
-.solutions:has(#sol-r-algo:checked){--pcol:var(--gruen)}
-.solutions:has(#sol-r-hl:checked){--pcol:var(--silber)}
-.solutions:has(#sol-r-kalshi:checked){--pcol:var(--bronze)}
+.solutions:has(#sol-r-algo:checked){--pcol:var(--alp)}
+.solutions:has(#sol-r-hl:checked){--pcol:var(--hl)}
+.solutions:has(#sol-r-kalshi:checked){--pcol:var(--kal)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;transform:translateY(-50%);pointer-events:none}
 .sol-title{max-width:calc(100% - 2rem);padding:0 clamp(1.5rem,3.6vw,3rem);background:linear-gradient(180deg,var(--bg) 50%,color-mix(in srgb,var(--marine) 64%,var(--card)) 50%) center/100% 3px no-repeat;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.45rem,2.9vw,2.15rem);letter-spacing:.02em;line-height:1.2;margin:0;color:var(--ink);text-shadow:0 2px 24px rgba(0,0,0,.4)}
@@ -502,11 +503,11 @@ footer{position:relative;z-index:1}
 /* ── trading markets: cross-bot comparison, per-panel slogan, live analytics — shared design language ── */
 
 /* engine plaque: one per market, same shell, small type, accent edge */
-.sol-slogan{position:relative;max-width:64ch;margin:0 auto;padding:1.15rem 1.6rem 1.25rem 1.9rem;border:1px solid color-mix(in srgb,var(--pcol) 30%,var(--line));border-radius:var(--r-sm);background:linear-gradient(155deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 26%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 50px -42px color-mix(in srgb,var(--pcol) 70%,transparent);overflow:hidden;transition:border-color .4s var(--ease)}
+.sol-slogan{position:relative;max-width:78ch;margin:0 auto;padding:1.4rem 2rem 1.5rem 2.2rem;border:1px solid color-mix(in srgb,var(--pcol) 30%,var(--line));border-radius:var(--r-sm);background:linear-gradient(155deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 26%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 50px -42px color-mix(in srgb,var(--pcol) 70%,transparent);overflow:hidden;transition:border-color .4s var(--ease)}
 .sol-slogan::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--pcol),transparent)}
 .sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 13%,transparent),transparent 68%);pointer-events:none}
-.sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.86rem,1.15vw,1rem);line-height:1.68;letter-spacing:.004em;color:color-mix(in srgb,var(--ink) 82%,transparent);margin:0;text-align:left}
-.sol-philosophy b{display:block;margin-bottom:.35rem;font-family:var(--sans);font-style:normal;font-weight:500;font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1rem,1.4vw,1.18rem);line-height:1.68;letter-spacing:.004em;color:color-mix(in srgb,var(--ink) 82%,transparent);margin:0;text-align:left}
+.sol-philosophy b{display:block;margin-bottom:.45rem;font-family:var(--sans);font-style:normal;font-weight:500;font-size:.86rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
 
 .an-block{display:flex;flex-direction:column;gap:clamp(1.4rem,2.6vw,2rem);width:100%}
 .an-row{display:flex;flex-wrap:wrap;gap:clamp(1rem,2.4vw,1.6rem)}
