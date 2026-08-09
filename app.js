@@ -326,6 +326,61 @@ function renderAnalytics(containerId, d){
   el.innerHTML = lead + calloutHtml + grid;
 }
 
+const spxP = fetchT('json/spx.json?' + Date.now(), 8000)
+  .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
+  .then(d => ((d || {}).series || []).filter(p => Array.isArray(p) && isFinite(p[0]) && isFinite(p[1]) && p[1] > 0))
+  .catch(() => []);
+
+function drawCompare(P, svg, eq, spxRaw){
+  if (eq.length < 2){ svg.innerHTML = ''; return; }
+  const t0 = eq[0][0], t1 = eq[eq.length - 1][0];
+  eq = eq.map(p => [p[0], p[1] / eq[0][1] * 100]);
+  let spx = (spxRaw || []).filter(p => p[0] >= t0 && p[0] <= t1);
+  spx = spx.length > 1 ? spx.map(p => [p[0], p[1] / spx[0][1] * 100]) : [];
+  const ys = eq.map(p => p[1]).concat(spx.map(p => p[1]));
+  let y0 = Math.min(...ys), y1 = Math.max(...ys);
+  if (y0 === y1){ y0 -= 1; y1 += 1; }
+  const W = 600, Hh = 300, pad = 6;
+  const X = x => pad + (x - t0) / (t1 - t0) * (W - 2 * pad);
+  const Y = y => Hh - pad - (y - y0) / (y1 - y0) * (Hh - 2 * pad);
+  const path = pts => pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
+  const dp = path(eq);
+  const area = dp + ' L' + X(t1).toFixed(1) + ' ' + Hh + ' L' + X(t0).toFixed(1) + ' ' + Hh + ' Z';
+  const up = eq[eq.length - 1][1] >= 100, col = up ? cv('--gruen') : cv('--holz');
+  const baseLine = '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(100).toFixed(1) + '" y2="' + Y(100).toFixed(1) + '" stroke="var(--line)" stroke-dasharray="3 4"/>';
+  const spxLine = spx.length ? '<path d="' + path(spx) + '" fill="none" stroke="' + cv('--silber') + '" stroke-width="1.3" stroke-opacity=".8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' : '';
+  svg.innerHTML = '<defs><linearGradient id="pg-' + P.k + '" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".22"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
+    baseLine + '<path d="' + area + '" fill="url(#pg-' + P.k + ')"/>' + spxLine +
+    '<path d="' + dp + '" fill="none" stroke="' + col + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
+    '<line class="tip-x" x1="0" x2="0" y1="' + pad + '" y2="' + (Hh - pad) + '" stroke="' + cv('--silber') + '" stroke-opacity=".55" stroke-dasharray="2 3" visibility="hidden"/>';
+  const box = svg.closest('.perf');
+  const swatch = box && box.querySelector('.lg-a');
+  if (swatch) swatch.style.background = col;
+  let tip = box && box.querySelector('.perf-tip');
+  if (box && !tip){ tip = document.createElement('div'); tip.className = 'perf-tip'; box.appendChild(tip); }
+  const cross = svg.querySelector('.tip-x');
+  const nearest = (pts, t) => pts.reduce((a, p) => Math.abs(p[0] - t) < Math.abs(a[0] - t) ? p : a);
+  const pctTxt = v => (v >= 100 ? '+' : '') + (v - 100).toFixed(1) + '%';
+  svg.addEventListener('pointermove', e => {
+    if (!tip) return;
+    const r = svg.getBoundingClientRect();
+    const t = t0 + Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * (t1 - t0);
+    const ep = nearest(eq, t), sp = spx.length ? nearest(spx, t) : null;
+    cross.setAttribute('x1', X(ep[0]).toFixed(1)); cross.setAttribute('x2', X(ep[0]).toFixed(1));
+    cross.setAttribute('visibility', 'visible');
+    tip.innerHTML = '<b>' + new Date(ep[0]).toISOString().slice(0, 10) + '</b>' +
+      '<span><i style="background:' + col + '"></i>strategy ' + pctTxt(ep[1]) + '</span>' +
+      (sp ? '<span><i style="background:' + cv('--silber') + '"></i>s&amp;p 500 ' + pctTxt(sp[1]) + '</span>' : '');
+    const fx = X(ep[0]) / W * r.width;
+    tip.style.left = Math.min(r.width - 70, Math.max(70, fx)) + 'px';
+    tip.style.display = 'block';
+  });
+  svg.addEventListener('pointerleave', () => {
+    if (tip) tip.style.display = 'none';
+    cross.setAttribute('visibility', 'hidden');
+  });
+}
+
 function mount(P){
   const svg = document.getElementById(P.svg); if (!svg) return;
   const note = P.note ? document.getElementById(P.note) : null;
@@ -349,27 +404,7 @@ function mount(P){
         G(P.k + 'AW', typeof s.avg_win_r === 'number' ? fmtPlain(s.avg_win_r, 'R') : fmtPct(s.avg_win_pct));
         G(P.k + 'PO', fmtPlain(s.payoff, 'x'));
       }
-      const sel = document.getElementById(P.sel), title = document.getElementById(P.title);
-      function draw(key){
-        const pts = sanitizeSeries((d.series || {})[key] || []);
-        if (title && sel) title.textContent = sel.options[sel.selectedIndex].text.split(' ')[0];
-        if (pts.length < 2){ svg.innerHTML = ''; return; }
-        const ys = pts.map(p => p[1]), xs = pts.map(p => p[0]);
-        let x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
-        if (y0 === y1){ y0 -= 1; y1 += 1; }
-        const W = 600, Hh = 300, pad = 6;
-        const X = x => pad + (x - x0) / (x1 - x0) * (W - 2 * pad);
-        const Y = y => Hh - pad - (y - y0) / (y1 - y0) * (Hh - 2 * pad);
-        const dp = pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
-        const area = dp + ' L' + X(x1).toFixed(1) + ' ' + Hh + ' L' + X(x0).toFixed(1) + ' ' + Hh + ' Z';
-        const up = ys[ys.length - 1] >= ys[0], col = key === 'drawdown' ? cv('--holz') : (up ? cv('--gruen') : cv('--holz'));
-        const zero = (key !== 'equity' && y0 < 0 && y1 > 0)
-          ? '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(0).toFixed(1) + '" y2="' + Y(0).toFixed(1) + '" stroke="var(--line)" stroke-dasharray="3 4"/>' : '';
-        svg.innerHTML = '<defs><linearGradient id="pg-' + P.k + '" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".22"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
-          zero + '<path d="' + area + '" fill="url(#pg-' + P.k + ')"/><path d="' + dp + '" fill="none" stroke="' + col + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>';
-      }
-      if (sel) sel.addEventListener('change', () => draw(sel.value));
-      draw('return');
+      spxP.then(spx => drawCompare(P, svg, sanitizeSeries((d.series || {}).equity || []), spx));
       renderAnalytics(P.an, d);
     })
     .catch(() => {
@@ -378,10 +413,10 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', sel:'perfSel', title:'perfTitle', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
-mount({svg:'kperfSvg', sel:'kperfSel', title:'kperfTitle', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshiMarkets/kalshi.json'});
-mount({svg:'hperfSvg', sel:'hperfSel', title:'hperfTitle', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquidMarkets/hyperliquid.json'});
-mount({svg:'wperfSvg', sel:'wperfSel', title:'wperfTitle', note:'wperfNote', k:'wst', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
+mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
+mount({svg:'kperfSvg', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshiMarkets/kalshi.json'});
+mount({svg:'hperfSvg', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquidMarkets/hyperliquid.json'});
+mount({svg:'wperfSvg', note:'wperfNote', k:'wst', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {

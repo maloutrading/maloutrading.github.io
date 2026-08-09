@@ -58,3 +58,11 @@ out = {
 }
 Path(__file__).with_name('wikifolio.json').write_text(json.dumps(out) + '\n')
 print('wikifolio.json:', out['stats'])
+
+spx = json.loads(get('https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=10y&interval=1d'))['chart']['result'][0]
+spxSeries = [[t * 1000, round(c, 2)] for t, c in zip(spx['timestamp'], spx['indicators']['quote'][0]['close'])
+             if isinstance(c, (int, float))]
+if len(spxSeries) < 1000:
+    raise SystemExit('spx history too short: %d points' % len(spxSeries))
+(Path(__file__).parents[1] / 'spx.json').write_text(json.dumps({'updated': int(time.time() * 1000), 'series': spxSeries}) + '\n')
+print('spx.json:', len(spxSeries), 'points')
