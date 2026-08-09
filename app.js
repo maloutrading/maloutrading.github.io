@@ -334,17 +334,21 @@ function mount(P){
     .then(d => {
       const s = d.stats || {}, G = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
       if (note && d.updated){
-        const fresh = (Date.now() - d.updated) < 2 * 3600 * 1000;
+        const fresh = (Date.now() - d.updated) < (P.freshMs || 2 * 3600 * 1000);
         const base = (note.dataset.base || note.textContent).replace(/\s*·\s*updated.*$/, '');
         note.dataset.base = base;
         note.innerHTML = escapeHtml(base) + ' · <span class="fresh-' + (fresh ? 'ok' : 'stale') + '">updated ' + fmtAge(d.updated) + ' ●</span>';
       }
-      G(P.k + 'Ret', fmtPct(s.total_return_pct));
-      G(P.k + 'Win', fmtPlain(s.win_rate_pct, '%'));
-      G(P.k + 'Tr', fmtPlain(s.trades, ''));
-      G(P.k + 'DD', fmtPct(s.max_drawdown_pct));
-      G(P.k + 'AW', typeof s.avg_win_r === 'number' ? fmtPlain(s.avg_win_r, 'R') : fmtPct(s.avg_win_pct));
-      G(P.k + 'PO', fmtPlain(s.payoff, 'x'));
+      if (P.rows){
+        P.rows.forEach(rw => G(P.k + rw[0], rw[2] === 'pct' ? fmtPct(s[rw[1]]) : fmtPlain(s[rw[1]], rw[3] || '')));
+      } else {
+        G(P.k + 'Ret', fmtPct(s.total_return_pct));
+        G(P.k + 'Win', fmtPlain(s.win_rate_pct, '%'));
+        G(P.k + 'Tr', fmtPlain(s.trades, ''));
+        G(P.k + 'DD', fmtPct(s.max_drawdown_pct));
+        G(P.k + 'AW', typeof s.avg_win_r === 'number' ? fmtPlain(s.avg_win_r, 'R') : fmtPct(s.avg_win_pct));
+        G(P.k + 'PO', fmtPlain(s.payoff, 'x'));
+      }
       const sel = document.getElementById(P.sel), title = document.getElementById(P.title);
       function draw(key){
         const pts = sanitizeSeries((d.series || {})[key] || []);
@@ -377,6 +381,8 @@ function mount(P){
 mount({svg:'perfSvg', sel:'perfSel', title:'perfTitle', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
 mount({svg:'kperfSvg', sel:'kperfSel', title:'kperfTitle', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshiMarkets/kalshi.json'});
 mount({svg:'hperfSvg', sel:'hperfSel', title:'hperfTitle', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquidMarkets/hyperliquid.json'});
+mount({svg:'wperfSvg', sel:'wperfSel', title:'wperfTitle', note:'wperfNote', k:'wst', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
+  rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {
   r.addEventListener('change', () => {
