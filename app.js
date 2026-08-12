@@ -326,16 +326,6 @@ function renderAnalytics(containerId, d){
   el.innerHTML = lead + calloutHtml + grid;
 }
 
-const tickData = {}, tagPlacers = [];
-function renderTicker(){
-  const el = document.getElementById('mkTrack'); if (!el) return;
-  const items = Object.keys(tickData).sort().map(k => {
-    const t = tickData[k];
-    return '<span class="mk-item">' + escapeHtml(t.name) + ' <b class="' + (t.v >= 0 ? 'up' : 'dn') + '">' + fmtPct(Math.round(t.v * 10) / 10) + '</b></span>';
-  }).join('');
-  if (items) el.innerHTML = items + items;
-}
-
 const spxP = fetchT('json/spx.json?' + Date.now(), 8000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
   .then(d => ((d || {}).series || []).filter(p => Array.isArray(p) && isFinite(p[0]) && isFinite(p[1]) && p[1] > 0))
@@ -371,20 +361,6 @@ function drawCompare(P, svg, eq, spxRaw){
   const cross = svg.querySelector('.tip-x');
   const nearest = (pts, t) => pts.reduce((a, p) => Math.abs(p[0] - t) < Math.abs(a[0] - t) ? p : a);
   const pctTxt = v => (v >= 100 ? '+' : '') + (v - 100).toFixed(1) + '%';
-  if (box){
-    let tags = box.querySelector('.end-tags');
-    if (!tags){ tags = document.createElement('div'); tags.className = 'end-tags'; box.appendChild(tags);
-      const place = () => { const br = box.getBoundingClientRect(), sr = svg.getBoundingClientRect();
-        if (!sr.height) return;
-        tags.style.top = (sr.top - br.top) + 'px'; tags.style.height = sr.height + 'px'; };
-      place(); tagPlacers.push(place); window.addEventListener('resize', place); }
-    const clamp = v => Math.min(94, Math.max(5, v));
-    let tA = clamp(Y(eq[eq.length - 1][1]) / Hh * 100), tB = spx.length ? clamp(Y(spx[spx.length - 1][1]) / Hh * 100) : null;
-    if (tB !== null && Math.abs(tA - tB) < 9) tB = clamp(tA + (tB >= tA ? 9 : -9));
-    const tag = (top, v, c, cls) => '<span class="end-tag ' + cls + '" style="top:' + top.toFixed(1) + '%;color:' + c + '">' + pctTxt(v) + '</span>';
-    tags.innerHTML = tag(tA, eq[eq.length - 1][1], col, 'et-a') +
-      (tB !== null ? tag(tB, spx[spx.length - 1][1], cv('--silber'), 'et-b') : '');
-  }
   svg.addEventListener('pointermove', e => {
     if (!tip) return;
     const r = svg.getBoundingClientRect();
@@ -417,17 +393,6 @@ function mount(P){
         e.textContent = v;
         e.classList.toggle('up', /^\+/.test(v));
         e.classList.toggle('dn', /^-/.test(v)); };
-      if (P.tick && typeof s.total_return_pct === 'number'){
-        tickData[P.ord] = { name: P.tick, v: s.total_return_pct };
-        renderTicker();
-      }
-      if (P.badge){
-        const b = document.getElementById(P.badge);
-        if (b && typeof s.total_return_pct === 'number'){
-          b.textContent = fmtPct(Math.round(s.total_return_pct * 10) / 10);
-          b.classList.add(s.total_return_pct >= 0 ? 'up' : 'dn');
-        }
-      }
       if (note && d.updated){
         const fresh = (Date.now() - d.updated) < (P.freshMs || 2 * 3600 * 1000);
         const base = (note.dataset.base || note.textContent).replace(/\s*·\s*updated.*$/, '');
@@ -453,10 +418,10 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json', ord:'3', tick:'us momentum', badge:'bAlgo'});
-mount({svg:'kperfSvg', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshiMarkets/kalshi.json', ord:'4', tick:'kalshi trends', badge:'bKalshi'});
-mount({svg:'hperfSvg', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquidMarkets/hyperliquid.json', ord:'2', tick:'hyperliquid trends', badge:'bHl'});
-mount({svg:'wperfSvg', note:'wperfNote', k:'wst', url:'json/wikifolioMarkets/wikifolio.json', ord:'1', tick:'alpaca turtle', badge:'bWiki', freshMs:30*3600*1000,
+mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
+mount({svg:'kperfSvg', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshiMarkets/kalshi.json'});
+mount({svg:'hperfSvg', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquidMarkets/hyperliquid.json'});
+mount({svg:'wperfSvg', note:'wperfNote', k:'wst', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {
@@ -464,6 +429,5 @@ document.querySelectorAll('.sol-radio').forEach(r => {
     document.querySelectorAll('.sol-vid video').forEach(v => {
       v.getBoundingClientRect().height > 0 ? v.play().catch(() => {}) : v.pause();
     });
-    tagPlacers.forEach(f => f());
   });
 });

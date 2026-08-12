@@ -486,18 +486,7 @@ footer{position:relative;z-index:1}
 .perf{position:relative;width:100%;height:100%;min-height:300px;display:flex;flex-direction:column;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 12%,var(--line));border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);padding:1rem 1.1rem .8rem}
 .perf-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
 .perf-title{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.mk-ticker{position:absolute;top:1.3rem;left:clamp(2.2rem,5vw,4.8rem);right:clamp(2.2rem,5vw,4.8rem);overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
-.mk-track{display:inline-flex;white-space:nowrap;animation:mkMove 42s linear infinite;will-change:transform}
-.mk-item{margin-right:3rem;font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
-.mk-item b{font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.1em}
-@keyframes mkMove{to{transform:translateX(-50%)}}
-@media(prefers-reduced-motion:reduce){.mk-track{animation:none}}
-.sol-badge{margin-left:.55rem;font-weight:500;font-size:.72rem;font-variant-numeric:tabular-nums;letter-spacing:.04em;opacity:.9}
-.sol-badge.up,.mk-item b.up{color:var(--gruen)}.sol-badge.dn,.mk-item b.dn{color:var(--holz)}
 .sol-meta{margin:.15rem 0 .55rem;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:color-mix(in srgb,var(--silber) 72%,var(--muted))}
-.end-tags{position:absolute;left:0;right:0;pointer-events:none}
-.end-tag{position:absolute;right:.4rem;transform:translateY(-50%);font-size:.66rem;font-variant-numeric:tabular-nums;letter-spacing:.06em;padding:.1rem .4rem;border-radius:4px;background:color-mix(in srgb,var(--marine) 78%,#000);border:1px solid color-mix(in srgb,var(--silber) 25%,transparent)}
-.end-tag.et-a::before{content:"";display:inline-block;width:6px;height:6px;margin-right:.35rem;border-radius:50%;background:currentColor;animation:freshPulse 2.2s ease-in-out infinite}
 @keyframes freshPulse{0%,100%{opacity:1}50%{opacity:.3}}
 .fresh-ok{animation:freshPulse 2.6s ease-in-out infinite}
 .perf-leg{display:flex;align-items:center;gap:.45rem;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -706,8 +695,7 @@ footer{position:relative;z-index:1}
 <input class="sol-radio" type="radio" name="sol" id="sol-r-hl">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-kalshi">
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
-<div class="mk-ticker" aria-hidden="true"><div class="mk-track" id="mkTrack"></div></div>
-<div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio<b class="sol-badge" id="bWiki">&ndash;</b></label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid<b class="sol-badge" id="bHl">&ndash;</b></label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca<b class="sol-badge" id="bAlgo">&ndash;</b></label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi<b class="sol-badge" id="bKalshi">&ndash;</b></label></div>
+<div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/wikifolio.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
