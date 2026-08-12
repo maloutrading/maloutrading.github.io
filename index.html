@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>malou trading</title>
 <meta name="description" content="systematic investing - calm, close to nature, documented.">
-<meta name="theme-color" content="#12163C">
+<meta name="theme-color" content="#1A1D21">
 <meta property="og:title" content="malou trading">
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
@@ -16,14 +16,25 @@
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBold.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBoldItalic.woff2) format('woff2')}
-@font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/PlayfairDisplay-SemiBold.woff2) format('woff2')}
 
 :root{
-  /* ── MASTER COLOURS — single source of truth. Everything else derives from these. ── */
-  --marine:#15142F; --weiss:#D9E1EA; --silber:#8C97A6;
-  --gold:#E9E4D4; --bronze:#8F6B2F; --gruen:#B7CFA2; --holz:#9B87D4;
-  --wiki:#95C11F; --hl:#50D2C1; --alp:#FCD72B; --kal:#4DE4B2;
-  /* derived neutrals (never a raw hex) */
+  /* ── THE ONLY THREE COLOURS IN THIS FILE. Everything below is mixed from them. ── */
+  --grafit:#1A1D21;   /* dark shiny elegant grey — the ground everything stands on */
+  --wein:#8C2F41;     /* burgundy — the single accent */
+  --weiss:#E2E6EA;    /* light neutral — the ink */
+  /* ── derived: semantic slots, never a raw hex again ── */
+  /* every step below clears the old palette's contrast floor (3.68:1) on --grafit */
+  --marine:var(--grafit);
+  --silber:color-mix(in srgb,var(--weiss) 62%,var(--grafit));
+  --gold:color-mix(in srgb,var(--weiss) 84%,var(--wein));
+  --bronze:color-mix(in srgb,var(--wein) 72%,var(--weiss));
+  --gruen:color-mix(in srgb,var(--weiss) 86%,var(--grafit));   /* gains shine */
+  --holz:color-mix(in srgb,var(--wein) 62%,var(--weiss));      /* losses bleed */
+  /* four markets = four luminance steps of the one accent */
+  --wiki:color-mix(in srgb,var(--wein) 72%,var(--weiss));
+  --kal:color-mix(in srgb,var(--wein) 57%,var(--weiss));
+  --hl:color-mix(in srgb,var(--wein) 44%,var(--weiss));
+  --alp:color-mix(in srgb,var(--wein) 30%,var(--weiss));
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
   --line:color-mix(in srgb,var(--silber) 42%,var(--marine));
@@ -31,7 +42,7 @@
   --serif:'EB Garamond',Georgia,serif;
   --sans:'EB Garamond',Georgia,serif;
   --mono:ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
-  --title:'Playfair Display',var(--serif);
+  --title:var(--serif);
   --body:var(--serif);
   --r:18px; --r-xs:12px; --r-sm:16px; --r-md:19px; --r-lg:24px; --pill:999px;
   --ease:cubic-bezier(.2,.75,.2,1);
@@ -67,6 +78,10 @@ body{margin:0;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);
   -webkit-text-size-adjust:100%;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;font-synthesis:none}
+/* the sheen that turns flat graphite into polished metal — light from above, wine from below */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(125% 70% at 50% -8%,color-mix(in srgb,var(--weiss) 9%,transparent),transparent 62%),
+             radial-gradient(95% 55% at 50% 108%,color-mix(in srgb,var(--wein) 12%,transparent),transparent 62%)}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.06;
   letter-spacing:0}
 h1{font-size:clamp(3.45rem,10.35vw,6.9rem);margin:.12em 0}
@@ -283,7 +298,7 @@ picture{display:contents}
 .solutions:has(#sol-r-kalshi:checked){--pcol:var(--kal)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
-.sol-title{max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.1rem,3vw,1.9rem);border:1px solid color-mix(in srgb,var(--silber) 85%,#fff);border-radius:4px;background:linear-gradient(180deg,#34373e,#0e0f12 55%,#1a1c21);box-shadow:inset 0 1px 0 rgba(255,255,255,.32),inset 0 -8px 16px rgba(0,0,0,.55),0 14px 34px -14px rgba(0,0,0,.9),0 0 24px -6px color-mix(in srgb,var(--silber) 50%,transparent);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.45rem,2.9vw,2.15rem);letter-spacing:.06em;line-height:1.2;color:var(--ink);-webkit-text-stroke:.35px color-mix(in srgb,var(--silber) 55%,#fff);text-shadow:0 0 12px color-mix(in srgb,var(--silber) 35%,transparent)}
+.sol-title{max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.1rem,3vw,1.9rem);border:1px solid color-mix(in srgb,var(--silber) 85%,var(--weiss));border-radius:4px;background:linear-gradient(180deg,color-mix(in srgb,var(--grafit) 74%,var(--weiss)),color-mix(in srgb,var(--grafit) 78%,#000) 55%,var(--grafit));box-shadow:inset 0 1px 0 rgba(255,255,255,.32),inset 0 -8px 16px rgba(0,0,0,.55),0 14px 34px -14px rgba(0,0,0,.9),0 0 24px -6px color-mix(in srgb,var(--silber) 50%,transparent);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.45rem,2.9vw,2.15rem);letter-spacing:.06em;line-height:1.2;color:var(--ink);-webkit-text-stroke:.35px color-mix(in srgb,var(--silber) 55%,#fff);text-shadow:0 0 12px color-mix(in srgb,var(--silber) 35%,transparent)}
 .sol-toggle{display:flex;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
 .sol-btn{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;white-space:nowrap;user-select:none;
@@ -311,9 +326,9 @@ picture{display:contents}
 .sol-chart iframe{width:100%;height:100%;border:0;display:block}
 .sol-text{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,2.6vw,2.1rem)}
 .sol-bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.85rem;align-items:stretch;width:100%}.sol-bullets li{--bcol:color-mix(in srgb,var(--pcol,var(--bronze)) 45%,var(--bronze));display:flex;align-items:center;justify-content:flex-start;font-family:var(--sans);font-style:italic;font-weight:400;letter-spacing:.025em;font-size:1.12rem;color:var(--gold);text-align:left;width:100%;min-height:3.3rem;padding:.7rem 1.4rem .7rem clamp(2rem,16%,4.5rem);text-shadow:0 1px 2px rgba(0,0,0,.35);border-radius:var(--pill);border:1px solid color-mix(in srgb,var(--bcol) 45%,var(--line));background:linear-gradient(135deg,color-mix(in srgb,var(--bcol) 32%,var(--card)),color-mix(in srgb,var(--bcol) 20%,var(--marine)));box-shadow:0 8px 20px -14px rgba(0,0,0,.6);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.sol-bullets li:nth-child(1){--bcol:color-mix(in srgb,var(--pcol) 40%,#a8987c)}
+.sol-bullets li:nth-child(1){--bcol:color-mix(in srgb,var(--pcol) 40%,var(--silber))}
 .sol-bullets li:nth-child(2){--bcol:color-mix(in srgb,var(--pcol) 45%,var(--bronze))}
-.sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 40%,#4a3d2c)}
+.sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 40%,color-mix(in srgb,var(--grafit) 72%,var(--wein)))}
 .sol-bullets li:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(0,0,0,.65)}
 .sol-cap{grid-row:1;align-self:start;text-align:center;padding:0}
 .sol-card{flex:1;display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:stretch;border:1px solid color-mix(in srgb,var(--pcol,var(--gold)) 42%,transparent);border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 22px -16px color-mix(in srgb,var(--pcol) 55%,transparent);padding:clamp(1.3rem,2.8vw,2rem);background:color-mix(in srgb,var(--card) 45%,transparent)}
