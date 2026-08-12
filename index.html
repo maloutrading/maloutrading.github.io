@@ -10,7 +10,7 @@
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312163C'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23E9E4D4' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://image-cdn-fa.spotifycdn.com; media-src 'self'; font-src 'self'; frame-src https://s.tradingview.com; connect-src 'self' https://api.open-meteo.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; frame-src 'none'; connect-src 'self' https://api.open-meteo.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
 <link rel="preload" href="fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
@@ -35,7 +35,6 @@
   --wiki:var(--ab);
   --hl:var(--lavendel);
   --alp:var(--zitrone);
-  --kal:var(--gold);
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
   --line:color-mix(in srgb,var(--silber) 42%,var(--marine));
@@ -297,7 +296,6 @@ picture{display:contents}
 .solutions:has(#sol-r-wiki:checked){--pcol:var(--wiki)}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--alp)}
 .solutions:has(#sol-r-hl:checked){--pcol:var(--hl)}
-.solutions:has(#sol-r-kalshi:checked){--pcol:var(--kal)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
 .sol-title{max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.1rem,3vw,1.9rem);border:1px solid color-mix(in srgb,var(--silber) 85%,var(--weiss));border-radius:4px;background:linear-gradient(180deg,color-mix(in srgb,var(--marine) 74%,var(--weiss)),color-mix(in srgb,var(--marine) 78%,#000) 55%,var(--marine));box-shadow:inset 0 1px 0 rgba(255,255,255,.32),inset 0 -8px 16px rgba(0,0,0,.55),0 14px 34px -14px rgba(0,0,0,.9),0 0 24px -6px color-mix(in srgb,var(--silber) 50%,transparent);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.45rem,2.9vw,2.15rem);letter-spacing:.06em;line-height:1.2;color:var(--ink);-webkit-text-stroke:.35px color-mix(in srgb,var(--silber) 55%,#fff);text-shadow:0 0 12px color-mix(in srgb,var(--silber) 35%,transparent)}
@@ -308,19 +306,16 @@ picture{display:contents}
 .sol-dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.45;transition:.25s}
 #sol-r-wiki:checked ~ .sol-toggle label[for="sol-r-wiki"],
 #sol-r-algo:checked ~ .sol-toggle label[for="sol-r-algo"],
-#sol-r-hl:checked ~ .sol-toggle label[for="sol-r-hl"],
-#sol-r-kalshi:checked ~ .sol-toggle label[for="sol-r-kalshi"]{color:var(--ink);
+#sol-r-hl:checked ~ .sol-toggle label[for="sol-r-hl"]{color:var(--ink);
   background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 26%,var(--card)),color-mix(in srgb,var(--bronze) 16%,var(--card)));
   box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 6px -3px rgba(0,0,0,.3)}
 #sol-r-wiki:checked ~ .sol-toggle label[for="sol-r-wiki"] .sol-dot,
 #sol-r-algo:checked ~ .sol-toggle label[for="sol-r-algo"] .sol-dot,
-#sol-r-hl:checked ~ .sol-toggle label[for="sol-r-hl"] .sol-dot,
-#sol-r-kalshi:checked ~ .sol-toggle label[for="sol-r-kalshi"] .sol-dot{opacity:1;background:var(--pcol)}
+#sol-r-hl:checked ~ .sol-toggle label[for="sol-r-hl"] .sol-dot{opacity:1;background:var(--pcol)}
 .sol-panel{display:none;flex-direction:column;gap:clamp(2.6rem,5vw,4.2rem);max-width:clamp(600px,86vw,1120px);margin-inline:auto;animation:solfade .5s var(--ease)}
 #sol-r-wiki:checked ~ .sol-body .sol-p-wiki{display:flex}
 #sol-r-algo:checked ~ .sol-body .sol-p-algo{display:flex}
 #sol-r-hl:checked ~ .sol-body .sol-p-hl{display:flex}
-#sol-r-kalshi:checked ~ .sol-body .sol-p-kalshi{display:flex}
 @keyframes solfade{from{opacity:0;transform:translateY(10px);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
 @media(max-width:640px){.sol-toggle{width:auto;max-width:17rem;flex-wrap:wrap;justify-content:center;border-radius:var(--r-md)}.sol-btn{padding:.6rem 1.05rem;font-size:.88rem}}
 .sol-two{display:flex;flex-direction:column;gap:clamp(2rem,3.6vw,3rem);width:100%}
@@ -346,7 +341,7 @@ picture{display:contents}
 .wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 46%,#fff),var(--silber) 55%,color-mix(in srgb,var(--silber) 62%,#000));border:0;color:var(--marine);box-shadow:0 8px 22px -8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.65),inset 0 -3px 8px -3px rgba(0,0,0,.22);animation:none}
 .wiki-cta.ghost:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 8%,#fff),color-mix(in srgb,var(--silber) 82%,#fff) 55%,var(--silber));color:var(--marine);box-shadow:0 14px 34px -12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.75)}
 @media(max-width:640px){.sol-text{grid-template-columns:1fr}.sol-chart{height:230px;margin-inline:0}}
-.sp-art{width:54px;height:54px;border-radius:var(--r-xs);object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
+.sp-art{width:54px;height:54px;border-radius:var(--r-xs);flex:none;display:grid;place-items:center;font-style:normal;font-size:1.35rem;color:color-mix(in srgb,var(--gruen) 70%,var(--weiss));background:linear-gradient(150deg,color-mix(in srgb,var(--lavendel) 26%,var(--card)),color-mix(in srgb,var(--burgund) 34%,var(--card)));border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
 .spotify-track:hover .sp-art{transform:scale(1.05)}
 .book-cover-link{display:block;width:100%;max-width:196px;aspect-ratio:2/3;border-radius:2px;overflow:hidden;box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--accent,var(--gold)) 22%,transparent);transition:transform .4s ease,box-shadow .4s ease}
 .book:nth-child(1) .book-cover-link{transform:rotate(-2.6deg)}
@@ -695,9 +690,8 @@ footer{position:relative;z-index:1}
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-hl">
-<input class="sol-radio" type="radio" name="sol" id="sol-r-kalshi">
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
-<div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label><label class="sol-btn keepcase" for="sol-r-kalshi"><span class="sol-dot"></span>kalshi</label></div>
+<div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-hl"><span class="sol-dot"></span>hyperliquid</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/wikifolio.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
@@ -710,10 +704,6 @@ footer{position:relative;z-index:1}
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">One breakout engine, both directions, no exceptions</h3></div><p class="sol-philosophy keepcase">US equities traded long and short overnight &mdash; never held through a full session, never left unprotected.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase">equity &middot; start = 100</span><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>us stocks</li><li>algorithmic</li><li>long &amp; short, overnight swing</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-meta keepcase">us equities &middot; alpaca markets &middot; overnight swing</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-block" id="stAn"></div></div>
-<div class="sol-panel sol-p-kalshi"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/slt.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
-<div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">One breakout engine, both directions, no exceptions</h3></div><p class="sol-philosophy keepcase">Event-contract breakouts priced in cents, sized exactly like every other market the engine trades.</p></div>
-<div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-title keepcase">equity &middot; start = 100</span><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="kperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="kperfNote">live &middot; kalshi</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>event markets</li><li>breakout momentum</li><li>hourly, long &amp; short</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">event markets</span><h3 class="sol-card-name keepcase">kalshi trends</h3><p class="sol-meta keepcase">event contracts &middot; kalshi exchange &middot; maker-only &middot; hourly</p></div><div class="perf-stats"><div><b id="kstRet">–</b><span>return</span></div><div><b id="kstWin">–</b><span>win rate</span></div><div><b id="kstTr">–</b><span>trades</span></div><div><b id="kstDD">–</b><span>max dd</span></div><div><b id="kstAW">–</b><span>avg win</span></div><div><b id="kstPO">–</b><span>payoff</span></div></div></div></div></div>
-<div class="an-block" id="kstAn"></div></div>
 </div>
 </div>  </div>
 <p class="markets-legal keepcase"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
@@ -795,17 +785,17 @@ footer{position:relative;z-index:1}
     <div class="team-bottom">
       <div class="spotify-box">
         <a class="spotify-track" href="https://open.spotify.com/track/4gldqByzAgQB2TeOjdvyw4" target="_blank" rel="noopener">
-          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0210b2ce4586bad7aae335783e" alt="" loading="lazy">
+          <i class="sp-art" aria-hidden="true">♪</i>
           <span class="t"><b class="keepcase">Afon Colhuw</b><small class="keepcase">Huw Marc Bennett</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
         <a class="spotify-track" href="https://open.spotify.com/track/3usbbmpFd1sx1UQQOGgc8A" target="_blank" rel="noopener">
-          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02997f0400dbb389f44e552105" alt="" loading="lazy">
+          <i class="sp-art" aria-hidden="true">♪</i>
           <span class="t"><b class="keepcase">Part III</b><small class="keepcase">I Am An Instrument</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
         <a class="spotify-track" href="https://open.spotify.com/track/4wk9PCZ3ZysvUapP8G86aV" target="_blank" rel="noopener">
-          <img class="sp-art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02976bc2ace1672ba9400a0662" alt="" loading="lazy">
+          <i class="sp-art" aria-hidden="true">♪</i>
           <span class="t"><b class="keepcase">Bario Alto</b><small class="keepcase">Thievery Corporation</small></span>
           <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
@@ -838,17 +828,21 @@ footer{position:relative;z-index:1}
     <p>Benjamin Suermann, address as above.</p>
     <h3>Liability for content and links</h3>
     <p>As a service provider I am responsible for my own content on this website, but not
-    obliged to monitor transmitted or stored third-party information. This website embeds the
-    services Spotify and TradingView and links to external destinations; the respective provider
-    alone is responsible for their content.</p>
+    obliged to monitor transmitted or stored third-party information. This website embeds no third-party
+    services; it only links to external destinations, for whose content the respective provider
+    alone is responsible.</p>
     <h3>Important note &ndash; no investment advice</h3>
-    <p>All content serves documentation and information only and reflects the results of a private
-    proprietary trading account. It is no investment advice, investment brokerage, asset management
+    <p>All content serves documentation and information only. The figures reflect a private
+    proprietary trading account; the wikifolio figures reflect the publicly quoted certificate as
+    published by wikifolio.com and are net of the wikifolio fees, but not of any purchase costs or
+    spreads charged by your own broker. It is no investment advice, investment brokerage, asset management
     or solicitation to buy or sell financial instruments. Trading financial instruments is highly risky and can lead to total loss.</p>
     <h3>Sources and credits</h3>
-    <p>Weather data: Open-Meteo.com (CC BY 4.0). Prices and charts: TradingView. Music tracks:
-    embedded via Spotify; the rights to the music and cover images belong to the respective
-    rights holders. Typeface: EB Garamond / Georgia (SIL Open Font License).</p>
+    <p>Weather data: Open-Meteo.com (CC BY 4.0). wikifolio figures: wikifolio.com. Benchmark
+    S&amp;P 500: Yahoo Finance, retrieved on the server, never from your browser. All other figures
+    come from my own trading accounts. Music: text links to Spotify only, no embedded player and no
+    cover images; the rights to the music belong to the respective rights holders. Typeface:
+    EB Garamond (SIL Open Font License), self-hosted.</p>
   </div>
 </section>
 
@@ -867,14 +861,13 @@ footer{position:relative;z-index:1}
     data (e.g. IP address, access time, browser type) in order to deliver the page and ensure its
     security (Art. 6(1)(f) GDPR); this may involve a transfer to the USA.</p>
     <h3>4. Embedded media and services</h3>
-    <p>Videos and images are delivered directly with the page. On the &bdquo;idea&ldquo; page,
-    individual music tracks are embedded via the official Spotify player (Spotify AB, Sweden);
-    a connection to Spotify is established only on playback, whereby Spotify may process its own
-    data and set cookies. On the &bdquo;trade&ldquo; page, a price chart is embedded via
-    TradingView, Inc. (USA); a connection to TradingView is established only on loading, whereby
-    TradingView may process its own data and set cookies. To display the weather, the Open-Meteo
-    interface is queried. The privacy terms of the respective providers apply; this may involve a
-    transfer to third countries.</p>
+    <p>All videos, images, fonts and price data are delivered directly with the page from the
+    hosting server. No third-party service is embedded, so no data flows to any third party
+    while you read. The single exception: on the &bdquo;team&ldquo; page the current Hamburg
+    weather is fetched from the Open-Meteo interface (Open-Meteo, Switzerland), which transmits
+    your IP address to that provider; the legal basis is my legitimate interest in displaying it
+    (Art. 6(1)(f) GDPR). Music titles are plain text links &ndash; Spotify learns nothing about
+    you unless you click one.</p>
     <h3>5. External links</h3>
     <p>This website links to external offerings (e.g. Wikifolio, LinkedIn). For their content and
     data processing, the information of the respective providers applies exclusively.</p>

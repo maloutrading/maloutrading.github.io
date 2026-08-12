@@ -419,7 +419,6 @@ function mount(P){
     });
 }
 mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
-mount({svg:'kperfSvg', note:'kperfNote', k:'kst', an:'kstAn', url:'json/kalshiMarkets/kalshi.json'});
 mount({svg:'hperfSvg', note:'hperfNote', k:'hst', an:'hAn', url:'json/hyperliquidMarkets/hyperliquid.json'});
 mount({svg:'wperfSvg', note:'wperfNote', k:'wst', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
