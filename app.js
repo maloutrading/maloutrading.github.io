@@ -53,7 +53,7 @@ document.querySelectorAll('.stage video,.topvid video').forEach(v => {
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
 
-const TITLES = {home:'malou trading', team:'team - malou trading', trade:'trade - malou trading', news:'news - malou trading'};
+const TITLES = {home:'malou trading', team:'team - malou trading', trade:'trade - malou trading', news:'news - malou trading', stuff:'stuff - malou trading'};
 function show(id, push){
   if (!document.getElementById(id)) id = 'home';
   document.querySelectorAll('main .tab').forEach(s => s.classList.remove('show'));
@@ -137,7 +137,7 @@ function initWx(){
 })();
 
 // swipe between ribbons (native browser back/forward arrows disabled via overscroll-behavior-x)
-const SWIPE = ['home','team','news','trade'];
+const SWIPE = ['home','team','news','trade','stuff'];
 function swipeTo(dir){
   const cur = document.querySelector('main .tab.show'); if(!cur) return;
   const i = SWIPE.indexOf(cur.id); if(i < 0) return;

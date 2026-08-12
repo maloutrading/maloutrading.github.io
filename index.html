@@ -102,6 +102,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 #team{--accent:var(--holz)}
 #trade{--accent:var(--bronze)}
 #news{--accent:var(--gruen)}
+#stuff{--accent:var(--ab)}
 #news .wrap{max-width:var(--wide)}
 #impressum,#datenschutz{--accent:var(--holz)}
 .wrap{max-width:var(--w);margin:0 auto;padding:0 1.7rem}
@@ -131,6 +132,8 @@ nav.tabs button[data-t="trade"]:hover{color:var(--bronze)}
 nav.tabs button[data-t="trade"].active{background:var(--bronze);color:var(--marine)}
 nav.tabs button[data-t="news"]:hover{color:var(--gruen)}
 nav.tabs button[data-t="news"].active{background:var(--gruen);color:var(--weiss)}
+nav.tabs button[data-t="stuff"]:hover{color:var(--ab)}
+nav.tabs button[data-t="stuff"].active{background:var(--ab);color:var(--weiss)}
 @media(max-width:640px){
   .nav{padding:.7rem 1rem}
   nav.tabs{flex-wrap:nowrap;overflow-x:auto;max-width:100%;
@@ -352,6 +355,13 @@ picture{display:contents}
 .mag{position:relative;max-width:840px;margin:0 auto;text-align:left;padding:clamp(2rem,4vw,3.2rem) clamp(1.8rem,4vw,3.4rem);border:0;border-radius:var(--r-lg);background:linear-gradient(180deg,color-mix(in srgb,#fff 3%,transparent),transparent 40%);box-shadow:0 34px 76px -52px rgba(0,0,0,.7),0 0 54px -8px color-mix(in srgb,var(--accent,var(--gold)) 13%,transparent)}
 .mag-date{text-align:center;color:var(--muted);font-style:italic;font-size:.95rem;letter-spacing:.14em;margin:0 0 clamp(1.8rem,3.4vw,2.6rem)}
 .mag::before{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1.5px solid color-mix(in srgb,var(--accent,var(--gold)) 36%,transparent);filter:blur(4.5px);opacity:.75;pointer-events:none}
+.stuff-group{margin:0 0 calc(clamp(2.6rem,5vw,3.8rem) + 1cm)}
+.stuff-label{display:block;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 1.4rem}
+.stuff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:clamp(1.1rem,2.4vw,1.7rem)}
+.stuff-card{display:block;text-decoration:none;color:var(--ink);padding:clamp(1.3rem,2.6vw,1.8rem);border:1px solid var(--line);border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 60%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
+.stuff-card:hover{color:var(--ink);border-color:color-mix(in srgb,var(--accent,var(--gold)) 55%,transparent);transform:translateY(-3px);box-shadow:0 26px 52px -34px rgba(0,0,0,.8)}
+.stuff-head{font-family:var(--sans);font-weight:600;font-size:1.12rem;line-height:1.32;letter-spacing:-.01em;margin:0 0 .8rem}
+.stuff-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted);margin:0}
 .mag-item{break-inside:avoid;-webkit-column-break-inside:avoid;padding:clamp(1.3rem,2.6vw,1.9rem) 0;border-top:1px solid var(--line)}
 .mag-kicker{display:block;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gruen);margin:0 0 .75rem}
 .mag-head{font-family:var(--sans);font-weight:600;font-size:clamp(1.25rem,2.4vw,1.55rem);line-height:1.25;letter-spacing:-.01em;margin:0 0 .85rem;color:var(--ink)}
@@ -645,6 +655,7 @@ footer{position:relative;z-index:1}
       <button data-t="team" data-nav="team">team</button>
       <button data-t="news" data-nav="news">news</button>
       <button data-t="trade" data-nav="trade">trade</button>
+      <button data-t="stuff" data-nav="stuff">stuff</button>
     </nav>
   </div>
   <div class="progress" id="prog" aria-hidden="true"></div>
@@ -662,6 +673,7 @@ footer{position:relative;z-index:1}
           <button data-nav="team">team</button>
           <button data-nav="news">news</button>
           <button data-nav="trade">trade</button>
+          <button data-nav="stuff">stuff</button>
         </nav>
       </div>
     </div>
@@ -707,6 +719,49 @@ footer{position:relative;z-index:1}
 </div>
 </div>  </div>
 <p class="markets-legal keepcase"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
+</section>
+
+<section class="tab sub" id="stuff">
+  <div class="topvid" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="none">
+      <source src="shortVids/moe.mp4" type="video/mp4">
+    </video>
+    <i class="tint"></i>
+  </div>
+  <div class="wrap reveal">
+    <div class="rib-intro" style="--accent:var(--ab)"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2><p class="rib-lead keepcase">articles, guest columns &amp; talks</p></div><div class="divider" aria-hidden="true"></div>
+
+    <div class="stuff-group">
+      <span class="stuff-label keepcase">finanzwelt &middot; guest columns</span>
+      <div class="stuff-grid">
+        <a class="stuff-card" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta keepcase">finanzwelt &middot; portfolio manager nordIX Anleihen Defensiv</p></a>
+        <a class="stuff-card" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta keepcase">finanzwelt &middot; 12/2025</p></a>
+      </div>
+    </div>
+
+    <div class="stuff-group">
+      <span class="stuff-label keepcase">capinside &middot; webinar</span>
+      <div class="stuff-grid">
+        <a class="stuff-card" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta keepcase">nordIX webinar &middot; speaker</p></a>
+      </div>
+    </div>
+
+    <div class="stuff-group">
+      <span class="stuff-label keepcase">anlegerplus &middot; funds &amp; equities</span>
+      <div class="stuff-grid">
+        <a class="stuff-card" href="https://anlegerplus.de/raumfahrt-etfs-abgehobenes-investment/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Raumfahrt-ETFs: abgehobenes Investment?</h3><p class="stuff-meta keepcase">anlegerplus &middot; 03/2026</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/in-asien-investieren-pragmatismus-schlaegt-dogma/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">In Asien investieren: Pragmatismus schl&auml;gt Dogma</h3><p class="stuff-meta keepcase">anlegerplus &middot; 02/2026 &middot; Invesco Asian Equity</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/nahrungsmittelindustrie-gesaettigter-markt-oder-chancenreiches-umfeld/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Nahrungsmittelindustrie: ges&auml;ttigter Markt oder chancenreiches Umfeld?</h3><p class="stuff-meta keepcase">anlegerplus &middot; 12/2025</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/mit-einem-etf-in-genomik-investieren/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Mit einem ETF in Genomik investieren</h3><p class="stuff-meta keepcase">anlegerplus &middot; 10/2025 &middot; Global X Genomics</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/lifecycle-etfs-altersvorsorge-im-autopilot/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Lifecycle-ETFs: Altersvorsorge im Autopilot</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2025</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta keepcase">anlegerplus &middot; 06/2025</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta keepcase">anlegerplus &middot; 09/2024 &middot; iShares MSCI World Momentum</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/gut-holz-der-timber-etf/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Gut Holz: der Timber-ETF</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2024 &middot; iShares Global Timber &amp; Forestry</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2024</p></a>
+      </div>
+      <p class="stuff-meta keepcase" style="margin-top:1.4rem">some anlegerplus articles are behind a paywall</p>
+    </div>
+  </div>
 </section>
 
 <section class="tab sub" id="news">
