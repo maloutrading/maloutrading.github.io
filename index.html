@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>malou trading</title>
 <meta name="description" content="systematic investing - calm, close to nature, documented.">
-<meta name="theme-color" content="#1A1D21">
+<meta name="theme-color" content="#15181B">
 <meta property="og:title" content="malou trading">
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
@@ -19,21 +19,21 @@
 
 :root{
   /* ── THE ONLY THREE COLOURS IN THIS FILE. Everything below is mixed from them. ── */
-  --grafit:#1A1D21;   /* dark shiny elegant grey — the ground everything stands on */
-  --wein:#8C2F41;     /* burgundy — the single accent */
+  --grafit:#15181B;   /* dark shiny elegant grey — the ground everything stands on */
+  --wein:#7A1424;     /* deep red wine — the single accent */
   --weiss:#E2E6EA;    /* light neutral — the ink */
   /* ── derived: semantic slots, never a raw hex again ── */
   /* every step below clears the old palette's contrast floor (3.68:1) on --grafit */
   --marine:var(--grafit);
   --silber:color-mix(in srgb,var(--weiss) 62%,var(--grafit));
   --gold:color-mix(in srgb,var(--weiss) 84%,var(--wein));
-  --bronze:color-mix(in srgb,var(--wein) 72%,var(--weiss));
+  --bronze:color-mix(in srgb,var(--wein) 64%,var(--weiss));
   --gruen:color-mix(in srgb,var(--weiss) 86%,var(--grafit));   /* gains shine */
-  --holz:color-mix(in srgb,var(--wein) 62%,var(--weiss));      /* losses bleed */
+  --holz:color-mix(in srgb,var(--wein) 55%,var(--weiss));      /* losses bleed */
   /* four markets = four luminance steps of the one accent */
-  --wiki:color-mix(in srgb,var(--wein) 72%,var(--weiss));
-  --kal:color-mix(in srgb,var(--wein) 57%,var(--weiss));
-  --hl:color-mix(in srgb,var(--wein) 44%,var(--weiss));
+  --wiki:color-mix(in srgb,var(--wein) 64%,var(--weiss));
+  --kal:color-mix(in srgb,var(--wein) 54%,var(--weiss));
+  --hl:color-mix(in srgb,var(--wein) 42%,var(--weiss));
   --alp:color-mix(in srgb,var(--wein) 30%,var(--weiss));
   --grau:color-mix(in srgb,var(--marine) 84%,var(--weiss));
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
@@ -81,7 +81,7 @@ body{margin:0;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);
 /* the sheen that turns flat graphite into polished metal — light from above, wine from below */
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(125% 70% at 50% -8%,color-mix(in srgb,var(--weiss) 9%,transparent),transparent 62%),
-             radial-gradient(95% 55% at 50% 108%,color-mix(in srgb,var(--wein) 12%,transparent),transparent 62%)}
+             radial-gradient(95% 55% at 50% 108%,color-mix(in srgb,var(--wein) 17%,transparent),transparent 62%)}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.06;
   letter-spacing:0}
 h1{font-size:clamp(3.45rem,10.35vw,6.9rem);margin:.12em 0}
