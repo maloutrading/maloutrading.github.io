@@ -28,6 +28,7 @@ def authGet(url, tries=4):
 sellTypes = {'Sell', 'SellLimit', 'SellStopLimit', 'ExpirySell'}
 buyTypes = {'Buy', 'BuyLimit', 'BuyStopLimit'}
 stopTypes = {'SellStopLimit', 'ExpirySell'}
+kinds = {620: 'stock', 630: 'etf', 640: 'cert'}
 
 def fetchOrders(maxPages=600, pageSize=20):
     email, pw = os.environ.get('WIKIFOLIO_EMAIL'), os.environ.get('WIKIFOLIO_PASSWORD')
@@ -82,6 +83,7 @@ def roundTrips(orders):
             'r': round(pct, 2),
             'hold': (closed - entry).days if entry else None,
             'stop': any(f['orderType'] in stopTypes for f in fills),
+            'kind': kinds.get(fills[-1].get('securityType'), 'other'),
         })
     return sorted(out, key=lambda t: t['ts'])
 

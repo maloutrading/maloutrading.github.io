@@ -271,19 +271,170 @@ function monthGrid(rows){
   return '<div class="mg">' + head + body + '</div>';
 }
 
-// the principle made measurable: winners are held, losers are cut
-function holdSvg(trades){
-  const t = (trades || []).filter(x => typeof x.hold === 'number' && isFinite(x.hold) && typeof x.r === 'number');
-  if (t.length < 6) return svgEmpty('not enough closed trades yet');
+// one trailing window for every rolling trade chart, so all of them read on the same clock
+function trailWin(n){ return Math.max(5, Math.min(50, Math.floor(n / 2), Math.max(10, Math.round(n / 20)))); }
+function closedTrades(trades){ return (trades || []).filter(t => typeof t.r === 'number' && isFinite(t.r)); }
+function trailSeries(list, win, fn){
+  const out = [];
+  for (let i = win - 1; i < list.length; i++) out.push(fn(list.slice(i - win + 1, i + 1)));
+  return out;
+}
+const meanOf = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+
+// draws a path that breaks across null gaps instead of inventing a straight line through them
+function linePath(vals, X, Y){
+  let d = '', pen = false;
+  vals.forEach((v, i) => {
+    if (v == null){ pen = false; return; }
+    d += (pen ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1) + ' ';
+    pen = true;
+  });
+  return d.trim();
+}
+function trailPlot(seriesList, y0, y1, refY){
+  const W = 300, H = 120, pad = 5, n = Math.max(...seriesList.map(s => s.vals.length));
+  const X = i => pad + (n > 1 ? i / (n - 1) : 0) * (W - 2 * pad);
+  const Y = v => H - pad - (v - y0) / ((y1 - y0) || 1) * (H - 2 * pad);
+  const ref = typeof refY === 'number'
+    ? '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(refY).toFixed(1) + '" y2="' + Y(refY).toFixed(1) +
+      '" stroke="var(--line)" stroke-dasharray="2 3"/>' : '';
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg">' + ref +
+    seriesList.map(s => '<path d="' + linePath(s.vals, X, Y) + '" fill="none" stroke="' + s.col +
+      '" stroke-width="' + (s.w || 1.8) + '" vector-effect="non-scaling-stroke" stroke-linejoin="round"' +
+      (s.dash ? ' stroke-dasharray="3 3"' : '') + '/>').join('') + '</svg>';
+}
+function numsRow(items){
+  return '<div class="rw-nums">' + items.map(i =>
+    '<span><b class="' + (i[2] || '') + '">' + i[0] + '</b>' + i[1] + '</span>').join('') + '</div>';
+}
+
+// trailing avg win vs avg loss — is the system winning bigger, or just losing sloppier?
+function avgWinLossSvg(trades){
+  const list = closedTrades(trades), win = trailWin(list.length);
+  if (list.length < win + 2) return svgEmpty('not enough closed trades yet');
+  const ws = trailSeries(list, win, s => meanOf(s.filter(t => t.r > 0).map(t => t.r)));
+  const ls = trailSeries(list, win, s => meanOf(s.filter(t => t.r <= 0).map(t => t.r)));
+  const all = [...ws, ...ls].filter(v => v != null);
+  const y1 = Math.max(...all, 1), y0 = Math.min(...all, -1);
+  const last = a => [...a].reverse().find(v => v != null);
+  return '<div class="rw">' + numsRow([
+    ['+' + (last(ws) || 0).toFixed(1) + '%', 'avg win', 'up'],
+    [(last(ls) || 0).toFixed(1) + '%', 'avg loss', 'dn'],
+    [win, 'trade window']]) +
+    '<div class="rw-plot">' + trailPlot([{vals: ws, col: cv('--gruen')}, {vals: ls, col: cv('--holz')}], y0, y1, 0) +
+    '<i class="rw-t" style="top:0">+' + y1.toFixed(0) + '%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i></div></div>';
+}
+
+// trailing payoff against the ratio the same window actually needed to break even
+function payoffSvg(trades){
+  const list = closedTrades(trades), win = trailWin(list.length);
+  if (list.length < win + 2) return svgEmpty('not enough closed trades yet');
+  const ratio = trailSeries(list, win, s => {
+    const w = meanOf(s.filter(t => t.r > 0).map(t => t.r)), l = meanOf(s.filter(t => t.r <= 0).map(t => t.r));
+    return w != null && l != null && l !== 0 ? w / Math.abs(l) : null;
+  });
+  const need = trailSeries(list, win, s => {
+    const w = s.filter(t => t.r > 0).length / s.length;
+    return w > 0 && w < 1 ? (1 - w) / w : null;
+  });
+  const all = [...ratio, ...need].filter(v => v != null);
+  if (!all.length) return svgEmpty('not enough closed trades yet');
+  const y1 = Math.min(Math.max(...all), 12), y0 = 0;
+  const last = a => [...a].reverse().find(v => v != null);
+  const beat = ratio.filter((v, i) => v != null && need[i] != null && v > need[i]).length;
+  const both = ratio.filter((v, i) => v != null && need[i] != null).length;
+  return '<div class="rw">' + numsRow([
+    [(last(ratio) || 0).toFixed(2) + 'x', 'payoff now', (last(ratio) > last(need) ? 'up' : 'dn')],
+    [(last(need) || 0).toFixed(2) + 'x', 'break-even'],
+    [Math.round(beat / (both || 1) * 100) + '%', 'of windows above']]) +
+    '<div class="rw-plot">' + trailPlot([{vals: need, col: cv('--silber'), w: 1.2, dash: true},
+      {vals: ratio, col: cv('--gruen')}], y0, y1) +
+    '<i class="rw-t" style="top:0">' + y1.toFixed(0) + 'x</i><i class="rw-t" style="bottom:0">0x</i></div>' +
+    '<p class="hb-foot">solid = achieved payoff &middot; dashed = payoff the window’s hit rate needed to break even</p></div>';
+}
+
+// where the edge actually sits: hit rate and average result per holding bucket
+function edgeByHoldSvg(trades){
+  const t = closedTrades(trades).filter(x => typeof x.hold === 'number' && isFinite(x.hold));
+  if (t.length < 10) return svgEmpty('not enough closed trades yet');
+  const buckets = [['0d', 0, 0], ['1–2d', 1, 2], ['3–7d', 3, 7], ['8–30d', 8, 30], ['30d+', 31, 1e9]];
+  const rows = buckets.map(([lab, lo, hi]) => {
+    const g = t.filter(x => x.hold >= lo && x.hold <= hi);
+    return {lab, n: g.length, win: g.length ? g.filter(x => x.r > 0).length / g.length * 100 : 0, avg: meanOf(g.map(x => x.r))};
+  }).filter(r => r.n);
+  if (rows.length < 2) return svgEmpty('not enough closed trades yet');
+  const mxN = Math.max(...rows.map(r => r.n));
   const med = v => { const s = [...v].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]; };
-  const wins = t.filter(x => x.r > 0).map(x => x.hold), losses = t.filter(x => x.r <= 0).map(x => x.hold);
-  if (!wins.length || !losses.length) return svgEmpty('not enough closed trades yet');
-  const mw = med(wins), ml = med(losses), mx = Math.max(mw, ml, 1);
-  const bar = (label, v, n, cls) => '<div class="hb-row"><span class="hb-lab">' + label + '</span>' +
-    '<span class="hb-track"><b class="hb-fill ' + cls + '" style="width:' + Math.max(4, v / mx * 100).toFixed(1) + '%"></b></span>' +
-    '<span class="hb-val">' + v + 'd</span><span class="hb-n">' + n + '</span></div>';
-  return '<div class="hb">' + bar('winners', mw, wins.length, 'up') + bar('losers', ml, losses.length, 'dn') +
-    '<p class="hb-foot">median days held &middot; winners run ' + (ml > 0 ? (mw / ml).toFixed(1) + '&times;' : '') + ' longer than losers</p></div>';
+  const mw = med(t.filter(x => x.r > 0).map(x => x.hold)), ml = med(t.filter(x => x.r <= 0).map(x => x.hold));
+  const runs = (mw != null && ml > 0) ? ' &middot; winners held ' + (mw / ml).toFixed(1) + '&times; longer (' + mw + 'd vs ' + ml + 'd median)' : '';
+  return '<div class="eb">' + rows.map(r =>
+    '<div class="eb-row"><span class="eb-lab">' + r.lab + '</span>' +
+    '<span class="hb-track"><b class="hb-fill ' + (r.avg >= 0 ? 'up' : 'dn') + '" style="width:' +
+    Math.max(4, r.n / mxN * 100).toFixed(1) + '%"></b></span>' +
+    '<span class="eb-win">' + Math.round(r.win) + '%</span>' +
+    '<span class="eb-avg ' + (r.avg >= 0 ? 'up' : 'dn') + '">' + (r.avg >= 0 ? '+' : '') + r.avg.toFixed(1) + '%</span>' +
+    '<span class="hb-n">' + r.n + '</span></div>').join('') +
+    '<p class="hb-foot">bar = trades &middot; then hit rate and average result' + runs + '</p></div>';
+}
+
+// how much of the total gain rides on the few biggest winners
+function concentrationSvg(trades){
+  const rs = closedTrades(trades).map(t => t.r).filter(v => v > 0).sort((a, b) => b - a);
+  if (rs.length < 10) return svgEmpty('not enough closed trades yet');
+  const total = rs.reduce((a, b) => a + b, 0);
+  const cum = [];
+  rs.reduce((a, v, i) => { cum[i] = (a + v) / total * 100; return a + v; }, 0);
+  const W = 300, H = 120, pad = 5;
+  const X = i => pad + (rs.length > 1 ? i / (rs.length - 1) : 0) * (W - 2 * pad);
+  const Y = v => H - pad - v / 100 * (H - 2 * pad);
+  const at = frac => cum[Math.min(cum.length - 1, Math.max(0, Math.round(frac * rs.length) - 1))];
+  const diag = 'M' + X(0) + ' ' + Y(100 / rs.length) + ' L' + X(rs.length - 1) + ' ' + Y(100);
+  return '<div class="rw">' + numsRow([
+    [Math.round(at(0.05)) + '%', 'from top 5%'],
+    [Math.round(at(0.10)) + '%', 'from top 10%'],
+    [rs.length, 'winners']]) +
+    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg">' +
+    '<path d="' + diag + '" fill="none" stroke="var(--line)" stroke-dasharray="2 3"/>' +
+    '<path d="' + linePath(cum, X, Y) + '" fill="none" stroke="' + cv('--gruen') +
+    '" stroke-width="1.8" vector-effect="non-scaling-stroke"/></svg>' +
+    '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
+    '<p class="hb-foot">share of all gains, winners ranked best first &middot; dashed = if every winner paid equally</p></div>';
+}
+
+// the trade curve: what the closed trades add up to, independent of position sizing
+function tradeEquitySvg(trades){
+  const list = closedTrades(trades);
+  if (list.length < 10) return svgEmpty('not enough closed trades yet');
+  let sum = 0;
+  const cum = list.map(t => (sum += t.r));
+  const y1 = Math.max(...cum, 0), y0 = Math.min(...cum, 0);
+  return '<div class="rw">' + numsRow([
+    [(sum >= 0 ? '+' : '') + Math.round(sum) + '%', 'sum of trades', sum >= 0 ? 'up' : 'dn'],
+    [(meanOf(list.map(t => t.r)) || 0).toFixed(2) + '%', 'per trade'],
+    [list.length, 'trades']]) +
+    '<div class="rw-plot">' + trailPlot([{vals: cum, col: cv('--gruen')}], y0, y1, 0) +
+    '<i class="rw-t" style="top:0">+' + y1.toFixed(0) + '%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i></div>' +
+    '<p class="hb-foot">unweighted sum of every closed trade &mdash; strategy shape, not portfolio return</p></div>';
+}
+
+function mixSvg(trades){
+  const t = closedTrades(trades).filter(x => x.kind);
+  if (t.length < 10) return svgEmpty('not enough closed trades yet');
+  const names = {stock: 'stocks', etf: 'etf / etn', cert: 'certs', other: 'other'};
+  const rows = ['stock', 'etf', 'cert', 'other'].map(k => {
+    const g = t.filter(x => x.kind === k);
+    return {lab: names[k], n: g.length, win: g.length ? g.filter(x => x.r > 0).length / g.length * 100 : 0, avg: meanOf(g.map(x => x.r))};
+  }).filter(r => r.n);
+  if (rows.length < 2) return svgEmpty('not enough closed trades yet');
+  const mxN = Math.max(...rows.map(r => r.n));
+  return '<div class="eb">' + rows.map(r =>
+    '<div class="eb-row"><span class="eb-lab">' + r.lab + '</span>' +
+    '<span class="hb-track"><b class="hb-fill ' + (r.avg >= 0 ? 'up' : 'dn') + '" style="width:' +
+    Math.max(4, r.n / mxN * 100).toFixed(1) + '%"></b></span>' +
+    '<span class="eb-win">' + Math.round(r.win) + '%</span>' +
+    '<span class="eb-avg ' + (r.avg >= 0 ? 'up' : 'dn') + '">' + (r.avg >= 0 ? '+' : '') + r.avg.toFixed(1) + '%</span>' +
+    '<span class="hb-n">' + r.n + '</span></div>').join('') +
+    '<p class="hb-foot">bar = number of trades &middot; then hit rate and average result</p></div>';
 }
 
 function tradeStatsCard(s){
@@ -397,12 +548,18 @@ function renderAnalytics(containerId, d, opts){
   const calloutHtml = (s.best_trade || s.worst_trade)
     ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade, unit) + callout('worst trade', s.worst_trade, unit) + '</div>' : '';
   const months = hasMonths ? '<div class="an-card mg-card"><h5 class="an-h">monthly returns</h5>' + monthGrid(d.monthly) + '</div>' : '';
+  const t = d.trades_detail;
   const grid = '<div class="an-grid">' +
-    card((unit === '%' ? 'return' : unit + '-multiple') + ' distribution', rHistSvg(d.trades_detail, unit)) +
+    card((unit === '%' ? 'return' : unit + '-multiple') + ' distribution', rHistSvg(t, unit)) +
     (hasMonths ? card('drawdown', ddSvg(dd)) : card('daily returns', heatGrid((d.series || {}).equity))) +
-    card('rolling win rate', rollingWinSvg(d.trades_detail)) +
-    (opts.showHold ? card('holding period', holdSvg(d.trades_detail))
-      : showExposure ? card('long / short exposure', exposureSvg(d.exposure)) : '') + '</div>';
+    card('trailing hit rate', rollingWinSvg(t)) +
+    (opts.showTrail ? card('trailing avg win / loss', avgWinLossSvg(t)) : '') +
+    (opts.showTrail ? card('trailing payoff vs break-even', payoffSvg(t)) : '') +
+    (opts.showTrail ? card('trade curve', tradeEquitySvg(t)) : '') +
+    (opts.showTrail ? card('edge by holding period', edgeByHoldSvg(t)) : '') +
+    (opts.showTrail ? card('gain concentration', concentrationSvg(t)) : '') +
+    (opts.showTrail ? card('instrument mix', mixSvg(t)) : '') +
+    (showExposure ? card('long / short exposure', exposureSvg(d.exposure)) : '') + '</div>';
   const trades = tradesHtml(d, unit, opts.tradeRows);
   const side = showBook ? bookHtml(d) : tradeStatsCard(s);
   const lead = trades ? '<div class="an-row book-trades">' + side + trades + '</div>' : side;
@@ -503,7 +660,7 @@ function mount(P){
 }
 mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
 mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
-  unit:'%', showBook:false, showExposure:false, showHold:true, tradeRows:14,
+  unit:'%', showBook:false, showExposure:false, showTrail:true, tradeRows:14,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {
