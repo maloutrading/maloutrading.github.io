@@ -78,11 +78,6 @@ body{margin:0;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);
   -webkit-text-size-adjust:100%;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;font-synthesis:none}
-/* the sheen that turns flat graphite into polished metal — light from above, wine from below */
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(125% 70% at 50% -8%,color-mix(in srgb,var(--weiss) 3%,transparent),transparent 62%),
-             radial-gradient(80% 50% at 12% 22%,color-mix(in srgb,var(--messing) 3%,transparent),transparent 66%),
-             radial-gradient(95% 55% at 50% 108%,color-mix(in srgb,var(--oxblut) 8%,transparent),transparent 62%)}
 /* grain + vignette — the dark ground stops banding and starts breathing */
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
   background:radial-gradient(120% 90% at 50% 50%,transparent 52%,color-mix(in srgb,black 42%,transparent)),
@@ -253,11 +248,8 @@ picture{display:contents}
   background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 56%,#000),color-mix(in srgb,var(--silber) 34%,#000) 55%,color-mix(in srgb,var(--silber) 22%,#000));
   box-shadow:0 8px 22px -8px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 60%,#fff),inset 0 -3px 8px -3px rgba(0,0,0,.5);
   transition:transform .35s var(--ease),box-shadow .35s var(--ease),filter .35s var(--ease);}
-.wiki-cta::after{content:"";position:absolute;top:-25%;left:-90%;width:60%;height:150%;pointer-events:none;transform:skewX(-18deg);
-  background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.55) 50%,transparent 68%);transition:left .75s var(--ease)}
-.wiki-cta:hover{transform:translateY(-3px) scale(1.035);color:var(--weiss);filter:brightness(1.12);animation:none;
+.wiki-cta:hover{transform:translateY(-3px) scale(1.035);color:var(--weiss);filter:brightness(1.12);
   box-shadow:0 18px 44px -10px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 72%,#fff)}
-.wiki-cta:hover::after{left:135%}
 .wiki-cta:active{transform:translateY(-1px) scale(.99)}
 .rib-intro{text-align:center;max-width:var(--wt);margin:0 auto calc(clamp(2.6rem,5vw,3.8rem) + 2.5cm)}
 .rib-kicker{display:block;font-style:normal;font-size:.7rem;letter-spacing:.44em;text-transform:uppercase;color:var(--muted);margin:0 0 1.5rem}
@@ -305,13 +297,11 @@ picture{display:contents}
 .book{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
 .solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1px solid color-mix(in srgb,var(--silber) 65%,transparent);border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%);box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}
-.solutions::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.07) 50%,transparent 65%);background-size:250% 100%;animation:solShine 8s ease-in-out infinite}
-@keyframes solShine{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .solutions:has(#sol-r-wiki:checked){--pcol:var(--wiki)}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--alp)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
-.sol-title{max-width:calc(100% - 2rem);margin:0;padding:.5rem clamp(1rem,2.6vw,1.7rem);border:1px solid color-mix(in srgb,var(--silber) 88%,var(--weiss));border-radius:2px;background:linear-gradient(color-mix(in srgb,var(--silber) 4%,transparent),color-mix(in srgb,var(--silber) 4%,transparent)),linear-gradient(180deg,color-mix(in srgb,var(--marine) 74%,var(--weiss)),color-mix(in srgb,var(--marine) 78%,#000) 55%,var(--marine));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -6px 14px rgba(0,0,0,.45),0 10px 24px -14px rgba(0,0,0,.85),0 0 14px -6px color-mix(in srgb,var(--silber) 60%,transparent);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink);-webkit-text-stroke:.35px color-mix(in srgb,var(--silber) 55%,#fff);text-shadow:none}
+.sol-title{max-width:calc(100% - 2rem);margin:0;padding:.5rem clamp(1rem,2.6vw,1.7rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink)}
 /* grid statt flex: 1fr-spuren unter max-content geben jedem knopf die breite des breitesten */
 .sol-toggle{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
@@ -359,7 +349,7 @@ picture{display:contents}
 .sol-card .wiki-cta{margin-top:1.1rem;align-self:flex-start}
 .sol-cta-row{grid-row:2;display:flex;flex-direction:column;gap:.6rem;margin:0;align-self:center;width:100%}
 .sol-cta-row .wiki-cta{margin:0;font-family:var(--sans);font-style:italic;font-weight:600;font-size:1.12rem;min-height:3.3rem;padding:.7rem 1.4rem .7rem clamp(2rem,16%,4.5rem);width:100%;display:flex;align-items:center;justify-content:flex-start;text-align:left;text-shadow:0 1px 1px rgba(255,255,255,.14)}
-.wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 46%,#fff),var(--silber) 55%,color-mix(in srgb,var(--silber) 62%,#000));border:0;color:var(--marine);box-shadow:0 8px 22px -8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.65),inset 0 -3px 8px -3px rgba(0,0,0,.22);animation:none}
+.wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 46%,#fff),var(--silber) 55%,color-mix(in srgb,var(--silber) 62%,#000));border:0;color:var(--marine);box-shadow:0 8px 22px -8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.65),inset 0 -3px 8px -3px rgba(0,0,0,.22)}
 .wiki-cta.ghost:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 8%,#fff),color-mix(in srgb,var(--silber) 82%,#fff) 55%,var(--silber));color:var(--marine);box-shadow:0 14px 34px -12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.75)}
 @media(max-width:640px){.sol-text{grid-template-columns:1fr}.sol-chart{height:230px;margin-inline:0}}
 .sp-art{width:54px;height:54px;border-radius:var(--r-xs);flex:none;display:grid;place-items:center;font-style:normal;font-size:1.35rem;color:color-mix(in srgb,var(--gruen) 70%,var(--weiss));background:linear-gradient(150deg,color-mix(in srgb,var(--smaragd) 26%,var(--card)),color-mix(in srgb,var(--oxblut) 34%,var(--card)));border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
@@ -543,28 +533,23 @@ footer{position:relative;z-index:1}
 #team .wrap{position:relative;z-index:1}
 
 
-.trade-quotes{display:block;position:relative;overflow:hidden;text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem);
-  padding:clamp(1.6rem,3.2vw,2.6rem) clamp(1.4rem,3.4vw,2.8rem);border:0;border-radius:var(--r-lg);
-  background:linear-gradient(180deg,color-mix(in srgb,#fff 4%,transparent),transparent 60%);
-  box-shadow:0 46px 92px -50px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.1),inset 0 -34px 60px -44px rgba(0,0,0,.55)}
+.trade-quotes{display:block;text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem);
+  padding:clamp(1.6rem,3.2vw,2.6rem) clamp(1.4rem,3.4vw,2.8rem)}
 .trade-quote{display:block;margin:.35rem auto 0;padding:0;border:0;background:none;border-radius:0;white-space:normal;max-width:52ch;
   font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.9rem,1.7vw,1.05rem);
   line-height:1.45;letter-spacing:.01em;word-spacing:.02em;color:var(--weiss);text-transform:none;text-shadow:0 1px 10px rgba(0,0,0,.5)}
 .member .portrait,.homage-portrait{border:0;box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--accent,var(--gold)) 22%,transparent)}
-.library::after,.divider::before,#trade h2:not(.sol-title)::after,#stuff h2:not(.sol-title)::after,#news h2:not(.sol-title)::after{animation:shelfPulse 6.5s ease-in-out infinite}
-@keyframes shelfPulse{0%,100%{opacity:.9}50%{opacity:1}}
 .trade-quote::before{display:none}
 .trade-quote cite{display:block;margin:.6rem 0 0;font-style:italic;color:var(--accent,var(--gold));white-space:nowrap;font-size:.85em;letter-spacing:.08em}
 .divider{position:relative;height:1px;width:min(760px,86%);margin:clamp(4.5rem,9vw,7.5rem) auto}
 .divider::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;transform:translateY(-50%);
   background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent,var(--gold)) 38%,transparent) 50%,transparent)}
-@media(prefers-reduced-motion:reduce){.cur{display:none}}.ql{opacity:1}
+@media(prefers-reduced-motion:reduce){.cur{display:none}}
 .topvid video,.landing .stage video{animation:kenburns 44s ease-in-out infinite alternate}
 @keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.1) translate(1.5%,-1.5%)}}
 .perf{position:relative;width:100%;height:100%;min-height:300px;display:flex;flex-direction:column;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 12%,var(--line));border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);padding:1rem 1.1rem .8rem}
 .perf-top{display:flex;justify-content:flex-end;align-items:center;margin-bottom:.5rem}
 .sol-meta{margin:.15rem 0 .55rem;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:color-mix(in srgb,var(--silber) 72%,var(--muted))}
-.fresh-ok{animation:freshPulse 2.6s ease-in-out infinite}
 .perf-leg{display:flex;align-items:center;gap:.45rem;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .perf-leg i{display:inline-block;width:14px;height:2px;border-radius:2px;background:var(--gruen)}
 .perf-leg .lg-b{background:color-mix(in srgb,var(--silber) 80%,transparent)}
@@ -723,8 +708,6 @@ footer{position:relative;z-index:1}
 .markets-legal .linklike{background:none;border:0;padding:0;font:inherit;cursor:pointer}
 .fresh-ok{color:var(--gruen)}
 .fresh-stale{color:var(--gold)}
-@media(prefers-reduced-motion:no-preference){.fresh-ok{animation:freshPulse 2.6s ease-in-out infinite}}
-@keyframes freshPulse{0%,100%{opacity:1}50%{opacity:.55}}
 @media(max-width:640px){.an-grid{grid-template-columns:1fr}}
 /* ── mobile: mehr lesebreite, keine mikroschrift ── */
 @media(max-width:640px){
@@ -813,7 +796,7 @@ footer{position:relative;z-index:1}
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--bronze)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
-    <div class="trade-quotes"><p class="trade-quote keepcase"><span class="ql" style="--i:0">A</span><span class="ql" style="--i:1">l</span><span class="ql" style="--i:2">l</span> <span class="ql" style="--i:3">t</span><span class="ql" style="--i:4">r</span><span class="ql" style="--i:5">a</span><span class="ql" style="--i:6">d</span><span class="ql" style="--i:7">i</span><span class="ql" style="--i:8">n</span><span class="ql" style="--i:9">g</span> <span class="ql" style="--i:10">i</span><span class="ql" style="--i:11">s</span> <span class="ql" style="--i:12">u</span><span class="ql" style="--i:13">l</span><span class="ql" style="--i:14">t</span><span class="ql" style="--i:15">i</span><span class="ql" style="--i:16">m</span><span class="ql" style="--i:17">a</span><span class="ql" style="--i:18">t</span><span class="ql" style="--i:19">e</span><span class="ql" style="--i:20">l</span><span class="ql" style="--i:21">y</span> <span class="ql" style="--i:22">d</span><span class="ql" style="--i:23">i</span><span class="ql" style="--i:24">s</span><span class="ql" style="--i:25">c</span><span class="ql" style="--i:26">r</span><span class="ql" style="--i:27">e</span><span class="ql" style="--i:28">t</span><span class="ql" style="--i:29">i</span><span class="ql" style="--i:30">o</span><span class="ql" style="--i:31">n</span><span class="ql" style="--i:32">a</span><span class="ql" style="--i:33">r</span><span class="ql" style="--i:34">y</span><span class="ql" style="--i:35">.</span> <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions">
+    <div class="trade-quotes"><p class="trade-quote keepcase">All trading is ultimately discretionary. <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
