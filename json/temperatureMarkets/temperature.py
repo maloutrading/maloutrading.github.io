@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 UA = {'User-Agent': 'Mozilla/5.0'}
-YEAR_MS = 365.25 * 86400 * 1000
 
 MARKETS = [
     ('^OVX', 'OVX · oil vol'), ('^MOVE', 'MOVE · rates vol'), ('^VIX', 'VIX · equity vol'),
