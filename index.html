@@ -314,6 +314,15 @@ picture{display:contents}
 #sol-r-algo:checked ~ .sol-body .sol-p-algo{display:flex}
 @keyframes solfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media(max-width:640px){.sol-toggle{width:auto;max-width:17rem;flex-wrap:wrap;justify-content:center;border-radius:var(--r-md)}.sol-btn{padding:.6rem 1.05rem;font-size:.88rem}}
+.stuff-toggle{position:relative;max-width:1120px;margin-inline:auto}
+#sol-r-articles:checked ~ .sol-toggle label[for="sol-r-articles"],
+#sol-r-temp:checked ~ .sol-toggle label[for="sol-r-temp"]{color:var(--ink);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent,var(--gold)) 26%,var(--card)),color-mix(in srgb,var(--accent,var(--gold)) 16%,var(--card)));
+  box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 6px -3px rgba(0,0,0,.3)}
+#sol-r-articles:checked ~ .sol-toggle label[for="sol-r-articles"] .sol-dot,
+#sol-r-temp:checked ~ .sol-toggle label[for="sol-r-temp"] .sol-dot{opacity:1;background:var(--accent,var(--gold))}
+#sol-r-articles:checked ~ .sol-body .sol-p-articles{display:flex}
+#sol-r-temp:checked ~ .sol-body .sol-p-temp{display:flex}
 .sol-two{display:flex;flex-direction:column;gap:clamp(2rem,3.6vw,3rem);width:100%}
 .sol-chart{border:1px solid color-mix(in srgb,var(--pcol) 42%,transparent);border-radius:var(--r-sm);overflow:hidden;background:color-mix(in srgb,var(--card) 50%,transparent);height:clamp(230px,30vw,300px);display:flex;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 2px 34px -22px color-mix(in srgb,var(--pcol) 55%,transparent)}
 .sol-chart iframe{width:100%;height:100%;border:0;display:block}
@@ -378,6 +387,30 @@ picture{display:contents}
 .stuff-card:hover{color:var(--ink);border-color:color-mix(in srgb,var(--accent,var(--gold)) 55%,transparent);transform:translateY(-3px);box-shadow:0 26px 52px -34px rgba(0,0,0,.8)}
 .stuff-head{font-family:var(--sans);font-weight:600;font-size:1.12rem;line-height:1.32;letter-spacing:-.01em;margin:0 0 .8rem}
 .stuff-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted);margin:0}
+.temp-tiles{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem}
+.temp-tile{flex:1 1 160px;border:1px solid var(--line);border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 55%,transparent);padding:1rem 1.1rem}
+.temp-label{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.temp-val{font-family:var(--serif);font-size:1.6rem;color:var(--ink);margin-right:.5rem}
+.temp-delta{font-size:.78rem}.temp-delta.up{color:var(--gruen)}.temp-delta.dn{color:var(--ab)}
+.temp-spark{display:block;width:100%;height:32px;margin-top:.4rem}
+.temp-card{border:1px solid var(--line);border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 45%,transparent);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
+.temp-card h4{margin:0 0 .3rem;font-family:var(--sans);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,var(--gold))}
+.temp-sub{margin:0 0 1rem;font-size:.72rem;color:var(--muted)}
+.temp-sub2{font-size:.72rem;letter-spacing:.04em;color:var(--accent,var(--gold));margin:1.1rem 0 .2rem}
+.temp-svg{width:100%;height:190px}
+.temp-mkt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem}
+.temp-mkt{border:1px solid var(--line);border-radius:var(--r-sm);padding:.7rem .8rem;background:color-mix(in srgb,var(--card) 40%,transparent)}
+.temp-mkt-name{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.temp-mkt-val{font-family:var(--serif);font-size:1.15rem;color:var(--ink);margin:.15rem 0 .3rem}
+.temp-pred-row{display:flex;padding:.6rem 0;border-bottom:1px solid var(--line);gap:.8rem;align-items:center}
+.temp-pred-row:last-child{border-bottom:none}
+.temp-pred-q{flex:1 1 0;font-size:.86rem;color:var(--ink)}
+.temp-pred-meta{font-size:.64rem;color:var(--muted);margin-top:.15rem}
+.temp-pred-bar{flex:0 0 140px;height:8px;border:1px solid var(--line);border-radius:3px;background:var(--card);overflow:hidden}
+.temp-pred-bar i{display:block;height:100%;background:var(--accent,var(--gold))}
+.temp-pred-p{flex:0 0 46px;text-align:right;font-family:var(--serif);color:var(--ink)}
+.temp-stale{font-size:.7rem;color:var(--muted);margin-top:.4rem}
+@media(max-width:640px){.temp-pred-bar{flex-basis:80px}}
 .mag-claim{font-family:var(--serif);font-style:italic;font-size:clamp(1.12rem,2.2vw,1.32rem);line-height:1.5;color:var(--ink);margin:0;text-transform:none}
 .dl-box{display:flex;align-items:center;gap:1.1rem;margin:clamp(1.8rem,3.4vw,2.6rem) auto 0;max-width:420px;
   padding:1.1rem 1.4rem;border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 34%,var(--line));border-radius:var(--r-sm);
@@ -745,6 +778,13 @@ footer{position:relative;z-index:1}
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--ab)"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
 
+    <div class="stuff-toggle">
+      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-articles" checked>
+      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-temp">
+      <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn keepcase" for="sol-r-temp"><span class="sol-dot"></span>temperature</label></div>
+      <div class="sol-body">
+        <div class="sol-panel sol-p-articles">
+
     <div class="stuff-group">
       <span class="stuff-label keepcase">finanzwelt &middot; guest columns</span>
       <div class="stuff-grid">
@@ -770,6 +810,20 @@ footer{position:relative;z-index:1}
         <a class="stuff-card" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta keepcase">anlegerplus &middot; 06/2025</p></a>
         <a class="stuff-card" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta keepcase">anlegerplus &middot; 09/2024</p></a>
         <a class="stuff-card" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2024</p></a>
+      </div>
+    </div>
+
+        </div>
+        <div class="sol-panel sol-p-temp">
+          <div class="temp-tiles" id="tempTiles"></div>
+          <div class="temp-card"><h4 class="keepcase">geopolitical risk (GPR)</h4><p class="temp-sub keepcase">Caldara/Iacoviello &middot; newspaper text analysis, daily &middot; 5 years</p><svg class="temp-svg" id="tempGprSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg></div>
+          <div class="temp-card"><h4 class="keepcase">economic policy uncertainty (US)</h4><p class="temp-sub keepcase">Baker/Bloom/Davis &middot; 30-day mean, 2 years</p><svg class="temp-svg" id="tempEpuSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg></div>
+          <div class="temp-card"><h4 class="keepcase">market-implied prices</h4><p class="temp-sub keepcase">volatility &amp; risk assets, 1 year &mdash; prices, not opinions</p><div class="temp-mkt-grid" id="tempMktGrid"></div></div>
+          <div class="temp-card"><h4 class="keepcase">prediction markets</h4><p class="temp-sub keepcase">Polymarket geopolitics by 24h volume &middot; implied yes-probability</p><div id="tempPoly"></div>
+            <div class="temp-sub2 keepcase" id="tempKalshiLabel" style="display:none">Kalshi &mdash; CFTC-regulated &middot; supplementary cross-check</div><div id="tempKalshi"></div>
+          </div>
+          <p class="temp-stale keepcase" id="tempUpdated"></p>
+        </div>
       </div>
     </div>
   </div>

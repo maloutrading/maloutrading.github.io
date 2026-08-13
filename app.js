@@ -429,3 +429,106 @@ document.addEventListener('click', e => {
   row.classList.add('loaded');
   row.replaceChildren(f);
 });
+
+/* ═══════════════ stuff · temperature — global risk read, lean subset ═══════════════ */
+
+function sparkPath(vals){
+  const w = 100, h = 32, pad = 1;
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const X = i => pad + i / (vals.length - 1) * (w - 2 * pad);
+  const Y = v => h - pad - (hi > lo ? (v - lo) / (hi - lo) : .5) * (h - 2 * pad);
+  return vals.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+}
+function sparkSvg(vals){
+  if (!Array.isArray(vals) || vals.length < 2) return '';
+  return '<svg class="temp-spark" viewBox="0 0 100 32" preserveAspectRatio="none"><path d="' + sparkPath(vals) +
+    '" fill="none" stroke="' + cv('--flieder') + '" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>';
+}
+function tempTile(label, valueStr, deltaPct, series){
+  const badge = (typeof deltaPct === 'number' && isFinite(deltaPct))
+    ? '<span class="temp-delta ' + (deltaPct >= 0 ? 'up' : 'dn') + '">' + (deltaPct >= 0 ? '▲' : '▼') + ' ' + Math.abs(deltaPct).toFixed(1) + '%</span>'
+    : '<span class="temp-delta" style="color:var(--muted)">–</span>';
+  return '<div class="temp-tile"><span class="temp-label keepcase">' + escapeHtml(label) + '</span><span class="temp-val">' + valueStr + '</span>' +
+    badge + sparkSvg(series) + '</div>';
+}
+function tempChart(svg, pts, cols){
+  if (!svg || !Array.isArray(pts) || pts.length < 2) return;
+  const W = 600, H = 220, pad = 6;
+  const t0 = pts[0][0], t1 = pts[pts.length - 1][0];
+  const allVals = cols.flatMap(c => pts.map(p => p[c]));
+  let y0 = Math.min(...allVals), y1 = Math.max(...allVals);
+  if (y0 === y1){ y0 -= 1; y1 += 1; }
+  const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : 0) * (W - 2 * pad);
+  const Y = v => H - pad - (v - y0) / (y1 - y0) * (H - 2 * pad);
+  const path = c => pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[c]).toFixed(1)).join(' ');
+  const colors = [cv('--flieder'), cv('--silber')];
+  svg.innerHTML = cols.map((c, i) => '<path d="' + path(c) + '" fill="none" stroke="' + colors[i % colors.length] +
+    '" stroke-width="' + (i === 0 ? 1.4 : 2) + '" stroke-opacity="' + (i === 0 ? .55 : 1) +
+    '" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>').join('');
+}
+function tempMktCard(m){
+  const vals = (m.series || []).map(p => p[1]);
+  if (vals.length < 2) return '';
+  const last = vals[vals.length - 1], prev = vals[Math.max(0, vals.length - 22)];
+  const chg = prev ? (last / prev - 1) * 100 : null;
+  const badge = (typeof chg === 'number' && isFinite(chg))
+    ? '<span class="temp-delta ' + (chg >= 0 ? 'up' : 'dn') + '">' + (chg >= 0 ? '▲' : '▼') + ' ' + Math.abs(chg).toFixed(1) + '%</span>' : '';
+  return '<div class="temp-mkt"><div class="temp-mkt-name keepcase">' + escapeHtml(m.name) + '</div>' +
+    '<div class="temp-mkt-val">' + last.toFixed(2) + '</div>' + sparkSvg(vals.slice(-90)) + badge + '</div>';
+}
+function tempPredRows(list){
+  if (!Array.isArray(list) || !list.length) return svgEmpty('no data');
+  return list.map(m => {
+    const pct = Math.round((m.p || 0) * 100);
+    let meta = '24h-vol $' + Math.round(m.vol || 0).toLocaleString('en-US');
+    const end = m.end && new Date(m.end);
+    if (end && !isNaN(end)) meta += ' · ends ' + end.toISOString().slice(0, 10);
+    const q = escapeHtml(m.question || m.title || '');
+    return '<div class="temp-pred-row"><div style="flex:1 1 0"><div class="temp-pred-q">' + q + '</div>' +
+      '<div class="temp-pred-meta">' + meta + '</div></div>' +
+      '<div class="temp-pred-bar"><i style="width:' + Math.max(2, pct) + '%"></i></div>' +
+      '<div class="temp-pred-p">' + pct + '%</div></div>';
+  }).join('');
+}
+function renderTemperature(d){
+  const tiles = document.getElementById('tempTiles');
+  if (tiles){
+    let html = '';
+    if (Array.isArray(d.gpr) && d.gpr.length){
+      const last = d.gpr[d.gpr.length - 1], delta = last[2] ? (last[1] / last[2] - 1) * 100 : null;
+      html += tempTile('GPR index', last[1].toFixed(0), delta, d.gpr.slice(-90).map(p => p[1]));
+    }
+    if (Array.isArray(d.epu) && d.epu.length){
+      const arr = d.epu, last = arr[arr.length - 1][1], prev = arr[Math.max(0, arr.length - 31)][1];
+      html += tempTile('policy uncertainty', last.toFixed(0), prev ? (last / prev - 1) * 100 : null, arr.slice(-90).map(p => p[1]));
+    }
+    const vix = (d.markets || []).find(m => m.key === '^VIX');
+    if (vix && vix.series.length > 1){
+      const vals = vix.series.map(p => p[1]), last = vals[vals.length - 1], prev = vals[Math.max(0, vals.length - 22)];
+      html += tempTile('VIX', last.toFixed(1), prev ? (last / prev - 1) * 100 : null, vals.slice(-90));
+    }
+    tiles.innerHTML = html || svgEmpty('live data unavailable — check back shortly');
+  }
+  const gprSvg = document.getElementById('tempGprSvg');
+  if (gprSvg){ if (Array.isArray(d.gpr) && d.gpr.length) tempChart(gprSvg, d.gpr, [1, 2]); else gprSvg.outerHTML = svgEmpty('no data'); }
+  const epuSvg = document.getElementById('tempEpuSvg');
+  if (epuSvg){ if (Array.isArray(d.epu) && d.epu.length) tempChart(epuSvg, d.epu, [1]); else epuSvg.outerHTML = svgEmpty('no data'); }
+  const mktGrid = document.getElementById('tempMktGrid');
+  if (mktGrid) mktGrid.innerHTML = (d.markets || []).map(tempMktCard).join('') || svgEmpty('no data');
+  const poly = document.getElementById('tempPoly');
+  if (poly) poly.innerHTML = tempPredRows(d.polymarket);
+  const kalshiLabel = document.getElementById('tempKalshiLabel'), kalshi = document.getElementById('tempKalshi');
+  if (Array.isArray(d.kalshi) && d.kalshi.length){
+    if (kalshiLabel) kalshiLabel.style.display = 'block';
+    if (kalshi) kalshi.innerHTML = tempPredRows(d.kalshi);
+  }
+  const upd = document.getElementById('tempUpdated');
+  if (upd) upd.textContent = d.updated ? 'updated ' + fmtAge(d.updated) : '';
+}
+fetchT('json/temperatureMarkets/temperature.json?' + Date.now(), 10000)
+  .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
+  .then(renderTemperature)
+  .catch(() => {
+    const tiles = document.getElementById('tempTiles');
+    if (tiles) tiles.innerHTML = svgEmpty('live data unavailable — check back shortly');
+  });
