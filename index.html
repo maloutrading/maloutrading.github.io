@@ -10,7 +10,7 @@
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312163C'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23E9E4D4' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; frame-src 'none'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; frame-src 'none'; connect-src 'self' https://api.open-meteo.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
 <link rel="preload" href="fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
@@ -451,6 +451,11 @@ footer{position:relative;z-index:1}
   color-mix(in srgb,var(--marine) 58%,transparent),color-mix(in srgb,var(--marine) 80%,transparent))}
 #team .wrap{position:relative;z-index:1}
 
+.wx{display:inline-block;margin:1.8rem auto 0;font-weight:300;color:var(--holz);font-size:.84rem;letter-spacing:.22em;
+  padding:.34rem .95rem;border:1px solid color-mix(in srgb,var(--holz) 34%,var(--line));border-radius:999px;
+  background:color-mix(in srgb,var(--holz) 8%,transparent)}
+.wx[hidden]{display:none}
+
 .trade-quotes{display:block;position:relative;overflow:hidden;text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem);
   padding:clamp(1.6rem,3.2vw,2.6rem) clamp(1.4rem,3.4vw,2.8rem);border:0;border-radius:var(--r-lg);
   background:linear-gradient(180deg,color-mix(in srgb,#fff 4%,transparent),transparent 60%);
@@ -778,7 +783,7 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--holz)"><h2 class="rib-title keepcase">team</h2><p class="rib-lead">we make code, designs &amp; investments</p><p class="rib-lead rib-est keepcase">malou trading - est. 2024</p></div>
+    <div class="rib-intro" style="--accent:var(--holz)"><h2 class="rib-title keepcase">team</h2><p class="rib-lead">we make code, designs &amp; investments</p><p class="rib-lead rib-est keepcase">malou trading - est. 2024</p><div class="wx keepcase" id="wx" hidden></div></div>
     <div class="member">
       <figure class="portrait noimg">
         <picture>
