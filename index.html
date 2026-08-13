@@ -10,7 +10,7 @@
 <meta property="og:description" content="systematic investing - calm, close to nature, documented.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23100E24'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23EDE8DC' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; frame-src 'none'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; frame-src https://open.spotify.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
 <link rel="preload" href="fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
 @font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
@@ -629,6 +629,15 @@ footer{position:relative;z-index:1}
 #impDe:checked ~ .lang-toggle label[for="impDe"],#impEn:checked ~ .lang-toggle label[for="impEn"],#dsDe:checked ~ .lang-toggle label[for="dsDe"],#dsEn:checked ~ .lang-toggle label[for="dsEn"]{color:var(--ink);border-color:color-mix(in srgb,var(--bronze) 55%,var(--line))}
 .lang-de,.lang-en{display:none}
 #impDe:checked ~ .lang-de,#impEn:checked ~ .lang-en,#dsDe:checked ~ .lang-de,#dsEn:checked ~ .lang-en{display:block}
+.sp-load{margin-left:auto;flex:none;background:transparent;border:1px solid color-mix(in srgb,var(--gruen) 45%,var(--line));color:var(--gruen);border-radius:var(--pill);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;padding:.24rem .8rem;cursor:pointer;transition:.22s var(--ease)}
+.sp-load:hover{background:color-mix(in srgb,var(--gruen) 14%,transparent);color:var(--weiss)}
+.sp-out{flex:none;margin-left:.6rem;color:var(--muted);text-decoration:none;font-size:.95rem;line-height:1}
+.sp-out:hover{color:var(--gruen)}
+.spotify-track iframe{width:100%;height:80px;border:0;border-radius:var(--r-xs);display:block}
+.spotify-track.loaded{display:block;padding:.55rem 0}
+.sp-brand{display:block;margin:1.15rem auto 0;width:88px;opacity:.72;transition:opacity .22s var(--ease)}
+.sp-brand:hover{opacity:1}
+.sp-brand img{display:block;width:100%;height:auto}
 </style>
 </head>
 <body class="home">
@@ -825,21 +834,10 @@ footer{position:relative;z-index:1}
 
     <div class="team-bottom">
       <div class="spotify-box">
-        <a class="spotify-track" href="https://open.spotify.com/track/4gldqByzAgQB2TeOjdvyw4" target="_blank" rel="noopener">
-          <i class="sp-art" aria-hidden="true">♪</i>
-          <span class="t"><b class="keepcase">Afon Colhuw</b><small class="keepcase">Huw Marc Bennett</small></span>
-          <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
-        </a>
-        <a class="spotify-track" href="https://open.spotify.com/track/3usbbmpFd1sx1UQQOGgc8A" target="_blank" rel="noopener">
-          <i class="sp-art" aria-hidden="true">♪</i>
-          <span class="t"><b class="keepcase">Part III</b><small class="keepcase">I Am An Instrument</small></span>
-          <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
-        </a>
-        <a class="spotify-track" href="https://open.spotify.com/track/4wk9PCZ3ZysvUapP8G86aV" target="_blank" rel="noopener">
-          <i class="sp-art" aria-hidden="true">♪</i>
-          <span class="t"><b class="keepcase">Bario Alto</b><small class="keepcase">Thievery Corporation</small></span>
-          <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
-        </a>
+        <div class="spotify-track" data-track="4gldqByzAgQB2TeOjdvyw4"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b class="keepcase">Afon Colhuw</b><small class="keepcase">Huw Marc Bennett</small></span><button class="sp-load keepcase" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/4gldqByzAgQB2TeOjdvyw4" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
+        <div class="spotify-track" data-track="3usbbmpFd1sx1UQQOGgc8A"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b class="keepcase">Part III</b><small class="keepcase">I Am An Instrument</small></span><button class="sp-load keepcase" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/3usbbmpFd1sx1UQQOGgc8A" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
+        <div class="spotify-track" data-track="4wk9PCZ3ZysvUapP8G86aV"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b class="keepcase">Bario Alto</b><small class="keepcase">Thievery Corporation</small></span><button class="sp-load keepcase" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/4wk9PCZ3ZysvUapP8G86aV" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
+<a class="sp-brand" href="https://open.spotify.com" target="_blank" rel="noopener"><img src="pics/spotifyLogo.svg" alt="Spotify" width="88" height="24" loading="lazy"></a>
       </div>
       <figure class="homage">
         <div class="homage-portrait">
@@ -874,8 +872,9 @@ footer{position:relative;z-index:1}
     <h3>Haftung f&uuml;r Inhalte und Links</h3>
     <p>Als Diensteanbieter bin ich f&uuml;r eigene Inhalte auf dieser Website verantwortlich, jedoch
     nicht verpflichtet, &uuml;bermittelte oder gespeicherte fremde Informationen zu &uuml;berwachen.
-    Diese Website bindet keine Dienste Dritter ein; sie verlinkt lediglich auf externe Ziele, f&uuml;r
-    deren Inhalte ausschlie&szlig;lich der jeweilige Anbieter verantwortlich ist.</p>
+    Diese Website bindet Dienste Dritter ausschlie&szlig;lich nach ausdr&uuml;cklichem Klick ein
+    (Spotify-Player) und verlinkt im &Uuml;brigen auf externe Ziele, f&uuml;r deren Inhalte
+    ausschlie&szlig;lich der jeweilige Anbieter verantwortlich ist.</p>
     <h3>Wichtiger Hinweis &ndash; keine Anlageberatung</h3>
     <p>Alle Inhalte dienen ausschlie&szlig;lich der Dokumentation und Information. Die Zahlen bilden
     ein privates Eigenhandelskonto ab; die wikifolio-Zahlen bilden das &ouml;ffentlich notierte
@@ -886,9 +885,9 @@ footer{position:relative;z-index:1}
     kann zum Totalverlust f&uuml;hren.</p>
     <h3>Quellen und Nachweise</h3>
     <p>wikifolio-Zahlen: wikifolio.com. Benchmark S&amp;P 500: Yahoo Finance, serverseitig abgerufen,
-    nie aus Ihrem Browser. Alle &uuml;brigen Zahlen stammen aus meinen eigenen Handelskonten. Musik:
-    ausschlie&szlig;lich Textlinks zu Spotify, kein eingebetteter Player und keine Coverbilder; die
-    Rechte an der Musik liegen bei den jeweiligen Rechteinhabern. Schrift: EB Garamond (SIL Open Font
+    nie aus Ihrem Browser. Alle &uuml;brigen Zahlen stammen aus meinen eigenen Handelskonten. Musik: Titel, K&uuml;nstler und
+    der Player stammen von Spotify und werden erst nach Klick geladen; Spotify-Logo und Marke sind
+    Eigentum der Spotify AB, die Rechte an der Musik liegen bei den jeweiligen Rechteinhabern. Schrift: EB Garamond (SIL Open Font
     License), selbst gehostet.</p>
     </div>
     <div class="lang-en">
@@ -901,9 +900,9 @@ footer{position:relative;z-index:1}
     <p>Benjamin Suermann, address as above.</p>
     <h3>Liability for content and links</h3>
     <p>As a service provider I am responsible for my own content on this website, but not
-    obliged to monitor transmitted or stored third-party information. This website embeds no third-party
-    services; it only links to external destinations, for whose content the respective provider
-    alone is responsible.</p>
+    obliged to monitor transmitted or stored third-party information. This website embeds third-party
+    services only after an explicit click (Spotify player) and otherwise merely links to external
+    destinations, for whose content the respective provider alone is responsible.</p>
     <h3>Important note &ndash; no investment advice</h3>
     <p>All content serves documentation and information only. The figures reflect a private
     proprietary trading account; the wikifolio figures reflect the publicly quoted certificate as
@@ -913,9 +912,9 @@ footer{position:relative;z-index:1}
     highly risky and can lead to total loss.</p>
     <h3>Sources and credits</h3>
     <p>wikifolio figures: wikifolio.com. Benchmark S&amp;P 500: Yahoo Finance, retrieved on the
-    server, never from your browser. All other figures come from my own trading accounts. Music: text
-    links to Spotify only, no embedded player and no cover images; the rights to the music belong to
-    the respective rights holders. Typeface: EB Garamond (SIL Open Font License), self-hosted.</p>
+    server, never from your browser. All other figures come from my own trading accounts. Music: titles, artists and the
+    player come from Spotify and load only after a click; the Spotify logo and brand are property of
+    Spotify AB, the rights to the music belong to the respective rights holders. Typeface: EB Garamond (SIL Open Font License), self-hosted.</p>
     </div>
   </div>
 </section>
@@ -941,9 +940,16 @@ footer{position:relative;z-index:1}
     &Uuml;bermittlung in die USA erfolgen.</p>
     <h3>4. Eingebettete Medien und Dienste</h3>
     <p>S&auml;mtliche Videos, Bilder, Schriften und Kursdaten werden unmittelbar mit der Seite vom
-    Hosting-Server ausgeliefert. Es ist kein Dienst Dritter eingebunden. W&auml;hrend Sie lesen,
-    flie&szlig;en daher keine Daten an Dritte. Musiktitel sind reine Textlinks &ndash; Spotify
-    erf&auml;hrt nichts &uuml;ber Sie, solange Sie keinen davon anklicken.</p>
+    Hosting-Server ausgeliefert. Beim blo&szlig;en Lesen flie&szlig;en keine Daten an Dritte.
+    Einzige Ausnahme ist der Spotify-Player auf der Seite &bdquo;team&ldquo;: Er ist bewusst als
+    Zwei-Klick-L&ouml;sung gebaut. Zun&auml;chst sehen Sie nur eine lokale Kachel; erst wenn Sie auf
+    &bdquo;play&ldquo; klicken, wird der offizielle Player der Spotify AB (Regeringsgatan 19,
+    111 53 Stockholm, Schweden) nachgeladen. Dabei werden Ihre IP-Adresse und Ger&auml;tedaten an
+    Spotify &uuml;bermittelt, und Spotify kann eigene Cookies setzen; eine &Uuml;bermittlung in
+    Drittl&auml;nder ist m&ouml;glich. Rechtsgrundlage ist Ihre durch den Klick erteilte
+    Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, &sect; 25 Abs. 1 TDDDG), die Sie jederzeit f&uuml;r
+    die Zukunft widerrufen k&ouml;nnen, indem Sie die Seite neu laden und nicht erneut klicken. Ohne
+    diesen Klick erf&auml;hrt Spotify nichts &uuml;ber Sie.</p>
     <h3>5. Externe Links</h3>
     <p>Diese Website verlinkt auf externe Angebote (z.&nbsp;B. LinkedIn). F&uuml;r deren Inhalte und
     Datenverarbeitung gelten ausschlie&szlig;lich die Angaben des jeweiligen Anbieters.</p>
@@ -975,9 +981,14 @@ footer{position:relative;z-index:1}
     security (Art. 6(1)(f) GDPR); this may involve a transfer to the USA.</p>
     <h3>4. Embedded media and services</h3>
     <p>All videos, images, fonts and price data are delivered directly with the page from the
-    hosting server. No third-party service is embedded, so no data flows to any third party while
-    you read. Music titles are plain text links &ndash; Spotify learns nothing about you unless you
-    click one.</p>
+    hosting server. While you merely read, no data flows to any third party. The single exception is
+    the Spotify player on the &bdquo;team&ldquo; page, deliberately built as a two-click solution:
+    at first you see only a local tile; the official player of Spotify AB (Regeringsgatan 19,
+    111 53 Stockholm, Sweden) is loaded only once you click &bdquo;play&ldquo;. Your IP address and
+    device data are then transmitted to Spotify, which may set its own cookies; a transfer to third
+    countries is possible. The legal basis is the consent you give by clicking (Art. 6(1)(a) GDPR,
+    &sect; 25(1) TDDDG), which you may withdraw at any time for the future by reloading the page and
+    not clicking again. Without that click, Spotify learns nothing about you.</p>
     <h3>5. External links</h3>
     <p>This website links to external offerings (e.g. LinkedIn). For their content and data
     processing, the information of the respective providers applies exclusively.</p>

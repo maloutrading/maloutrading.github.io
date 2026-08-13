@@ -415,3 +415,17 @@ document.querySelectorAll('.sol-radio').forEach(r => {
     });
   });
 });
+
+// spotify: nothing reaches spotify until the visitor asks for it (two-click)
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.sp-load'); if (!btn) return;
+  const row = btn.closest('.spotify-track'), id = row && row.dataset.track;
+  if (!id || !/^[A-Za-z0-9]+$/.test(id)) return;
+  const f = document.createElement('iframe');
+  f.src = 'https://open.spotify.com/embed/track/' + id;
+  f.allow = 'encrypted-media';
+  f.loading = 'lazy';
+  f.title = 'Spotify player';
+  row.classList.add('loaded');
+  row.replaceChildren(f);
+});
