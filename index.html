@@ -339,17 +339,26 @@ picture{display:contents}
 @media(max-width:640px){.sol-text{grid-template-columns:1fr}.sol-chart{height:230px;margin-inline:0}}
 .sp-art{width:54px;height:54px;border-radius:var(--r-xs);flex:none;display:grid;place-items:center;font-style:normal;font-size:1.35rem;color:color-mix(in srgb,var(--gruen) 70%,var(--weiss));background:linear-gradient(150deg,color-mix(in srgb,var(--smaragd) 26%,var(--card)),color-mix(in srgb,var(--oxblut) 34%,var(--card)));border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
 .spotify-track:hover .sp-art{transform:scale(1.05)}
-.book-cover{display:flex;flex-direction:column;width:100%;max-width:196px;aspect-ratio:2/3;border-radius:2px;overflow:hidden;position:relative;
-  background:linear-gradient(165deg,color-mix(in srgb,var(--smaragd) 14%,var(--card)),color-mix(in srgb,var(--oxblut) 30%,var(--card)) 55%,color-mix(in srgb,var(--marine) 85%,#000));
-  box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--bronze) 22%,transparent);transition:transform .4s ease,box-shadow .4s ease}
-.book-cover::after{content:"";position:absolute;inset:6px;border:1px solid color-mix(in srgb,var(--bronze) 26%,transparent);border-radius:1px;pointer-events:none}
-.bc-band{flex:none;height:7px;background:linear-gradient(180deg,color-mix(in srgb,var(--bronze) 85%,#fff),var(--bronze) 45%,color-mix(in srgb,var(--bronze) 65%,#000))}
-.bc-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;padding:1rem .85rem;text-align:center}
-.bc-title{font-family:var(--serif);font-weight:600;font-size:1.05rem;line-height:1.32;letter-spacing:.04em;text-transform:uppercase;color:var(--weiss)}
-.bc-rule{display:flex;align-items:center;gap:.34rem}
-.bc-rule i{width:13px;height:1px;background:color-mix(in srgb,var(--bronze) 70%,transparent)}
-.bc-rule b{width:4px;height:4px;border-radius:50%;background:var(--bronze);display:block}
-.bc-author{font-family:var(--serif);font-style:italic;font-weight:600;font-size:.86rem;letter-spacing:.03em;color:color-mix(in srgb,var(--bronze) 72%,var(--weiss))}
+.book-cover{--bc-leather:color-mix(in srgb,var(--oxblut) 46%,var(--marine) 54%);
+  --bc-leather-lt:color-mix(in srgb,var(--oxblut) 58%,var(--messing) 14%);
+  --bc-gilt:color-mix(in srgb,var(--messing) 62%,var(--oxblut) 18%);
+  display:flex;flex-direction:row;width:100%;max-width:196px;aspect-ratio:2/3;border-radius:2px;overflow:hidden;position:relative;
+  box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--bc-leather) 65%,transparent);transition:transform .4s ease,box-shadow .4s ease}
+.bc-spine{flex:0 0 17%;position:relative;
+  background:repeating-linear-gradient(180deg,rgba(0,0,0,.4) 0 2px,transparent 2px 21%),
+    linear-gradient(90deg,rgba(255,255,255,.09),transparent 55%),
+    linear-gradient(180deg,var(--bc-leather-lt),var(--bc-leather) 55%,color-mix(in srgb,var(--bc-leather) 74%,#000) 100%);
+  box-shadow:inset -2px 0 4px rgba(0,0,0,.45)}
+.bc-face{flex:1;position:relative;display:flex;flex-direction:column;
+  background:linear-gradient(160deg,var(--bc-leather-lt),var(--bc-leather) 60%,color-mix(in srgb,var(--bc-leather) 78%,#000) 100%)}
+.bc-face::before{content:"";position:absolute;inset:8px;border:1px solid color-mix(in srgb,var(--bc-gilt) 50%,transparent);pointer-events:none}
+.bc-face::after{content:"";position:absolute;inset:11px;border:1px solid color-mix(in srgb,var(--bc-gilt) 24%,transparent);pointer-events:none}
+.bc-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.68rem;padding:1.2rem .8rem;text-align:center}
+.bc-title{font-family:var(--serif);font-weight:600;font-size:1.02rem;line-height:1.32;letter-spacing:.03em;text-transform:uppercase;color:color-mix(in srgb,var(--weiss) 92%,var(--bc-gilt))}
+.bc-rule{display:flex;align-items:center;gap:.4rem}
+.bc-rule i{width:11px;height:1px;background:color-mix(in srgb,var(--bc-gilt) 65%,transparent)}
+.bc-leaf{font-size:.8rem;line-height:1;color:var(--bc-gilt)}
+.bc-author{font-family:var(--serif);font-style:italic;font-weight:600;font-size:.84rem;letter-spacing:.03em;color:color-mix(in srgb,var(--bc-gilt) 65%,var(--weiss))}
 .book:nth-child(1) .book-cover{transform:rotate(-2.6deg)}
 .book:nth-child(2) .book-cover{transform:rotate(1.5deg) translateY(-7px)}
 .book:nth-child(3) .book-cover{transform:rotate(-1deg) translateY(4px)}
@@ -853,7 +862,7 @@ footer{position:relative;z-index:1}
         </figcaption>
       </figure>
     </div>
-    <div class="library"><div class="lib-vid" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="shortVids/cat.mp4" type="video/mp4"></video></div><div class="books"><article class="book"><div class="book-cover"><i class="bc-band" aria-hidden="true"></i><div class="bc-body"><span class="bc-title">Reminiscences<br>of a Stock<br>Operator</span><span class="bc-rule" aria-hidden="true"><i></i><b></b><i></i></span><span class="bc-author">Edwin Lef&egrave;vre</span></div><i class="bc-band" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><i class="bc-band" aria-hidden="true"></i><div class="bc-body"><span class="bc-title">Zen in the<br>Art of<br>Archery</span><span class="bc-rule" aria-hidden="true"><i></i><b></b><i></i></span><span class="bc-author">Eugen Herrigel</span></div><i class="bc-band" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><i class="bc-band" aria-hidden="true"></i><div class="bc-body"><span class="bc-title">The Education<br>of a<br>Speculator</span><span class="bc-rule" aria-hidden="true"><i></i><b></b><i></i></span><span class="bc-author">Victor Niederhoffer</span></div><i class="bc-band" aria-hidden="true"></i></div></article></div></div>
+    <div class="library"><div class="lib-vid" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="shortVids/cat.mp4" type="video/mp4"></video></div><div class="books"><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Reminiscences<br>of a Stock<br>Operator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10086;</span><i></i></span><span class="bc-author">Edwin Lef&egrave;vre</span></div></div></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Zen in the<br>Art of<br>Archery</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10086;</span><i></i></span><span class="bc-author">Eugen Herrigel</span></div></div></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">The Education<br>of a<br>Speculator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10086;</span><i></i></span><span class="bc-author">Victor Niederhoffer</span></div></div></div></article></div></div>
   </div>
 </section>
 
