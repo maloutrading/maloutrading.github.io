@@ -175,26 +175,36 @@ function fmtPlain(v, suf){ return (typeof v === 'number' && isFinite(v)) ? v + (
 function cv(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || name; }
 function svgEmpty(msg){ return '<p class="an-empty">' + msg + '</p>'; }
 
-function rHistSvg(trades){
+function rHistSvg(trades, unit){
+  unit = unit || 'R';
   const rs = (trades || []).map(t => t.r).filter(v => typeof v === 'number' && isFinite(v));
   if (rs.length < 3) return svgEmpty('not enough closed trades yet');
   const lo = Math.min(...rs), hi = Math.max(...rs);
-  const mn = Math.min(lo, -1), mx = Math.max(hi, 1), n = 8, w = (mx - mn) / n || 1;
+  // clip the axis to the bulk of the sample — a single +635% outlier would otherwise flatten every other bar
+  const srt = [...rs].sort((a, b) => a - b), q = p => srt[Math.min(srt.length - 1, Math.floor(p * srt.length))];
+  const mn = Math.min(q(0.03), -1), mx = Math.max(q(0.97), 1);
+  const clipped = mn > lo || mx < hi;
+  // zero is a hard bin edge, so no bar ever mixes winners and losers
+  const nNeg = 4, nPos = 5, n = nNeg + nPos, wNeg = -mn / nNeg, wPos = mx / nPos;
+  const edge = i => i < nNeg ? mn + wNeg * i : wPos * (i - nNeg);
   const bins = new Array(n).fill(0);
-  rs.forEach(v => { let i = Math.floor((v - mn) / w); if (i >= n) i = n - 1; if (i < 0) i = 0; bins[i]++; });
+  rs.forEach(v => {
+    const i = v <= 0 ? Math.min(nNeg - 1, Math.floor((v - mn) / wNeg)) : nNeg + Math.floor(v / wPos);
+    bins[Math.max(0, Math.min(n - 1, i))]++;
+  });
   const maxC = Math.max(...bins, 1);
   const avg = rs.reduce((a, b) => a + b, 0) / rs.length;
   const wins = rs.filter(v => v > 0).length;
   const bars = bins.map((c, i) => {
-    const a = mn + w * i, b = a + w;
-    return '<i class="rh-col ' + (a + w / 2 >= 0 ? 'up' : 'dn') + '" title="' + a.toFixed(2) + 'R to ' + b.toFixed(2) + 'R · ' + c + ' trades">' +
+    const a = edge(i), b = i + 1 === n ? mx : edge(i + 1);
+    return '<i class="rh-col ' + (i < nNeg ? 'dn' : 'up') + '" title="' + a.toFixed(1) + unit + ' to ' + b.toFixed(1) + unit + ' · ' + c + ' trades">' +
       '<b>' + (c || '') + '</b><u style="height:' + (c / maxC * 100).toFixed(1) + '%"></u></i>';
   }).join('');
-  const zeroPct = ((0 - mn) / (mx - mn || 1)) * 100;
+  const zeroPct = nNeg / n * 100;
   return '<div class="rh"><div class="rh-bars"><em class="rh-zero" style="left:' + zeroPct.toFixed(1) + '%"></em>' + bars + '</div>' +
-    '<div class="rh-axis"><span>' + mn.toFixed(1) + 'R</span><span class="rh-zero-tag" style="left:' + zeroPct.toFixed(1) + '%">0</span><span>+' + mx.toFixed(1) + 'R</span></div>' +
-    '<div class="rh-foot"><span><b>' + rs.length + '</b> trades</span><span><b class="' + (avg >= 0 ? 'up' : 'dn') + '">' + (avg >= 0 ? '+' : '') + avg.toFixed(2) + 'R</b> avg</span>' +
-    '<span><b class="up">+' + hi.toFixed(2) + 'R</b> best</span><span><b class="dn">' + lo.toFixed(2) + 'R</b> worst</span>' +
+    '<div class="rh-axis"><span>' + (clipped ? '≤' : '') + mn.toFixed(1) + unit + '</span><span class="rh-zero-tag" style="left:' + zeroPct.toFixed(1) + '%">0</span><span>' + (clipped ? '≥+' : '+') + mx.toFixed(1) + unit + '</span></div>' +
+    '<div class="rh-foot"><span><b>' + rs.length + '</b> trades</span><span><b class="' + (avg >= 0 ? 'up' : 'dn') + '">' + (avg >= 0 ? '+' : '') + avg.toFixed(2) + unit + '</b> avg</span>' +
+    '<span><b class="up">+' + hi.toFixed(2) + unit + '</b> best</span><span><b class="dn">' + lo.toFixed(2) + unit + '</b> worst</span>' +
     '<span><b>' + wins + '</b> / ' + (rs.length - wins) + ' win&nbsp;·&nbsp;loss</span></div></div>';
 }
 
@@ -216,10 +226,86 @@ function heatGrid(eqSeries){
   return '<div class="heat-grid">' + cells + '</div>';
 }
 
+// underwater curve: every day spent below the previous high — the honest shape of a long track record
+function ddSvg(pts){
+  const s = (pts || []).filter(p => Array.isArray(p) && isFinite(p[0]) && isFinite(p[1]) && p[1] <= 0);
+  if (s.length < 2) return svgEmpty('not enough history yet');
+  const W = 300, H = 120, pad = 5, lo = Math.min(...s.map(p => p[1]), -1);
+  const t0 = s[0][0], t1 = s[s.length - 1][0];
+  const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : 0) * (W - 2 * pad);
+  const Y = v => pad + (v / lo) * (H - 2 * pad);
+  const line = s.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
+  const worst = s.reduce((a, p) => p[1] < a[1] ? p : a);
+  const now = s[s.length - 1][1];
+  return '<div class="rw"><div class="rw-nums"><span><b class="dn">' + lo.toFixed(1) + '%</b>deepest</span>' +
+    '<span><b class="' + (now < -0.05 ? 'dn' : 'up') + '">' + now.toFixed(1) + '%</b>today</span>' +
+    '<span><b>' + new Date(worst[0]).toISOString().slice(0, 7) + '</b>trough</span></div>' +
+    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg">' +
+    '<path d="M' + X(t0).toFixed(1) + ' ' + pad + ' ' + line.slice(1) + ' L' + X(t1).toFixed(1) + ' ' + pad + ' Z" fill="' + cv('--holz') + '" fill-opacity=".2"/>' +
+    '<path d="' + line + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
+    '<i class="rw-t" style="top:0">0%</i><i class="rw-t" style="bottom:0">' + lo.toFixed(0) + '%</i></div></div>';
+}
+
+// month x year grid — the standard way a multi-year track record is read
+function monthGrid(rows){
+  const r = (rows || []).filter(x => Array.isArray(x) && x.length === 3 && isFinite(x[2]));
+  if (r.length < 2) return svgEmpty('not enough history yet');
+  const years = [...new Set(r.map(x => x[0]))].sort();
+  const val = new Map(r.map(x => [x[0] + '-' + x[1], x[2]]));
+  const mx = Math.max(...r.map(x => Math.abs(x[2])), 1);
+  const names = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  const cell = v => {
+    if (typeof v !== 'number') return '<i class="mg-cell mg-void"></i>';
+    const tone = v >= 0 ? cv('--gruen') : cv('--holz');
+    return '<i class="mg-cell" style="background:color-mix(in srgb,' + tone + ' ' +
+      (18 + Math.min(1, Math.abs(v) / mx) * 70).toFixed(0) + '%,var(--card))" title="' + (v >= 0 ? '+' : '') + v.toFixed(1) + '%">' +
+      (v >= 0 ? '+' : '') + v.toFixed(0) + '</i>';
+  };
+  const head = '<i class="mg-lab"></i>' + names.map(n => '<i class="mg-lab">' + n + '</i>').join('') + '<i class="mg-lab mg-tot">year</i>';
+  const body = years.map(y => {
+    const ms = names.map((_, i) => val.get(y + '-' + (i + 1)));
+    const tot = (ms.filter(v => typeof v === 'number').reduce((a, v) => a * (1 + v / 100), 1) - 1) * 100;
+    return '<i class="mg-lab">' + y + '</i>' + ms.map(cell).join('') +
+      '<i class="mg-tot ' + (tot >= 0 ? 'up' : 'dn') + '">' + (tot >= 0 ? '+' : '') + tot.toFixed(0) + '</i>';
+  }).join('');
+  return '<div class="mg">' + head + body + '</div>';
+}
+
+// the principle made measurable: winners are held, losers are cut
+function holdSvg(trades){
+  const t = (trades || []).filter(x => typeof x.hold === 'number' && isFinite(x.hold) && typeof x.r === 'number');
+  if (t.length < 6) return svgEmpty('not enough closed trades yet');
+  const med = v => { const s = [...v].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]; };
+  const wins = t.filter(x => x.r > 0).map(x => x.hold), losses = t.filter(x => x.r <= 0).map(x => x.hold);
+  if (!wins.length || !losses.length) return svgEmpty('not enough closed trades yet');
+  const mw = med(wins), ml = med(losses), mx = Math.max(mw, ml, 1);
+  const bar = (label, v, n, cls) => '<div class="hb-row"><span class="hb-lab">' + label + '</span>' +
+    '<span class="hb-track"><b class="hb-fill ' + cls + '" style="width:' + Math.max(4, v / mx * 100).toFixed(1) + '%"></b></span>' +
+    '<span class="hb-val">' + v + 'd</span><span class="hb-n">' + n + '</span></div>';
+  return '<div class="hb">' + bar('winners', mw, wins.length, 'up') + bar('losers', ml, losses.length, 'dn') +
+    '<p class="hb-foot">median days held &middot; winners run ' + (ml > 0 ? (mw / ml).toFixed(1) + '&times;' : '') + ' longer than losers</p></div>';
+}
+
+function tradeStatsCard(s){
+  const num = (v, suf, signed) => typeof v === 'number' && isFinite(v)
+    ? {txt: (signed && v > 0 ? '+' : '') + v + (suf || ''), cls: signed ? (v > 0 ? 'up' : v < 0 ? 'dn' : '') : ''} : null;
+  const streak = (typeof s.streak_win === 'number' && typeof s.streak_loss === 'number')
+    ? {txt: s.streak_win + ' / ' + s.streak_loss, cls: ''} : null;
+  const cells = [
+    ['trades', num(s.trades)], ['win rate', num(s.win_rate_pct, '%')], ['payoff', num(s.payoff, 'x')],
+    ['avg win', num(s.avg_win_pct, '%', true)], ['avg loss', num(s.avg_loss_pct, '%', true)],
+    ['stop exits', num(s.stop_share_pct, '%')], ['sharpe', num(s.sharpe)], ['sortino', num(s.sortino)],
+    ['streak w / l', streak],
+  ].filter(c => c[1]);
+  if (!cells.length) return '';
+  return '<div class="an-card"><h5 class="an-h">trade record</h5><div class="tstats">' + cells.map(c =>
+    '<div><b class="' + c[1].cls + '">' + c[1].txt + '</b><span>' + c[0] + '</span></div>').join('') + '</div></div>';
+}
+
 function rollingWinSvg(trades){
   const list = (trades || []).filter(t => typeof t.r === 'number' && isFinite(t.r));
   if (list.length < 6) return svgEmpty('not enough closed trades yet');
-  const win = Math.max(5, Math.min(10, Math.floor(list.length / 2)));
+  const win = Math.max(5, Math.min(50, Math.floor(list.length / 2), Math.max(10, Math.round(list.length / 20))));
   const vals = [];
   for (let i = win - 1; i < list.length; i++) vals.push(list.slice(i - win + 1, i + 1).filter(t => t.r > 0).length / win * 100);
   const now = vals[vals.length - 1], avg = vals.reduce((a, b) => a + b, 0) / vals.length;
@@ -250,10 +336,11 @@ function exposureSvg(exp){
     '<path d="' + path(shorts) + '" fill="none" stroke="var(--holz)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>';
 }
 
-function callout(label, t){
+function callout(label, t, unit){
   if (!t || typeof t.r !== 'number') return '';
+  unit = unit || 'R';
   return '<div class="callout"><span class="callout-label">' + label + '</span><b>' + escapeHtml(t.symbol) + '</b>' +
-    '<span class="callout-r ' + (t.r >= 0 ? 'up' : 'dn') + '">' + (t.r >= 0 ? '+' : '') + t.r.toFixed(2) + 'R</span>' +
+    '<span class="callout-r ' + (t.r >= 0 ? 'up' : 'dn') + '">' + (t.r >= 0 ? '+' : '') + t.r.toFixed(2) + unit + '</span>' +
     '<span class="callout-date">' + escapeHtml(String(t.ts || '').slice(0, 10)) + '</span></div>';
 }
 
@@ -284,32 +371,42 @@ function bookHtml(d){
 }
 
 // recent closed trades = the track record (date · ticker · side · R). R-multiple only, no $ (kept private).
-function tradesHtml(d){
-  const t = Array.isArray(d.trades_detail) ? d.trades_detail.slice(-7).reverse() : [];
+function tradesHtml(d, unit, rows){
+  unit = unit || 'R';
+  const t = Array.isArray(d.trades_detail) ? d.trades_detail.slice(-(rows || 7)).reverse() : [];
   if (!t.length) return '';
-  const rows = t.map(x => {
+  const list = t.map(x => {
     const up = (x.r || 0) >= 0;
     return '<div class="trade-row"><span class="trade-date">' + escapeHtml(String(x.ts || '').slice(5, 10)) + '</span>' +
       '<span class="trade-side ' + (x.side === 'long' ? 'long' : 'short') + '">' + (x.side === 'long' ? 'L' : 'S') + '</span>' +
       '<span class="trade-sym">' + escapeHtml(x.symbol || '') + '</span>' +
-      '<span class="trade-r ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (x.r || 0).toFixed(2) + 'R</span></div>';
+      (typeof x.hold === 'number' ? '<span class="trade-hold">' + x.hold + 'd</span>' : '') +
+      '<span class="trade-r ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (x.r || 0).toFixed(2) + unit + '</span></div>';
   }).join('');
-  return '<div class="an-card trades-card"><h5 class="an-h">recent trades</h5><div class="trade-rows">' + rows + '</div></div>';
+  return '<div class="an-card trades-card"><h5 class="an-h">recent trades</h5><div class="trade-rows">' + list + '</div></div>';
 }
 
-function renderAnalytics(containerId, d){
+function renderAnalytics(containerId, d, opts){
   const el = document.getElementById(containerId); if (!el) return;
+  opts = opts || {};
+  const unit = opts.unit || 'R', showBook = opts.showBook !== false, showExposure = opts.showExposure !== false;
   const s = d.stats || {};
+  const card = (title, html) => '<div class="an-card"><h5 class="an-h">' + title + '</h5>' + html + '</div>';
+  const hasMonths = Array.isArray(d.monthly) && d.monthly.length > 1;
+  const dd = ((d.series || {}).drawdown) || [];
   const calloutHtml = (s.best_trade || s.worst_trade)
-    ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade) + callout('worst trade', s.worst_trade) + '</div>' : '';
+    ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade, unit) + callout('worst trade', s.worst_trade, unit) + '</div>' : '';
+  const months = hasMonths ? '<div class="an-card mg-card"><h5 class="an-h">monthly returns</h5>' + monthGrid(d.monthly) + '</div>' : '';
   const grid = '<div class="an-grid">' +
-    '<div class="an-card"><h5 class="an-h">R-multiple distribution</h5>' + rHistSvg(d.trades_detail) + '</div>' +
-    '<div class="an-card"><h5 class="an-h">daily returns</h5>' + heatGrid((d.series || {}).equity) + '</div>' +
-    '<div class="an-card"><h5 class="an-h">rolling win rate</h5>' + rollingWinSvg(d.trades_detail) + '</div>' +
-    '<div class="an-card"><h5 class="an-h">long / short exposure</h5>' + exposureSvg(d.exposure) + '</div>' + '</div>';
-  const trades = tradesHtml(d);
-  const lead = trades ? '<div class="an-row book-trades">' + bookHtml(d) + trades + '</div>' : bookHtml(d);
-  el.innerHTML = lead + calloutHtml + grid;
+    card((unit === '%' ? 'return' : unit + '-multiple') + ' distribution', rHistSvg(d.trades_detail, unit)) +
+    (hasMonths ? card('drawdown', ddSvg(dd)) : card('daily returns', heatGrid((d.series || {}).equity))) +
+    card('rolling win rate', rollingWinSvg(d.trades_detail)) +
+    (opts.showHold ? card('holding period', holdSvg(d.trades_detail))
+      : showExposure ? card('long / short exposure', exposureSvg(d.exposure)) : '') + '</div>';
+  const trades = tradesHtml(d, unit, opts.tradeRows);
+  const side = showBook ? bookHtml(d) : tradeStatsCard(s);
+  const lead = trades ? '<div class="an-row book-trades">' + side + trades + '</div>' : side;
+  el.innerHTML = lead + calloutHtml + months + grid;
 }
 
 const spxP = fetchT('json/spx.json?' + Date.now(), 8000)
@@ -396,7 +493,7 @@ function mount(P){
         G(P.k + 'PO', fmtPlain(s.payoff, 'x'));
       }
       spxP.then(spx => drawCompare(P, svg, sanitizeSeries((d.series || {}).equity || []), spx));
-      renderAnalytics(P.an, d);
+      renderAnalytics(P.an, d, P);
     })
     .catch(() => {
       const an = document.getElementById(P.an);
@@ -405,7 +502,8 @@ function mount(P){
     });
 }
 mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
-mount({svg:'wperfSvg', note:'wperfNote', k:'wst', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
+mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
+  unit:'%', showBook:false, showExposure:false, showHold:true, tradeRows:14,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {

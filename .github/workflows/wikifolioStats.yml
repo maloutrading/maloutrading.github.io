@@ -20,6 +20,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: python json/wikifolioMarkets/wikifolio.py
+        env:
+          WIKIFOLIO_EMAIL: ${{ secrets.WIKIFOLIO_EMAIL }}
+          WIKIFOLIO_PASSWORD: ${{ secrets.WIKIFOLIO_PASSWORD }}
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
