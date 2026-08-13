@@ -566,7 +566,8 @@ function renderAnalytics(containerId, d, opts){
   el.innerHTML = lead + calloutHtml + months + grid;
 }
 
-const spxP = fetchT('json/spx.json?' + Date.now(), 8000)
+const bust = Math.floor(Date.now() / 9e5);
+const spxP = fetchT('json/spx.json?' + bust, 8000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
   .then(d => ((d || {}).series || []).filter(p => Array.isArray(p) && isFinite(p[0]) && isFinite(p[1]) && p[1] > 0))
   .catch(() => []);
@@ -626,7 +627,7 @@ function drawCompare(P, svg, eq, spxRaw){
 function mount(P){
   const svg = document.getElementById(P.svg); if (!svg) return;
   const note = P.note ? document.getElementById(P.note) : null;
-  fetchT(P.url + '?' + Date.now(), 8000)
+  fetchT(P.url + '?' + bust, 8000)
     .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
     .then(d => {
       const s = d.stats || {}, G = (id, v) => { const e = document.getElementById(id); if (!e) return;
