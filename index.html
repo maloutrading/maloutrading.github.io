@@ -240,10 +240,6 @@ section.tab.sub h2:not(.sol-title)::after{content:"";display:block;width:4.2rem;
   object-fit:cover;image-rendering:auto}
 #news .topvid video{object-position:center 50%}
 #trade .topvid video{object-position:center 8%}
-.topvid::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,transparent 54%,color-mix(in srgb,var(--marine) 55%,transparent) 80%,var(--marine) 100%);
-  -webkit-mask-image:linear-gradient(to bottom,transparent 56%,#000 90%);mask-image:linear-gradient(to bottom,transparent 56%,#000 90%);
-  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px)}
 .topvid::before{content:"";position:absolute;inset:1.1rem;pointer-events:none;
   border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 55%,transparent)}
 .legal{font-size:1.127rem}
@@ -532,8 +528,6 @@ footer{position:relative;z-index:1}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .tabbg,.landing .stage{-webkit-mask-image:linear-gradient(to bottom,#000 56%,transparent 100%);mask-image:linear-gradient(to bottom,#000 56%,transparent 100%)}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
-.tabbg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,
-  color-mix(in srgb,var(--marine) 10%,transparent),color-mix(in srgb,var(--marine) 16%,transparent))}
 #team .wrap{position:relative;z-index:1}
 
 
@@ -579,14 +573,11 @@ footer{position:relative;z-index:1}
 .sol-vid{order:-2;position:relative;height:clamp(260px,36vw,400px);border-radius:var(--r-sm);overflow:hidden;display:flex;align-items:center;justify-content:center;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 99%);mask-image:linear-gradient(180deg,#000 45%,transparent 99%)}
 .sol-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
 .sol-p-wiki .sol-vid video{transform:scale(1.32);transform-origin:center 6%}
-.sol-vid-tint{position:absolute;inset:0;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--marine) 16%,transparent))}
 @media(max-width:640px){.sol-vid{height:150px}}
 
-.topvid::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,color-mix(in srgb,var(--accent,var(--gold)) 4%,transparent) 82%,color-mix(in srgb,var(--bg) 10%,transparent))}
 
 .lib-vid{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;-webkit-mask-image:radial-gradient(115% 105% at 50% 48%,#000 42%,transparent 88%);mask-image:radial-gradient(115% 105% at 50% 48%,#000 42%,transparent 88%)}
-.lib-vid video{width:100%;height:100%;object-fit:cover;filter:saturate(.45) grayscale(.25) brightness(.92) contrast(1.12)}
-.lib-vid::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 80% at 50% 50%,color-mix(in srgb,var(--marine) 8%,transparent),color-mix(in srgb,var(--marine) 16%,transparent))}
+.lib-vid video{width:100%;height:100%;object-fit:cover;filter:saturate(.45) grayscale(.25) contrast(1.12)}
 .library .books{position:relative;z-index:1}
 
 .sol-card:has(.sol-bullets){display:flex;flex-direction:column;justify-content:center;gap:.85rem}
@@ -816,11 +807,11 @@ footer{position:relative;z-index:1}
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label></div>
 <div class="sol-body">
-<div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/giraffe.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
+<div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/giraffe.mp4" type="video/mp4"></video></div>
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="wperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="wperfNote">live &middot; wikifolio</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>global macro</li><li>discretionary</li><li>long, short, leveraged</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3><p class="sol-meta keepcase">isin de000ls9syp5 &middot; lang &amp; schwarz &middot; live since nov 2020</p></div><div class="perf-stats"><div><b id="wstRet">–</b><span>since inception</span></div><div><b id="wstYr">–</b><span>12 months</span></div><div><b id="wstPa">–</b><span>p.a.</span></div><div><b id="wstDD">–</b><span>max dd</span></div><div><b id="wstVol">–</b><span>volatility</span></div><div><b id="wstCap">–</b><span>invested</span></div></div></div></div></div>
 <div class="an-block" id="wAn"></div></div>
-<div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/moe.mp4" type="video/mp4"></video><i class="sol-vid-tint"></i></div>
+<div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/moe.mp4" type="video/mp4"></video></div>
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Buy strength. Ride the trend. Let the stop decide.</h3><p class="sol-philo-sub keepcase">turtle-style systematic trend following</p></div><p class="sol-philosophy keepcase">Thirty leveraged ETFs, one rule: buy the strongest of the pack the moment it breaks its seven-day high &mdash; at most three positions, each guarded by a stop that only ever tightens. No forecasts, no targets, no opinions: losses are cut small and automatically, winners run until the trend itself ends. The system loses often and small, wins rarely and big &mdash; and when nothing is breaking out, cash is the position.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li>leveraged us etfs</li><li>algorithmic trend following</li><li>long/short</li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-meta keepcase">leveraged etfs &middot; alpaca markets &middot; turtle-style breakout</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div><div class="sol-universe keepcase"><span class="sol-uni-label">universe &middot; 30 leveraged etfs</span><p class="sol-uni-list">TQQQ SOXL UPRO TNA TECL LABU FAS UDOW YINN NUGT BOIL TMF ERX WEBL DPST MSTX</p><span class="sol-uni-label">inverse &middot; short exposure via long positions</span><p class="sol-uni-list">SQQQ SOXS SPXU TZA TECS LABD FAZ SDOW YANG DUST KOLD UVXY TMV ERY</p></div></div></div></div>
 <div class="an-block" id="stAn"></div></div>
