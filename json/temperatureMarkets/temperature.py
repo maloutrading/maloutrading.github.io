@@ -52,7 +52,7 @@ def fetchEpu():
             continue
         rows.append([d, v])
     rows.sort(key=lambda x: x[0])
-    cutoff = datetime.now() - timedelta(days=2 * 365)
+    cutoff = datetime.now() - timedelta(days=5 * 365)
     rows = [r for r in rows if r[0] >= cutoff - timedelta(days=30)]
     pts = []
     for i in range(len(rows)):
@@ -72,6 +72,31 @@ def fetchMarkets():
             pts = [[t * 1000, round(c, 2)] for t, c in zip(r['timestamp'], closes) if isinstance(c, (int, float))]
             if len(pts) > 20:
                 out.append({'key': ticker, 'name': name, 'series': pts})
+        except Exception:
+            continue
+    return out
+
+CHOKEPOINTS = [
+    ('chokepoint6', 'hormuz'), ('chokepoint4', 'bab el-mandeb'), ('chokepoint1', 'suez'),
+    ('chokepoint5', 'malacca'), ('chokepoint11', 'taiwan strait'), ('chokepoint2', 'panama'),
+]
+
+def esriMs(v):
+    return int(v) if isinstance(v, (int, float)) else int(datetime.strptime(v[:10], '%Y-%m-%d').timestamp() * 1000)
+
+def fetchChokepoints():
+    url = ('https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/'
+           'Daily_Chokepoints_Data/FeatureServer/0/query')
+    out = []
+    for pid, name in CHOKEPOINTS:
+        try:
+            feats = json.loads(get(url, {'where': "portid='%s'" % pid, 'outFields': 'date,n_total',
+                                         'orderByFields': 'date DESC', 'resultRecordCount': 420,
+                                         'f': 'json'})).get('features', [])
+            pts = sorted([[esriMs(f['attributes']['date']), round(float(f['attributes']['n_total']), 1)]
+                          for f in feats if f['attributes'].get('n_total') is not None])
+            if len(pts) > 30:
+                out.append({'key': pid, 'name': name, 'series': pts})
         except Exception:
             continue
     return out
@@ -162,6 +187,7 @@ def fetchKalshi():
 
 out = {'updated': int(time.time() * 1000)}
 for key, fn in (('gpr', fetchGpr), ('epu', fetchEpu), ('markets', fetchMarkets),
+                ('chokepoints', fetchChokepoints),
                 ('polymarket', fetchPolymarket), ('kalshi', fetchKalshi)):
     try:
         out[key] = fn()

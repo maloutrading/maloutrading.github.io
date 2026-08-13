@@ -700,91 +700,172 @@ function sparkSvg(vals){
   return '<svg class="temp-spark" viewBox="0 0 100 32" preserveAspectRatio="none"><path d="' + sparkPath(vals) +
     '" fill="none" stroke="' + cv('--flieder') + '" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>';
 }
-function tempTile(label, valueStr, deltaPct, series){
-  const badge = (typeof deltaPct === 'number' && isFinite(deltaPct))
-    ? '<span class="temp-delta ' + (deltaPct >= 0 ? 'up' : 'dn') + '">' + (deltaPct >= 0 ? '▲' : '▼') + ' ' + Math.abs(deltaPct).toFixed(1) + '%</span>'
-    : '<span class="temp-delta" style="color:var(--muted)">–</span>';
-  return '<div class="temp-tile"><span class="temp-label keepcase">' + escapeHtml(label) + '</span><span class="temp-val">' + valueStr + '</span>' +
-    badge + sparkSvg(series) + '</div>';
+const tempEl = id => document.getElementById(id);
+const tempVal = id => (tempEl(id) || {}).value || '';
+const tempData = {};
+
+function tempCut(pts, days){
+  if (!Array.isArray(pts) || !days) return pts || [];
+  const from = pts[pts.length - 1][0] - days * 864e5;
+  return pts.filter(p => p[0] >= from);
 }
-function tempChart(svg, pts, cols){
-  if (!svg || !Array.isArray(pts) || pts.length < 2) return;
-  const W = 600, H = 220, pad = 6;
-  const t0 = pts[0][0], t1 = pts[pts.length - 1][0];
-  const allVals = cols.flatMap(c => pts.map(p => p[c]));
-  let y0 = Math.min(...allVals), y1 = Math.max(...allVals);
-  if (y0 === y1){ y0 -= 1; y1 += 1; }
+function tempSmooth(pts, n){
+  return pts.map((p, i) => {
+    const win = pts.slice(Math.max(0, i - n + 1), i + 1);
+    return [p[0], win.reduce((s, q) => s + q[1], 0) / win.length];
+  });
+}
+function tempPctRank(pts){
+  const sorted = pts.map(p => p[1]).slice().sort((a, b) => a - b);
+  return pts.map(p => {
+    let lo = 0, hi = sorted.length;
+    while (lo < hi){ const m = (lo + hi) >> 1; if (sorted[m] < p[1]) lo = m + 1; else hi = m; }
+    return [p[0], lo / Math.max(1, sorted.length - 1) * 100];
+  });
+}
+function tempOrdinal(n){
+  const t = n % 100, d = n % 10;
+  return n + (t > 10 && t < 20 ? 'th' : d === 1 ? 'st' : d === 2 ? 'nd' : d === 3 ? 'rd' : 'th');
+}
+function tempMedian(vals){
+  const s = vals.slice().sort((a, b) => a - b);
+  return s.length ? s[Math.floor(s.length / 2)] : 0;
+}
+function tempAxis(el, t0, t1){
+  if (!el) return;
+  el.innerHTML = [0, .25, .5, .75, 1].map(f => '<span style="left:' + (f * 100) + '%">' +
+    new Date(t0 + (t1 - t0) * f).toLocaleDateString('en-US', { month: 'short', year: '2-digit' }) + '</span>').join('');
+}
+function tempPlot(svgId, axisId, series){
+  const svg = tempEl(svgId);
+  if (!svg) return;
+  const live = series.filter(s => Array.isArray(s.pts) && s.pts.length > 1);
+  if (!live.length){ svg.innerHTML = ''; tempAxis(tempEl(axisId), Date.now(), Date.now()); return; }
+  const W = 600, H = 220, pad = 10;
+  const t0 = Math.min(...live.map(s => s.pts[0][0])), t1 = Math.max(...live.map(s => s.pts[s.pts.length - 1][0]));
   const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : 0) * (W - 2 * pad);
-  const Y = v => H - pad - (v - y0) / (y1 - y0) * (H - 2 * pad);
-  const path = c => pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[c]).toFixed(1)).join(' ');
-  const colors = [cv('--flieder'), cv('--silber')];
-  svg.innerHTML = cols.map((c, i) => '<path d="' + path(c) + '" fill="none" stroke="' + colors[i % colors.length] +
-    '" stroke-width="' + (i === 0 ? 1.4 : 2) + '" stroke-opacity="' + (i === 0 ? .55 : 1) +
-    '" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>').join('');
+  const grid = [0, .25, .5, .75, 1].map(f => { const y = (pad + f * (H - 2 * pad)).toFixed(1);
+    return '<line x1="0" x2="' + W + '" y1="' + y + '" y2="' + y + '" stroke="' + cv('--line') + '" stroke-opacity=".3" vector-effect="non-scaling-stroke"/>'; }).join('');
+  const body = live.map(s => {
+    const peers = s.group ? live.filter(x => x.group === s.group) : [s];
+    const vals = peers.flatMap(x => x.pts.map(p => p[1]));
+    let lo = Math.min(...vals), hi = Math.max(...vals);
+    const room = (hi - lo) * .07 || 1;
+    lo -= room; hi += room;
+    const Y = v => H - pad - (v - lo) / (hi - lo) * (H - 2 * pad);
+    return '<path d="' + s.pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ') +
+      '" fill="none" stroke="' + s.color + '" stroke-width="' + (s.width || 2) + '" stroke-opacity="' + (s.opacity || 1) +
+      '" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>';
+  }).join('');
+  svg.innerHTML = grid + body;
+  tempAxis(tempEl(axisId), t0, t1);
 }
-function tempMktCard(m){
-  const vals = (m.series || []).map(p => p[1]);
-  if (vals.length < 2) return '';
-  const last = vals[vals.length - 1], prev = vals[Math.max(0, vals.length - 22)];
-  const chg = prev ? (last / prev - 1) * 100 : null;
-  const badge = (typeof chg === 'number' && isFinite(chg))
-    ? '<span class="temp-delta ' + (chg >= 0 ? 'up' : 'dn') + '">' + (chg >= 0 ? '▲' : '▼') + ' ' + Math.abs(chg).toFixed(1) + '%</span>' : '';
-  return '<div class="temp-mkt"><div class="temp-mkt-name keepcase">' + escapeHtml(m.name) + '</div>' +
-    '<div class="temp-mkt-val">' + last.toFixed(2) + '</div>' + sparkSvg(vals.slice(-90)) + badge + '</div>';
+function tempLegend(id, items){
+  const el = tempEl(id);
+  if (el) el.innerHTML = items.map(i => '<span class="temp-leg"><i style="background:' + i.color + ';opacity:' + (i.opacity || 1) + '"></i>' +
+    escapeHtml(i.name) + (i.value ? '<b>' + i.value + '</b>' : '') + '</span>').join('');
 }
-function tempPredRows(list){
-  if (!Array.isArray(list) || !list.length) return svgEmpty('no data');
-  return list.map(m => {
-    const pct = Math.round((m.p || 0) * 100);
-    let meta = '24h-vol $' + Math.round(m.vol || 0).toLocaleString('en-US');
+
+function renderRisk(){
+  const years = +tempVal('tempRiskRange') || 3, pct = tempVal('tempRiskScale') === 'pct';
+  const gpr = tempCut(tempData.gpr, years * 365), epu = tempCut(tempData.epu, years * 365);
+  const col = (pts, c) => pts.map(p => [p[0], p[c]]);
+  const last = pts => pts.length ? pts[pts.length - 1][1] : null;
+  let series = [
+    { name: 'GPR daily', pts: col(gpr, 1), color: cv('--flieder'), width: 1.2, opacity: .4, group: 'gpr' },
+    { name: 'GPR 30-day mean', pts: col(gpr, 2), color: cv('--flieder'), width: 2.2, group: 'gpr' },
+    { name: 'policy uncertainty', pts: col(epu, 1), color: cv('--gold'), width: 2.2, group: 'epu' }
+  ].filter(s => s.pts.length > 1);
+  tempLegend('tempRiskLegend', series.map(s => ({ name: s.name, color: s.color, opacity: s.opacity,
+    value: pct ? tempOrdinal(Math.round(tempPctRank(s.pts)[s.pts.length - 1][1])) : Math.round(last(s.pts)) })));
+  if (pct) series = series.map(s => Object.assign({}, s, { pts: tempPctRank(s.pts), group: 'pct' }));
+  tempPlot('tempRiskSvg', 'tempRiskAxis', series);
+}
+
+function renderGates(){
+  const gates = tempData.chokepoints || [], sel = tempEl('tempGateSel');
+  if (!gates.length){ tempLegend('tempGateLegend', []); tempPlot('tempGateSvg', 'tempGateAxis', []); return; }
+  if (sel && !sel.options.length){
+    sel.innerHTML = '<option value="all">all gates</option>' +
+      gates.map(g => '<option value="' + g.key + '">' + escapeHtml(g.name) + '</option>').join('');
+    sel.value = gates[0].key;
+  }
+  const days = +tempVal('tempGateRange') || 0, pick = tempVal('tempGateSel') || 'all';
+  const pal = [cv('--flieder'), cv('--gold'), cv('--silber'), cv('--gruen'), cv('--ab'), cv('--muted')];
+  const shown = pick === 'all' ? gates : gates.filter(g => g.key === pick);
+  const series = shown.map((g, i) => ({ name: g.name, color: pal[i % pal.length], width: 2,
+    group: pick === 'all' ? 'g' + i : null, pts: tempCut(tempSmooth(g.series, 7), days) }));
+  tempLegend('tempGateLegend', series.map(s => ({ name: s.name, color: s.color,
+    value: s.pts.length ? Math.round(s.pts[s.pts.length - 1][1]) : '' })));
+  tempPlot('tempGateSvg', 'tempGateAxis', series);
+  const stat = tempEl('tempGateStat');
+  if (!stat) return;
+  if (pick === 'all'){ stat.innerHTML = 'each gate scaled to its own range &mdash; shape over level. pick one gate for absolute counts.'; return; }
+  const raw = shown[0].series, recent = raw.slice(-7).reduce((s, p) => s + p[1], 0) / Math.min(7, raw.length);
+  const base = raw.slice(0, Math.max(1, raw.length - 90)).map(p => p[1]).sort((a, b) => a - b);
+  const med = base[Math.floor(base.length / 2)] || 0;
+  const dev = med ? (recent / med - 1) * 100 : 0;
+  stat.innerHTML = '<b>' + recent.toFixed(0) + '</b> ships/day over the last week &middot; <span class="temp-delta ' +
+    (dev >= 0 ? 'up' : 'dn') + '">' + (dev >= 0 ? '▲' : '▼') + ' ' + Math.abs(dev).toFixed(0) + '%</span> versus the ' +
+    med.toFixed(0) + ' ships/day median of the period before.';
+}
+
+function renderMarkets(){
+  const grid = tempEl('tempMktGrid');
+  if (!grid) return;
+  const win = +tempVal('tempMktWin') || 66;
+  const cards = (tempData.markets || []).map(m => {
+    const vals = (m.series || []).map(p => p[1]);
+    if (vals.length < 2) return null;
+    const last = vals[vals.length - 1], prev = vals[Math.max(0, vals.length - 1 - win)];
+    return { m: m, last: last, chg: prev ? (last / prev - 1) * 100 : 0, vals: vals.slice(-win) };
+  }).filter(Boolean);
+  if (tempVal('tempMktSort') === 'mov') cards.sort((a, b) => Math.abs(b.chg) - Math.abs(a.chg));
+  grid.innerHTML = cards.map(c =>
+    '<div class="temp-mkt"><div class="temp-mkt-name keepcase">' + escapeHtml(c.m.name) + '</div>' +
+    '<div class="temp-mkt-val">' + c.last.toFixed(2) + '</div>' + sparkSvg(c.vals) +
+    '<span class="temp-delta ' + (c.chg >= 0 ? 'up' : 'dn') + '">' + (c.chg >= 0 ? '▲' : '▼') + ' ' +
+    Math.abs(c.chg).toFixed(1) + '%</span></div>').join('') || svgEmpty('no data');
+}
+
+function renderPredictions(){
+  const box = tempEl('tempPred');
+  if (!box) return;
+  const src = tempVal('tempPredSrc') || 'all', sort = tempVal('tempPredSort') || 'vol';
+  const tag = (list, venue) => (list || []).map(m => Object.assign({ venue: venue }, m));
+  let rows = src === 'poly' ? tag(tempData.polymarket, 'Polymarket')
+    : src === 'kalshi' ? tag(tempData.kalshi, 'Kalshi')
+    : tag(tempData.polymarket, 'Polymarket').concat(tag(tempData.kalshi, 'Kalshi'));
+  const key = sort === 'p' ? m => m.p || 0 : sort === 'chg' ? m => Math.abs(m.chg || 0) : m => m.vol || 0;
+  rows = rows.sort((a, b) => key(b) - key(a)).slice(0, 12);
+  if (!rows.length){ box.innerHTML = svgEmpty('no data'); return; }
+  box.innerHTML = rows.map(m => {
+    const pct = Math.round((m.p || 0) * 100), chg = (m.chg || 0) * 100;
+    let meta = m.venue + ' · 24h-vol $' + Math.round(m.vol || 0).toLocaleString('en-US');
     const end = m.end && new Date(m.end);
     if (end && !isNaN(end)) meta += ' · ends ' + end.toISOString().slice(0, 10);
-    const q = escapeHtml(m.question || m.title || '');
-    return '<div class="temp-pred-row"><div style="flex:1 1 0"><div class="temp-pred-q">' + q + '</div>' +
-      '<div class="temp-pred-meta">' + meta + '</div></div>' +
+    if (Math.abs(chg) >= .5) meta += ' · <span class="temp-delta ' + (chg >= 0 ? 'up' : 'dn') + '">' +
+      (chg >= 0 ? '▲' : '▼') + ' ' + Math.abs(chg).toFixed(0) + 'pp/24h</span>';
+    return '<div class="temp-pred-row"><div style="flex:1 1 0"><div class="temp-pred-q">' +
+      escapeHtml(m.question || m.title || '') + '</div><div class="temp-pred-meta">' + meta + '</div></div>' +
       '<div class="temp-pred-bar"><i style="width:' + Math.max(2, pct) + '%"></i></div>' +
       '<div class="temp-pred-p">' + pct + '%</div></div>';
   }).join('');
 }
+
 function renderTemperature(d){
-  const tiles = document.getElementById('tempTiles');
-  if (tiles){
-    let html = '';
-    if (Array.isArray(d.gpr) && d.gpr.length){
-      const last = d.gpr[d.gpr.length - 1], delta = last[2] ? (last[1] / last[2] - 1) * 100 : null;
-      html += tempTile('GPR index', last[1].toFixed(0), delta, d.gpr.slice(-90).map(p => p[1]));
-    }
-    if (Array.isArray(d.epu) && d.epu.length){
-      const arr = d.epu, last = arr[arr.length - 1][1], prev = arr[Math.max(0, arr.length - 31)][1];
-      html += tempTile('policy uncertainty', last.toFixed(0), prev ? (last / prev - 1) * 100 : null, arr.slice(-90).map(p => p[1]));
-    }
-    const vix = (d.markets || []).find(m => m.key === '^VIX');
-    if (vix && vix.series.length > 1){
-      const vals = vix.series.map(p => p[1]), last = vals[vals.length - 1], prev = vals[Math.max(0, vals.length - 22)];
-      html += tempTile('VIX', last.toFixed(1), prev ? (last / prev - 1) * 100 : null, vals.slice(-90));
-    }
-    tiles.innerHTML = html || svgEmpty('live data unavailable — check back shortly');
-  }
-  const gprSvg = document.getElementById('tempGprSvg');
-  if (gprSvg){ if (Array.isArray(d.gpr) && d.gpr.length) tempChart(gprSvg, d.gpr, [1, 2]); else gprSvg.outerHTML = svgEmpty('no data'); }
-  const epuSvg = document.getElementById('tempEpuSvg');
-  if (epuSvg){ if (Array.isArray(d.epu) && d.epu.length) tempChart(epuSvg, d.epu, [1]); else epuSvg.outerHTML = svgEmpty('no data'); }
-  const mktGrid = document.getElementById('tempMktGrid');
-  if (mktGrid) mktGrid.innerHTML = (d.markets || []).map(tempMktCard).join('') || svgEmpty('no data');
-  const poly = document.getElementById('tempPoly');
-  if (poly) poly.innerHTML = tempPredRows(d.polymarket);
-  const kalshiLabel = document.getElementById('tempKalshiLabel'), kalshi = document.getElementById('tempKalshi');
-  if (Array.isArray(d.kalshi) && d.kalshi.length){
-    if (kalshiLabel) kalshiLabel.style.display = 'block';
-    if (kalshi) kalshi.innerHTML = tempPredRows(d.kalshi);
-  }
-  const upd = document.getElementById('tempUpdated');
+  Object.assign(tempData, d);
+  renderRisk(); renderGates(); renderMarkets(); renderPredictions();
+  const upd = tempEl('tempUpdated');
   if (upd) upd.textContent = d.updated ? 'updated ' + fmtAge(d.updated) : '';
 }
-fetchT('json/temperatureMarkets/temperature.json?' + Date.now(), 10000)
+[['tempRiskRange', renderRisk], ['tempRiskScale', renderRisk], ['tempGateSel', renderGates], ['tempGateRange', renderGates],
+ ['tempMktWin', renderMarkets], ['tempMktSort', renderMarkets], ['tempPredSrc', renderPredictions], ['tempPredSort', renderPredictions]]
+  .forEach(([id, fn]) => { const el = tempEl(id); if (el) el.addEventListener('change', fn); });
+fetchT('json/temperatureMarkets/temperature.json?' + bust, 10000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
   .then(renderTemperature)
   .catch(() => {
-    const tiles = document.getElementById('tempTiles');
-    if (tiles) tiles.innerHTML = svgEmpty('live data unavailable — check back shortly');
+    const box = tempEl('tempRiskLegend');
+    if (box) box.innerHTML = svgEmpty('live data unavailable — check back shortly');
   });

@@ -403,17 +403,29 @@ picture{display:contents}
 .stuff-card:hover{color:var(--ink);border-color:color-mix(in srgb,var(--accent,var(--gold)) 55%,transparent);transform:translateY(-3px);box-shadow:0 26px 52px -34px rgba(0,0,0,.8)}
 .stuff-head{font-family:var(--sans);font-weight:600;font-size:1.12rem;line-height:1.32;letter-spacing:-.01em;margin:0 0 .8rem}
 .stuff-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted);margin:0}
-.temp-tiles{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem}
-.temp-tile{flex:1 1 160px;border:1px solid var(--line);border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 55%,transparent);padding:1rem 1.1rem}
-.temp-label{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.temp-val{font-family:var(--serif);font-size:1.6rem;color:var(--ink);margin-right:.5rem}
 .temp-delta{font-size:.78rem}.temp-delta.up{color:var(--gruen)}.temp-delta.dn{color:var(--ab)}
+.temp-head{display:flex;gap:1.2rem;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.temp-ctl{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.temp-sel{appearance:none;-webkit-appearance:none;background:color-mix(in srgb,var(--card) 70%,transparent);border:1px solid var(--line);border-radius:var(--r-sm);
+  color:var(--muted);font-size:.68rem;letter-spacing:.06em;padding:.34rem 1.7rem .34rem .65rem;cursor:pointer;transition:color .2s,border-color .2s;
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-position:right .85rem center,right .6rem center;background-size:5px 5px;background-repeat:no-repeat}
+.temp-sel:hover,.temp-sel:focus{color:var(--ink);border-color:var(--accent,var(--gold));outline:none}
+.temp-sel option{background:var(--card);color:var(--ink)}
+.temp-legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin:.2rem 0 .7rem;font-size:.7rem;color:var(--muted)}
+.temp-leg i{display:inline-block;width:15px;height:2px;vertical-align:middle;margin-right:.5rem;border-radius:1px}
+.temp-leg b{font-family:var(--serif);font-size:.95rem;font-weight:400;color:var(--ink);margin-left:.45rem}
+.temp-axis{position:relative;height:1rem;font-size:.6rem;letter-spacing:.05em;color:var(--muted)}
+.temp-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.temp-axis span:first-child{transform:none}.temp-axis span:last-child{transform:translateX(-100%)}
+.temp-src{margin:1rem 0 0;text-align:right;font-size:.58rem;letter-spacing:.05em;color:color-mix(in srgb,var(--muted) 62%,transparent)}
+.temp-stat{font-size:.74rem;color:var(--muted);margin:.7rem 0 0}
+.temp-stat b{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--ink)}
 .temp-spark{display:block;width:100%;height:32px;margin-top:.4rem}
 .temp-card{border:1px solid var(--line);border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 45%,transparent);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
 .temp-card h4{margin:0 0 .3rem;font-family:var(--sans);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,var(--gold))}
 .temp-sub{margin:0 0 1rem;font-size:.72rem;color:var(--muted)}
-.temp-sub2{font-size:.72rem;letter-spacing:.04em;color:var(--accent,var(--gold));margin:1.1rem 0 .2rem}
-.temp-svg{width:100%;height:190px}
+.temp-svg{width:100%;height:230px}
 .temp-mkt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem}
 .temp-mkt{border:1px solid var(--line);border-radius:var(--r-sm);padding:.7rem .8rem;background:color-mix(in srgb,var(--card) 40%,transparent)}
 .temp-mkt-name{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -531,9 +543,8 @@ footer{position:relative;z-index:1}
   font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.9rem,1.7vw,1.05rem);
   line-height:1.45;letter-spacing:.01em;word-spacing:.02em;color:var(--weiss);text-transform:none;text-shadow:0 1px 10px rgba(0,0,0,.5)}
 .member .portrait,.homage-portrait{border:0;box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--accent,var(--gold)) 22%,transparent)}
-.books::after{animation:shelfPulse 5s ease-in-out infinite}
-.library::after{animation:shelfPulse 6.5s ease-in-out infinite}
-@keyframes shelfPulse{0%,100%{opacity:.45}50%{opacity:1}}
+.library::after,.divider::before,#trade h2:not(.sol-title)::after,#stuff h2:not(.sol-title)::after,#news h2:not(.sol-title)::after{animation:shelfPulse 6.5s ease-in-out infinite}
+@keyframes shelfPulse{0%,100%{opacity:.9}50%{opacity:1}}
 .trade-quote::before{display:none}
 .trade-quote cite{display:block;margin:.6rem 0 0;font-style:italic;color:var(--accent,var(--gold));white-space:nowrap;font-size:.85em;letter-spacing:.08em}
 .divider{position:relative;height:1px;width:min(760px,86%);margin:clamp(4.5rem,9vw,7.5rem) auto}
@@ -863,12 +874,46 @@ footer{position:relative;z-index:1}
 
         </div>
         <div class="sol-panel sol-p-temp">
-          <div class="temp-tiles" id="tempTiles"></div>
-          <div class="temp-card"><h4 class="keepcase">geopolitical risk (GPR)</h4><p class="temp-sub keepcase">Caldara/Iacoviello &middot; newspaper text analysis, daily &middot; 5 years</p><svg class="temp-svg" id="tempGprSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg></div>
-          <div class="temp-card"><h4 class="keepcase">economic policy uncertainty (US)</h4><p class="temp-sub keepcase">Baker/Bloom/Davis &middot; 30-day mean, 2 years</p><svg class="temp-svg" id="tempEpuSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg></div>
-          <div class="temp-card"><h4 class="keepcase">market-implied prices</h4><p class="temp-sub keepcase">volatility &amp; risk assets, 1 year &mdash; prices, not opinions</p><div class="temp-mkt-grid" id="tempMktGrid"></div></div>
-          <div class="temp-card"><h4 class="keepcase">prediction markets</h4><p class="temp-sub keepcase">Polymarket geopolitics by 24h volume &middot; implied yes-probability</p><div id="tempPoly"></div>
-            <div class="temp-sub2 keepcase" id="tempKalshiLabel" style="display:none">Kalshi &mdash; CFTC-regulated &middot; supplementary cross-check</div><div id="tempKalshi"></div>
+          <div class="temp-card">
+            <div class="temp-head"><div><h4 class="keepcase">the words &mdash; what the press is afraid of</h4><p class="temp-sub keepcase">geopolitical risk and policy uncertainty on one canvas &middot; daily newspaper text analysis</p></div>
+              <div class="temp-ctl">
+                <select class="temp-sel keepcase" id="tempRiskRange" aria-label="time range"><option value="1">1 year</option><option value="3" selected>3 years</option><option value="5">5 years</option></select>
+                <select class="temp-sel keepcase" id="tempRiskScale" aria-label="scaling"><option value="own">own scale</option><option value="pct">percentile</option></select>
+              </div></div>
+            <div class="temp-legend" id="tempRiskLegend"></div>
+            <svg class="temp-svg" id="tempRiskSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg>
+            <div class="temp-axis" id="tempRiskAxis"></div>
+            <p class="temp-src keepcase">GPR: Caldara/Iacoviello &middot; matteoiacoviello.com &nbsp;|&nbsp; EPU: Baker/Bloom/Davis &middot; policyuncertainty.com</p>
+          </div>
+          <div class="temp-card">
+            <div class="temp-head"><div><h4 class="keepcase">the ships &mdash; what actually passes the gates</h4><p class="temp-sub keepcase">daily transits through the world's chokepoints &middot; 7-day mean &middot; ground truth, not headline</p></div>
+              <div class="temp-ctl">
+                <select class="temp-sel keepcase" id="tempGateSel" aria-label="chokepoint"></select>
+                <select class="temp-sel keepcase" id="tempGateRange" aria-label="time range"><option value="90">3 months</option><option value="365" selected>12 months</option><option value="0">all</option></select>
+              </div></div>
+            <div class="temp-legend" id="tempGateLegend"></div>
+            <svg class="temp-svg" id="tempGateSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg>
+            <div class="temp-axis" id="tempGateAxis"></div>
+            <p class="temp-stat keepcase" id="tempGateStat"></p>
+            <p class="temp-src keepcase">IMF PortWatch &middot; portwatch.imf.org &middot; AIS vessel tracking, ~2 days lag</p>
+          </div>
+          <div class="temp-card">
+            <div class="temp-head"><div><h4 class="keepcase">the money &mdash; what capital already paid for</h4><p class="temp-sub keepcase">volatility and risk assets &mdash; prices, not opinions</p></div>
+              <div class="temp-ctl">
+                <select class="temp-sel keepcase" id="tempMktWin" aria-label="change window"><option value="22">1 month</option><option value="66" selected>3 months</option><option value="252">1 year</option></select>
+                <select class="temp-sel keepcase" id="tempMktSort" aria-label="order"><option value="def">by theme</option><option value="mov">biggest movers</option></select>
+              </div></div>
+            <div class="temp-mkt-grid" id="tempMktGrid"></div>
+            <p class="temp-src keepcase">Yahoo Finance &middot; daily closes</p>
+          </div>
+          <div class="temp-card">
+            <div class="temp-head"><div><h4 class="keepcase">the odds &mdash; what real capital bets on next</h4><p class="temp-sub keepcase">implied yes-probability &middot; money at risk, not a survey</p></div>
+              <div class="temp-ctl">
+                <select class="temp-sel keepcase" id="tempPredSrc" aria-label="venue"><option value="all">both venues</option><option value="poly">Polymarket</option><option value="kalshi">Kalshi</option></select>
+                <select class="temp-sel keepcase" id="tempPredSort" aria-label="order"><option value="vol">by volume</option><option value="p">by probability</option><option value="chg">by 24h move</option></select>
+              </div></div>
+            <div id="tempPred"></div>
+            <p class="temp-src keepcase">Polymarket gamma-api &middot; Kalshi trade-api (CFTC-regulated)</p>
           </div>
           <p class="temp-stale keepcase" id="tempUpdated"></p>
         </div>
@@ -888,8 +933,7 @@ footer{position:relative;z-index:1}
     <div class="rib-intro" style="--accent:var(--gruen)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
     <div class="mag">
 <!-- auto:report -->
-<div class="mag-date keepcase">08/04/2026</div>
-<p class="mag-claim">Three of today's stories are about walling off: the US regulator FCC bars Chinese robots from the American market, the think tank RAND designs sealed data centres against the theft of AI model weights, and the European Council on Foreign Relations prepares the EU for a confrontational France under Marine Le Pen. Against them stands a study from the University of Pennsylvania: a bean protein that binds HPV in saliva.</p>
+<p class="mag-claim">daily AI generated news &amp; intelligence &middot; designed for continuous learning and unbiased intel</p>
 <!-- /auto:report -->
 <a class="dl-box" href="reports/briefing.pdf" download>
   <span class="dl-icon" aria-hidden="true">&#8595;</span>
