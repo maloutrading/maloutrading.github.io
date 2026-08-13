@@ -463,13 +463,13 @@ footer{position:relative;z-index:1}
   color-mix(in srgb,var(--marine) 58%,transparent),color-mix(in srgb,var(--marine) 80%,transparent))}
 #team .wrap{position:relative;z-index:1}
 
-.trade-quotes{display:block;text-align:center;max-width:var(--w);margin:0 auto clamp(1rem,2vw,1.6rem)}
-.trade-quote{display:block;margin:.35rem auto 0;padding:0;border:0;background:none;border-radius:0;white-space:normal;max-width:34ch;
+.trade-quotes{display:block;position:relative;overflow:hidden;text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem);
+  padding:clamp(1.6rem,3.2vw,2.6rem) clamp(1.4rem,3.4vw,2.8rem);border:0;border-radius:var(--r-lg);
+  background:linear-gradient(180deg,color-mix(in srgb,#fff 4%,transparent),transparent 60%);
+  box-shadow:0 46px 92px -50px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.1),inset 0 -34px 60px -44px rgba(0,0,0,.55)}
+.trade-quote{display:block;margin:.35rem auto 0;padding:0;border:0;background:none;border-radius:0;white-space:normal;max-width:52ch;
   font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.9rem,1.7vw,1.05rem);
   line-height:1.45;letter-spacing:.01em;word-spacing:.02em;color:var(--weiss);text-transform:none;text-shadow:0 2px 24px rgba(0,0,0,.4)}
-.news-quote .trade-quote{max-width:52ch}
-.news-quote cite{display:block;margin-top:.55rem;font-size:.88em}
-.trade-quotes,.news-quote{position:relative;overflow:hidden;padding:clamp(2rem,3.8vw,3.2rem) clamp(1.4rem,3.4vw,2.8rem);border:0;border-radius:var(--r-lg);background:linear-gradient(180deg,color-mix(in srgb,#fff 4%,transparent),transparent 60%);box-shadow:0 46px 92px -50px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.1),inset 0 -34px 60px -44px rgba(0,0,0,.55)}
 .book-cover-link{position:relative}
 .member .portrait,.homage-portrait{border:0;box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--accent,var(--gold)) 22%,transparent)}
 .book-cover-link::after{content:"";position:absolute;top:-10%;bottom:-10%;left:0;width:55%;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.14) 46%,rgba(212,180,110,.5) 50%,rgba(255,255,255,.14) 54%,transparent 64%);transform:translateX(-150%);animation:goldSheen 6s ease-in-out infinite;pointer-events:none;mix-blend-mode:screen}
@@ -482,9 +482,7 @@ footer{position:relative;z-index:1}
 @keyframes shelfPulse{0%,100%{opacity:.45}50%{opacity:1}}
 .trade-quote::before{display:none}
 .trade-quote cite{display:block;margin:.6rem 0 0;font-style:italic;color:var(--accent,var(--gold));white-space:nowrap;font-size:.85em;letter-spacing:.08em}
-.trade-quotes{padding:clamp(1.2rem,2.6vw,1.9rem) clamp(1.2rem,3vw,2.2rem)}  /* trade-header kompakter (news-quote unberuehrt) */
 .divider{position:relative;height:1px;width:min(760px,86%);margin:clamp(4.5rem,9vw,7.5rem) auto}
-.news-quote{text-align:center;max-width:100%;margin:1.4rem auto clamp(2.4rem,5vw,3.4rem);border-radius:var(--r-lg)}
 .divider::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;transform:translateY(-50%);
   background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent,var(--gold)) 38%,transparent) 50%,transparent)}
 @media(prefers-reduced-motion:reduce){.cur{display:none}}.ql{opacity:1}
@@ -729,7 +727,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--ab)"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2><p class="rib-lead keepcase">articles, guest columns &amp; talks</p></div><div class="divider" aria-hidden="true"></div>
+    <div class="rib-intro" style="--accent:var(--ab)"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
 
     <div class="stuff-group">
       <span class="stuff-label keepcase">finanzwelt &middot; guest columns</span>
@@ -772,7 +770,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--gruen)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="news-quote"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <div class="rib-intro" style="--accent:var(--gruen)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
     <div class="mag">
 <!-- auto:report -->
 <div class="mag-date keepcase">08/04/2026</div>
