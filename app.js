@@ -794,13 +794,23 @@ function renderGates(){
   const pal = [cv('--flieder'), cv('--gold'), cv('--silber'), cv('--gruen'), cv('--ab'), cv('--muted')];
   const shown = pick === 'all' ? gates : gates.filter(g => g.key === pick);
   const series = shown.map((g, i) => ({ name: g.name, color: pal[i % pal.length], width: 2,
-    group: pick === 'all' ? 'g' + i : null, pts: tempCut(tempSmooth(g.series, 7), days) }));
+    pts: tempCut(tempSmooth(g.series, 7), days) }));
   tempLegend('tempGateLegend', series.map(s => ({ name: s.name, color: s.color,
     value: s.pts.length ? Math.round(s.pts[s.pts.length - 1][1]) : '' })));
-  tempPlot('tempGateSvg', 'tempGateAxis', series);
+  let plotted = series;
+  if (pick === 'all'){
+    plotted = series.map(s => {
+      const med = tempMedian(s.pts.map(p => p[1]));
+      return Object.assign({}, s, { group: 'rel', pts: med ? s.pts.map(p => [p[0], p[1] / med * 100]) : s.pts });
+    });
+    const span = plotted[0].pts;
+    plotted = plotted.concat([{ name: '', color: cv('--muted'), width: 1, opacity: .5, group: 'rel',
+      pts: [[span[0][0], 100], [span[span.length - 1][0], 100]] }]);
+  }
+  tempPlot('tempGateSvg', 'tempGateAxis', plotted);
   const stat = tempEl('tempGateStat');
   if (!stat) return;
-  if (pick === 'all'){ stat.innerHTML = 'each gate scaled to its own range &mdash; shape over level. pick one gate for absolute counts.'; return; }
+  if (pick === 'all'){ stat.innerHTML = 'every gate as a share of its own normal &mdash; the flat line is 100%, business as usual. pick a single gate for absolute counts.'; return; }
   const raw = shown[0].series, recent = raw.slice(-7).reduce((s, p) => s + p[1], 0) / Math.min(7, raw.length);
   const base = raw.slice(0, Math.max(1, raw.length - 90)).map(p => p[1]).sort((a, b) => a - b);
   const med = base[Math.floor(base.length / 2)] || 0;
