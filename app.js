@@ -66,7 +66,6 @@ function show(id, push){
   });
   body.classList.toggle('home', id === 'home');
   el.querySelectorAll('video').forEach(v => { const p = v.play(); if (p && p.catch) p.catch(() => {}); });
-  if (id === 'team') initWx();
   document.title = TITLES[id] || (id + ' - malou trading');
   if (push !== false){ try { history.pushState({id}, '', '#' + id); } catch(e){} }
   scrollTo(0, 0);
@@ -106,18 +105,6 @@ if(!reduce) document.querySelectorAll('.rib-title').forEach(t => {
   t.dataset.rl = '1';
 });
 const fetchT = (u, ms) => Promise.race([fetch(u), new Promise((_, r) => setTimeout(r, ms || 8000))]);
-let wxDone = 0;
-function wxWord(c){ if(c==null)return'-'; if(c===0)return'clear'; if(c<3)return'fair'; if(c<45)return'cloudy'; if(c<50)return'overcast'; if(c<57)return'fog'; if(c<68)return'rain'; if(c<78)return'snow'; if(c<83)return'showers'; return'storm'; }
-function initWx(){
-  if(wxDone) return; wxDone = 1;
-  const el = document.getElementById('wx'); if(!el) return;
-  fetchT('https://api.open-meteo.com/v1/forecast?latitude=53.55&longitude=9.99&current=temperature_2m,weather_code&timezone=Europe%2FBerlin')
-    .then(r => r.json()).then(d => {
-      const c = d.current || {}, t = Math.round(c.temperature_2m);
-      if(isNaN(t)) throw 0;
-      el.textContent = 'Hamburg - ' + t + 'C - ' + wxWord(c.weather_code); el.hidden = false;
-    }).catch(() => { wxDone = 0; });
-}
 (function(){
   if(reduce || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
   const ring = document.querySelector('.cur.ring'), dot = document.querySelector('.cur.dot');
