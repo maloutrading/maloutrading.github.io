@@ -501,7 +501,7 @@ footer{position:relative;z-index:1}
 .sol-vid{order:-2;position:relative;height:clamp(260px,36vw,400px);border-radius:var(--r-sm);overflow:hidden;display:flex;align-items:center;justify-content:center;-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 99%);mask-image:linear-gradient(180deg,#000 45%,transparent 99%)}
 .sol-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
 .sol-p-wiki .sol-vid video{transform:scale(1.32);transform-origin:center 6%}
-.sol-vid-tint{position:absolute;inset:0;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--marine) 68%,transparent))}
+.sol-vid-tint{position:absolute;inset:0;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--marine) 78%,transparent))}
 @media(max-width:640px){.sol-vid{height:150px}}
 
 .topvid::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,color-mix(in srgb,var(--accent,var(--gold)) 13%,transparent) 82%,color-mix(in srgb,var(--bg) 45%,transparent))}
@@ -521,9 +521,9 @@ footer{position:relative;z-index:1}
 /* ── trading markets: cross-bot comparison, per-panel slogan, live analytics — shared design language ── */
 
 /* engine plaque: one per market, same shell, small type, accent edge */
-.sol-slogan{position:relative;max-width:78ch;margin:0 auto;padding:1.4rem 2rem 1.5rem 2.2rem;border:1px solid color-mix(in srgb,var(--pcol) 30%,var(--line));border-radius:var(--r-sm);background:linear-gradient(155deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 26%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 50px -42px color-mix(in srgb,var(--pcol) 70%,transparent);overflow:hidden;transition:border-color .4s var(--ease)}
-.sol-slogan::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--pcol),transparent)}
-.sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 13%,transparent),transparent 68%);pointer-events:none}
+.sol-slogan{position:relative;max-width:78ch;margin:0 auto;padding:1.4rem 2rem 1.5rem 2.2rem;border:1px solid color-mix(in srgb,var(--pcol) 16%,var(--line));border-radius:var(--r-sm);background:linear-gradient(155deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 26%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 34px -30px color-mix(in srgb,var(--pcol) 38%,transparent);overflow:hidden;transition:border-color .4s var(--ease)}
+.sol-slogan::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pcol) 55%,transparent),transparent)}
+.sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 68%);pointer-events:none}
 .sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1rem,1.4vw,1.18rem);line-height:1.68;letter-spacing:.004em;color:color-mix(in srgb,var(--ink) 82%,transparent);max-width:64ch;margin:0 auto;text-align:left}
 .sol-philo-head{text-align:center;margin-bottom:1.05rem}
 .sol-philo-kicker{display:block;font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:color-mix(in srgb,var(--pcol) 72%,var(--muted))}
