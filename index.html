@@ -301,7 +301,10 @@ picture{display:contents}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--alp)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
-.sol-title{max-width:calc(100% - 2rem);margin:0;padding:.5rem clamp(1rem,2.6vw,1.7rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink)}
+.sol-title{--pinv:rgb(from var(--pcol) calc(255 - r) calc(255 - g) calc(255 - b));max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.4rem,3vw,2.2rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink);
+  border:1px solid color-mix(in srgb,var(--pinv) 55%,transparent);border-radius:100px;animation:solGlow 3.4s ease-in-out infinite;transition:border-color .4s var(--ease)}
+@keyframes solGlow{0%,100%{box-shadow:0 0 22px -6px color-mix(in srgb,var(--pinv) 45%,transparent)}50%{box-shadow:0 0 42px -4px color-mix(in srgb,var(--pinv) 70%,transparent)}}
+@media(prefers-reduced-motion:reduce){.sol-title{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--pinv) 55%,transparent)}}
 /* grid statt flex: 1fr-spuren unter max-content geben jedem knopf die breite des breitesten */
 .sol-toggle{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
@@ -320,18 +323,6 @@ picture{display:contents}
 @keyframes solfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media(max-width:640px){.sol-toggle{width:auto;max-width:100%;border-radius:var(--r-md)}.sol-btn{padding:.6rem 1.05rem;font-size:.88rem;white-space:normal;text-align:center}}
 @media(max-width:380px){.sol-toggle{grid-auto-flow:row}}
-.pulse{display:flex;flex-direction:column;gap:.55rem;width:min(560px,100%);margin:0 auto clamp(2rem,4vw,2.8rem)}
-.pulse:empty{display:none}
-.pulse-row{display:grid;grid-template-columns:5.5rem 1fr auto;align-items:center;gap:.8rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.pulse-bars{display:flex;gap:3px;align-items:center}
-.pulse-bars i{flex:1;height:13px;border-radius:2px;background:color-mix(in srgb,var(--gruen) 62%,var(--marine))}
-.pulse-bars i.miss{background:color-mix(in srgb,var(--holz) 55%,var(--marine))}
-.pulse-up{font-variant-numeric:tabular-nums;color:var(--silber)}
-.rail{position:fixed;right:clamp(10px,1.8vw,28px);top:50%;transform:translateY(-50%);height:min(44vh,400px);width:1px;z-index:30;background:color-mix(in srgb,var(--weiss) 14%,transparent);visibility:hidden}
-.rail i{position:absolute;left:0;top:0;width:1px;background:var(--gold)}
-.rail b{position:absolute;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:color-mix(in srgb,var(--weiss) 26%,transparent);cursor:pointer}
-.rail b.on{background:var(--gold)}
-@media(max-width:900px),(pointer:coarse){.rail{display:none}}
 .stuff-toggle{position:relative;max-width:1120px;margin-inline:auto}
 #sol-r-articles:checked ~ .sol-toggle label[for="sol-r-articles"],
 #sol-r-temp:checked ~ .sol-toggle label[for="sol-r-temp"]{color:var(--ink);
@@ -817,7 +808,6 @@ footer{position:relative;z-index:1}
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
 <div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label></div>
-<div class="pulse" id="pulse"></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/giraffe.mp4" type="video/mp4"></video></div>
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>

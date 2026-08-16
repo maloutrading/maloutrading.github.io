@@ -9,7 +9,7 @@ function apply(){
   const denom = docEl.scrollHeight - innerHeight;
   const frac = denom > 4 ? Math.min(1, y / denom) : 0;
   prog.style.width = frac * 100 + '%';               // progress bar = header's bottom edge
-  updateRib(); updateSolVids(); updateTopVid(); updateRail();
+  updateRib(); updateSolVids(); updateTopVid();
   lastY = y; ticking = false;
 }
 // section title (trade/news/team): letters assemble as it scrolls into the reading zone, fade slightly leaving the top
@@ -713,7 +713,6 @@ function mount(P){
       }
       spxP.then(spx => drawCompare(P, svg, sanitizeSeries((d.series || {}).equity || []), spx));
       renderAnalytics(P.an, d, P);
-      pulse(P.k, d);
     })
     .catch(() => {
       const an = document.getElementById(P.an);
@@ -942,23 +941,6 @@ fetchT('websiteData/temperature.json?' + bust, 10000)
     if (box) box.innerHTML = svgEmpty('live data unavailable — check back shortly');
   });
 
-// bot-heartbeat: je bot eine statuspage-zeile — bar je cron-tick aus den equity-timestamps, luecke > 1.75x median = miss
-const PULSE = {names: {wst: 'wikifolio', st: 'alpaca'}, data: {}};
-function pulse(k, d){
-  const box = document.getElementById('pulse'); if (!box || !PULSE.names[k]) return;
-  PULSE.data[k] = d;
-  box.innerHTML = Object.keys(PULSE.names).filter(x => PULSE.data[x]).map(x => {
-    const eq = (((PULSE.data[x].series || {}).equity) || []).map(p => p[0]).slice(-31);
-    if (eq.length < 4) return '';
-    const gaps = eq.slice(1).map((t, i) => t - eq[i]);
-    const med = gaps.slice().sort((a, b) => a - b)[Math.floor(gaps.length / 2)];
-    const ok = gaps.filter(g => g <= med * 1.75).length;
-    return '<div class="pulse-row"><span>' + PULSE.names[x] + '</span><span class="pulse-bars">' +
-      gaps.map(g => '<i' + (g > med * 1.75 ? ' class="miss"' : '') + '></i>').join('') +
-      '</span><span class="pulse-up">' + (ok / gaps.length * 100).toFixed(0) + '%</span></div>';
-  }).join('');
-}
-
 // 3d-tilt: buecher und chart-karten neigen sich zum cursor
 if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
   document.querySelectorAll('.book, .perf').forEach(el => {
@@ -990,31 +972,3 @@ if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
     c.style.setProperty('--mx', (e.clientX - r.left).toFixed(0) + 'px');
     c.style.setProperty('--my', (e.clientY - r.top).toFixed(0) + 'px');
   }, {passive:true});
-
-// kapitel-rail: haarlinie rechts, fuellstand = scroll, dots = kapitel des aktiven tabs
-var rail, railFill, railDots;
-function updateRail(){
-  if (!rail){
-    rail = document.createElement('div');
-    rail.className = 'rail'; rail.setAttribute('aria-hidden', 'true'); rail.innerHTML = '<i></i>';
-    document.body.appendChild(rail);
-    railFill = rail.firstChild; railDots = [];
-  }
-  const sec = document.querySelector('main .tab.show'), H = rail.clientHeight;
-  const doc = docEl.scrollHeight - innerHeight;
-  const marks = sec && !body.classList.contains('home') && doc > 300 ? [...sec.querySelectorAll('.rib-title,.sol-title,.library,.mag')] : [];
-  rail.style.visibility = marks.length ? 'visible' : 'hidden';
-  if (!marks.length) return;
-  const frac = Math.min(1, Math.max(0, scrollY / doc));
-  railFill.style.height = (frac * H).toFixed(1) + 'px';
-  while (railDots.length < marks.length){ const b = document.createElement('b'); rail.appendChild(b); railDots.push(b); }
-  while (railDots.length > marks.length) railDots.pop().remove();
-  marks.forEach((m, i) => {
-    const t = m.getBoundingClientRect().top + scrollY;
-    const f = Math.min(1, Math.max(0, t / doc));
-    railDots[i].style.top = (f * H).toFixed(1) + 'px';
-    railDots[i].classList.toggle('on', f <= frac);
-    railDots[i].onclick = () => scrollTo({top: Math.max(0, t - innerHeight * .3), behavior: 'smooth'});
-  });
-}
-updateRail();
