@@ -3,9 +3,6 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-# manual fallback for wikifolio.py: wikifolio.com's official CSV export (trades + daily prices),
-# downloaded by hand next to this script and gitignored (real trade/cash history — never committed).
-# use when the API scrape is stale/broken; produces the identical websiteData/wikifolio.json shape.
 here = Path(__file__).resolve().parent
 tradesCsv, priceCsv = here / 'wikiTrades.csv', here / 'wikiPrice.csv'
 
@@ -21,7 +18,6 @@ def num(s):
 def parseDt(s):
     return datetime.strptime(s.strip(), '%d.%m.%Y %H:%M:%S').replace(tzinfo=timezone.utc)
 
-# ── price series ──
 pxRows = [l.split(';') for l in readRows(priceCsv) if l.strip()]
 pts = [(parseDt(f[0]), num(f[3])) for f in pxRows if num(f[3]) is not None]
 pts.sort(key=lambda p: p[0])
@@ -54,7 +50,6 @@ def monthlyReturns(rows):
     return [[int(k[:4]), int(k[5:7]), round((last[k] / last[keys[i - 1]] - 1) * 100, 2)]
             for i, k in enumerate(keys) if i]
 
-# ── trades: round trips per ISIN, reconstructed from buy/sell fills ──
 buyTypes = {'Wertpapier-Transaktion (Kauf)'}
 sellTypes = {'Wertpapier-Transaktion (Verkauf)', 'Verkauf vor Verfall', 'Knock Out', 'Delisting'}
 stopTypes = {'Verkauf vor Verfall', 'Knock Out', 'Delisting'}

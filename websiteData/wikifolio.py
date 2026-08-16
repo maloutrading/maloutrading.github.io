@@ -10,10 +10,8 @@ def get(url):
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     return urllib.request.urlopen(req, timeout=30).read().decode()
 
-# the price curve is public; the per-trade history needs a logged-in session
 opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 
-# ~250 sequential pages per run: one flaky read must not lose the whole history
 def authGet(url, tries=4):
     for attempt in range(tries):
         try:
@@ -48,7 +46,6 @@ def fetchOrders(maxPages=600, pageSize=20):
             break
     return orders
 
-# one round trip = one exit. partial fills collapse into a single trade, a buy in between opens the next position.
 def roundTrips(orders):
     when = lambda o: datetime.fromisoformat(o['executionDate'])
     byIsin = defaultdict(list)
@@ -116,7 +113,6 @@ def tradeMetrics(trades):
         'worst_trade': {k: worst[k] for k in ('ts', 'symbol', 'r')},
     }
 
-# month keys come straight off the ISO string — no timezone maths to shift a close into the wrong month
 def monthlyReturns(rows):
     last = {}
     for t, v in rows:
@@ -151,7 +147,6 @@ vol = math.sqrt(sum((r - mean) ** 2 for r in logRets) / (len(logRets) - 1)) * ma
 
 page = get(pageUrl)
 invested = round(float(re.search(r'"label":"Investiertes Kapital","value":([0-9.]+)', page).group(1)) / 1000)
-# the first otherKeyRiskIndicators block is labelled "Max" — since inception, matching every other stat here
 sinceInception = page[page.find('"otherKeyRiskIndicators"'):][:4000]
 ratio = lambda label: (lambda m: round(float(m.group(1)), 2) if m else None)(
     re.search(r'"label":"%s","value":(-?[0-9.]+)' % label, sinceInception))

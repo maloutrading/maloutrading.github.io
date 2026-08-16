@@ -4,38 +4,31 @@ let lastY = 0, ticking = false;
 function apply(){
   const y = scrollY, home = body.classList.contains('home');
   hd.classList.toggle('solid', y > 40 || !home);
-  hd.classList.remove('away');                       // header stays pinned on scroll
-  body.classList.toggle('atbottom', innerHeight + y >= docEl.scrollHeight - 60);
+  hd.classList.remove('away');  body.classList.toggle('atbottom', innerHeight + y >= docEl.scrollHeight - 60);
   const denom = docEl.scrollHeight - innerHeight;
   const frac = denom > 4 ? Math.min(1, y / denom) : 0;
   prog.style.width = frac * 100 + '%';               // progress bar = header's bottom edge
   updateRib(); updateSolVids(); updateTopVid();
   lastY = y; ticking = false;
 }
-// section title (trade/news/team): letters assemble as it scrolls into the reading zone, fade slightly leaving the top
-// section-video: sanftes parallax ueber object-position (kein transform -> kein kenburns-konflikt)
 function updateTopVid(){
   const tv = document.querySelector('main .tab.show .topvid video'); if(!tv) return;
   const r = tv.parentElement.getBoundingClientRect(); if(!r.height) return;
   let pgs = -r.top / r.height; pgs = pgs<-1?-1:pgs>1?1:pgs;
   tv.style.objectPosition = 'center calc(50% + ' + (pgs*7).toFixed(2) + '%)';
 }
-// solutions-videos: wie ein tab im tab — beim Hochscrollen sanft ausfaden
 function updateSolVids(){
   document.querySelectorAll('.sol-vid').forEach(el => {
     const r = el.getBoundingClientRect(); if(!r.height) return;
     const c = r.top + r.height/2;
-    let o = c / (innerHeight*0.33); o = o<0?0:o>1?1:o;   // Mitte oberhalb 33% vh -> ausgefadet
-    el.style.opacity = (0.08 + 0.92*o).toFixed(3);
+    let o = c / (innerHeight*0.33); o = o<0?0:o>1?1:o;    el.style.opacity = (0.08 + 0.92*o).toFixed(3);
   });
 }
 function updateRib(){
   const sec = document.querySelector('main .tab.show'); if(!sec) return;
   const t = sec.querySelector('.rib-title'); if(!t) return;
   const vh = innerHeight, r = t.getBoundingClientRect(), c = r.top + r.height/2;
-  let a = (vh - c) / (vh*0.35); a = a<0?0:a>1?1:a;   // scattered below → assembled at 65% vh
-  let f = (vh*0.14 - c) / (vh*0.14); f = f<0?0:f>1?1:f; // fade only near the top edge
-  t.style.setProperty('--asm', a.toFixed(3));
+  let a = (vh - c) / (vh*0.35); a = a<0?0:a>1?1:a;  let f = (vh*0.14 - c) / (vh*0.14); f = f<0?0:f>1?1:f;  t.style.setProperty('--asm', a.toFixed(3));
   t.style.opacity = (1 - 0.5*f).toFixed(3);
 }
 addEventListener('scroll', () => {
@@ -74,7 +67,6 @@ function show(id, push){
 }
 addEventListener('popstate', () => show((location.hash || '#home').slice(1), false));
 
-// delegated nav (buttons/links carry data-nav="<tab id>" instead of inline onclick — CSP script-src 'self' friendly)
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-nav]');
   if (!el) return;
@@ -82,7 +74,6 @@ document.addEventListener('click', e => {
   show(el.dataset.nav);
 });
 
-// portrait fallback: show initials until the photo actually loads, drop broken images cleanly
 document.querySelectorAll('.port-img').forEach(img => {
   const reveal = () => { const p = img.closest('.portrait'); if (p) p.classList.remove('noimg'); };
   const fail = () => img.remove();
@@ -123,7 +114,6 @@ const fetchT = (u, ms) => Promise.race([fetch(u), new Promise((_, r) => setTimeo
     hotEl = e.target.closest ? e.target.closest(hot) : null;
     ring.classList.toggle('hot', !!hotEl);
   }, {passive:true});
-  // ring morpht auf die form interaktiver elemente, sonst folgt er dem cursor
   (function loop(){
     let cx = tx, cy = ty, w = 24, h = 24, r = 12;
     if(hotEl && hotEl.isConnected){
@@ -143,7 +133,6 @@ const fetchT = (u, ms) => Promise.race([fetch(u), new Promise((_, r) => setTimeo
   })();
 })();
 
-// swipe between ribbons (native browser back/forward arrows disabled via overscroll-behavior-x)
 const SWIPE = ['home','team','news','trade','stuff'];
 function swipeTo(dir){
   const cur = document.querySelector('main .tab.show'); if(!cur) return;
@@ -175,14 +164,12 @@ apply();
    the "bot = tuning + adapter" unification on the python side). */
 
 function sanitizeSeries(pts){
-  // plausibility filter for return/drawdown series (both are percentages, bounded)
   if(!Array.isArray(pts)) return [];
   return pts.filter(p => Array.isArray(p) && p.length >= 2
     && typeof p[0] === 'number' && isFinite(p[0])
     && typeof p[1] === 'number' && isFinite(p[1]) && p[1] > -100 && p[1] < 1000);
 }
 function sanitizeEquity(pts){
-  // equity is a dollar value, not a percentage — only rule out negative/non-finite noise
   if(!Array.isArray(pts)) return [];
   return pts.filter(p => Array.isArray(p) && p.length >= 2
     && typeof p[0] === 'number' && isFinite(p[0])
@@ -201,11 +188,9 @@ function rHistSvg(trades, unit){
   const rs = (trades || []).map(t => t.r).filter(v => typeof v === 'number' && isFinite(v));
   if (rs.length < 3) return svgEmpty('not enough closed trades yet');
   const lo = Math.min(...rs), hi = Math.max(...rs);
-  // clip the axis to the bulk of the sample — a single +635% outlier would otherwise flatten every other bar
   const srt = [...rs].sort((a, b) => a - b), q = p => srt[Math.min(srt.length - 1, Math.floor(p * srt.length))];
   const mn = Math.min(q(0.03), -1), mx = Math.max(q(0.97), 1);
   const clipped = mn > lo || mx < hi;
-  // zero is a hard bin edge, so no bar ever mixes winners and losers
   const nNeg = 4, nPos = 5, n = nNeg + nPos, wNeg = -mn / nNeg, wPos = mx / nPos;
   const edge = i => i < nNeg ? mn + wNeg * i : wPos * (i - nNeg);
   const bins = new Array(n).fill(0);
@@ -247,7 +232,6 @@ function heatGrid(eqSeries){
   return '<div class="heat-grid">' + cells + '</div>';
 }
 
-// underwater curve: every day spent below the previous high — the honest shape of a long track record
 function ddSvg(pts){
   const s = (pts || []).filter(p => Array.isArray(p) && isFinite(p[0]) && isFinite(p[1]) && p[1] <= 0);
   if (s.length < 2) return svgEmpty('not enough history yet');
@@ -267,7 +251,6 @@ function ddSvg(pts){
     '<i class="rw-t" style="top:0">0%</i><i class="rw-t" style="bottom:0">' + lo.toFixed(0) + '%</i></div></div>';
 }
 
-// month x year grid — the standard way a multi-year track record is read
 function monthGrid(rows){
   const r = (rows || []).filter(x => Array.isArray(x) && x.length === 3 && isFinite(x[2]));
   if (r.length < 2) return svgEmpty('not enough history yet');
@@ -292,7 +275,6 @@ function monthGrid(rows){
   return '<div class="mg">' + head + body + '</div>';
 }
 
-// one trailing window for every rolling trade chart, so all of them read on the same clock
 function trailWin(n){ return Math.max(5, Math.min(50, Math.floor(n / 2), Math.max(10, Math.round(n / 20)))); }
 function closedTrades(trades){ return (trades || []).filter(t => typeof t.r === 'number' && isFinite(t.r)); }
 function trailSeries(list, win, fn){
@@ -302,7 +284,6 @@ function trailSeries(list, win, fn){
 }
 const meanOf = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
 
-// draws a path that breaks across null gaps instead of inventing a straight line through them
 function linePath(vals, X, Y){
   let d = '', pen = false;
   vals.forEach((v, i) => {
@@ -329,7 +310,6 @@ function numsRow(items){
     '<span><b class="' + (i[2] || '') + '">' + i[0] + '</b>' + i[1] + '</span>').join('') + '</div>';
 }
 
-// trailing avg win vs avg loss — is the system winning bigger, or just losing sloppier?
 function avgWinLossSvg(trades){
   const list = closedTrades(trades), win = trailWin(list.length);
   if (list.length < win + 2) return svgEmpty('not enough closed trades yet');
@@ -346,7 +326,6 @@ function avgWinLossSvg(trades){
     '<i class="rw-t" style="top:0">+' + y1.toFixed(0) + '%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i></div></div>';
 }
 
-// trailing payoff against the ratio the same window actually needed to break even
 function payoffSvg(trades){
   const list = closedTrades(trades), win = trailWin(list.length);
   if (list.length < win + 2) return svgEmpty('not enough closed trades yet');
@@ -374,7 +353,6 @@ function payoffSvg(trades){
     '<p class="hb-foot">solid = achieved payoff &middot; dashed = payoff the window’s hit rate needed to break even</p></div>';
 }
 
-// where the edge actually sits: hit rate and average result per holding bucket
 function edgeByHoldSvg(trades){
   const t = closedTrades(trades).filter(x => typeof x.hold === 'number' && isFinite(x.hold));
   if (t.length < 10) return svgEmpty('not enough closed trades yet');
@@ -398,7 +376,6 @@ function edgeByHoldSvg(trades){
     '<p class="hb-foot">bar = trades &middot; then hit rate and average result' + runs + '</p></div>';
 }
 
-// how much of the total gain rides on the few biggest winners
 function concentrationSvg(trades){
   const rs = closedTrades(trades).map(t => t.r).filter(v => v > 0).sort((a, b) => b - a);
   if (rs.length < 10) return svgEmpty('not enough closed trades yet');
@@ -422,7 +399,6 @@ function concentrationSvg(trades){
     '<p class="hb-foot">share of all gains, winners ranked best first &middot; dashed = if every winner paid equally</p></div>';
 }
 
-// the trade curve: what the closed trades add up to, independent of position sizing
 function tradeEquitySvg(trades){
   const list = closedTrades(trades);
   if (list.length < 10) return svgEmpty('not enough closed trades yet');
@@ -525,7 +501,6 @@ function fmtAge(ms){
   return Math.round(s / 86400) + 'd ago';
 }
 
-// sobald eine karte ins bild scrollt: zahlen zaehlen hoch, linien zeichnen sich selbst
 function countUp(el){
   const fin = el.textContent, m = fin.match(/-?\d+(?:\.(\d+))?/);
   if (!m) return;
@@ -551,7 +526,6 @@ const drawIO = !reduce && 'IntersectionObserver' in window ? new IntersectionObs
   });
 }), {threshold: .35}) : null;
 
-// live open-book: what each bot holds right now (mirrors the telegram Book) + realized edge
 function bookHtml(d){
   const b = Array.isArray(d.book) ? d.book : [];
   const s = d.stats || {};
@@ -568,7 +542,6 @@ function bookHtml(d){
   return '<div class="an-card book-card">' + head + '<div class="book-rows">' + rows + '</div></div>';
 }
 
-// recent closed trades = the track record (date · ticker · side · R). R-multiple only, no $ (kept private).
 function tradesHtml(d, unit, rows){
   unit = unit || 'R';
   const t = Array.isArray(d.trades_detail) ? d.trades_detail.slice(-(rows || 7)).reverse() : [];
@@ -841,7 +814,6 @@ document.querySelectorAll('.sol-radio').forEach(r => {
   });
 });
 
-// spotify: nothing reaches spotify until the visitor asks for it (two-click)
 document.addEventListener('click', e => {
   const btn = e.target.closest('.sp-load'); if (!btn) return;
   const row = btn.closest('.spotify-track'), id = row && row.dataset.track;
@@ -1049,7 +1021,6 @@ fetchT('websiteData/temperature.json?' + bust, 10000)
     if (box) box.innerHTML = svgEmpty('live data unavailable — check back shortly');
   });
 
-// 3d-tilt: buecher und chart-karten neigen sich zum cursor
 if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
   document.querySelectorAll('.book, .perf').forEach(el => {
     el.addEventListener('pointerenter', () => { el.style.transition = 'transform .18s ease-out'; });
@@ -1061,7 +1032,6 @@ if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
     el.addEventListener('pointerleave', () => { el.style.transition = 'transform .55s var(--ease)'; el.style.transform = ''; });
   });
 
-// magnet: nav- und toggle-buttons ziehen sich leicht zum cursor
 if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
   document.querySelectorAll('nav.tabs button, .sol-btn, .lang-toggle label').forEach(el => {
     el.addEventListener('pointermove', e => {
@@ -1071,7 +1041,6 @@ if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
     el.addEventListener('pointerleave', () => { el.style.transform = ''; });
   });
 
-// spotlight: gold-lichtkegel folgt dem cursor ueber karten (::after in index.html)
 if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
   addEventListener('pointermove', e => {
     const c = e.target.closest && e.target.closest('.an-card, .sol-card, .stuff-card');
