@@ -567,7 +567,7 @@ function renderAnalytics(containerId, d, opts){
 }
 
 const bust = Math.floor(Date.now() / 9e5);
-const spxP = fetchT('json/spx.json?' + bust, 8000)
+const spxP = fetchT('websiteData/spx.json?' + bust, 8000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
   .then(d => ((d || {}).series || []).filter(p => Array.isArray(p) && isFinite(p[0]) && isFinite(p[1]) && p[1] > 0))
   .catch(() => []);
@@ -672,8 +672,8 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'json/alpacaMarkets/alpaca.json'});
-mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'json/wikifolioMarkets/wikifolio.json', freshMs:30*3600*1000,
+mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json'});
+mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'websiteData/wikifolio.json', freshMs:30*3600*1000,
   unit:'%', showBook:false, showExposure:false, showTrail:true, tradeRows:14,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
@@ -885,7 +885,7 @@ function renderTemperature(d){
 [['tempRiskRange', renderRisk], ['tempRiskScale', renderRisk], ['tempGateSel', renderGates], ['tempGateRange', renderGates],
  ['tempMktWin', renderMarkets], ['tempMktSort', renderMarkets], ['tempPredSrc', renderPredictions], ['tempPredSort', renderPredictions]]
   .forEach(([id, fn]) => { const el = tempEl(id); if (el) el.addEventListener('change', fn); });
-fetchT('json/temperatureMarkets/temperature.json?' + bust, 10000)
+fetchT('websiteData/temperature.json?' + bust, 10000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
   .then(renderTemperature)
   .catch(() => {

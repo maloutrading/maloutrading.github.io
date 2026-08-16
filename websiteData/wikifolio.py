@@ -192,5 +192,5 @@ spxSeries = [[t * 1000, round(c, 2)] for t, c in zip(spx['timestamp'], spx['indi
              if isinstance(c, (int, float))]
 if len(spxSeries) < 1000:
     raise SystemExit('spx history too short: %d points' % len(spxSeries))
-(Path(__file__).parents[1] / 'spx.json').write_text(json.dumps({'updated': int(time.time() * 1000), 'series': spxSeries}) + '\n')
+Path(__file__).with_name('spx.json').write_text(json.dumps({'updated': int(time.time() * 1000), 'series': spxSeries}) + '\n')
 print('spx.json:', len(spxSeries), 'points')
