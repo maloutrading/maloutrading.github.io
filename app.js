@@ -615,6 +615,112 @@ function renderAnalytics(containerId, d, opts){
   if (drawIO) el.querySelectorAll('svg.an-svg').forEach(sv => drawIO.observe(sv));
 }
 
+/* ═══════════════ trade-time chart: metric switch + range switch + real-calendar-time line(s) ═══════════════ */
+const TC_RANGES = [['90d', 90], ['1y', 365], ['all', null]];
+const TC_METRICS = [
+  {key: 'winloss', label: 'avg win / loss', win: 20, dual: true,
+    calc: g => ({a: meanOf(g.filter(t => t.r > 0).map(t => t.r)), b: meanOf(g.filter(t => t.r <= 0).map(t => t.r))})},
+  {key: 'winrate', label: 'win rate (30)', win: 30, dual: false,
+    calc: g => g.filter(t => t.r > 0).length / g.length * 100},
+  {key: 'hold', label: 'avg hold', win: 20, dual: false,
+    calc: g => meanOf(g.map(t => t.hold).filter(v => typeof v === 'number'))},
+  {key: 'edge', label: 'edge over time', win: 20, dual: false,
+    calc: g => meanOf(g.map(t => t.r))},
+];
+
+function tcSeries(list, m){
+  if (list.length < m.win + 2) return null;
+  const out = [];
+  for (let i = m.win - 1; i < list.length; i++){
+    const t = Date.parse(list[i].ts);
+    if (isFinite(t)) out.push([t, m.calc(list.slice(i - m.win + 1, i + 1))]);
+  }
+  return out.length ? out : null;
+}
+
+function tcFmt(m, v, unit){
+  if (v == null || !isFinite(v)) return '–';
+  if (m.key === 'winrate') return Math.round(v) + '%';
+  if (m.key === 'hold') return v.toFixed(1) + 'd';
+  return (v >= 0 ? '+' : '') + v.toFixed(2) + unit;
+}
+
+function drawTc(svg, series, m, unit){
+  const W = 600, H = 220, pad = 8;
+  const t0 = series[0][0], t1 = series[series.length - 1][0];
+  const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : .5) * (W - 2 * pad);
+  const vals = (m.dual ? series.flatMap(p => [p[1].a, p[1].b]) : series.map(p => p[1])).filter(v => v != null);
+  if (!vals.length){ svg.innerHTML = ''; return; }
+  let y0 = m.key === 'winrate' ? 0 : Math.min(...vals), y1 = m.key === 'winrate' ? 100 : Math.max(...vals);
+  if (y0 === y1){ y0 -= 1; y1 += 1; }
+  if (m.key !== 'winrate'){ const p = (y1 - y0) * .12; y0 -= p; y1 += p; }
+  const Y = v => H - pad - (v - y0) / (y1 - y0) * (H - 2 * pad);
+  const path = key => {
+    let d = '', pen = false;
+    series.forEach(p => {
+      const v = m.dual ? p[1][key] : p[1];
+      if (v == null){ pen = false; return; }
+      d += (pen ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(v).toFixed(1) + ' ';
+      pen = true;
+    });
+    return d.trim();
+  };
+  const zeroY = m.key === 'winrate' ? 50 : (y0 < 0 && y1 > 0 ? 0 : null);
+  const refLine = zeroY != null ? '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(zeroY).toFixed(1) +
+    '" y2="' + Y(zeroY).toFixed(1) + '" stroke="var(--line)" stroke-dasharray="2 3"/>' : '';
+  const lines = m.dual
+    ? '<path d="' + path('a') + '" fill="none" stroke="' + cv('--gruen') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
+      '<path d="' + path('b') + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>'
+    : '<path d="' + path() + '" fill="none" stroke="' + cv('--gold') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>';
+  svg.innerHTML = refLine + lines +
+    '<line class="tc-x" x1="0" x2="0" y1="' + pad + '" y2="' + (H - pad) + '" stroke="' + cv('--silber') +
+    '" stroke-opacity=".55" stroke-dasharray="2 3" visibility="hidden"/>';
+
+  const box = svg.closest('.tc-body');
+  let tip = box.querySelector('.perf-tip');
+  if (!tip){ tip = document.createElement('div'); tip.className = 'perf-tip'; box.appendChild(tip); }
+  const cross = svg.querySelector('.tc-x');
+  const nearest = t => series.reduce((a, p) => Math.abs(p[0] - t) < Math.abs(a[0] - t) ? p : a);
+  svg.onpointermove = e => {
+    const r = svg.getBoundingClientRect();
+    const t = t0 + Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * (t1 - t0);
+    const p = nearest(t);
+    cross.setAttribute('x1', X(p[0]).toFixed(1)); cross.setAttribute('x2', X(p[0]).toFixed(1));
+    cross.setAttribute('visibility', 'visible');
+    const dateStr = new Date(p[0]).toISOString().slice(0, 10);
+    tip.innerHTML = m.dual
+      ? '<b>' + dateStr + '</b><span><i style="background:' + cv('--gruen') + '"></i>avg win ' + tcFmt(m, p[1].a, unit) + '</span>' +
+        '<span><i style="background:' + cv('--holz') + '"></i>avg loss ' + tcFmt(m, p[1].b, unit) + '</span>'
+      : '<b>' + dateStr + '</b><span>' + tcFmt(m, p[1], unit) + '</span>';
+    const fx = X(p[0]) / W * r.width;
+    tip.style.left = Math.min(r.width - 70, Math.max(70, fx)) + 'px';
+    tip.style.display = 'block';
+  };
+  svg.onpointerleave = () => { tip.style.display = 'none'; cross.setAttribute('visibility', 'hidden'); };
+}
+
+function tcCard(elId, trades, unit){
+  const wrap = document.getElementById(elId); if (!wrap) return;
+  const state = wrap._tcState || (wrap._tcState = {metric: 'winloss', range: 'all'});
+  const m = TC_METRICS.find(x => x.key === state.metric), range = TC_RANGES.find(x => x[0] === state.range);
+
+  const tabs = TC_METRICS.map(x => '<button class="tc-btn' + (state.metric === x.key ? ' active' : '') +
+    '" data-tc-m="' + x.key + '" type="button">' + x.label + '</button>').join('');
+  const ranges = TC_RANGES.map(x => '<button class="tc-btn' + (state.range === x[0] ? ' active' : '') +
+    '" data-tc-r="' + x[0] + '" type="button">' + x[0] + '</button>').join('');
+  wrap.innerHTML = '<div class="tc-head"><h5 class="an-h">performance over time</h5><div class="tc-ranges">' + ranges + '</div></div>' +
+    '<div class="tc-tabs">' + tabs + '</div><div class="tc-body"><svg viewBox="0 0 600 220" preserveAspectRatio="none" class="tc-svg"></svg></div>';
+  wrap.querySelectorAll('[data-tc-m]').forEach(b => b.addEventListener('click', () => { state.metric = b.dataset.tcM; tcCard(elId, trades, unit); }));
+  wrap.querySelectorAll('[data-tc-r]').forEach(b => b.addEventListener('click', () => { state.range = b.dataset.tcR; tcCard(elId, trades, unit); }));
+
+  let list = closedTrades(trades).filter(t => t.ts);
+  if (range[1]){ const cutoff = Date.now() - range[1] * 86400000; list = list.filter(t => Date.parse(t.ts) >= cutoff); }
+  const svg = wrap.querySelector('.tc-svg'), body = wrap.querySelector('.tc-body');
+  const series = tcSeries(list, m);
+  if (!series){ body.innerHTML = svgEmpty('not enough closed trades in this window'); return; }
+  drawTc(svg, series, m, unit);
+}
+
 const bust = Math.floor(Date.now() / 9e5);
 const spxP = fetchT('websiteData/spx.json?' + bust, 8000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
@@ -714,6 +820,7 @@ function mount(P){
       }
       spxP.then(spx => drawCompare(P, svg, sanitizeSeries((d.series || {}).equity || []), spx));
       renderAnalytics(P.an, d, P);
+      if (P.tc) tcCard(P.tc, d.trades_detail, P.unit || 'R');
     })
     .catch(() => {
       const an = document.getElementById(P.an);
@@ -721,8 +828,8 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json'});
-mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'websiteData/wikifolio.json', freshMs:30*3600*1000,
+mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', tc:'stTc', url:'websiteData/alpaca.json'});
+mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', tc:'wTc', url:'websiteData/wikifolio.json', freshMs:30*3600*1000,
   unit:'%', showBook:false, showExposure:false, showTrail:true, showTrades:false, showCallouts:false,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 

@@ -296,15 +296,19 @@ picture{display:contents}
 .books{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(2.4rem,5vw,3.8rem);align-items:start;position:relative;max-width:1080px;margin-inline:auto}
 .book{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
-.solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1px solid color-mix(in srgb,var(--silber) 65%,transparent);border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%),radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%),linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%);box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}
+.solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1px solid transparent;border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%) padding-box,linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;animation:solSilber 14s linear infinite}
+@keyframes solSilber{0%{background-position:0 0,0 0,0 0,0% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}50%{box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 46px -16px color-mix(in srgb,var(--silber) 62%,transparent),inset 0 1px 0 rgba(255,255,255,.1)}100%{background-position:0 0,0 0,0 0,300% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}}
+@media(prefers-reduced-motion:reduce){.solutions{animation:none;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}}
 .solutions:has(#sol-r-wiki:checked){--pcol:var(--wiki)}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--alp)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
-.sol-title{--pinv:rgb(from var(--pcol) calc(255 - r) calc(255 - g) calc(255 - b));max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.4rem,3vw,2.2rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink);
-  border:1px solid color-mix(in srgb,var(--pinv) 55%,transparent);border-radius:100px;animation:solGlow 3.4s ease-in-out infinite;transition:border-color .4s var(--ease)}
-@keyframes solGlow{0%,100%{box-shadow:0 0 22px -6px color-mix(in srgb,var(--pinv) 45%,transparent)}50%{box-shadow:0 0 42px -4px color-mix(in srgb,var(--pinv) 70%,transparent)}}
-@media(prefers-reduced-motion:reduce){.sol-title{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--pinv) 55%,transparent)}}
+.sol-title{--glowBlau:color-mix(in srgb,color-mix(in srgb,var(--heide) 52%,var(--smaragd)) 62%,var(--weiss));--glowLila:var(--flieder);max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.4rem,3vw,2.2rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink);
+  border:1px solid color-mix(in srgb,var(--glowBlau) 55%,transparent);border-radius:100px;animation:solGlow 7s ease-in-out infinite}
+@keyframes solGlow{
+  0%,100%{border-color:color-mix(in srgb,var(--glowBlau) 55%,transparent);box-shadow:0 0 24px -6px color-mix(in srgb,var(--glowBlau) 50%,transparent),0 0 44px -8px color-mix(in srgb,var(--glowBlau) 34%,transparent)}
+  50%{border-color:color-mix(in srgb,var(--glowLila) 60%,transparent);box-shadow:0 0 30px -4px color-mix(in srgb,var(--glowLila) 62%,transparent),0 0 58px -6px color-mix(in srgb,var(--glowLila) 40%,transparent)}}
+@media(prefers-reduced-motion:reduce){.sol-title{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--glowBlau) 55%,transparent)}}
 /* grid statt flex: 1fr-spuren unter max-content geben jedem knopf die breite des breitesten */
 .sol-toggle{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
@@ -642,6 +646,15 @@ footer{position:relative;z-index:1}
 .an-card{border:1px solid color-mix(in srgb,var(--pcol) 22%,var(--line));border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 40%,transparent);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
 .an-h{margin:0 0 .55rem;font-family:var(--sans);font-weight:400;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .an-svg{flex:1;width:100%;min-height:100px}
+.tc-card{min-height:0}
+.tc-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;margin-bottom:.9rem}
+.tc-tabs,.tc-ranges{display:flex;flex-wrap:wrap;gap:.4rem}
+.tc-btn{font-family:var(--sans);font-size:.72rem;letter-spacing:.03em;padding:.42rem .85rem;border-radius:var(--pill);border:1px solid color-mix(in srgb,var(--pcol) 30%,var(--line));background:color-mix(in srgb,var(--card) 55%,transparent);color:var(--muted);cursor:pointer;transition:.25s var(--ease)}
+.tc-btn:hover{color:var(--ink);border-color:color-mix(in srgb,var(--pcol) 50%,var(--line))}
+.tc-btn.active{color:var(--marine);background:color-mix(in srgb,var(--pcol) 70%,var(--gold));border-color:transparent}
+.tc-body{position:relative;min-height:220px}
+.tc-svg{width:100%;height:220px;display:block}
+@media(max-width:640px){.tc-head{flex-direction:column;align-items:flex-start}}
 .an-empty{margin:auto;font-size:.82rem;color:var(--muted);font-style:italic;text-align:center}
 .heat-grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(11px,1fr));gap:3px;align-content:center}
 .heat-cell{aspect-ratio:1;border-radius:2px}
@@ -814,10 +827,12 @@ footer{position:relative;z-index:1}
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/giraffe.mp4" type="video/mp4"></video></div>
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="wperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="wperfNote">live &middot; wikifolio</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">global macro</span></li><li><span class="sol-bullet-tx">discretionary</span></li><li><span class="sol-bullet-tx">long, short, leveraged</span></li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3><p class="sol-meta keepcase">isin de000ls9syp5 &middot; lang &amp; schwarz &middot; live since nov 2020</p></div><div class="perf-stats"><div><b id="wstRet">–</b><span>since inception</span></div><div><b id="wstYr">–</b><span>12 months</span></div><div><b id="wstPa">–</b><span>p.a.</span></div><div><b id="wstDD">–</b><span>max dd</span></div><div><b id="wstVol">–</b><span>volatility</span></div><div><b id="wstCap">–</b><span>invested</span></div></div></div></div></div>
+<div class="an-card tc-card" id="wTc"></div>
 <div class="an-block" id="wAn"></div></div>
 <div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/moe.mp4" type="video/mp4"></video></div>
 <div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Buy strength. Ride the trend. Let the stop decide.</h3><p class="sol-philo-sub keepcase">turtle-style systematic trend following</p></div><p class="sol-philosophy keepcase">Thirty leveraged ETFs, one rule: buy the strongest of the pack the moment it breaks its seven-day high &mdash; at most three positions, each guarded by a stop that only ever tightens. No forecasts, no targets, no opinions: losses are cut small and automatically, winners run until the trend itself ends. The system loses often and small, wins rarely and big &mdash; and when nothing is breaking out, cash is the position.</p></div>
 <div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">leveraged us etfs</span></li><li><span class="sol-bullet-tx">algorithmic trend following</span></li><li><span class="sol-bullet-tx">long/short</span></li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-meta keepcase">leveraged etfs &middot; alpaca markets &middot; turtle-style breakout</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div><div class="sol-universe keepcase"><span class="sol-uni-label">universe &middot; 30 leveraged etfs</span><p class="sol-uni-list">TQQQ SOXL UPRO TNA TECL LABU FAS UDOW YINN NUGT BOIL TMF ERX WEBL DPST MSTX</p><span class="sol-uni-label">inverse &middot; short exposure via long positions</span><p class="sol-uni-list">SQQQ SOXS SPXU TZA TECS LABD FAZ SDOW YANG DUST KOLD UVXY TMV ERY</p></div></div></div></div>
+<div class="an-card tc-card" id="stTc"></div>
 <div class="an-block" id="stAn"></div></div>
 </div>
 </div>  </div>
@@ -842,16 +857,10 @@ footer{position:relative;z-index:1}
         <div class="sol-panel sol-p-articles">
 
     <div class="stuff-group">
-      <span class="stuff-label keepcase">finanzwelt &middot; guest columns</span>
+      <span class="stuff-label keepcase">guest columns &amp; webinars</span>
       <div class="stuff-grid">
         <a class="stuff-card" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta keepcase">finanzwelt &middot; 02/2025</p></a>
         <a class="stuff-card" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta keepcase">finanzwelt &middot; 12/2025</p></a>
-      </div>
-    </div>
-
-    <div class="stuff-group">
-      <span class="stuff-label keepcase">capinside &middot; webinar</span>
-      <div class="stuff-grid">
         <a class="stuff-card" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta keepcase">capinside &middot; 06/2025</p></a>
       </div>
     </div>
