@@ -430,7 +430,7 @@ picture{display:contents}
 .temp-stat{font-size:.74rem;color:var(--muted);margin:.7rem 0 0}
 .temp-stat b{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--ink)}
 .temp-spark{display:block;width:100%;height:32px;margin-top:.4rem}
-.temp-card{border:1px solid var(--line);border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 45%,transparent);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
+.temp-card{border-radius:var(--r-sm);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
 .temp-card h4{margin:0 0 .3rem;font-family:var(--sans);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,var(--gold))}
 .temp-sub{margin:0 0 1rem;font-size:.72rem;color:var(--muted)}
 .temp-svg{width:100%;height:230px}
@@ -460,8 +460,7 @@ picture{display:contents}
 .dl-text small{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--muted)}
 
 
-.portrait{position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;
-  border:1px solid var(--gold-line);background:linear-gradient(150deg,var(--grau),var(--marine))}
+.portrait{position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .portrait .mono{display:none}
 .portrait.noimg .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -631,7 +630,7 @@ footer{position:relative;z-index:1}
 .rw-plot .an-svg{min-height:86px}
 .rw-t{position:absolute;right:0;font-family:var(--mono);font-style:normal;font-size:.6rem;color:var(--muted);transform:translateY(-50%)}
 .rw-t[style*="top:0"],.rw-t[style*="bottom"]{transform:none}
-.callout{flex:1 1 220px;display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.2rem;border-radius:var(--r-sm);border:1px solid color-mix(in srgb,var(--pcol) 32%,transparent);background:color-mix(in srgb,var(--card) 45%,transparent)}
+.callout{flex:1 1 220px;display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.2rem;border-radius:var(--r-sm)}
 .callout-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .callout b{font-family:var(--sans);font-size:1.15rem;color:var(--ink)}
 .callout-r{font-family:var(--serif);font-size:1.05rem}
@@ -716,7 +715,7 @@ footer{position:relative;z-index:1}
 .tstats span{display:block;margin-top:.1rem;font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 @media(max-width:640px){.book-trades{grid-template-columns:1fr}.mg{grid-template-columns:2.2rem repeat(12,1fr) 2.2rem}}
 /* pflicht-risikohinweis unter den ergebnissen */
-.markets-legal{max-width:min(820px,94vw);margin:clamp(2.2rem,4vw,3.2rem) auto 0;padding:1rem 1.3rem;border:1px solid color-mix(in srgb,var(--holz) 28%,var(--line));border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 38%,transparent);font-family:var(--sans);font-size:.78rem;line-height:1.65;color:var(--muted);text-align:center;text-wrap:balance}
+.markets-legal{max-width:min(820px,94vw);margin:clamp(2.2rem,4vw,3.2rem) auto 0;padding:1rem 1.3rem;border-radius:var(--r-sm);font-family:var(--sans);font-size:.78rem;line-height:1.65;color:var(--muted);text-align:center;text-wrap:balance}
 .markets-legal b{color:var(--ink);font-weight:600}
 .markets-legal a,.markets-legal .linklike{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
 .markets-legal .linklike{background:none;border:0;padding:0;font:inherit;cursor:pointer}
@@ -833,7 +832,7 @@ footer{position:relative;z-index:1}
 <div class="an-block" id="stAn"></div></div>
 </div>
 </div>  </div>
-<p class="markets-legal keepcase"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
+<p class="markets-legal keepcase frame"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
 </section>
 
 <section class="tab sub" id="stuff">
@@ -853,7 +852,7 @@ footer{position:relative;z-index:1}
       <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-markets"><span class="sol-dot"></span>markets</label><label class="sol-btn keepcase" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn keepcase" for="sol-r-services"><span class="sol-dot"></span>services</label></div>
       <div class="sol-body">
         <div class="sol-panel sol-p-markets">
-          <div class="temp-card">
+          <div class="temp-card frame">
             <div class="temp-head"><div><h4 class="keepcase">the words &mdash; what the press is afraid of</h4><p class="temp-sub keepcase">geopolitical risk and policy uncertainty on one canvas &middot; daily newspaper text analysis</p></div>
               <div class="temp-ctl">
                 <select class="temp-sel keepcase" id="tempRiskRange" aria-label="time range"><option value="1">1 year</option><option value="3" selected>3 years</option><option value="5">5 years</option></select>
@@ -864,7 +863,7 @@ footer{position:relative;z-index:1}
             <div class="temp-axis" id="tempRiskAxis"></div>
             <p class="temp-src keepcase">GPR: Caldara/Iacoviello &middot; matteoiacoviello.com &nbsp;|&nbsp; EPU: Baker/Bloom/Davis &middot; policyuncertainty.com</p>
           </div>
-          <div class="temp-card">
+          <div class="temp-card frame">
             <div class="temp-head"><div><h4 class="keepcase">the ships &mdash; what actually passes the gates</h4><p class="temp-sub keepcase">daily transits through the world's chokepoints &middot; 7-day mean &middot; ground truth, not headline</p></div>
               <div class="temp-ctl">
                 <select class="temp-sel keepcase" id="tempGateSel" aria-label="chokepoint"></select>
@@ -876,7 +875,7 @@ footer{position:relative;z-index:1}
             <p class="temp-stat keepcase" id="tempGateStat"></p>
             <p class="temp-src keepcase">IMF PortWatch &middot; portwatch.imf.org &middot; AIS vessel tracking, ~2 days lag</p>
           </div>
-          <div class="temp-card">
+          <div class="temp-card frame">
             <div class="temp-head"><div><h4 class="keepcase">the money &mdash; what capital already paid for</h4><p class="temp-sub keepcase">volatility and risk assets &mdash; prices, not opinions</p></div>
               <div class="temp-ctl">
                 <select class="temp-sel keepcase" id="tempMktWin" aria-label="change window"><option value="22">1 month</option><option value="66" selected>3 months</option><option value="252">1 year</option></select>
@@ -885,7 +884,7 @@ footer{position:relative;z-index:1}
             <div class="temp-mkt-grid" id="tempMktGrid"></div>
             <p class="temp-src keepcase">Yahoo Finance &middot; daily closes</p>
           </div>
-          <div class="temp-card">
+          <div class="temp-card frame">
             <div class="temp-head"><div><h4 class="keepcase">the odds &mdash; what real capital bets on next</h4><p class="temp-sub keepcase">implied yes-probability &middot; money at risk, not a survey</p></div>
               <div class="temp-ctl">
                 <select class="temp-sel keepcase" id="tempPredSrc" aria-label="venue"><option value="all">both venues</option><option value="poly">Polymarket</option><option value="kalshi">Kalshi</option></select>

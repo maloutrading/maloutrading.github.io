@@ -487,7 +487,7 @@ function exposureSvg(exp){
 function callout(label, t, unit){
   if (!t || typeof t.r !== 'number') return '';
   unit = unit || 'R';
-  return '<div class="callout"><span class="callout-label">' + label + '</span><b>' + escapeHtml(t.symbol) + '</b>' +
+  return '<div class="callout frame"><span class="callout-label">' + label + '</span><b>' + escapeHtml(t.symbol) + '</b>' +
     '<span class="callout-r ' + (t.r >= 0 ? 'up' : 'dn') + '">' + (t.r >= 0 ? '+' : '') + t.r.toFixed(2) + unit + '</span>' +
     '<span class="callout-date">' + escapeHtml(String(t.ts || '').slice(0, 10)) + '</span></div>';
 }
