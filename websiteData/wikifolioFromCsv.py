@@ -4,10 +4,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # manual fallback for wikifolio.py: wikifolio.com's official CSV export (trades + daily prices),
-# downloaded by hand into the repo root and gitignored (real trade/cash history — never committed).
+# downloaded by hand next to this script and gitignored (real trade/cash history — never committed).
 # use when the API scrape is stale/broken; produces the identical websiteData/wikifolio.json shape.
-root = Path(__file__).resolve().parent.parent
-tradesCsv, priceCsv = root / 'wikiTrades.csv', root / 'wikiPrice.csv'
+here = Path(__file__).resolve().parent
+tradesCsv, priceCsv = here / 'wikiTrades.csv', here / 'wikiPrice.csv'
 
 def readRows(path):
     lines = path.read_bytes().decode('utf-32-le').splitlines()
