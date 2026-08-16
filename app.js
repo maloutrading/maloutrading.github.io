@@ -109,17 +109,38 @@ const fetchT = (u, ms) => Promise.race([fetch(u), new Promise((_, r) => setTimeo
   if(reduce || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
   const ring = document.querySelector('.cur.ring'), dot = document.querySelector('.cur.dot');
   if(!ring || !dot) return;
-  let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry, on = 0;
-  const hot = 'a,button,input,textarea,[data-nav]';
+  ring.style.margin = '0';
+  let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry, on = 0, hotEl = null;
+  let rw = 24, rh = 24, rr = 12;
+  const hot = 'a,button,input,textarea,[data-nav],label[for]';
   addEventListener('pointermove', e => {
     tx = e.clientX; ty = e.clientY; dot.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
     if(!on){ on = 1; ring.style.opacity = dot.style.opacity = '1'; }
   }, {passive:true});
   addEventListener('pointerdown', () => ring.classList.add('down'));
   addEventListener('pointerup', () => ring.classList.remove('down'));
-  addEventListener('pointerover', e => { if(e.target.closest && e.target.closest(hot)) ring.classList.add('hot'); }, {passive:true});
-  addEventListener('pointerout', e => { if(e.target.closest && e.target.closest(hot)) ring.classList.remove('hot'); }, {passive:true});
-  (function loop(){ rx += (tx-rx)*.18; ry += (ty-ry)*.18; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(loop); })();
+  addEventListener('pointerover', e => {
+    hotEl = e.target.closest ? e.target.closest(hot) : null;
+    ring.classList.toggle('hot', !!hotEl);
+  }, {passive:true});
+  // ring morpht auf die form interaktiver elemente, sonst folgt er dem cursor
+  (function loop(){
+    let cx = tx, cy = ty, w = 24, h = 24, r = 12;
+    if(hotEl && hotEl.isConnected){
+      const b = hotEl.getBoundingClientRect();
+      if(b.width && b.width < 300 && b.height < 120){
+        cx = b.left + b.width/2; cy = b.top + b.height/2;
+        w = b.width + 14; h = b.height + 10;
+        r = Math.min(h/2, (parseFloat(getComputedStyle(hotEl).borderRadius) || h/2) + 6);
+      }
+    } else hotEl = null;
+    if(ring.classList.contains('down')){ w *= .82; h *= .82; }
+    rx += (cx-rx)*.18; ry += (cy-ry)*.18; rw += (w-rw)*.22; rh += (h-rh)*.22; rr += (r-rr)*.25;
+    ring.style.transform = 'translate(' + (rx-rw/2).toFixed(1) + 'px,' + (ry-rh/2).toFixed(1) + 'px)';
+    ring.style.width = rw.toFixed(1) + 'px'; ring.style.height = rh.toFixed(1) + 'px';
+    ring.style.borderRadius = rr.toFixed(1) + 'px';
+    requestAnimationFrame(loop);
+  })();
 })();
 
 // swipe between ribbons (native browser back/forward arrows disabled via overscroll-behavior-x)
@@ -504,6 +525,32 @@ function fmtAge(ms){
   return Math.round(s / 86400) + 'd ago';
 }
 
+// sobald eine karte ins bild scrollt: zahlen zaehlen hoch, linien zeichnen sich selbst
+function countUp(el){
+  const fin = el.textContent, m = fin.match(/-?\d+(?:\.(\d+))?/);
+  if (!m) return;
+  const num = parseFloat(m[0]), dec = m[1] ? m[1].length : 0;
+  const pre = fin.slice(0, m.index), suf = fin.slice(m.index + m[0].length);
+  const t0 = performance.now();
+  (function step(t){
+    const p = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = pre + (num * e).toFixed(dec) + suf;
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+const cntIO = !reduce && 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return; cntIO.unobserve(e.target); countUp(e.target);
+}), {threshold: .6}) : null;
+const drawIO = !reduce && 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return; drawIO.unobserve(e.target);
+  e.target.querySelectorAll('path[fill="none"]:not([stroke-dasharray])').forEach((p, i) => {
+    const L = p.getTotalLength(); if (!L) return;
+    p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+    p.style.transition = 'stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1) ' + (i * .18) + 's';
+    requestAnimationFrame(() => { p.style.strokeDashoffset = '0'; });
+  });
+}), {threshold: .35}) : null;
+
 // live open-book: what each bot holds right now (mirrors the telegram Book) + realized edge
 function bookHtml(d){
   const b = Array.isArray(d.book) ? d.book : [];
@@ -564,6 +611,7 @@ function renderAnalytics(containerId, d, opts){
   const side = showBook ? bookHtml(d) : tradeStatsCard(s);
   const lead = trades ? '<div class="an-row book-trades">' + side + trades + '</div>' : side;
   el.innerHTML = lead + calloutHtml + months + grid;
+  if (drawIO) el.querySelectorAll('svg.an-svg').forEach(sv => drawIO.observe(sv));
 }
 
 const bust = Math.floor(Date.now() / 9e5);
@@ -645,7 +693,8 @@ function mount(P){
       const s = d.stats || {}, G = (id, v) => { const e = document.getElementById(id); if (!e) return;
         e.textContent = v;
         e.classList.toggle('up', /^\+/.test(v));
-        e.classList.toggle('dn', /^-/.test(v)); };
+        e.classList.toggle('dn', /^-/.test(v));
+        if (cntIO) cntIO.observe(e); };
       if (note && d.updated){
         const fresh = (Date.now() - d.updated) < (P.freshMs || 2 * 3600 * 1000);
         const base = (note.dataset.base || note.textContent).replace(/\s*·\s*updated.*$/, '');
@@ -921,6 +970,26 @@ if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
     });
     el.addEventListener('pointerleave', () => { el.style.transition = 'transform .55s var(--ease)'; el.style.transform = ''; });
   });
+
+// magnet: nav- und toggle-buttons ziehen sich leicht zum cursor
+if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
+  document.querySelectorAll('nav.tabs button, .sol-btn, .lang-toggle label').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.transform = 'translate(' + ((e.clientX - r.left - r.width/2)*.24).toFixed(1) + 'px,' + ((e.clientY - r.top - r.height/2)*.34).toFixed(1) + 'px)';
+    }, {passive:true});
+    el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+  });
+
+// spotlight: gold-lichtkegel folgt dem cursor ueber karten (::after in index.html)
+if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
+  addEventListener('pointermove', e => {
+    const c = e.target.closest && e.target.closest('.an-card, .sol-card, .stuff-card');
+    if (!c) return;
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - r.left).toFixed(0) + 'px');
+    c.style.setProperty('--my', (e.clientY - r.top).toFixed(0) + 'px');
+  }, {passive:true});
 
 // kapitel-rail: haarlinie rechts, fuellstand = scroll, dots = kapitel des aktiven tabs
 var rail, railFill, railDots;
