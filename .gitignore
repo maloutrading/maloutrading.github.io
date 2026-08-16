@@ -5,3 +5,5 @@ intelReport/
 maintenanceCrew/
 tools/
 keys.env
+wikiPrice.csv
+wikiTrades.csv
