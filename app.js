@@ -446,7 +446,7 @@ function tradeStatsCard(s){
     ['streak w / l', streak],
   ].filter(c => c[1]);
   if (!cells.length) return '';
-  return '<div class="an-card"><h5 class="an-h">trade record</h5><div class="tstats">' + cells.map(c =>
+  return '<div class="an-card frame"><h5 class="an-h">trade record</h5><div class="tstats">' + cells.map(c =>
     '<div><b class="' + c[1].cls + '">' + c[1].txt + '</b><span>' + c[0] + '</span></div>').join('') + '</div></div>';
 }
 
@@ -532,14 +532,14 @@ function bookHtml(d){
   const edge = (typeof s.expectancy_r === 'number')
     ? '<span class="book-edge">edge ' + (s.expectancy_r >= 0 ? '+' : '') + s.expectancy_r.toFixed(2) + 'R/trade</span>' : '';
   const head = '<div class="book-head"><h5 class="an-h">open now' + (b.length ? ' (' + b.length + ')' : '') + '</h5>' + edge + '</div>';
-  if (!b.length) return '<div class="an-card book-card">' + head + '<p class="book-empty">flat &mdash; no open positions</p></div>';
+  if (!b.length) return '<div class="an-card book-card frame">' + head + '<p class="book-empty">flat &mdash; no open positions</p></div>';
   const rows = b.map(p => {
     const up = (p.pnl || 0) >= 0;
     return '<div class="book-row"><span class="book-side ' + (p.side === 'long' ? 'long' : 'short') + '">' +
       (p.side === 'long' ? 'L' : 'S') + '</span><span class="book-sym">' + escapeHtml(p.sym) + '</span>' +
       '<span class="book-pnl ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (p.pnl || 0).toFixed(1) + '%</span></div>';
   }).join('');
-  return '<div class="an-card book-card">' + head + '<div class="book-rows">' + rows + '</div></div>';
+  return '<div class="an-card book-card frame">' + head + '<div class="book-rows">' + rows + '</div></div>';
 }
 
 function tradesHtml(d, unit, rows){
@@ -554,7 +554,7 @@ function tradesHtml(d, unit, rows){
       (typeof x.hold === 'number' ? '<span class="trade-hold">' + x.hold + 'd</span>' : '') +
       '<span class="trade-r ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (x.r || 0).toFixed(2) + unit + '</span></div>';
   }).join('');
-  return '<div class="an-card trades-card"><h5 class="an-h">recent trades</h5><div class="trade-rows">' + list + '</div></div>';
+  return '<div class="an-card trades-card frame"><h5 class="an-h">recent trades</h5><div class="trade-rows">' + list + '</div></div>';
 }
 
 function renderAnalytics(containerId, d, opts){
@@ -563,12 +563,12 @@ function renderAnalytics(containerId, d, opts){
   const unit = opts.unit || 'R', showBook = opts.showBook !== false, showExposure = opts.showExposure !== false;
   const showTrades = opts.showTrades !== false, showCallouts = opts.showCallouts !== false;
   const s = d.stats || {};
-  const card = (title, html) => '<div class="an-card"><h5 class="an-h">' + title + '</h5>' + html + '</div>';
+  const card = (title, html) => '<div class="an-card frame"><h5 class="an-h">' + title + '</h5>' + html + '</div>';
   const hasMonths = Array.isArray(d.monthly) && d.monthly.length > 1;
   const dd = ((d.series || {}).drawdown) || [];
   const calloutHtml = (showCallouts && (s.best_trade || s.worst_trade))
     ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade, unit) + callout('worst trade', s.worst_trade, unit) + '</div>' : '';
-  const months = hasMonths ? '<div class="an-card mg-card"><h5 class="an-h">monthly returns</h5>' + monthGrid(d.monthly) + '</div>' : '';
+  const months = hasMonths ? '<div class="an-card mg-card frame"><h5 class="an-h">monthly returns</h5>' + monthGrid(d.monthly) + '</div>' : '';
   const t = d.trades_detail;
   const grid = '<div class="an-grid">' +
     card((unit === '%' ? 'return' : unit + '-multiple') + ' distribution', rHistSvg(t, unit)) +
@@ -1023,11 +1023,13 @@ fetchT('websiteData/temperature.json?' + bust, 10000)
 
 if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches)
   document.querySelectorAll('.book, .perf').forEach(el => {
+    const deg = el.classList.contains('perf') ? 10 : 6;
+    const persp = el.classList.contains('perf') ? 600 : 700;
     el.addEventListener('pointerenter', () => { el.style.transition = 'transform .18s ease-out'; });
     el.addEventListener('pointermove', e => {
       const r = el.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      el.style.transform = 'perspective(700px) rotateX(' + (-y * 6).toFixed(2) + 'deg) rotateY(' + (x * 6).toFixed(2) + 'deg)';
+      el.style.transform = 'perspective(' + persp + 'px) rotateX(' + (-y * deg).toFixed(2) + 'deg) rotateY(' + (x * deg).toFixed(2) + 'deg)';
     });
     el.addEventListener('pointerleave', () => { el.style.transition = 'transform .55s var(--ease)'; el.style.transform = ''; });
   });

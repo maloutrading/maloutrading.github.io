@@ -32,6 +32,8 @@
   --gruen:var(--smaragd);                                      /* gains rise */
   --ab:color-mix(in srgb,var(--oxblut) 62%,var(--weiss));      /* losses fall — oxblood lifted just enough to be read */
   --flieder:color-mix(in srgb,var(--heide) 72%,var(--weiss));  /* heather lifted for text on marine */
+  --glow-a:color-mix(in srgb,color-mix(in srgb,var(--heide) 52%,var(--smaragd)) 62%,var(--weiss));
+  --glow-b:var(--flieder);                                     /* the one oscillating glow, shared by every pill edge */
   --holz:var(--ab);                                            /* team ribbon */
   --wiki:var(--gruen);
   --alp:var(--messing);
@@ -259,7 +261,7 @@ picture{display:contents}
 .team-bottom{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
   gap:clamp(1.6rem,3.5vw,3rem);max-width:var(--w);
   margin:calc(clamp(5.6rem,9vw,7.5rem) + 2.4cm) auto 0;
-  padding:calc(clamp(4rem,6.5vw,5.6rem) + 2cm) 0 0;border-top:1px solid var(--line)}
+  padding:calc(clamp(4rem,6.5vw,5.6rem) + 2cm) 0 0}
 .homage{display:flex;flex-direction:column;align-items:center;text-align:center;margin:0}
 .homage-portrait{width:244px;height:244px;border-radius:50%;overflow:hidden;
   border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 50%,transparent);
@@ -284,31 +286,30 @@ picture{display:contents}
 .spotify-track:hover .go{opacity:1;transform:translateX(0)}
 .spotify-track:hover .t b{color:var(--gruen)}
 @media(max-width:640px){.spotify-box{max-width:none}.homage{margin:1.5rem auto 0}}
-.library{position:relative;max-width:var(--wide);margin:clamp(7rem,12vw,10rem) auto clamp(3.5rem,7vw,5rem);
-  padding:clamp(3rem,6vw,4.6rem) clamp(2rem,5vw,4rem) clamp(3.4rem,6vw,5rem);
-  --lib-blau:color-mix(in srgb,var(--heide) 42%,var(--marine));
-  border:3px solid transparent;border-radius:var(--r-lg);
-  background:linear-gradient(180deg,color-mix(in srgb,var(--card) 62%,transparent),color-mix(in srgb,var(--card) 34%,transparent)) padding-box,linear-gradient(var(--marine),var(--marine)) padding-box,
-    linear-gradient(115deg,color-mix(in srgb,var(--lib-blau) 72%,var(--weiss)),color-mix(in srgb,var(--lib-blau) 44%,var(--weiss)) 24%,color-mix(in srgb,var(--lib-blau) 78%,var(--weiss)) 52%,color-mix(in srgb,var(--lib-blau) 48%,var(--weiss)) 78%,color-mix(in srgb,var(--lib-blau) 68%,var(--weiss))) border-box;
-  box-shadow:0 0 0 1px rgba(255,255,255,.18),0 3px 6px rgba(0,0,0,.28),0 16px 34px -12px rgba(0,0,0,.5),0 44px 82px -30px rgba(0,0,0,.6),0 92px 150px -60px rgba(0,0,0,.5),0 150px 220px -90px rgba(0,0,0,.35),inset 0 2px 1px -1px rgba(255,255,255,.26),inset 0 -34px 66px -46px rgba(0,0,0,.5)}
-.library::before{content:"";position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 15%,transparent);border-radius:1px;pointer-events:none}
-.library::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:clamp(70px,18%,150px);height:2px;background:linear-gradient(90deg,transparent,var(--accent,var(--gold)),transparent)}
+/* ── master edge: the one framed-box design, every box below just sets --pcol and layout ── */
+.frame{--fcol:var(--pcol,var(--accent,var(--silber)));position:relative;border:1px solid transparent;border-radius:var(--r-lg);
+  background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--fcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--fcol) 6%,transparent),transparent 58%) padding-box,linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;animation:frameSilber 14s linear infinite}
+@keyframes frameSilber{0%{background-position:0 0,0 0,0 0,0% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}50%{box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 46px -16px color-mix(in srgb,var(--silber) 62%,transparent),inset 0 1px 0 rgba(255,255,255,.1)}100%{background-position:0 0,0 0,0 0,300% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}}
+@media(prefers-reduced-motion:reduce){.frame{animation:none;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}}
+.library{--pcol:var(--heide);max-width:var(--wide);margin:clamp(7rem,12vw,10rem) auto clamp(3.5rem,7vw,5rem);
+  padding:clamp(3rem,6vw,4.6rem) clamp(2rem,5vw,4rem) clamp(3.4rem,6vw,5rem)}
+.library::before{content:"";position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--pcol) 15%,transparent);border-radius:1px;pointer-events:none}
+.library::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:clamp(70px,18%,150px);height:2px;background:linear-gradient(90deg,transparent,var(--pcol),transparent)}
 .books{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(2.4rem,5vw,3.8rem);align-items:start;position:relative;max-width:1080px;margin-inline:auto}
 .book{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
 @media(max-width:760px){.books{grid-template-columns:1fr;max-width:330px;margin-inline:auto;gap:2.6rem}}
-.solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);position:relative;width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem);border:1px solid transparent;border-radius:var(--r-lg);background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--pcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 58%) padding-box,linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;animation:solSilber 14s linear infinite}
-@keyframes solSilber{0%{background-position:0 0,0 0,0 0,0% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}50%{box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 46px -16px color-mix(in srgb,var(--silber) 62%,transparent),inset 0 1px 0 rgba(255,255,255,.1)}100%{background-position:0 0,0 0,0 0,300% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}}
-@media(prefers-reduced-motion:reduce){.solutions{animation:none;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}}
+.solutions{--pcol:var(--bronze);--boxW:min(1280px,94vw);width:var(--boxW);margin:clamp(2.6rem,5vw,4rem) calc((100% - var(--boxW))/2);padding:clamp(4rem,7vw,6.8rem) clamp(2.2rem,5vw,4.8rem)}
 .solutions:has(#sol-r-wiki:checked){--pcol:var(--wiki)}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--alp)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
-.sol-title{--glowBlau:color-mix(in srgb,color-mix(in srgb,var(--heide) 52%,var(--smaragd)) 62%,var(--weiss));--glowLila:var(--flieder);max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.4rem,3vw,2.2rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink);
-  border:1px solid color-mix(in srgb,var(--glowBlau) 55%,transparent);border-radius:100px;animation:solGlow 7s ease-in-out infinite}
-@keyframes solGlow{
-  0%,100%{border-color:color-mix(in srgb,var(--glowBlau) 55%,transparent);box-shadow:0 0 24px -6px color-mix(in srgb,var(--glowBlau) 50%,transparent),0 0 44px -8px color-mix(in srgb,var(--glowBlau) 34%,transparent)}
-  50%{border-color:color-mix(in srgb,var(--glowLila) 60%,transparent);box-shadow:0 0 30px -4px color-mix(in srgb,var(--glowLila) 62%,transparent),0 0 58px -6px color-mix(in srgb,var(--glowLila) 40%,transparent)}}
-@media(prefers-reduced-motion:reduce){.sol-title{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--glowBlau) 55%,transparent)}}
+/* ── master edge: the one oscillating glow pill, every badge below just adds this class ── */
+.glow-pill{border:1px solid color-mix(in srgb,var(--glow-a) 55%,transparent);border-radius:100px;animation:pillGlow 7s ease-in-out infinite}
+@keyframes pillGlow{
+  0%,100%{border-color:color-mix(in srgb,var(--glow-a) 55%,transparent);box-shadow:0 0 24px -6px color-mix(in srgb,var(--glow-a) 50%,transparent),0 0 44px -8px color-mix(in srgb,var(--glow-a) 34%,transparent)}
+  50%{border-color:color-mix(in srgb,var(--glow-b) 60%,transparent);box-shadow:0 0 30px -4px color-mix(in srgb,var(--glow-b) 62%,transparent),0 0 58px -6px color-mix(in srgb,var(--glow-b) 40%,transparent)}}
+@media(prefers-reduced-motion:reduce){.glow-pill{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--glow-a) 55%,transparent)}}
+.sol-title{max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.4rem,3vw,2.2rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink)}
 /* grid statt flex: 1fr-spuren unter max-content geben jedem knopf die breite des breitesten */
 .sol-toggle{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
@@ -328,16 +329,19 @@ picture{display:contents}
 @media(max-width:640px){.sol-toggle{width:auto;max-width:100%;border-radius:var(--r-md)}.sol-btn{padding:.6rem 1.05rem;font-size:.88rem;white-space:normal;text-align:center}}
 @media(max-width:380px){.sol-toggle{grid-auto-flow:row}}
 .stuff-toggle{position:relative;max-width:1120px;margin-inline:auto}
+#sol-r-markets:checked ~ .sol-toggle label[for="sol-r-markets"],
 #sol-r-articles:checked ~ .sol-toggle label[for="sol-r-articles"],
-#sol-r-temp:checked ~ .sol-toggle label[for="sol-r-temp"]{color:var(--ink);
+#sol-r-services:checked ~ .sol-toggle label[for="sol-r-services"]{color:var(--ink);
   background:linear-gradient(135deg,color-mix(in srgb,var(--accent,var(--gold)) 26%,var(--card)),color-mix(in srgb,var(--accent,var(--gold)) 16%,var(--card)));
   box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 6px -3px rgba(0,0,0,.3)}
+#sol-r-markets:checked ~ .sol-toggle label[for="sol-r-markets"] .sol-dot,
 #sol-r-articles:checked ~ .sol-toggle label[for="sol-r-articles"] .sol-dot,
-#sol-r-temp:checked ~ .sol-toggle label[for="sol-r-temp"] .sol-dot{opacity:1;background:var(--accent,var(--gold))}
+#sol-r-services:checked ~ .sol-toggle label[for="sol-r-services"] .sol-dot{opacity:1;background:var(--accent,var(--gold))}
+#sol-r-markets:checked ~ .sol-body .sol-p-markets{display:flex}
 #sol-r-articles:checked ~ .sol-body .sol-p-articles{display:flex}
-#sol-r-temp:checked ~ .sol-body .sol-p-temp{display:flex}
+#sol-r-services:checked ~ .sol-body .sol-p-services{display:flex}
 .sol-two{display:flex;flex-direction:column;gap:clamp(2rem,3.6vw,3rem);width:100%}
-.sol-chart{border:1px solid color-mix(in srgb,var(--pcol) 42%,transparent);border-radius:var(--r-sm);overflow:hidden;background:color-mix(in srgb,var(--card) 50%,transparent);height:clamp(230px,30vw,300px);display:flex;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 2px 34px -22px color-mix(in srgb,var(--pcol) 55%,transparent)}
+.sol-chart{border-radius:var(--r-sm);overflow:hidden;height:clamp(230px,30vw,300px);display:flex}
 .sol-chart iframe{width:100%;height:100%;border:0;display:block}
 .sol-text{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,2.6vw,2.1rem)}
 .sol-bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.85rem;align-items:stretch;width:100%}.sol-bullets li{--bcol:color-mix(in srgb,var(--pcol,var(--bronze)) 45%,var(--bronze));display:flex;align-items:center;justify-content:flex-start;font-family:var(--sans);font-style:italic;font-weight:400;letter-spacing:.025em;font-size:1.12rem;text-align:left;width:100%;min-height:3.3rem;padding:.7rem 1.4rem .7rem clamp(2rem,16%,4.5rem);border-radius:var(--pill);border:1px solid color-mix(in srgb,var(--bcol) 45%,var(--line));background:linear-gradient(135deg,color-mix(in srgb,var(--bcol) 32%,var(--card)),color-mix(in srgb,var(--bcol) 20%,var(--marine)));box-shadow:0 8px 20px -14px rgba(0,0,0,.6);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
@@ -348,7 +352,7 @@ picture{display:contents}
 @keyframes sol-shine{to{background-position:220% 0}}
 .sol-bullets li:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(0,0,0,.65)}
 .sol-cap{grid-row:1;align-self:start;text-align:center;padding:0}
-.sol-card{flex:1;display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:stretch;border:1px solid color-mix(in srgb,var(--pcol,var(--gold)) 42%,transparent);border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 22px -16px color-mix(in srgb,var(--pcol) 55%,transparent);padding:clamp(1.3rem,2.8vw,2rem);background:color-mix(in srgb,var(--card) 45%,transparent)}
+.sol-card{flex:1;height:29rem;display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:stretch;border-radius:var(--r-sm);padding:clamp(1.3rem,2.8vw,2rem);box-sizing:border-box;overflow:hidden}
 .sol-card .wiki-kicker{margin:0 0 .55rem}
 .sol-card-name{font-family:var(--sans);font-weight:600;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.015em;margin:0 0 .7rem;color:var(--ink)}
 .sol-card-tag{color:var(--muted);font-size:.98rem;line-height:1.6;margin:0}
@@ -402,9 +406,10 @@ picture{display:contents}
 .stuff-group{margin:0 0 calc(clamp(2.6rem,5vw,3.8rem) + 1cm)}
 .stuff-label{display:block;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 1.4rem}
 .stuff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:clamp(1.1rem,2.4vw,1.7rem)}
-.stuff-card{display:block;text-decoration:none;color:var(--ink);padding:clamp(1.3rem,2.6vw,1.8rem);border:1px solid var(--line);border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 60%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
-.stuff-card:hover{color:var(--ink);border-color:color-mix(in srgb,var(--accent,var(--gold)) 55%,transparent);transform:translateY(-3px);box-shadow:0 26px 52px -34px rgba(0,0,0,.8)}
+.stuff-card{display:block;text-decoration:none;color:var(--ink);padding:clamp(1.3rem,2.6vw,1.8rem);border-radius:var(--r-sm);transition:transform .3s var(--ease)}
+.stuff-card:hover{color:var(--ink);transform:translateY(-3px)}
 .stuff-head{font-family:var(--sans);font-weight:600;font-size:1.12rem;line-height:1.32;letter-spacing:-.01em;margin:0 0 .8rem}
+.stuff-desc{font-family:var(--sans);font-style:italic;color:var(--silber);font-size:.95rem;line-height:1.5;margin:0 0 .9rem}
 .stuff-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted);margin:0}
 .temp-delta{font-size:.78rem}.temp-delta.up{color:var(--gruen)}.temp-delta.dn{color:var(--ab)}
 .temp-head{display:flex;gap:1.2rem;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
@@ -468,7 +473,7 @@ picture{display:contents}
 .member .about-text h3{margin:0;font-size:1.725rem}
 .member-say{text-transform:none;font-style:italic;color:var(--ink);text-align:center;
   font-size:clamp(1.495rem,3.22vw,2.07rem);margin:0;flex:1;display:flex;align-items:center;justify-content:center}
-.member+.member{margin-top:3.4rem;padding-top:3.4rem;border-top:1px solid var(--line)}
+.member+.member{margin-top:3.4rem;padding-top:3.4rem}
 .socials{display:flex;justify-content:flex-start;gap:1.3rem;margin:1.6rem 0 0}
 .socials a{color:var(--muted);display:inline-flex;transition:color .3s,transform .3s}
 .socials a:hover{color:var(--gold);transform:translateY(-2px)}
@@ -525,15 +530,9 @@ footer{position:relative;z-index:1}
   color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--weiss) 8%,transparent);
   opacity:.6;pointer-events:none;z-index:0}
 .rib-intro>*{position:relative;z-index:1}
-#team .rib-intro{padding:clamp(2.6rem,5.5vw,4rem) clamp(1.8rem,5vw,3.4rem);border-radius:var(--r-lg);
-  background:linear-gradient(158deg,color-mix(in srgb,var(--marine) 62%,transparent),color-mix(in srgb,var(--marine) 40%,transparent));
-  border:1px solid color-mix(in srgb,var(--weiss) 14%,transparent);
-  box-shadow:0 32px 64px -24px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(9px)}
+#team .rib-intro{padding:clamp(2.6rem,5.5vw,4rem) clamp(1.8rem,5vw,3.4rem)}
 .rib-est{display:inline-block;margin-top:1.6rem;font-size:.9rem;font-weight:300;letter-spacing:.3em;
-  padding:.52rem 1.35rem;border-radius:999px;
-  background:var(--accent,var(--gold));color:var(--weiss);
-  border:1px solid color-mix(in srgb,var(--weiss) 45%,transparent);
-  box-shadow:inset 0 0 0 3px var(--accent,var(--gold)),inset 0 0 0 4px color-mix(in srgb,var(--weiss) 25%,transparent),0 10px 24px -12px rgba(0,0,0,.5)}
+  padding:.52rem 1.35rem;background:color-mix(in srgb,var(--card) 55%,transparent);color:var(--accent,var(--gold))}
 
 #team{position:relative}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
@@ -596,7 +595,7 @@ footer{position:relative;z-index:1}
 /* ── trading markets: cross-bot comparison, per-panel slogan, live analytics — shared design language ── */
 
 /* engine plaque: one per market, same shell, small type, accent edge */
-.sol-slogan{position:relative;width:100%;max-width:none;margin:0 auto;min-height:clamp(13rem,22vw,15.5rem);display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:clamp(1.6rem,3.2vw,2.3rem) clamp(2rem,4.4vw,3.1rem);border:1px solid color-mix(in srgb,var(--pcol,var(--gold)) 42%,transparent);border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 22px -16px color-mix(in srgb,var(--pcol) 55%,transparent);background:color-mix(in srgb,var(--card) 45%,transparent);overflow:hidden;transition:border-color .4s var(--ease)}
+.sol-slogan{position:relative;width:100%;max-width:none;margin:0 auto;height:25rem;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:clamp(1.6rem,3.2vw,2.3rem) clamp(2rem,4.4vw,3.1rem);border-radius:var(--r-sm);overflow:hidden}
 .sol-slogan::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pcol) 55%,transparent),transparent)}
 .sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 68%);pointer-events:none}
 .sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1rem,1.4vw,1.18rem);line-height:1.78;letter-spacing:.014em;color:color-mix(in srgb,var(--ink) 82%,transparent);max-width:88ch;margin:0 auto;text-align:left}
@@ -604,9 +603,6 @@ footer{position:relative;z-index:1}
 .sol-philo-kicker{display:block;font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:color-mix(in srgb,var(--pcol) 72%,var(--muted))}
 .sol-philo-title{margin:.5rem 0 0;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.28rem,2.2vw,1.68rem);line-height:1.25;color:var(--ink)}
 .sol-philo-sub{margin:.4rem 0 0;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-.sol-universe{margin-top:1rem;padding-top:.85rem;border-top:1px solid color-mix(in srgb,var(--ink) 10%,transparent)}
-.sol-uni-label{display:block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
-.sol-uni-list{margin:0 0 .7rem;font-size:.78rem;letter-spacing:.06em;line-height:1.9;color:color-mix(in srgb,var(--ink) 68%,transparent);word-spacing:.55em}
 .sol-philo-head::after{content:"";display:block;width:3.2rem;height:1px;margin:.85rem auto 0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pcol) 75%,transparent),transparent)}
 
 .an-block{display:flex;flex-direction:column;gap:clamp(1.4rem,2.6vw,2rem);width:100%}
@@ -643,7 +639,7 @@ footer{position:relative;z-index:1}
 .callout-r.dn{color:var(--holz)}
 .callout-date{font-size:.7rem;color:var(--muted);letter-spacing:.04em}
 .an-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1rem,2.4vw,1.6rem);width:100%}
-.an-card{border:1px solid color-mix(in srgb,var(--pcol) 22%,var(--line));border-radius:var(--r-sm);background:color-mix(in srgb,var(--card) 40%,transparent);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
+.an-card{border-radius:var(--r-sm);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
 .an-h{margin:0 0 .55rem;font-family:var(--sans);font-weight:400;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .an-svg{flex:1;width:100%;min-height:100px}
 .tc-card{min-height:0}
@@ -731,7 +727,8 @@ footer{position:relative;z-index:1}
 @media(max-width:640px){
   .solutions{padding:clamp(3rem,9vw,4rem) 1.1rem}
   .mag{padding:2rem 1.15rem}
-  .sol-slogan{padding:1.1rem 1.1rem 1.15rem 1.3rem;min-height:0}
+  .sol-slogan{padding:1.1rem 1.1rem 1.15rem 1.3rem;height:auto}
+  .sol-card{height:auto}
   .perf-note,.callout-label,.callout-date,.rh-foot,.rh-col b,.rh-axis,.rw-nums,.book-side,.trade-side{font-size:.74rem}
 }
 .lang-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
@@ -818,21 +815,21 @@ footer{position:relative;z-index:1}
   </div>
   <div class="wrap reveal">
     <div class="rib-intro" style="--accent:var(--bronze)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
-    <div class="trade-quotes"><p class="trade-quote keepcase">All trading is ultimately discretionary. <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions">
+    <div class="trade-quotes"><p class="trade-quote keepcase">All trading is ultimately discretionary. <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions frame">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
-<div class="sol-head"><h2 class="sol-title keepcase">trading markets</h2></div>
+<div class="sol-head"><h2 class="sol-title glow-pill keepcase">trading markets</h2></div>
 <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/giraffe.mp4" type="video/mp4"></video></div>
-<div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
-<div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="wperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="wperfNote">live &middot; wikifolio</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">global macro</span></li><li><span class="sol-bullet-tx">discretionary</span></li><li><span class="sol-bullet-tx">long, short, leveraged</span></li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3><p class="sol-meta keepcase">isin de000ls9syp5 &middot; lang &amp; schwarz &middot; live since nov 2020</p></div><div class="perf-stats"><div><b id="wstRet">–</b><span>since inception</span></div><div><b id="wstYr">–</b><span>12 months</span></div><div><b id="wstPa">–</b><span>p.a.</span></div><div><b id="wstDD">–</b><span>max dd</span></div><div><b id="wstVol">–</b><span>volatility</span></div><div><b id="wstCap">–</b><span>invested</span></div></div></div></div></div>
-<div class="an-card tc-card" id="wTc"></div>
+<div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
+<div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="wperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="wperfNote">live &middot; wikifolio</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">global macro</span></li><li><span class="sol-bullet-tx">discretionary</span></li><li><span class="sol-bullet-tx">long, short, leveraged</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3><p class="sol-meta keepcase">isin de000ls9syp5 &middot; lang &amp; schwarz &middot; live since nov 2020</p></div><div class="perf-stats"><div><b id="wstRet">–</b><span>since inception</span></div><div><b id="wstYr">–</b><span>12 months</span></div><div><b id="wstPa">–</b><span>p.a.</span></div><div><b id="wstDD">–</b><span>max dd</span></div><div><b id="wstVol">–</b><span>volatility</span></div><div><b id="wstCap">–</b><span>invested</span></div></div></div></div></div>
+<div class="an-card tc-card frame" id="wTc"></div>
 <div class="an-block" id="wAn"></div></div>
-<div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/moe.mp4" type="video/mp4"></video></div>
-<div class="sol-slogan"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Buy strength. Ride the trend. Let the stop decide.</h3><p class="sol-philo-sub keepcase">turtle-style systematic trend following</p></div><p class="sol-philosophy keepcase">Thirty leveraged ETFs, one rule: buy the strongest of the pack the moment it breaks its seven-day high &mdash; at most three positions, each guarded by a stop that only ever tightens. No forecasts, no targets, no opinions: losses are cut small and automatically, winners run until the trend itself ends. The system loses often and small, wins rarely and big &mdash; and when nothing is breaking out, cash is the position.</p></div>
-<div class="sol-two"><div class="sol-chart"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">leveraged us etfs</span></li><li><span class="sol-bullet-tx">algorithmic trend following</span></li><li><span class="sol-bullet-tx">long/short</span></li></ul></div><div class="sol-card"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-meta keepcase">leveraged etfs &middot; alpaca markets &middot; turtle-style breakout</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div><div class="sol-universe keepcase"><span class="sol-uni-label">universe &middot; 30 leveraged etfs</span><p class="sol-uni-list">TQQQ SOXL UPRO TNA TECL LABU FAS UDOW YINN NUGT BOIL TMF ERX WEBL DPST MSTX</p><span class="sol-uni-label">inverse &middot; short exposure via long positions</span><p class="sol-uni-list">SQQQ SOXS SPXU TZA TECS LABD FAZ SDOW YANG DUST KOLD UVXY TMV ERY</p></div></div></div></div>
-<div class="an-card tc-card" id="stTc"></div>
+<div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/seagull.mp4" type="video/mp4"></video></div>
+<div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Buy strength. Ride the trend. Let the stop decide.</h3><p class="sol-philo-sub keepcase">turtle-style systematic trend following</p></div><p class="sol-philosophy keepcase">Thirty leveraged ETFs, one rule: buy the strongest of the pack the moment it breaks its seven-day high &mdash; at most three positions, each guarded by a stop that only ever tightens. No forecasts, no targets, no opinions: losses are cut small and automatically, winners run until the trend itself ends. The system loses often and small, wins rarely and big &mdash; and when nothing is breaking out, cash is the position.</p></div>
+<div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">leveraged us etfs</span></li><li><span class="sol-bullet-tx">algorithmic trend following</span></li><li><span class="sol-bullet-tx">long/short</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-meta keepcase">leveraged etfs &middot; alpaca markets &middot; turtle-style breakout</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div></div></div></div>
+<div class="an-card tc-card frame" id="stTc"></div>
 <div class="an-block" id="stAn"></div></div>
 </div>
 </div>  </div>
@@ -850,36 +847,12 @@ footer{position:relative;z-index:1}
     <div class="rib-intro" style="--accent:var(--ab)"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
 
     <div class="stuff-toggle">
-      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-articles" checked>
-      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-temp">
-      <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn keepcase" for="sol-r-temp"><span class="sol-dot"></span>temperature</label></div>
+      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-markets" checked>
+      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-articles">
+      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-services">
+      <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-markets"><span class="sol-dot"></span>markets</label><label class="sol-btn keepcase" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn keepcase" for="sol-r-services"><span class="sol-dot"></span>services</label></div>
       <div class="sol-body">
-        <div class="sol-panel sol-p-articles">
-
-    <div class="stuff-group">
-      <span class="stuff-label keepcase">guest columns &amp; webinars</span>
-      <div class="stuff-grid">
-        <a class="stuff-card" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta keepcase">finanzwelt &middot; 02/2025</p></a>
-        <a class="stuff-card" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta keepcase">finanzwelt &middot; 12/2025</p></a>
-        <a class="stuff-card" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta keepcase">capinside &middot; 06/2025</p></a>
-      </div>
-    </div>
-
-    <div class="stuff-group">
-      <span class="stuff-label keepcase">anlegerplus &middot; funds &amp; equities</span>
-      <div class="stuff-grid">
-        <a class="stuff-card" href="https://anlegerplus.de/in-asien-investieren-pragmatismus-schlaegt-dogma/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">In Asien investieren: Pragmatismus schl&auml;gt Dogma</h3><p class="stuff-meta keepcase">anlegerplus &middot; 02/2026</p></a>
-        <a class="stuff-card" href="https://anlegerplus.de/nahrungsmittelindustrie-gesaettigter-markt-oder-chancenreiches-umfeld/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Nahrungsmittelindustrie: ges&auml;ttigter Markt oder chancenreiches Umfeld?</h3><p class="stuff-meta keepcase">anlegerplus &middot; 12/2025</p></a>
-        <a class="stuff-card" href="https://anlegerplus.de/mit-einem-etf-in-genomik-investieren/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Mit einem ETF in Genomik investieren</h3><p class="stuff-meta keepcase">anlegerplus &middot; 10/2025</p></a>
-        <a class="stuff-card" href="https://anlegerplus.de/lifecycle-etfs-altersvorsorge-im-autopilot/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Lifecycle-ETFs: Altersvorsorge im Autopilot</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2025</p></a>
-        <a class="stuff-card" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta keepcase">anlegerplus &middot; 06/2025</p></a>
-        <a class="stuff-card" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta keepcase">anlegerplus &middot; 09/2024</p></a>
-        <a class="stuff-card" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2024</p></a>
-      </div>
-    </div>
-
-        </div>
-        <div class="sol-panel sol-p-temp">
+        <div class="sol-panel sol-p-markets">
           <div class="temp-card">
             <div class="temp-head"><div><h4 class="keepcase">the words &mdash; what the press is afraid of</h4><p class="temp-sub keepcase">geopolitical risk and policy uncertainty on one canvas &middot; daily newspaper text analysis</p></div>
               <div class="temp-ctl">
@@ -923,6 +896,42 @@ footer{position:relative;z-index:1}
           </div>
           <p class="temp-stale keepcase" id="tempUpdated"></p>
         </div>
+        <div class="sol-panel sol-p-articles">
+
+    <div class="stuff-group">
+      <span class="stuff-label keepcase">guest columns &amp; webinars</span>
+      <div class="stuff-grid">
+        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta keepcase">finanzwelt &middot; 02/2025</p></a>
+        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta keepcase">finanzwelt &middot; 12/2025</p></a>
+        <a class="stuff-card frame" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta keepcase">capinside &middot; 06/2025</p></a>
+      </div>
+    </div>
+
+    <div class="stuff-group">
+      <span class="stuff-label keepcase">anlegerplus &middot; funds &amp; equities</span>
+      <div class="stuff-grid">
+        <a class="stuff-card frame" href="https://anlegerplus.de/in-asien-investieren-pragmatismus-schlaegt-dogma/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">In Asien investieren: Pragmatismus schl&auml;gt Dogma</h3><p class="stuff-meta keepcase">anlegerplus &middot; 02/2026</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/nahrungsmittelindustrie-gesaettigter-markt-oder-chancenreiches-umfeld/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Nahrungsmittelindustrie: ges&auml;ttigter Markt oder chancenreiches Umfeld?</h3><p class="stuff-meta keepcase">anlegerplus &middot; 12/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/mit-einem-etf-in-genomik-investieren/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Mit einem ETF in Genomik investieren</h3><p class="stuff-meta keepcase">anlegerplus &middot; 10/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/lifecycle-etfs-altersvorsorge-im-autopilot/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Lifecycle-ETFs: Altersvorsorge im Autopilot</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta keepcase">anlegerplus &middot; 06/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta keepcase">anlegerplus &middot; 09/2024</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2024</p></a>
+      </div>
+    </div>
+
+        </div>
+        <div class="sol-panel sol-p-services">
+
+    <div class="stuff-group">
+      <span class="stuff-label keepcase">work with me</span>
+      <div class="stuff-grid">
+        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Website%20Anfrage"><h3 class="stuff-head keepcase">Website &amp; Design</h3><p class="stuff-desc keepcase">Need help with your website? I design and build sites like this one &mdash; clean, fast, no bloat.</p><p class="stuff-meta keepcase">write me &rarr; maloutrading@web.de</p></a>
+        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Hallo"><h3 class="stuff-head keepcase">Get in Touch</h3><p class="stuff-desc keepcase">Got a question, an idea, or just want to say hi? Send me a message directly.</p><p class="stuff-meta keepcase">write me &rarr; maloutrading@web.de</p></a>
+      </div>
+    </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -956,7 +965,7 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--holz)"><h2 class="rib-title keepcase">team</h2><p class="rib-lead">we make code, designs &amp; investments</p><p class="rib-lead rib-est keepcase">malou trading - est. 2024</p></div>
+    <div class="rib-intro frame" style="--accent:var(--holz)"><h2 class="rib-title keepcase">team</h2><p class="rib-lead rib-est glow-pill keepcase">malou trading - est. 2024</p><p class="rib-lead">we do code, designs &amp; finance</p></div>
     <div class="member">
       <figure class="portrait noimg">
         <picture>
@@ -1012,7 +1021,7 @@ footer{position:relative;z-index:1}
         </figcaption>
       </figure>
     </div>
-    <div class="library"><div class="lib-vid" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="shortVids/cat.mp4" type="video/mp4"></video></div><div class="books"><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Reminiscences<br>of a Stock<br>Operator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10086;</span><i></i></span><span class="bc-author">Edwin Lef&egrave;vre</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Zen in the<br>Art of<br>Archery</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#9675;</span><i></i></span><span class="bc-author">Eugen Herrigel</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">The Education<br>of a<br>Speculator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10087;</span><i></i></span><span class="bc-author">Victor Niederhoffer</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article></div></div>
+    <div class="library frame"><div class="lib-vid" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="shortVids/cat.mp4" type="video/mp4"></video></div><div class="books"><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Reminiscences<br>of a Stock<br>Operator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10086;</span><i></i></span><span class="bc-author">Edwin Lef&egrave;vre</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Zen in the<br>Art of<br>Archery</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#9675;</span><i></i></span><span class="bc-author">Eugen Herrigel</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">The Education<br>of a<br>Speculator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10087;</span><i></i></span><span class="bc-author">Victor Niederhoffer</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article></div></div>
   </div>
 </section>
 
