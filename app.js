@@ -588,11 +588,12 @@ function renderAnalytics(containerId, d, opts){
   const el = document.getElementById(containerId); if (!el) return;
   opts = opts || {};
   const unit = opts.unit || 'R', showBook = opts.showBook !== false, showExposure = opts.showExposure !== false;
+  const showTrades = opts.showTrades !== false, showCallouts = opts.showCallouts !== false;
   const s = d.stats || {};
   const card = (title, html) => '<div class="an-card"><h5 class="an-h">' + title + '</h5>' + html + '</div>';
   const hasMonths = Array.isArray(d.monthly) && d.monthly.length > 1;
   const dd = ((d.series || {}).drawdown) || [];
-  const calloutHtml = (s.best_trade || s.worst_trade)
+  const calloutHtml = (showCallouts && (s.best_trade || s.worst_trade))
     ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade, unit) + callout('worst trade', s.worst_trade, unit) + '</div>' : '';
   const months = hasMonths ? '<div class="an-card mg-card"><h5 class="an-h">monthly returns</h5>' + monthGrid(d.monthly) + '</div>' : '';
   const t = d.trades_detail;
@@ -607,7 +608,7 @@ function renderAnalytics(containerId, d, opts){
     (opts.showTrail ? card('gain concentration', concentrationSvg(t)) : '') +
     (opts.showTrail ? card('instrument mix', mixSvg(t)) : '') +
     (showExposure ? card('long / short exposure', exposureSvg(d.exposure)) : '') + '</div>';
-  const trades = tradesHtml(d, unit, opts.tradeRows);
+  const trades = showTrades ? tradesHtml(d, unit, opts.tradeRows) : '';
   const side = showBook ? bookHtml(d) : tradeStatsCard(s);
   const lead = trades ? '<div class="an-row book-trades">' + side + trades + '</div>' : side;
   el.innerHTML = lead + calloutHtml + months + grid;
@@ -722,7 +723,7 @@ function mount(P){
 }
 mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json'});
 mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'websiteData/wikifolio.json', freshMs:30*3600*1000,
-  unit:'%', showBook:false, showExposure:false, showTrail:true, tradeRows:14,
+  unit:'%', showBook:false, showExposure:false, showTrail:true, showTrades:false, showCallouts:false,
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {
