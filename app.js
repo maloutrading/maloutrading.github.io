@@ -280,24 +280,6 @@ function chartTips(scope){
   });
 }
 
-function heatGrid(eqSeries){
-  const pts = sanitizeEquity(eqSeries || []);
-  if (pts.length < 4) return svgEmpty('not enough days yet');
-  const days = pts.slice(-43);
-  let cells = '';
-  for (let i = 1; i < days.length; i++){
-    const prev = days[i - 1][1], cur = days[i][1];
-    const chg = prev ? (cur / prev - 1) * 100 : 0;
-    const mag = Math.max(0, Math.min(1, Math.abs(chg) / 3));
-    const tone = chg >= 0 ? 'var(--gruen)' : 'var(--holz)';
-    const col = 'color-mix(in srgb,' + tone + ' ' + (24 + mag * 68).toFixed(0) + '%, var(--card))';
-    let dLabel = '';
-    try { dLabel = new Date(days[i][0]).toISOString().slice(0, 10); } catch(e){}
-    cells += '<i class="heat-cell" style="background:' + col + '" title="' + dLabel + ': ' + (chg >= 0 ? '+' : '') + chg.toFixed(1) + '%"></i>';
-  }
-  return '<div class="heat-grid">' + cells + '</div>';
-}
-
 function monthGrid(rows){
   const r = (rows || []).filter(x => Array.isArray(x) && x.length === 3 && isFinite(x[2]));
   if (r.length < 2) return svgEmpty('not enough history yet');
@@ -322,8 +304,14 @@ function monthGrid(rows){
   return '<div class="mg">' + head + body + '</div>';
 }
 
-function trailWin(n){ return Math.max(5, Math.min(50, Math.floor(n / 2), Math.max(10, Math.round(n / 20)))); }
-function closedTrades(trades){ return (trades || []).filter(t => typeof t.r === 'number' && isFinite(t.r)); }
+function dayStats(d){
+  const rows = periodReturns((d.series || {}).equity, t => Math.floor(t / 864e5)).slice(1);
+  const vals = rows.map(r => r[1]);
+  const win = Math.max(8, Math.min(120, Math.floor(vals.length / 3)));
+  const yrs = rows.length > 1 ? (rows[rows.length - 1][0] - rows[0][0]) / 365.25 : 0;
+  return {vals, win, ppy: yrs > 0 ? vals.length / yrs : 252,
+    labels: rows.slice(win - 1).map(r => new Date(r[0] * 864e5).toISOString().slice(0, 10))};
+}
 function trailSeries(list, win, fn){
   const out = [];
   for (let i = win - 1; i < list.length; i++) out.push(fn(list.slice(i - win + 1, i + 1)));
@@ -360,183 +348,120 @@ function numsRow(items){
     '<span><b class="' + (i[2] || '') + '">' + i[0] + '</b>' + i[1] + '</span>').join('') + '</div>';
 }
 
-function avgWinLossSvg(trades){
-  const list = closedTrades(trades), win = trailWin(list.length);
-  if (list.length < win + 2) return svgEmpty('not enough closed trades yet');
-  const ws = trailSeries(list, win, s => meanOf(s.filter(t => t.r > 0).map(t => t.r)));
-  const ls = trailSeries(list, win, s => meanOf(s.filter(t => t.r <= 0).map(t => t.r)));
-  const all = [...ws, ...ls].filter(v => v != null);
-  const y1 = Math.max(...all, 1), y0 = Math.min(...all, -1);
-  const last = a => [...a].reverse().find(v => v != null);
+function drawdownSvg(eq){
+  const pts = sanitizeEquity(eq || []).filter(p => p[1] > 0);
+  if (pts.length < 8) return svgEmpty('not enough history yet');
+  let peak = 0;
+  const dd = pts.map(p => { peak = Math.max(peak, p[1]); return Math.min(0, (p[1] / peak - 1) * 100); });
+  const dates = pts.map(p => new Date(p[0]).toISOString().slice(0, 10));
+  const deep = Math.min(...dd), now = dd[dd.length - 1];
+  const y0 = Math.min(deep, -1);
+  const W = 300, H = 120, pad = 5;
+  const X = i => pad + i / (dd.length - 1) * (W - 2 * pad);
+  const Y = v => pad + v / y0 * (H - 2 * pad);
+  const line = linePath(dd, X, Y);
+  const area = line + ' L' + X(dd.length - 1).toFixed(1) + ' ' + pad + ' L' + X(0).toFixed(1) + ' ' + pad + ' Z';
+  let longest = 0, start = null;
+  pts.forEach((p, i) => {
+    if (dd[i] >= -1e-9){ start = null; return; }
+    if (start == null) start = p[0];
+    longest = Math.max(longest, p[0] - start);
+  });
+  const under = dd.filter(v => v < -1e-9).length / dd.length * 100;
   return '<div class="rw">' + numsRow([
-    ['+' + (last(ws) || 0).toFixed(1) + '%', 'avg win', 'up'],
-    [(last(ls) || 0).toFixed(1) + '%', 'avg loss', 'dn'],
-    [win, 'trade window']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: ws, col: cv('--gruen')}, {vals: ls, col: cv('--holz')}], y0, y1, 0, {u: '%', names: ['avg win', 'avg loss']}) +
-    '<i class="rw-t" style="top:0">+' + y1.toFixed(0) + '%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i></div></div>';
+    [now.toFixed(1) + '%', 'now', now >= -0.5 ? 'up' : 'dn'],
+    [deep.toFixed(1) + '%', 'deepest', 'dn'],
+    [Math.round(longest / 864e5) + 'd', 'longest stretch'],
+    [Math.round(under) + '%', 'time under water']]) +
+    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg" data-tip="' +
+    escapeHtml(JSON.stringify({u: '%', x: dates,
+      s: [{n: 'drawdown', c: cv('--holz'), v: dd.map(v => +v.toFixed(1))}]})) + '">' +
+    '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + pad + '" y2="' + pad + '" stroke="var(--line)" stroke-dasharray="2 3"/>' +
+    '<path d="' + area + '" fill="' + cv('--holz') + '" fill-opacity=".18"/>' +
+    '<path d="' + line + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
+    '<i class="rw-t" style="top:0">0%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i></div>' +
+    '<p class="hb-foot">distance below the last equity peak &middot; 0 = at a new high</p></div>';
 }
 
-function payoffSvg(trades){
-  const list = closedTrades(trades), win = trailWin(list.length);
-  if (list.length < win + 2) return svgEmpty('not enough closed trades yet');
-  const ratio = trailSeries(list, win, s => {
-    const w = meanOf(s.filter(t => t.r > 0).map(t => t.r)), l = meanOf(s.filter(t => t.r <= 0).map(t => t.r));
-    return w != null && l != null && l !== 0 ? w / Math.abs(l) : null;
+function hitRatioSvg(S){
+  if (S.vals.length < S.win + 4) return svgEmpty('not enough days yet');
+  const hit = trailSeries(S.vals, S.win, s => s.filter(v => v > 0).length / s.length * 100);
+  const now = hit[hit.length - 1], avg = meanOf(hit);
+  return '<div class="rw">' + numsRow([
+    [Math.round(now) + '%', 'now', now >= 50 ? 'up' : 'dn'],
+    [Math.round(avg) + '%', 'average'],
+    [Math.round(Math.min(...hit)) + '&ndash;' + Math.round(Math.max(...hit)) + '%', 'range'],
+    [S.win + 'd', 'window']]) +
+    '<div class="rw-plot">' + trailPlot([{vals: hit, col: cv('--gruen'), w: 2}], 0, 100, 50, {u: '%', names: ['hit ratio'], x: S.labels}) +
+    '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
+    '<p class="hb-foot">share of up days in the rolling window &middot; dashed = coin flip</p></div>';
+}
+
+function winLossSvg(S){
+  if (S.vals.length < S.win + 4) return svgEmpty('not enough days yet');
+  const g = trailSeries(S.vals, S.win, s => meanOf(s.filter(v => v > 0)));
+  const l = trailSeries(S.vals, S.win, s => meanOf(s.filter(v => v <= 0)));
+  const all = [...g, ...l].filter(v => v != null);
+  if (!all.length) return svgEmpty('not enough days yet');
+  const y1 = Math.max(...all, 0.1), y0 = Math.min(...all, -0.1);
+  const last = a => [...a].reverse().find(v => v != null);
+  const ratio = last(l) ? Math.abs((last(g) || 0) / last(l)) : null;
+  return '<div class="rw">' + numsRow([
+    ['+' + (last(g) || 0).toFixed(2) + '%', 'avg gain', 'up'],
+    [(last(l) || 0).toFixed(2) + '%', 'avg loss', 'dn'],
+    [ratio != null ? ratio.toFixed(2) + 'x' : '–', 'gain ÷ loss', ratio >= 1 ? 'up' : 'dn'],
+    [S.win + 'd', 'window']]) +
+    '<div class="rw-plot">' + trailPlot([{vals: g, col: cv('--gruen')}, {vals: l, col: cv('--holz')}], y0, y1, 0, {u: '%', names: ['avg gain', 'avg loss'], x: S.labels}) +
+    '<i class="rw-t" style="top:0">+' + y1.toFixed(1) + '%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '%</i></div>' +
+    '<p class="hb-foot">average up day vs average down day &middot; the gap between the lines is the engine of return</p></div>';
+}
+
+function payoffSvg(S){
+  if (S.vals.length < S.win + 4) return svgEmpty('not enough days yet');
+  const ratio = trailSeries(S.vals, S.win, s => {
+    const g = meanOf(s.filter(v => v > 0)), l = meanOf(s.filter(v => v <= 0));
+    return g != null && l ? -g / l : null;
   });
-  const need = trailSeries(list, win, s => {
-    const w = s.filter(t => t.r > 0).length / s.length;
-    return w > 0 && w < 1 ? (1 - w) / w : null;
+  const need = trailSeries(S.vals, S.win, s => {
+    const h = s.filter(v => v > 0).length / s.length;
+    return h > 0 && h < 1 ? (1 - h) / h : null;
   });
   const all = [...ratio, ...need].filter(v => v != null);
-  if (!all.length) return svgEmpty('not enough closed trades yet');
-  const y1 = Math.min(Math.max(...all), 12), y0 = 0;
+  if (!all.length) return svgEmpty('not enough days yet');
+  const y1 = Math.min(Math.max(...all), 6), y0 = 0;
   const last = a => [...a].reverse().find(v => v != null);
   const beat = ratio.filter((v, i) => v != null && need[i] != null && v > need[i]).length;
   const both = ratio.filter((v, i) => v != null && need[i] != null).length;
   return '<div class="rw">' + numsRow([
-    [(last(ratio) || 0).toFixed(2) + 'x', 'payoff now', (last(ratio) > last(need) ? 'up' : 'dn')],
+    [(last(ratio) || 0).toFixed(2) + 'x', 'payoff now', last(ratio) > last(need) ? 'up' : 'dn'],
     [(last(need) || 0).toFixed(2) + 'x', 'break-even'],
-    [Math.round(beat / (both || 1) * 100) + '%', 'of windows above']]) +
+    [Math.round(beat / (both || 1) * 100) + '%', 'time above'],
+    [S.win + 'd', 'window']]) +
     '<div class="rw-plot">' + trailPlot([{vals: need, col: cv('--silber'), w: 1.2, dash: true},
-      {vals: ratio, col: cv('--gruen')}], y0, y1, null, {u: 'x', names: ['break-even', 'payoff']}) +
+      {vals: ratio, col: cv('--gruen')}], y0, y1, null, {u: 'x', names: ['break-even', 'payoff'], x: S.labels}) +
     '<i class="rw-t" style="top:0">' + y1.toFixed(0) + 'x</i><i class="rw-t" style="bottom:0">0x</i></div>' +
-    '<p class="hb-foot">solid = achieved payoff &middot; dashed = payoff the window’s hit rate needed to break even</p></div>';
+    '<p class="hb-foot">solid = avg gain &divide; avg loss &middot; dashed = the payoff this hit ratio needs to break even</p></div>';
 }
 
-function edgeByHoldSvg(trades){
-  const t = closedTrades(trades).filter(x => typeof x.hold === 'number' && isFinite(x.hold));
-  if (t.length < 10) return svgEmpty('not enough closed trades yet');
-  const buckets = [['0d', 0, 0], ['1–2d', 1, 2], ['3–7d', 3, 7], ['8–30d', 8, 30], ['30d+', 31, 1e9]];
-  const rows = buckets.map(([lab, lo, hi]) => {
-    const g = t.filter(x => x.hold >= lo && x.hold <= hi);
-    return {lab, n: g.length, win: g.length ? g.filter(x => x.r > 0).length / g.length * 100 : 0, avg: meanOf(g.map(x => x.r))};
-  }).filter(r => r.n);
-  if (rows.length < 2) return svgEmpty('not enough closed trades yet');
-  const mxN = Math.max(...rows.map(r => r.n));
-  const med = v => { const s = [...v].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]; };
-  const mw = med(t.filter(x => x.r > 0).map(x => x.hold)), ml = med(t.filter(x => x.r <= 0).map(x => x.hold));
-  const runs = (mw != null && ml > 0) ? ' &middot; winners held ' + (mw / ml).toFixed(1) + '&times; longer (' + mw + 'd vs ' + ml + 'd median)' : '';
-  return '<div class="eb">' + rows.map(r =>
-    '<div class="eb-row"><span class="eb-lab">' + r.lab + '</span>' +
-    '<span class="hb-track"><b class="hb-fill ' + (r.avg >= 0 ? 'up' : 'dn') + '" style="width:' +
-    Math.max(4, r.n / mxN * 100).toFixed(1) + '%"></b></span>' +
-    '<span class="eb-win">' + Math.round(r.win) + '%</span>' +
-    '<span class="eb-avg ' + (r.avg >= 0 ? 'up' : 'dn') + '">' + (r.avg >= 0 ? '+' : '') + r.avg.toFixed(1) + '%</span>' +
-    '<span class="hb-n">' + r.n + '</span></div>').join('') +
-    '<p class="hb-foot">bar = trades &middot; then hit rate and average result' + runs + '</p></div>';
-}
-
-function concentrationSvg(trades){
-  const rs = closedTrades(trades).map(t => t.r).filter(v => v > 0).sort((a, b) => b - a);
-  if (rs.length < 10) return svgEmpty('not enough closed trades yet');
-  const total = rs.reduce((a, b) => a + b, 0);
-  const cum = [];
-  rs.reduce((a, v, i) => { cum[i] = (a + v) / total * 100; return a + v; }, 0);
-  const W = 300, H = 120, pad = 5;
-  const X = i => pad + (rs.length > 1 ? i / (rs.length - 1) : 0) * (W - 2 * pad);
-  const Y = v => H - pad - v / 100 * (H - 2 * pad);
-  const at = frac => cum[Math.min(cum.length - 1, Math.max(0, Math.round(frac * rs.length) - 1))];
-  const diag = 'M' + X(0) + ' ' + Y(100 / rs.length) + ' L' + X(rs.length - 1) + ' ' + Y(100);
+function sharpeSvg(S){
+  if (S.vals.length < S.win + 4) return svgEmpty('not enough days yet');
+  const sr = trailSeries(S.vals, S.win, s => {
+    const m = meanOf(s), sd = Math.sqrt(s.reduce((a, v) => a + (v - m) * (v - m), 0) / (s.length - 1));
+    return sd > 0 ? m / sd * Math.sqrt(S.ppy) : null;
+  });
+  const all = sr.filter(v => v != null);
+  if (!all.length) return svgEmpty('not enough days yet');
+  const y1 = Math.max(...all, 1.5), y0 = Math.min(...all, -0.5);
+  const now = [...sr].reverse().find(v => v != null), avg = meanOf(all);
+  const share = all.filter(v => v > 1).length / all.length * 100;
   return '<div class="rw">' + numsRow([
-    [Math.round(at(0.05)) + '%', 'from top 5%'],
-    [Math.round(at(0.10)) + '%', 'from top 10%'],
-    [rs.length, 'winners']]) +
-    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg" data-tip="' +
-    escapeHtml(JSON.stringify({u: '%', x: cum.map((_, i) => 'top ' + (i + 1)),
-      s: [{n: 'share of gains', c: cv('--gruen'), v: cum.map(v => +v.toFixed(1))}]})) + '">' +
-    '<path d="' + diag + '" fill="none" stroke="var(--line)" stroke-dasharray="2 3"/>' +
-    '<path d="' + linePath(cum, X, Y) + '" fill="none" stroke="' + cv('--gruen') +
-    '" stroke-width="1.8" vector-effect="non-scaling-stroke"/></svg>' +
-    '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
-    '<p class="hb-foot">share of all gains, winners ranked best first &middot; dashed = if every winner paid equally</p></div>';
-}
-
-function tradeEquitySvg(trades){
-  const list = closedTrades(trades);
-  if (list.length < 10) return svgEmpty('not enough closed trades yet');
-  let sum = 0;
-  const cum = list.map(t => (sum += t.r));
-  const y1 = Math.max(...cum, 0), y0 = Math.min(...cum, 0);
-  return '<div class="rw">' + numsRow([
-    [(sum >= 0 ? '+' : '') + Math.round(sum) + '%', 'sum of trades', sum >= 0 ? 'up' : 'dn'],
-    [(meanOf(list.map(t => t.r)) || 0).toFixed(2) + '%', 'per trade'],
-    [list.length, 'trades']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: cum, col: cv('--gruen')}], y0, y1, 0,
-      {u: '%', names: ['cumulative'], x: list.map(t => String(t.ts || '').slice(0, 10))}) +
-    '<i class="rw-t" style="top:0">+' + y1.toFixed(0) + '%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i></div>' +
-    '<p class="hb-foot">unweighted sum of every closed trade &mdash; strategy shape, not portfolio return</p></div>';
-}
-
-function mixSvg(trades){
-  const t = closedTrades(trades).filter(x => x.kind);
-  if (t.length < 10) return svgEmpty('not enough closed trades yet');
-  const names = {stock: 'stocks', etf: 'etf / etn', cert: 'certs', other: 'other'};
-  const rows = ['stock', 'etf', 'cert', 'other'].map(k => {
-    const g = t.filter(x => x.kind === k);
-    return {lab: names[k], n: g.length, win: g.length ? g.filter(x => x.r > 0).length / g.length * 100 : 0, avg: meanOf(g.map(x => x.r))};
-  }).filter(r => r.n);
-  if (rows.length < 2) return svgEmpty('not enough closed trades yet');
-  const mxN = Math.max(...rows.map(r => r.n));
-  return '<div class="eb">' + rows.map(r =>
-    '<div class="eb-row"><span class="eb-lab">' + r.lab + '</span>' +
-    '<span class="hb-track"><b class="hb-fill ' + (r.avg >= 0 ? 'up' : 'dn') + '" style="width:' +
-    Math.max(4, r.n / mxN * 100).toFixed(1) + '%"></b></span>' +
-    '<span class="eb-win">' + Math.round(r.win) + '%</span>' +
-    '<span class="eb-avg ' + (r.avg >= 0 ? 'up' : 'dn') + '">' + (r.avg >= 0 ? '+' : '') + r.avg.toFixed(1) + '%</span>' +
-    '<span class="hb-n">' + r.n + '</span></div>').join('') +
-    '<p class="hb-foot">bar = number of trades &middot; then hit rate and average result</p></div>';
-}
-
-function tradeRecord(s){
-  s = s || {};
-  const num = (v, suf, signed) => typeof v === 'number' && isFinite(v)
-    ? {txt: (signed && v > 0 ? '+' : '') + v + (suf || ''), cls: signed ? (v > 0 ? 'up' : v < 0 ? 'dn' : '') : ''} : null;
-  const streak = (typeof s.streak_win === 'number' && typeof s.streak_loss === 'number')
-    ? {txt: s.streak_win + ' / ' + s.streak_loss, cls: ''} : null;
-  const cells = [
-    ['total return', num(s.total_return_pct, '%', true)], ['max drawdown', num(s.max_drawdown_pct, '%', true)],
-    ['trades', num(s.trades)], ['win rate', num(s.win_rate_pct, '%')], ['payoff', num(s.payoff, 'x')],
-    ['expectancy', num(s.expectancy_r, 'R', true)],
-    ['avg win', num(s.avg_win_pct, '%', true)], ['avg loss', num(s.avg_loss_pct, '%', true)],
-    ['stop exits', num(s.stop_share_pct, '%')], ['volatility', num(s.volatility_pct, '%')],
-    ['sharpe', num(s.sharpe)], ['sortino', num(s.sortino)], ['streak w / l', streak],
-  ].filter(c => c[1]);
-  if (!cells.length) return svgEmpty('no figures yet');
-  return '<div class="tstats">' + cells.map(c =>
-    '<div><b class="' + c[1].cls + '">' + c[1].txt + '</b><span>' + c[0] + '</span></div>').join('') + '</div>';
-}
-
-function rollingWinSvg(trades){
-  const list = closedTrades(trades);
-  if (list.length < 6) return svgEmpty('not enough closed trades yet');
-  const win = trailWin(list.length);
-  const vals = trailSeries(list, win, s => s.filter(t => t.r > 0).length / win * 100);
-  const now = vals[vals.length - 1], avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-  return '<div class="rw">' + numsRow([
-    [Math.round(now) + '%', 'now', now >= 50 ? 'up' : 'dn'],
-    [Math.round(avg) + '%', 'average'],
-    [Math.round(Math.min(...vals)) + '&ndash;' + Math.round(Math.max(...vals)) + '%', 'range'],
-    [win, 'trade window']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: vals, col: cv('--gruen'), w: 2}], 0, 100, 50, {u: '%', names: ['hit rate']}) +
-    '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div></div>';
-}
-
-function exposureSvg(exp){
-  if (!Array.isArray(exp) || exp.length < 2) return svgEmpty('not enough history yet');
-  const longs = exp.map(e => e[1] || 0), shorts = exp.map(e => -(e[2] || 0));
-  const mx = Math.max(1, ...longs.map(Math.abs), ...shorts.map(Math.abs));
-  const W = 300, H = 140, pad = 5, mid = H / 2;
-  const X = i => pad + i / (exp.length - 1) * (W - 2 * pad);
-  const Y = v => mid - (v / mx) * (mid - pad);
-  const path = arr => arr.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
-  const dates = exp.map(e => { try { return new Date(e[0]).toISOString().slice(0, 10); } catch(err){ return ''; } });
-  return '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg" data-tip="' +
-    escapeHtml(JSON.stringify({u: '%', x: dates,
-      s: [{n: 'long', c: cv('--gruen'), v: longs.map(v => +v.toFixed(1))},
-        {n: 'short', c: cv('--holz'), v: shorts.map(v => +v.toFixed(1))}]})) + '">' +
-    '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + mid + '" y2="' + mid + '" stroke="var(--line)" stroke-dasharray="2 3"/>' +
-    '<path d="' + path(longs) + '" fill="none" stroke="var(--gruen)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
-    '<path d="' + path(shorts) + '" fill="none" stroke="var(--holz)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>';
+    [now.toFixed(2), 'now', now >= 1 ? 'up' : now < 0 ? 'dn' : ''],
+    [avg.toFixed(2), 'average'],
+    [Math.round(share) + '%', 'time above 1'],
+    [S.win + 'd', 'window']]) +
+    '<div class="rw-plot">' + trailPlot([{vals: sr, col: cv('--gruen'), w: 2}], y0, y1, 0, {u: '', names: ['sharpe'], x: S.labels}) +
+    '<i class="rw-t" style="top:0">' + y1.toFixed(1) + '</i><i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '</i></div>' +
+    '<p class="hb-foot">return per unit of risk, annualized &middot; above 1 = strong, below 0 = losing</p></div>';
 }
 
 function fmtAge(ms){
@@ -604,22 +529,14 @@ function tradesView(d, unit){
 
 const MEGA_VIEWS = [
   ['monthly returns', (d) => monthGrid(d.monthly || monthlyFromEquity((d.series || {}).equity))],
-  ['daily returns', (d) => heatGrid((d.series || {}).equity)],
-  ['daily return distribution', (d) => distSvg(eqReturns(d, t => Math.floor(t / 864e5)), '%', 'days')],
-  ['weekly return distribution', (d) => distSvg(eqReturns(d, t => Math.floor(t / 6048e5)), '%', 'weeks')],
-  ['monthly return distribution', (d) => distSvg(eqReturns(d, monthKey), '%', 'months')],
-  ['result distribution', (d, u) => distSvg(closedTrades(d.trades_detail).map(t => t.r), u, 'trades')],
-  ['trade curve', (d) => tradeEquitySvg(d.trades_detail)],
-  ['trailing hit rate', (d) => rollingWinSvg(d.trades_detail)],
-  ['trailing avg win / loss', (d) => avgWinLossSvg(d.trades_detail)],
-  ['trailing payoff vs break-even', (d) => payoffSvg(d.trades_detail)],
-  ['edge by holding period', (d) => edgeByHoldSvg(d.trades_detail)],
-  ['gain concentration', (d) => concentrationSvg(d.trades_detail)],
-  ['instrument mix', (d) => mixSvg(d.trades_detail)],
-  ['long / short exposure', (d) => exposureSvg(d.exposure)],
+  ['daily returns', (d) => distSvg(eqReturns(d, t => Math.floor(t / 864e5)), '%', 'days')],
+  ['drawdown', (d) => drawdownSvg((d.series || {}).equity)],
+  ['hit ratio', (d) => hitRatioSvg(dayStats(d))],
+  ['gain vs loss', (d) => winLossSvg(dayStats(d))],
+  ['payoff', (d) => payoffSvg(dayStats(d))],
+  ['sharpe', (d) => sharpeSvg(dayStats(d))],
   ['open positions', (d) => bookView(d)],
   ['recent trades', (d, u) => tradesView(d, u)],
-  ['all figures', (d) => tradeRecord(d.stats)],
 ];
 
 function renderMega(containerId, d, unit){
@@ -750,7 +667,7 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json'});
+mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json', unit:'%'});
 mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'websiteData/wikifolio.json', freshMs:30*3600*1000, unit:'%',
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
@@ -818,10 +735,12 @@ function tempMedian(vals){
   const s = vals.slice().sort((a, b) => a - b);
   return s.length ? s[Math.floor(s.length / 2)] : 0;
 }
+const axisDate = (t, spanMs) => new Date(t).toLocaleDateString('en-US',
+  spanMs > 3 * 365 * 864e5 ? { year: 'numeric' } : { month: 'short', year: 'numeric' });
 function tempAxis(el, t0, t1){
   if (!el) return;
   el.innerHTML = [0, .25, .5, .75, 1].map(f => '<span style="left:' + (f * 100) + '%">' +
-    new Date(t0 + (t1 - t0) * f).toLocaleDateString('en-US', { month: 'short', year: '2-digit' }) + '</span>').join('');
+    axisDate(t0 + (t1 - t0) * f, t1 - t0) + '</span>').join('');
 }
 function tempPlot(svgId, axisId, series){
   const svg = tempEl(svgId);
