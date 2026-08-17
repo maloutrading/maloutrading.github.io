@@ -378,9 +378,9 @@ picture{display:contents}
 .temp-pred-p{flex:0 0 46px;text-align:right;font-family:var(--serif);color:var(--ink)}
 .temp-stale{font-size:.7rem;color:var(--muted);margin-top:.4rem}
 @media(max-width:640px){.temp-pred-bar{flex-basis:80px}}
-.mag-kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,var(--gold));text-align:center;margin:0 0 clamp(1.6rem,3vw,2.4rem)}
-.mag-claim{font-family:var(--sans);font-style:normal;font-weight:500;font-size:clamp(1.05rem,2vw,1.22rem);line-height:1.55;letter-spacing:-.005em;color:var(--ink);margin:0;text-transform:none;text-align:center}
-.dl-box{display:flex;align-items:center;justify-content:center;gap:1.1rem;margin:clamp(1.8rem,3.4vw,2.6rem) auto 0;max-width:420px;
+.mag-claim{font-family:var(--sans);font-style:normal;font-weight:500;font-size:clamp(1.05rem,2vw,1.22rem);line-height:1.55;letter-spacing:-.005em;color:var(--accent,var(--gold));margin:0;text-transform:none;text-align:center}
+.dl-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:clamp(1rem,2.4vw,1.6rem);margin:clamp(1.8rem,3.4vw,2.6rem) auto 0;max-width:900px}
+.dl-box{display:flex;align-items:center;justify-content:center;gap:1.1rem;flex:1 1 380px;max-width:420px;box-sizing:border-box;min-height:5.4rem;
   padding:1.1rem 1.4rem;border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 34%,var(--line));border-radius:var(--r-sm);
   background:color-mix(in srgb,var(--accent,var(--gold)) 8%,transparent);text-decoration:none;color:var(--ink);
   transition:border-color .3s var(--ease),transform .3s var(--ease)}
@@ -390,6 +390,13 @@ picture{display:contents}
 .dl-text{display:flex;flex-direction:column;gap:.2rem;text-align:center}
 .dl-text b{font-family:var(--sans);font-weight:600;font-size:.98rem;letter-spacing:-.01em}
 .dl-text small{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--muted)}
+.dl-pill{border-radius:var(--pill);border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 45%,var(--line));
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent,var(--gold)) 32%,var(--card)),color-mix(in srgb,var(--accent,var(--gold)) 20%,var(--marine)));
+  box-shadow:0 8px 20px -14px rgba(0,0,0,.6)}
+.dl-pill .dl-icon{border-color:color-mix(in srgb,var(--accent,var(--gold)) 65%,transparent)}
+.dl-pill .dl-text b{font-style:italic;font-weight:400;letter-spacing:.025em;font-size:1.05rem;color:var(--silber);
+  background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);background-position:26% 0}
 
 
 .portrait{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
@@ -766,7 +773,7 @@ footer{position:relative;z-index:1}
       <div class="sol-body">
         <div class="sol-panel sol-p-markets">
           <div class="temp-card frame">
-            <div class="temp-head"><div><h4>the words &mdash; what the press is afraid of</h4><p class="temp-sub">geopolitical risk and policy uncertainty on one canvas &middot; daily newspaper text analysis</p></div>
+            <div class="temp-head"><div><h4>the words &mdash; daily newspaper text analysis</h4></div>
               <div class="temp-ctl">
                 <select class="temp-sel" id="tempRiskRange" aria-label="time range"><option value="1">1 year</option><option value="3" selected>3 years</option><option value="5">5 years</option></select>
                 <select class="temp-sel" id="tempRiskScale" aria-label="scaling"><option value="own">own scale</option><option value="pct">percentile</option></select>
@@ -866,18 +873,19 @@ footer{position:relative;z-index:1}
   <div class="wrap reveal">
     <div class="rib-intro"><span class="rib-kicker">file the</span><h2 class="rib-title">news</h2></div><div class="trade-quotes"><p class="trade-quote">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
     <div class="mag">
-<p class="mag-kicker">dailyIntel &middot; free daily newsletter &middot; PDF only</p>
 <!-- auto:report -->
 <p class="mag-claim">daily AI generated news &amp; intelligence &middot; designed for continuous learning and unbiased intel</p>
 <!-- /auto:report -->
+<div class="dl-row">
 <a class="dl-box" href="reports/briefing.pdf" download>
   <span class="dl-icon" aria-hidden="true">&#8595;</span>
   <span class="dl-text"><b>download today's briefing</b><small>PDF &middot; free &middot; no signup</small></span>
 </a>
-<a class="dl-box" href="mailto:maloutrading&#64;web.de?subject=dailyIntel%20abonnieren&amp;body=Bitte%20schicken%20Sie%20mir%20den%20dailyIntel%20Newsletter%20taeglich%20als%20PDF.">
+<a class="dl-box dl-pill" href="mailto:maloutrading&#64;web.de?subject=dailyIntel%20abonnieren&amp;body=Bitte%20schicken%20Sie%20mir%20den%20dailyIntel%20Newsletter%20taeglich%20als%20PDF.">
   <span class="dl-icon" aria-hidden="true">&#9993;</span>
-  <span class="dl-text"><b>get it every morning</b><small>free &middot; one PDF a day &middot; unsubscribe anytime</small></span>
+  <span class="dl-text"><b>register for daily updates</b><small>free &middot; one PDF a day &middot; unsubscribe anytime</small></span>
 </a>
+</div>
 </div>
   </div>
 </section>
