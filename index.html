@@ -46,7 +46,7 @@ body{margin:0;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;font-synthesis:none}
 /* grain + vignette — the dark ground stops banding and starts breathing */
-body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.28;
   background:radial-gradient(120% 90% at 50% 50%,transparent 52%,color-mix(in srgb,black 42%,transparent)),
              url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
   background-size:auto,160px 160px;mix-blend-mode:soft-light}
@@ -195,7 +195,7 @@ picture{display:contents}
 .wiki-kicker{display:block;font-style:italic;font-size:0.92rem;letter-spacing:.32em;text-transform:uppercase;color:var(--pcol,var(--gold));margin:0 0 .8rem}
 .wiki-cta{position:relative;overflow:hidden;display:inline-block;text-decoration:none;color:var(--weiss);padding:.95rem 2.2rem;border-radius:999px;font-style:italic;font-size:1.2075rem;
   background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 56%,#000),color-mix(in srgb,var(--silber) 34%,#000) 55%,color-mix(in srgb,var(--silber) 22%,#000));
-  box-shadow:0 8px 22px -8px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 60%,#fff),inset 0 -3px 8px -3px rgba(0,0,0,.5);
+  box-shadow:0 8px 22px -8px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 60%,#fff);
   transition:transform .35s var(--ease),box-shadow .35s var(--ease),filter .35s var(--ease);}
 .wiki-cta:hover{transform:translateY(-3px) scale(1.035);color:var(--weiss);filter:brightness(1.12);
   box-shadow:0 18px 44px -10px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 72%,#fff)}
@@ -253,7 +253,7 @@ picture{display:contents}
 #sol-r-wiki:checked ~ .sol-toggle label[for="sol-r-wiki"],
 #sol-r-algo:checked ~ .sol-toggle label[for="sol-r-algo"]{color:var(--ink);
   background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 26%,var(--card)),color-mix(in srgb,var(--bronze) 16%,var(--card)));
-  box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 6px -3px rgba(0,0,0,.3)}
+  box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28)}
 #sol-r-wiki:checked ~ .sol-toggle label[for="sol-r-wiki"] .sol-dot,
 #sol-r-algo:checked ~ .sol-toggle label[for="sol-r-algo"] .sol-dot{opacity:1;background:var(--pcol)}
 .sol-panel{display:none;flex-direction:column;gap:clamp(2.6rem,5vw,4.2rem);max-width:clamp(600px,86vw,1120px);margin-inline:auto;animation:solfade .5s var(--ease)}
@@ -267,7 +267,7 @@ picture{display:contents}
 #sol-r-articles:checked ~ .sol-toggle label[for="sol-r-articles"],
 #sol-r-services:checked ~ .sol-toggle label[for="sol-r-services"]{color:var(--ink);
   background:linear-gradient(135deg,color-mix(in srgb,var(--accent,var(--gold)) 26%,var(--card)),color-mix(in srgb,var(--accent,var(--gold)) 16%,var(--card)));
-  box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 6px -3px rgba(0,0,0,.3)}
+  box-shadow:0 6px 18px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.28)}
 #sol-r-markets:checked ~ .sol-toggle label[for="sol-r-markets"] .sol-dot,
 #sol-r-articles:checked ~ .sol-toggle label[for="sol-r-articles"] .sol-dot,
 #sol-r-services:checked ~ .sol-toggle label[for="sol-r-services"] .sol-dot{opacity:1;background:var(--accent,var(--gold))}
@@ -282,8 +282,8 @@ picture{display:contents}
 .sol-bullets li:nth-child(1){--bcol:color-mix(in srgb,var(--pcol) 40%,var(--silber))}
 .sol-bullets li:nth-child(2){--bcol:color-mix(in srgb,var(--pcol) 45%,var(--bronze))}
 .sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 40%,color-mix(in srgb,var(--marine) 72%,var(--ton)))}
-.sol-bullet-tx{color:var(--silber);background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:sol-shine 7s linear infinite}
-@keyframes sol-shine{to{background-position:220% 0}}
+.sol-bullet-tx{color:var(--silber);background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);background-position:26% 0}
+
 .sol-bullets li:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(0,0,0,.65)}
 .sol-cap{grid-row:1;align-self:start;text-align:center;padding:0}
 .sol-card{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));flex:1;height:29rem;display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:stretch;border-radius:var(--r-sm);padding:clamp(1.3rem,2.8vw,2rem);box-sizing:border-box;overflow:hidden}
@@ -296,7 +296,7 @@ picture{display:contents}
 .sol-card .wiki-cta{margin-top:1.1rem;align-self:flex-start}
 .sol-cta-row{grid-row:2;display:flex;flex-direction:column;gap:.6rem;margin:0;align-self:center;width:100%}
 .sol-cta-row .wiki-cta{margin:0;font-family:var(--sans);font-style:italic;font-weight:600;font-size:1.12rem;min-height:3.3rem;padding:.7rem 1.4rem .7rem clamp(2rem,16%,4.5rem);width:100%;display:flex;align-items:center;justify-content:flex-start;text-align:left;text-shadow:0 1px 1px rgba(255,255,255,.14)}
-.wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 46%,#fff),var(--silber) 55%,color-mix(in srgb,var(--silber) 62%,#000));border:0;color:var(--marine);box-shadow:0 8px 22px -8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.65),inset 0 -3px 8px -3px rgba(0,0,0,.22)}
+.wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 46%,#fff),var(--silber) 55%,color-mix(in srgb,var(--silber) 62%,#000));border:0;color:var(--marine);box-shadow:0 8px 22px -8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.65)}
 .wiki-cta.ghost:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 8%,#fff),color-mix(in srgb,var(--silber) 82%,#fff) 55%,var(--silber));color:var(--marine);box-shadow:0 14px 34px -12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.75)}
 @media(max-width:640px){.sol-text{grid-template-columns:1fr}.sol-chart{height:230px;margin-inline:0}}
 .sp-art{width:54px;height:54px;border-radius:var(--r-xs);flex:none;display:grid;place-items:center;font-style:normal;font-size:1.35rem;color:color-mix(in srgb,var(--gruen) 70%,var(--weiss));background:linear-gradient(150deg,color-mix(in srgb,var(--smaragd) 26%,var(--card)),color-mix(in srgb,var(--ton) 34%,var(--card)));border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
@@ -307,7 +307,7 @@ picture{display:contents}
   --bc-gilt:color-mix(in srgb,var(--ocker) 58%,var(--ton) 20%);
   --bc-page:color-mix(in srgb,var(--weiss) 62%,var(--ocker) 10%);
   display:flex;flex-direction:row;width:100%;max-width:196px;aspect-ratio:4/5;border-radius:2px;overflow:hidden;position:relative;
-  box-shadow:0 4px 6px rgba(0,0,0,.55),0 32px 54px -16px rgba(0,0,0,.8),0 0 0 1px color-mix(in srgb,var(--bc-leather) 75%,transparent);transition:transform .4s ease,box-shadow .4s ease}
+  box-shadow:0 4px 6px rgba(0,0,0,.55);transition:transform .4s ease,box-shadow .4s ease}
 .bc-spine{flex:0 0 19%;position:relative;
   background:repeating-linear-gradient(180deg,rgba(0,0,0,.45) 0 2px,transparent 2px 21%),
     linear-gradient(90deg,rgba(255,255,255,.06),transparent 55%),
@@ -469,6 +469,14 @@ footer{position:relative;z-index:1}
 
 #team{position:relative}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* der horizont: ein stiller streifen am unteren rand, auf jedem tab, hinter allem */
+.horizon{position:fixed;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
+  height:clamp(74px,10.5vh,124px);
+  background:url(pics/sylt.webp) center 58%/cover no-repeat;
+  opacity:.22;filter:saturate(.85);
+  -webkit-mask-image:linear-gradient(to top,#000 0,#000 30%,transparent 100%);
+  mask-image:linear-gradient(to top,#000 0,#000 30%,transparent 100%)}
+@media (max-width:640px){.horizon{height:clamp(56px,8vh,84px);opacity:.18}}
 .tabbg,.landing .stage{-webkit-mask-image:linear-gradient(to bottom,#000 56%,transparent 100%);mask-image:linear-gradient(to bottom,#000 56%,transparent 100%)}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
 #team .wrap{position:relative;z-index:1}
@@ -688,6 +696,7 @@ footer{position:relative;z-index:1}
 </style>
 </head>
 <body class="home">
+<div class="horizon" aria-hidden="true"></div>
 <a class="skip" href="#main">skip to content</a>
 <noscript><p style="padding:6rem 1.5rem 0;text-align:center">
   this site needs javascript for navigation.</p></noscript>

@@ -33,7 +33,7 @@
   --holz:var(--rib1);
   --flieder:var(--rib4);
   --glow-a:color-mix(in srgb,color-mix(in srgb,var(--indigo) 52%,var(--smaragd)) 62%,var(--weiss));
-  --glow-b:var(--flieder);  /* the one oscillating glow, shared by every pill edge */
+  --glow-b:var(--flieder);  /* the one glow tone, shared by every pill edge */
   --wiki:var(--rib3);
   --alp:var(--rib5);
   --grau:color-mix(in srgb,color-mix(in srgb,var(--marine) 88%,var(--weiss)) 78%,transparent);
@@ -79,16 +79,12 @@ nav.tabs button[data-t="stuff"]{--accent:var(--rib4)}
 /* ── BOXES. The master edge: every framed box sets --pcol and its own layout, nothing else. ── */
 .frame{--fcol:var(--pcol,var(--accent,var(--silber)));position:relative;border:1px solid transparent;border-radius:var(--r-lg);
   --fbg:linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%);
-  background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--fcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--fcol) 6%,transparent),transparent 58%) padding-box,var(--fbg) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;animation:frameSilber 14s linear infinite}
-@keyframes frameSilber{0%{background-position:0 0,0 0,0 0,0% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}50%{box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 46px -16px color-mix(in srgb,var(--silber) 62%,transparent),inset 0 1px 0 rgba(255,255,255,.1)}100%{background-position:0 0,0 0,0 0,300% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}}
-@media(prefers-reduced-motion:reduce){.frame{animation:none;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}}
+  background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--fcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--fcol) 6%,transparent),transparent 58%) padding-box,var(--fbg) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;background-position:0 0,0 0,0 0,34% 0;
+  box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.05)}
 
-/* the one oscillating glow pill, every badge just adds this class */
-.glow-pill{border:1px solid color-mix(in srgb,var(--glow-a) 55%,transparent);border-radius:100px;animation:pillGlow 7s ease-in-out infinite}
-@keyframes pillGlow{
-  0%,100%{border-color:color-mix(in srgb,var(--glow-a) 55%,transparent);box-shadow:0 0 24px -6px color-mix(in srgb,var(--glow-a) 50%,transparent),0 0 44px -8px color-mix(in srgb,var(--glow-a) 34%,transparent)}
-  50%{border-color:color-mix(in srgb,var(--glow-b) 60%,transparent);box-shadow:0 0 30px -4px color-mix(in srgb,var(--glow-b) 62%,transparent),0 0 58px -6px color-mix(in srgb,var(--glow-b) 40%,transparent)}}
-@media(prefers-reduced-motion:reduce){.glow-pill{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--glow-a) 55%,transparent)}}
+/* the one glow pill — static halo, marks the lead element of a view */
+.glow-pill{border:1px solid color-mix(in srgb,var(--glow-a) 42%,transparent);border-radius:100px;
+  box-shadow:0 0 18px -8px color-mix(in srgb,var(--glow-a) 38%,transparent)}
 
 /* ── CHARTS. app.js reads these off :root via cv(); they are the chart palette. ── */
 /* gain --gruen · loss --ab · benchmark --silber · axis and label --muted · grid and rule --line
