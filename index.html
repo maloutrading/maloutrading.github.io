@@ -381,6 +381,7 @@ picture{display:contents}
 .temp-pred-p{flex:0 0 46px;text-align:right;font-family:var(--serif);color:var(--ink)}
 .temp-stale{font-size:.7rem;color:var(--muted);margin-top:.4rem}
 @media(max-width:640px){.temp-pred-bar{flex-basis:80px}}
+.mag-kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,var(--gold));text-align:center;margin:0 0 clamp(1.6rem,3vw,2.4rem)}
 .mag-claim{font-family:var(--sans);font-style:normal;font-weight:500;font-size:clamp(1.05rem,2vw,1.22rem);line-height:1.55;letter-spacing:-.005em;color:var(--ink);margin:0;text-transform:none;text-align:center}
 .dl-box{display:flex;align-items:center;justify-content:center;gap:1.1rem;margin:clamp(1.8rem,3.4vw,2.6rem) auto 0;max-width:420px;
   padding:1.1rem 1.4rem;border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 34%,var(--line));border-radius:var(--r-sm);
@@ -890,12 +891,17 @@ footer{position:relative;z-index:1}
   <div class="wrap reveal">
     <div class="rib-intro"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
     <div class="mag">
+<p class="mag-kicker keepcase">dailyIntel &middot; free daily newsletter &middot; PDF only</p>
 <!-- auto:report -->
 <p class="mag-claim">daily AI generated news &amp; intelligence &middot; designed for continuous learning and unbiased intel</p>
 <!-- /auto:report -->
 <a class="dl-box" href="reports/briefing.pdf" download>
   <span class="dl-icon" aria-hidden="true">&#8595;</span>
-  <span class="dl-text"><b class="keepcase">download the full briefing</b><small class="keepcase">PDF &middot; malou trading intelligence</small></span>
+  <span class="dl-text"><b class="keepcase">download today's briefing</b><small class="keepcase">PDF &middot; free &middot; no signup</small></span>
+</a>
+<a class="dl-box" href="mailto:maloutrading&#64;web.de?subject=dailyIntel%20abonnieren&amp;body=Bitte%20schicken%20Sie%20mir%20den%20dailyIntel%20Newsletter%20taeglich%20als%20PDF.">
+  <span class="dl-icon" aria-hidden="true">&#9993;</span>
+  <span class="dl-text"><b class="keepcase">get it every morning</b><small class="keepcase">free &middot; one PDF a day &middot; unsubscribe anytime</small></span>
 </a>
 </div>
   </div>
@@ -911,10 +917,8 @@ footer{position:relative;z-index:1}
     <div class="rib-intro frame"><h2 class="rib-title keepcase">team</h2><p class="rib-lead rib-est glow-pill keepcase">malou trading - est. 2024</p><p class="rib-lead">we do code, designs &amp; finance</p></div>
     <div class="member">
       <figure class="portrait noimg frame">
-        <picture>
-          <img class="port-img" src="pics/hickory.jpeg" alt="benjamin suermann" width="480" height="320" style="object-position:62% 42%"
+        <img class="port-img" src="pics/hickory.webp" alt="benjamin suermann" width="480" height="320" style="object-position:62% 42%"
                loading="lazy" decoding="async">
-        </picture>
         <span class="mono">bs</span>
       </figure>
       <div class="about-text">
@@ -929,7 +933,7 @@ footer{position:relative;z-index:1}
 
     <div class="member">
       <figure class="portrait noimg frame">
-        <img class="port-img" src="pics/claude.jpg" alt="claude" width="480" height="600"
+        <img class="port-img" src="pics/claude.webp" alt="claude" width="480" height="600"
              loading="lazy" decoding="async">
         <span class="mono">c</span>
       </figure>
@@ -954,10 +958,7 @@ footer{position:relative;z-index:1}
       </div>
       <figure class="homage">
         <div class="homage-portrait frame">
-          <picture>
-            <source srcset="pics/malou.webp" type="image/webp">
-            <img src="pics/malou.jpeg" alt="malou" width="768" height="1024" loading="lazy" decoding="async">
-          </picture>
+          <img src="pics/malou.webp" alt="malou" width="768" height="1024" loading="lazy" decoding="async">
         </div>
         <figcaption class="homage-text">
           <h3 class="homage-name keepcase">Malou</h3>
@@ -1070,7 +1071,16 @@ footer{position:relative;z-index:1}
     <p>Wenn Sie mich per E-Mail kontaktieren, werden Ihre Angaben ausschlie&szlig;lich zur
     Bearbeitung Ihres Anliegens verwendet (Art. 6 Abs. 1 lit. b DSGVO) und nicht an Dritte
     weitergegeben.</p>
-    <h3>7. Ihre Rechte</h3>
+    <h3>7. Newsletter &bdquo;dailyIntel&ldquo;</h3>
+    <p>Der dailyIntel-Newsletter ist kostenlos und wird ausschlie&szlig;lich als PDF-Anhang per
+    E-Mail versandt. Die Aufnahme erfolgt allein auf Ihre ausdr&uuml;ckliche Anfrage per E-Mail;
+    Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Gespeichert wird nur Ihre
+    E-Mail-Adresse, zweckgebunden f&uuml;r den Versand. Es gibt keine &Ouml;ffnungs- oder
+    Klickmessung, keine Z&auml;hlpixel und keine Weitergabe an Dritte; die Empf&auml;nger sehen
+    einander nicht. Sie k&ouml;nnen Ihre Einwilligung jederzeit mit Wirkung f&uuml;r die Zukunft
+    widerrufen &ndash; eine formlose E-Mail gen&uuml;gt, jede Ausgabe enth&auml;lt zus&auml;tzlich
+    einen Abmeldelink. Nach dem Widerruf wird Ihre Adresse gel&ouml;scht.</p>
+    <h3>8. Ihre Rechte</h3>
     <p>Sie haben das Recht auf Auskunft, Berichtigung, L&ouml;schung, Einschr&auml;nkung der
     Verarbeitung, Daten&uuml;bertragbarkeit und Widerspruch (Art. 15&ndash;21 DSGVO) sowie das Recht
     auf Beschwerde bei einer Datenschutz-Aufsichtsbeh&ouml;rde.</p>
