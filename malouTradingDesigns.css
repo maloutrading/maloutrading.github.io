@@ -1,0 +1,95 @@
+/* malouTradingDesigns.css — the single source of design truth.
+   Colour, type, geometry, boxes, chart contract. Defined once here, inherited everywhere.
+   Nothing below this file may declare a raw hex. Change a ribbon's colour in ONE line. */
+
+@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
+@font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
+@font-face{font-family:'EB Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBold.woff2) format('woff2')}
+@font-face{font-family:'EB Garamond';font-style:italic;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBoldItalic.woff2) format('woff2')}
+
+:root{
+  /* ── THE SEVEN RAW COLOURS. The only hex in the whole system. ── */
+  --marine:#070B18;   /* midnight slate — the ground everything stands on */
+  --ton:#B4653A;      /* terracotta — ribbon 1, and the warm tone of a loss */
+  --petrol:#2F7D8C;   /* petrol blue — ribbon 2 */
+  --smaragd:#3E8C72;  /* emerald — ribbon 3, and the cool tone of a gain */
+  --indigo:#6A72C4;   /* indigo — ribbon 4 */
+  --ocker:#C2A36B;    /* ochre — ribbon 5, and every metal line and frame */
+  --weiss:#EDE8DC;    /* bone white — the ink */
+
+  /* ── THE FIVE RIBBON ACCENTS, in nav order. Lifted until each clears 4.5:1 on --marine. ── */
+  --rib1:color-mix(in srgb,var(--ton) 76%,var(--weiss));      /* team */
+  --rib2:color-mix(in srgb,var(--petrol) 74%,var(--weiss));   /* news */
+  --rib3:color-mix(in srgb,var(--smaragd) 88%,var(--weiss));  /* trade */
+  --rib4:color-mix(in srgb,var(--indigo) 82%,var(--weiss));   /* stuff */
+  --rib5:var(--ocker);                                        /* reserved for the next ribbon */
+
+  /* ── derived: semantic slots, never a raw hex again ── */
+  --silber:color-mix(in srgb,var(--weiss) 62%,var(--marine));
+  --gold:color-mix(in srgb,var(--ocker) 72%,var(--weiss));
+  --bronze:var(--ocker);
+  --gruen:var(--smaragd);   /* gains rise */
+  --ab:var(--rib1);         /* losses fall */
+  --holz:var(--rib1);
+  --flieder:var(--rib4);
+  --glow-a:color-mix(in srgb,color-mix(in srgb,var(--indigo) 52%,var(--smaragd)) 62%,var(--weiss));
+  --glow-b:var(--flieder);  /* the one oscillating glow, shared by every pill edge */
+  --wiki:var(--rib3);
+  --alp:var(--rib5);
+  --grau:color-mix(in srgb,color-mix(in srgb,var(--marine) 88%,var(--weiss)) 78%,transparent);
+  --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
+  --line:color-mix(in srgb,var(--silber) 42%,var(--marine));
+
+  /* ── type ── */
+  --serif:'EB Garamond',Georgia,serif;
+  --sans:'EB Garamond',Georgia,serif;
+  --mono:ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  --title:var(--serif);
+  --body:var(--serif);
+
+  /* ── geometry ── */
+  --r:10px; --r-xs:6px; --r-sm:9px; --r-md:11px; --r-lg:13px; --pill:999px;
+  --ease:cubic-bezier(.2,.75,.2,1);
+  --w:960px; --wt:64ch; --wide:min(1120px,90vw);
+}
+
+/* ── RIBBON INHERITANCE. One line per ribbon; every box, rule and label inside inherits --accent. ── */
+#team{--accent:var(--rib1)}
+#news{--accent:var(--rib2)}
+#trade{--accent:var(--rib3)}
+#stuff{--accent:var(--rib4)}
+#impressum,#datenschutz{--accent:var(--rib1)}
+
+/* sub-ribbons carry the main ribbons' colours, in the main ribbons' order */
+.sol-toggle label[for="sol-r-markets"],.sol-p-markets{--accent:var(--rib1)}
+.sol-toggle label[for="sol-r-articles"],.sol-p-articles{--accent:var(--rib2)}
+.sol-toggle label[for="sol-r-services"],.sol-p-services{--accent:var(--rib3)}
+
+nav.tabs button[data-t="team"]{--accent:var(--rib1)}
+nav.tabs button[data-t="news"]{--accent:var(--rib2)}
+nav.tabs button[data-t="trade"]{--accent:var(--rib3)}
+nav.tabs button[data-t="stuff"]{--accent:var(--rib4)}
+
+.menu button:nth-child(1){--accent:var(--rib1)}
+.menu button:nth-child(2){--accent:var(--rib2)}
+.menu button:nth-child(3){--accent:var(--rib3)}
+.menu button:nth-child(4){--accent:var(--rib4)}
+.menu button:nth-child(5){--accent:var(--rib5)}
+
+/* ── BOXES. The master edge: every framed box sets --pcol and its own layout, nothing else. ── */
+.frame{--fcol:var(--pcol,var(--accent,var(--silber)));position:relative;border:1px solid transparent;border-radius:var(--r-lg);
+  --fbg:linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%);
+  background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--fcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--fcol) 6%,transparent),transparent 58%) padding-box,var(--fbg) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;animation:frameSilber 14s linear infinite}
+@keyframes frameSilber{0%{background-position:0 0,0 0,0 0,0% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}50%{box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 46px -16px color-mix(in srgb,var(--silber) 62%,transparent),inset 0 1px 0 rgba(255,255,255,.1)}100%{background-position:0 0,0 0,0 0,300% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}}
+@media(prefers-reduced-motion:reduce){.frame{animation:none;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}}
+
+/* the one oscillating glow pill, every badge just adds this class */
+.glow-pill{border:1px solid color-mix(in srgb,var(--glow-a) 55%,transparent);border-radius:100px;animation:pillGlow 7s ease-in-out infinite}
+@keyframes pillGlow{
+  0%,100%{border-color:color-mix(in srgb,var(--glow-a) 55%,transparent);box-shadow:0 0 24px -6px color-mix(in srgb,var(--glow-a) 50%,transparent),0 0 44px -8px color-mix(in srgb,var(--glow-a) 34%,transparent)}
+  50%{border-color:color-mix(in srgb,var(--glow-b) 60%,transparent);box-shadow:0 0 30px -4px color-mix(in srgb,var(--glow-b) 62%,transparent),0 0 58px -6px color-mix(in srgb,var(--glow-b) 40%,transparent)}}
+@media(prefers-reduced-motion:reduce){.glow-pill{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--glow-a) 55%,transparent)}}
+
+/* ── CHARTS. app.js reads these off :root via cv(); they are the chart palette. ── */
+/* gain --gruen · loss --ab · benchmark --silber · axis and label --muted · grid and rule --line
+   accent fills --gold and --flieder · every chart inherits the ribbon's --accent from its section. */

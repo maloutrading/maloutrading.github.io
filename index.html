@@ -12,44 +12,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C1220'/%3E%3Ctext x='16' y='23' font-family='Hoefler Text,Georgia,serif' font-size='21' fill='%23EDE8DC' text-anchor='middle'%3Em%3C/text%3E%3C/svg%3E">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; frame-src https://open.spotify.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'">
 <link rel="preload" href="fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<style>@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Regular.woff2) format('woff2')}
-@font-face{font-family:'EB Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/EBGaramond-Italic.woff2) format('woff2')}
-@font-face{font-family:'EB Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBold.woff2) format('woff2')}
-@font-face{font-family:'EB Garamond';font-style:italic;font-weight:600;font-display:swap;src:url(fonts/EBGaramond-SemiBoldItalic.woff2) format('woff2')}
+<link rel="stylesheet" href="malouTradingDesigns.css">
+<style>
 
-:root{
-  /* ── THE ONLY FIVE COLOURS IN THIS FILE. Everything below is mixed from them. ── */
-  --marine:#090E1C;   /* midnight slate — the ground everything stands on */
-  --oxblut:#8C2F2F;   /* oxblood — fills and glows, too dark to ever be text */
-  --messing:#C9A227;  /* brass — lines, frames, the trade ribbon */
-  --smaragd:#3E8C72;  /* emerald — gains */
-  --heide:#7E6BB5;    /* heather violet — the stuff ribbon */
-  --weiss:#EDE8DC;    /* bone white — the ink */
-  /* ── derived: semantic slots, never a raw hex again. Every one clears 4.5:1 on --marine. ── */
-  --silber:color-mix(in srgb,var(--weiss) 62%,var(--marine));
-  --gold:color-mix(in srgb,var(--messing) 58%,var(--weiss));
-  --bronze:var(--messing);                                     /* trade ribbon */
-  --gruen:var(--smaragd);                                      /* gains rise */
-  --ab:color-mix(in srgb,var(--oxblut) 62%,var(--weiss));      /* losses fall — oxblood lifted just enough to be read */
-  --flieder:color-mix(in srgb,var(--heide) 72%,var(--weiss));  /* heather lifted for text on marine */
-  --glow-a:color-mix(in srgb,color-mix(in srgb,var(--heide) 52%,var(--smaragd)) 62%,var(--weiss));
-  --glow-b:var(--flieder);                                     /* the one oscillating glow, shared by every pill edge */
-  --holz:var(--ab);                                            /* team ribbon */
-  --wiki:var(--gruen);
-  --alp:var(--messing);
-  --grau:color-mix(in srgb,color-mix(in srgb,var(--marine) 88%,var(--weiss)) 78%,transparent);
-  --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
-  --line:color-mix(in srgb,var(--silber) 42%,var(--marine));
-  --gold-line:color-mix(in srgb,var(--gold) 55%,transparent);
-  --serif:'EB Garamond',Georgia,serif;
-  --sans:'EB Garamond',Georgia,serif;
-  --mono:ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
-  --title:var(--serif);
-  --body:var(--serif);
-  --r:10px; --r-xs:6px; --r-sm:9px; --r-md:11px; --r-lg:13px; --pill:999px;
-  --ease:cubic-bezier(.2,.75,.2,1);
-  --w:960px; --wt:64ch; --wide:min(1120px,90vw);
-}
 *{box-sizing:border-box}
 button,input,select,textarea{font-family:inherit}
 img,svg,video{vertical-align:middle}
@@ -107,12 +72,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 .tag{font-style:italic;font-size:0.943rem;letter-spacing:.26em;color:var(--accent,var(--gold));
   display:inline-block}
 
-#team{--accent:var(--holz)}
-#trade{--accent:var(--bronze)}
-#news{--accent:var(--gruen)}
-#stuff{--accent:var(--flieder)}
 #news .wrap{max-width:var(--wide)}
-#impressum,#datenschutz{--accent:var(--holz)}
 .wrap{max-width:var(--w);margin:0 auto;padding:0 1.7rem}
 .text{max-width:var(--wt)}
 
@@ -132,16 +92,8 @@ nav.tabs{display:flex;gap:.15rem;flex-wrap:wrap}
 nav.tabs button{font-family:var(--serif);font-size:.95rem;letter-spacing:.05em;
   background:none;border:none;cursor:pointer;color:var(--silber);padding:.5rem .95rem;
   border-radius:999px;transition:all .3s;white-space:nowrap;min-height:40px}
-nav.tabs button:hover{color:var(--bronze)}
-nav.tabs button.active{background:var(--bronze);color:var(--marine)}
-nav.tabs button[data-t="team"]:hover{color:var(--holz)}
-nav.tabs button[data-t="team"].active{background:var(--holz);color:var(--weiss)}
-nav.tabs button[data-t="trade"]:hover{color:var(--bronze)}
-nav.tabs button[data-t="trade"].active{background:var(--bronze);color:var(--marine)}
-nav.tabs button[data-t="news"]:hover{color:var(--gruen)}
-nav.tabs button[data-t="news"].active{background:var(--gruen);color:var(--weiss)}
-nav.tabs button[data-t="stuff"]:hover{color:var(--flieder)}
-nav.tabs button[data-t="stuff"].active{background:var(--flieder);color:var(--marine)}
+nav.tabs button:hover{color:var(--accent,var(--bronze))}
+nav.tabs button.active{background:var(--accent,var(--bronze));color:var(--marine)}
 @media(max-width:640px){
   .nav{padding:.7rem 1rem}
   nav.tabs{flex-wrap:nowrap;overflow-x:auto;max-width:100%;
@@ -176,11 +128,6 @@ main section.tab.show{display:block}
 .brand-lg em{font-style:normal;color:inherit}
 .menu{justify-self:start;display:flex;flex-direction:column;gap:0;margin:0 0 0 3rem;
   width:min(13rem,80%)}
-.menu button:nth-child(1){--accent:var(--gruen)}
-.menu button:nth-child(2){--accent:var(--silber)}
-.menu button:nth-child(3){--accent:var(--bronze)}
-.menu button:nth-child(4){--accent:var(--gruen)}
-.menu button:nth-child(5){--accent:var(--bronze)}
 .menu button{position:relative;display:block;background:none;border:0;
   border-top:1px solid var(--line);cursor:pointer;color:var(--ink);font:inherit;
   font-size:.82rem;letter-spacing:.16em;padding:.7rem .1rem;
@@ -263,9 +210,7 @@ picture{display:contents}
   margin:calc(clamp(5.6rem,9vw,7.5rem) + 2.4cm) auto 0;
   padding:calc(clamp(4rem,6.5vw,5.6rem) + 2cm) 0 0}
 .homage{display:flex;flex-direction:column;align-items:center;text-align:center;margin:0}
-.homage-portrait{width:244px;height:244px;border-radius:50%;overflow:hidden;
-  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 50%,transparent);
-  box-shadow:0 14px 36px rgba(0,0,0,.32),0 0 0 6px color-mix(in srgb,var(--accent,var(--gold)) 7%,transparent)}
+.homage-portrait{width:244px;height:244px;border-radius:50%;overflow:hidden}
 .homage-portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:1.6rem 0 0}
 .spotify-box{flex:0 1 488px;max-width:488px;position:relative;border-radius:var(--r-lg);padding:2.1rem 2.1rem 1.65rem;
@@ -286,12 +231,7 @@ picture{display:contents}
 .spotify-track:hover .go{opacity:1;transform:translateX(0)}
 .spotify-track:hover .t b{color:var(--gruen)}
 @media(max-width:640px){.spotify-box{max-width:none}.homage{margin:1.5rem auto 0}}
-/* ── master edge: the one framed-box design, every box below just sets --pcol and layout ── */
-.frame{--fcol:var(--pcol,var(--accent,var(--silber)));position:relative;border:1px solid transparent;border-radius:var(--r-lg);
-  background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--fcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--fcol) 6%,transparent),transparent 58%) padding-box,linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;animation:frameSilber 14s linear infinite}
-@keyframes frameSilber{0%{background-position:0 0,0 0,0 0,0% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}50%{box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 46px -16px color-mix(in srgb,var(--silber) 62%,transparent),inset 0 1px 0 rgba(255,255,255,.1)}100%{background-position:0 0,0 0,0 0,300% 0;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),0 0 34px -20px color-mix(in srgb,var(--silber) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.06)}}
-@media(prefers-reduced-motion:reduce){.frame{animation:none;box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06)}}
-.library{--pcol:var(--heide);max-width:var(--wide);margin:clamp(7rem,12vw,10rem) auto clamp(3.5rem,7vw,5rem);
+.library{--pcol:var(--indigo);max-width:var(--wide);margin:clamp(7rem,12vw,10rem) auto clamp(3.5rem,7vw,5rem);
   padding:clamp(3rem,6vw,4.6rem) clamp(2rem,5vw,4rem) clamp(3.4rem,6vw,5rem)}
 .library::before{content:"";position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--pcol) 15%,transparent);border-radius:1px;pointer-events:none}
 .library::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:clamp(70px,18%,150px);height:2px;background:linear-gradient(90deg,transparent,var(--pcol),transparent)}
@@ -303,12 +243,6 @@ picture{display:contents}
 .solutions:has(#sol-r-algo:checked){--pcol:var(--alp)}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
-/* ── master edge: the one oscillating glow pill, every badge below just adds this class ── */
-.glow-pill{border:1px solid color-mix(in srgb,var(--glow-a) 55%,transparent);border-radius:100px;animation:pillGlow 7s ease-in-out infinite}
-@keyframes pillGlow{
-  0%,100%{border-color:color-mix(in srgb,var(--glow-a) 55%,transparent);box-shadow:0 0 24px -6px color-mix(in srgb,var(--glow-a) 50%,transparent),0 0 44px -8px color-mix(in srgb,var(--glow-a) 34%,transparent)}
-  50%{border-color:color-mix(in srgb,var(--glow-b) 60%,transparent);box-shadow:0 0 30px -4px color-mix(in srgb,var(--glow-b) 62%,transparent),0 0 58px -6px color-mix(in srgb,var(--glow-b) 40%,transparent)}}
-@media(prefers-reduced-motion:reduce){.glow-pill{animation:none;box-shadow:0 0 28px -5px color-mix(in srgb,var(--glow-a) 55%,transparent)}}
 .sol-title{max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.4rem,3vw,2.2rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink)}
 /* grid statt flex: 1fr-spuren unter max-content geben jedem knopf die breite des breitesten */
 .sol-toggle{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
@@ -341,18 +275,18 @@ picture{display:contents}
 #sol-r-articles:checked ~ .sol-body .sol-p-articles{display:flex}
 #sol-r-services:checked ~ .sol-body .sol-p-services{display:flex}
 .sol-two{display:flex;flex-direction:column;gap:clamp(2rem,3.6vw,3rem);width:100%}
-.sol-chart{border-radius:var(--r-sm);overflow:hidden;height:clamp(230px,30vw,300px);display:flex}
+.sol-chart{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));border-radius:var(--r-sm);overflow:hidden;height:clamp(230px,30vw,300px);display:flex}
 .sol-chart iframe{width:100%;height:100%;border:0;display:block}
 .sol-text{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,2.6vw,2.1rem)}
 .sol-bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.85rem;align-items:stretch;width:100%}.sol-bullets li{--bcol:color-mix(in srgb,var(--pcol,var(--bronze)) 45%,var(--bronze));display:flex;align-items:center;justify-content:flex-start;font-family:var(--sans);font-style:italic;font-weight:400;letter-spacing:.025em;font-size:1.12rem;text-align:left;width:100%;min-height:3.3rem;padding:.7rem 1.4rem .7rem clamp(2rem,16%,4.5rem);border-radius:var(--pill);border:1px solid color-mix(in srgb,var(--bcol) 45%,var(--line));background:linear-gradient(135deg,color-mix(in srgb,var(--bcol) 32%,var(--card)),color-mix(in srgb,var(--bcol) 20%,var(--marine)));box-shadow:0 8px 20px -14px rgba(0,0,0,.6);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 .sol-bullets li:nth-child(1){--bcol:color-mix(in srgb,var(--pcol) 40%,var(--silber))}
 .sol-bullets li:nth-child(2){--bcol:color-mix(in srgb,var(--pcol) 45%,var(--bronze))}
-.sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 40%,color-mix(in srgb,var(--marine) 72%,var(--oxblut)))}
+.sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 40%,color-mix(in srgb,var(--marine) 72%,var(--ton)))}
 .sol-bullet-tx{color:var(--silber);background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:sol-shine 7s linear infinite}
 @keyframes sol-shine{to{background-position:220% 0}}
 .sol-bullets li:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(0,0,0,.65)}
 .sol-cap{grid-row:1;align-self:start;text-align:center;padding:0}
-.sol-card{flex:1;height:29rem;display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:stretch;border-radius:var(--r-sm);padding:clamp(1.3rem,2.8vw,2rem);box-sizing:border-box;overflow:hidden}
+.sol-card{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));flex:1;height:29rem;display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:stretch;border-radius:var(--r-sm);padding:clamp(1.3rem,2.8vw,2rem);box-sizing:border-box;overflow:hidden}
 .sol-card .wiki-kicker{margin:0 0 .55rem}
 .sol-card-name{font-family:var(--sans);font-weight:600;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.015em;margin:0 0 .7rem;color:var(--ink)}
 .sol-card-tag{color:var(--muted);font-size:.98rem;line-height:1.6;margin:0}
@@ -365,13 +299,13 @@ picture{display:contents}
 .wiki-cta.ghost{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 46%,#fff),var(--silber) 55%,color-mix(in srgb,var(--silber) 62%,#000));border:0;color:var(--marine);box-shadow:0 8px 22px -8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.65),inset 0 -3px 8px -3px rgba(0,0,0,.22)}
 .wiki-cta.ghost:hover{background:linear-gradient(135deg,color-mix(in srgb,var(--silber) 8%,#fff),color-mix(in srgb,var(--silber) 82%,#fff) 55%,var(--silber));color:var(--marine);box-shadow:0 14px 34px -12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.75)}
 @media(max-width:640px){.sol-text{grid-template-columns:1fr}.sol-chart{height:230px;margin-inline:0}}
-.sp-art{width:54px;height:54px;border-radius:var(--r-xs);flex:none;display:grid;place-items:center;font-style:normal;font-size:1.35rem;color:color-mix(in srgb,var(--gruen) 70%,var(--weiss));background:linear-gradient(150deg,color-mix(in srgb,var(--smaragd) 26%,var(--card)),color-mix(in srgb,var(--oxblut) 34%,var(--card)));border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
+.sp-art{width:54px;height:54px;border-radius:var(--r-xs);flex:none;display:grid;place-items:center;font-style:normal;font-size:1.35rem;color:color-mix(in srgb,var(--gruen) 70%,var(--weiss));background:linear-gradient(150deg,color-mix(in srgb,var(--smaragd) 26%,var(--card)),color-mix(in srgb,var(--ton) 34%,var(--card)));border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 16px -5px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s ease}
 .spotify-track:hover .sp-art{transform:scale(1.05)}
-.book-cover{--bc-tone:color-mix(in srgb,color-mix(in srgb,var(--oxblut) 55%,var(--messing)) 58%,var(--marine));
+.book-cover{--bc-tone:color-mix(in srgb,color-mix(in srgb,var(--ton) 55%,var(--ocker)) 58%,var(--marine));
   --bc-leather:color-mix(in srgb,var(--bc-tone) 82%,transparent);
-  --bc-leather-lt:color-mix(in srgb,color-mix(in srgb,var(--bc-tone) 84%,var(--messing)) 82%,transparent);
-  --bc-gilt:color-mix(in srgb,var(--messing) 58%,var(--oxblut) 20%);
-  --bc-page:color-mix(in srgb,var(--weiss) 62%,var(--messing) 10%);
+  --bc-leather-lt:color-mix(in srgb,color-mix(in srgb,var(--bc-tone) 84%,var(--ocker)) 82%,transparent);
+  --bc-gilt:color-mix(in srgb,var(--ocker) 58%,var(--ton) 20%);
+  --bc-page:color-mix(in srgb,var(--weiss) 62%,var(--ocker) 10%);
   display:flex;flex-direction:row;width:100%;max-width:196px;aspect-ratio:4/5;border-radius:2px;overflow:hidden;position:relative;
   box-shadow:0 4px 6px rgba(0,0,0,.55),0 32px 54px -16px rgba(0,0,0,.8),0 0 0 1px color-mix(in srgb,var(--bc-leather) 75%,transparent);transition:transform .4s ease,box-shadow .4s ease}
 .bc-spine{flex:0 0 19%;position:relative;
@@ -394,10 +328,10 @@ picture{display:contents}
 .bc-leaf{font-size:.72rem;line-height:1;color:color-mix(in srgb,var(--bc-gilt) 85%,transparent)}
 .bc-author{font-family:var(--serif);font-style:italic;font-weight:500;font-size:.78rem;letter-spacing:.04em;color:color-mix(in srgb,var(--bc-gilt) 60%,var(--weiss))}
 .book:nth-child(1) .book-cover{transform:rotate(-2.6deg)}
-.book:nth-child(2) .book-cover{transform:rotate(1.5deg) translateY(-7px);--bc-tone:color-mix(in srgb,var(--smaragd) 52%,var(--marine));--bc-gilt:color-mix(in srgb,var(--messing) 40%,var(--weiss))}
+.book:nth-child(2) .book-cover{transform:rotate(1.5deg) translateY(-7px);--bc-tone:color-mix(in srgb,var(--smaragd) 52%,var(--marine));--bc-gilt:color-mix(in srgb,var(--ocker) 40%,var(--weiss))}
 .book:nth-child(2) .bc-face::after{display:none}
 .book:nth-child(2) .bc-rule i{width:26px}
-.book:nth-child(3) .book-cover{transform:rotate(-1deg) translateY(4px);--bc-tone:color-mix(in srgb,color-mix(in srgb,var(--messing) 55%,var(--smaragd)) 48%,var(--marine));--bc-gilt:color-mix(in srgb,var(--messing) 78%,var(--weiss))}
+.book:nth-child(3) .book-cover{transform:rotate(-1deg) translateY(4px);--bc-tone:color-mix(in srgb,color-mix(in srgb,var(--ocker) 55%,var(--smaragd)) 48%,var(--marine));--bc-gilt:color-mix(in srgb,var(--ocker) 78%,var(--weiss))}
 .book:nth-child(3) .bc-face::before{border-width:3px;border-style:double}
 .book:hover .book-cover{transform:translateY(-10px) rotate(0deg);box-shadow:0 40px 60px -18px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.2)}
 .mag{position:relative;max-width:840px;margin:0 auto;text-align:left;padding:clamp(2rem,4vw,3.2rem) clamp(1.8rem,4vw,3.4rem);border:0;border-radius:var(--r-lg);background:linear-gradient(180deg,color-mix(in srgb,#fff 3%,transparent),transparent 40%);box-shadow:0 34px 76px -52px rgba(0,0,0,.7),0 0 54px -8px color-mix(in srgb,var(--accent,var(--gold)) 13%,transparent)}
@@ -406,7 +340,7 @@ picture{display:contents}
 .stuff-group{margin:0 0 calc(clamp(2.6rem,5vw,3.8rem) + 1cm)}
 .stuff-label{display:block;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 1.4rem}
 .stuff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:clamp(1.1rem,2.4vw,1.7rem)}
-.stuff-card{display:block;text-decoration:none;color:var(--ink);padding:clamp(1.3rem,2.6vw,1.8rem);border-radius:var(--r-sm);transition:transform .3s var(--ease)}
+.stuff-card{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));display:block;text-decoration:none;color:var(--ink);padding:clamp(1.3rem,2.6vw,1.8rem);border-radius:var(--r-sm);transition:transform .3s var(--ease)}
 .stuff-card:hover{color:var(--ink);transform:translateY(-3px)}
 .stuff-head{font-family:var(--sans);font-weight:600;font-size:1.12rem;line-height:1.32;letter-spacing:-.01em;margin:0 0 .8rem}
 .stuff-desc{font-family:var(--sans);font-style:italic;color:var(--silber);font-size:.95rem;line-height:1.5;margin:0 0 .9rem}
@@ -430,7 +364,7 @@ picture{display:contents}
 .temp-stat{font-size:.74rem;color:var(--muted);margin:.7rem 0 0}
 .temp-stat b{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--ink)}
 .temp-spark{display:block;width:100%;height:32px;margin-top:.4rem}
-.temp-card{border-radius:var(--r-sm);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
+.temp-card{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));border-radius:var(--r-sm);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
 .temp-card h4{margin:0 0 .3rem;font-family:var(--sans);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,var(--gold))}
 .temp-sub{margin:0 0 1rem;font-size:.72rem;color:var(--muted)}
 .temp-svg{width:100%;height:230px}
@@ -460,7 +394,7 @@ picture{display:contents}
 .dl-text small{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--muted)}
 
 
-.portrait{position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
+.portrait{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .portrait .mono{display:none}
 .portrait.noimg .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -545,8 +479,9 @@ footer{position:relative;z-index:1}
 .trade-quote{display:block;margin:.35rem auto 0;padding:0;border:0;background:none;border-radius:0;white-space:normal;max-width:52ch;
   font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.9rem,1.7vw,1.05rem);
   line-height:1.45;letter-spacing:.01em;word-spacing:.02em;color:var(--weiss);text-transform:none;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-.member .portrait,.homage-portrait{border:0;box-shadow:0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.72),0 0 0 1px color-mix(in srgb,var(--accent,var(--gold)) 22%,transparent)}
 .trade-quote::before{display:none}
+.member .portrait{border-radius:var(--r)}
+.homage-portrait{border-radius:50%}
 .trade-quote cite{display:block;margin:.6rem 0 0;font-style:italic;color:var(--accent,var(--gold));white-space:nowrap;font-size:.85em;letter-spacing:.08em}
 .divider{position:relative;height:1px;width:min(760px,86%);margin:clamp(4.5rem,9vw,7.5rem) auto}
 .divider::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;transform:translateY(-50%);
@@ -594,7 +529,7 @@ footer{position:relative;z-index:1}
 /* ── trading markets: cross-bot comparison, per-panel slogan, live analytics — shared design language ── */
 
 /* engine plaque: one per market, same shell, small type, accent edge */
-.sol-slogan{position:relative;width:100%;max-width:none;margin:0 auto;height:25rem;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:clamp(1.6rem,3.2vw,2.3rem) clamp(2rem,4.4vw,3.1rem);border-radius:var(--r-sm);overflow:hidden}
+.sol-slogan{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));position:relative;width:100%;max-width:none;margin:0 auto;height:25rem;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:clamp(1.6rem,3.2vw,2.3rem) clamp(2rem,4.4vw,3.1rem);border-radius:var(--r-sm);overflow:hidden}
 .sol-slogan::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pcol) 55%,transparent),transparent)}
 .sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 68%);pointer-events:none}
 .sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1rem,1.4vw,1.18rem);line-height:1.78;letter-spacing:.014em;color:color-mix(in srgb,var(--ink) 82%,transparent);max-width:88ch;margin:0 auto;text-align:left}
@@ -630,7 +565,7 @@ footer{position:relative;z-index:1}
 .rw-plot .an-svg{min-height:86px}
 .rw-t{position:absolute;right:0;font-family:var(--mono);font-style:normal;font-size:.6rem;color:var(--muted);transform:translateY(-50%)}
 .rw-t[style*="top:0"],.rw-t[style*="bottom"]{transform:none}
-.callout{flex:1 1 220px;display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.2rem;border-radius:var(--r-sm)}
+.callout{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));flex:1 1 220px;display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.2rem;border-radius:var(--r-sm)}
 .callout-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .callout b{font-family:var(--sans);font-size:1.15rem;color:var(--ink)}
 .callout-r{font-family:var(--serif);font-size:1.05rem}
@@ -638,7 +573,7 @@ footer{position:relative;z-index:1}
 .callout-r.dn{color:var(--holz)}
 .callout-date{font-size:.7rem;color:var(--muted);letter-spacing:.04em}
 .an-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1rem,2.4vw,1.6rem);width:100%}
-.an-card{border-radius:var(--r-sm);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
+.an-card{--fbg:linear-gradient(0deg,rgb(36,40,51),rgb(36,40,51));border-radius:var(--r-sm);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
 .an-h{margin:0 0 .55rem;font-family:var(--sans);font-weight:400;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .an-svg{flex:1;width:100%;min-height:100px}
 .tc-card{min-height:0}
@@ -715,7 +650,7 @@ footer{position:relative;z-index:1}
 .tstats span{display:block;margin-top:.1rem;font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 @media(max-width:640px){.book-trades{grid-template-columns:1fr}.mg{grid-template-columns:2.2rem repeat(12,1fr) 2.2rem}}
 /* pflicht-risikohinweis unter den ergebnissen */
-.markets-legal{max-width:min(820px,94vw);margin:clamp(2.2rem,4vw,3.2rem) auto 0;padding:1rem 1.3rem;border-radius:var(--r-sm);font-family:var(--sans);font-size:.78rem;line-height:1.65;color:var(--muted);text-align:center;text-wrap:balance}
+.markets-legal{--fbg:linear-gradient(0deg,rgb(30,34,44),rgb(30,34,44));max-width:min(820px,94vw);margin:clamp(2.2rem,4vw,3.2rem) auto 0;padding:1rem 1.3rem;border-radius:var(--r-sm);font-family:var(--sans);font-size:.78rem;line-height:1.65;color:var(--muted);text-align:center;text-wrap:balance}
 .markets-legal b{color:var(--ink);font-weight:600}
 .markets-legal a,.markets-legal .linklike{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
 .markets-legal .linklike{background:none;border:0;padding:0;font:inherit;cursor:pointer}
@@ -813,7 +748,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--bronze)"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
+    <div class="rib-intro"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
     <div class="trade-quotes"><p class="trade-quote keepcase">All trading is ultimately discretionary. <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions frame">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
@@ -843,7 +778,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--ab)"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <div class="rib-intro"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
 
     <div class="stuff-toggle">
       <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-markets" checked>
@@ -925,8 +860,8 @@ footer{position:relative;z-index:1}
     <div class="stuff-group">
       <span class="stuff-label keepcase">work with me</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Website%20Anfrage"><h3 class="stuff-head keepcase">Website &amp; Design</h3><p class="stuff-desc keepcase">Need help with your website? I design and build sites like this one &mdash; clean, fast, no bloat.</p><p class="stuff-meta keepcase">write me &rarr; maloutrading@web.de</p></a>
-        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Hallo"><h3 class="stuff-head keepcase">Get in Touch</h3><p class="stuff-desc keepcase">Got a question, an idea, or just want to say hi? Send me a message directly.</p><p class="stuff-meta keepcase">write me &rarr; maloutrading@web.de</p></a>
+        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Website%20Anfrage"><h3 class="stuff-head keepcase">Website &amp; Design</h3><p class="stuff-desc keepcase">Need help with your website? I design and build sites like this one &mdash; clean, fast, no bloat.</p><p class="stuff-meta keepcase">write me &rarr;</p></a>
+        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Hallo"><h3 class="stuff-head keepcase">Get in Touch</h3><p class="stuff-desc keepcase">Got a question, an idea, or just want to say hi? Send me a message directly.</p><p class="stuff-meta keepcase">write me &rarr;</p></a>
       </div>
     </div>
 
@@ -944,7 +879,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro" style="--accent:var(--gruen)"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <div class="rib-intro"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
     <div class="mag">
 <!-- auto:report -->
 <p class="mag-claim">daily AI generated news &amp; intelligence &middot; designed for continuous learning and unbiased intel</p>
@@ -964,9 +899,9 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro frame" style="--accent:var(--holz)"><h2 class="rib-title keepcase">team</h2><p class="rib-lead rib-est glow-pill keepcase">malou trading - est. 2024</p><p class="rib-lead">we do code, designs &amp; finance</p></div>
+    <div class="rib-intro frame"><h2 class="rib-title keepcase">team</h2><p class="rib-lead rib-est glow-pill keepcase">malou trading - est. 2024</p><p class="rib-lead">we do code, designs &amp; finance</p></div>
     <div class="member">
-      <figure class="portrait noimg">
+      <figure class="portrait noimg frame">
         <picture>
           <img class="port-img" src="pics/hickory.jpeg" alt="benjamin suermann" width="480" height="320" style="object-position:62% 42%"
                loading="lazy" decoding="async">
@@ -984,7 +919,7 @@ footer{position:relative;z-index:1}
     </div>
 
     <div class="member">
-      <figure class="portrait noimg">
+      <figure class="portrait noimg frame">
         <img class="port-img" src="pics/claude.jpg" alt="claude" width="480" height="600"
              loading="lazy" decoding="async">
         <span class="mono">c</span>
@@ -1009,7 +944,7 @@ footer{position:relative;z-index:1}
 <a class="sp-brand" href="https://open.spotify.com" target="_blank" rel="noopener"><img src="pics/spotifyLogo.svg" alt="Spotify" width="88" height="24" loading="lazy"></a>
       </div>
       <figure class="homage">
-        <div class="homage-portrait">
+        <div class="homage-portrait frame">
           <picture>
             <source srcset="pics/malou.webp" type="image/webp">
             <img src="pics/malou.jpeg" alt="malou" width="768" height="1024" loading="lazy" decoding="async">
