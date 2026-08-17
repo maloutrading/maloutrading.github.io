@@ -279,7 +279,9 @@ picture{display:contents}
 .sol-bullets li:nth-child(1){--bcol:color-mix(in srgb,var(--pcol) 40%,var(--silber))}
 .sol-bullets li:nth-child(2){--bcol:color-mix(in srgb,var(--pcol) 45%,var(--bronze))}
 .sol-bullets li:nth-child(3){--bcol:color-mix(in srgb,var(--pcol) 40%,color-mix(in srgb,var(--marine) 72%,var(--ton)))}
-.sol-bullet-tx{color:var(--silber);background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);background-position:26% 0}
+.sol-bullet-tx{color:var(--silber);background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:sol-shine 9s linear infinite}
+@keyframes sol-shine{to{background-position:220% 0}}
+@media(prefers-reduced-motion:reduce){.sol-bullet-tx,.dl-pill .dl-text b{animation:none;background-position:26% 0}}
 
 .sol-bullets li:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(0,0,0,.65)}
 .sol-cap{grid-row:1;align-self:start;text-align:center;padding:0}
@@ -396,7 +398,7 @@ picture{display:contents}
 .dl-pill .dl-icon{border-color:color-mix(in srgb,var(--accent,var(--gold)) 65%,transparent)}
 .dl-pill .dl-text b{font-style:italic;font-weight:400;letter-spacing:.025em;font-size:1.05rem;color:var(--silber);
   background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);
-  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);background-position:26% 0}
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:sol-shine 9s linear infinite}
 
 
 .portrait{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
