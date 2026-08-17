@@ -42,7 +42,7 @@ const io = new IntersectionObserver(
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 document.querySelectorAll('.stage video,.topvid video').forEach(v => {
-  if (v.closest('.stage')) v.playbackRate = .5;
+  if (v.closest('#trade')) v.playbackRate = .5;
   const ready = () => v.classList.add('ready');
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
