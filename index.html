@@ -199,8 +199,8 @@ picture{display:contents}
   box-shadow:0 18px 44px -10px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--silber) 72%,#fff)}
 .wiki-cta:active{transform:translateY(-1px) scale(.99)}
 .rib-intro{text-align:center;max-width:var(--wt);margin:0 auto calc(clamp(2.6rem,5vw,3.8rem) + 2.5cm)}
-.rib-kicker{display:block;font-style:normal;font-size:.7rem;letter-spacing:.44em;text-transform:uppercase;color:var(--muted);margin:0 0 1.5rem}
-.rib-title{font-family:var(--sans);font-weight:600;font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.02em;line-height:1;margin:0}
+.rib-kicker{display:block;font-style:normal;font-size:.75rem;letter-spacing:.44em;text-transform:uppercase;color:var(--muted);margin:0 0 1.5rem}
+.rib-title{font-family:var(--sans);font-weight:600;font-size:clamp(2.15rem,4.8vw,3.5rem);letter-spacing:-.02em;line-height:1;margin:0}
 .rib-title::after{margin-left:auto;margin-right:auto}
 .rib-lead{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.2rem,2.5vw,1.48rem);margin:1.75rem auto 0;max-width:52ch}
 .team-bottom{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
@@ -476,7 +476,7 @@ footer{position:relative;z-index:1}
 .trade-quotes{display:block;text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem);
   padding:clamp(1.6rem,3.2vw,2.6rem) clamp(1.4rem,3.4vw,2.8rem)}
 .trade-quote{display:block;margin:.35rem auto 0;padding:0;border:0;background:none;border-radius:0;white-space:normal;max-width:52ch;
-  font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.9rem,1.7vw,1.05rem);
+  font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(.95rem,1.8vw,1.1rem);
   line-height:1.45;letter-spacing:.01em;word-spacing:.02em;color:var(--weiss);text-transform:none;text-shadow:0 1px 10px rgba(0,0,0,.5)}
 .trade-quote::before{display:none}
 .member .portrait{border-radius:var(--r)}
@@ -776,10 +776,10 @@ footer{position:relative;z-index:1}
     <div class="rib-intro"><span class="rib-kicker">written elsewhere</span><h2 class="rib-title">stuff</h2></div><div class="trade-quotes"><p class="trade-quote">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
 
     <div class="stuff-toggle">
-      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-markets" checked>
-      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-articles">
+      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-articles" checked>
+      <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-markets">
       <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-services">
-      <div class="sol-toggle"><label class="sol-btn" for="sol-r-markets"><span class="sol-dot"></span>markets</label><label class="sol-btn" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn" for="sol-r-services"><span class="sol-dot"></span>services</label></div>
+      <div class="sol-toggle"><label class="sol-btn" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn" for="sol-r-markets"><span class="sol-dot"></span>markets</label><label class="sol-btn" for="sol-r-services"><span class="sol-dot"></span>services</label></div>
       <div class="sol-body">
         <div class="sol-panel sol-p-markets">
           <div class="temp-card frame">
@@ -828,11 +828,18 @@ footer{position:relative;z-index:1}
         <div class="sol-panel sol-p-articles">
 
     <div class="stuff-group">
-      <span class="stuff-label">guest columns &amp; webinars</span>
+      <span class="stuff-label">webinars</span>
+      <div class="stuff-grid">
+        <a class="stuff-card frame" href="https://www.youtube.com/watch?v=FTteIuRz9Ys" target="_blank" rel="noopener"><h3 class="stuff-head">Hamburger Anleihe-Boutique fokussiert Nischen-Investments und sichert Zins-Sensitivit&auml;t ab</h3><p class="stuff-meta">fundview &middot; 07/2026</p></a>
+        <a class="stuff-card frame" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta">capinside &middot; 06/2025</p></a>
+      </div>
+    </div>
+
+    <div class="stuff-group">
+      <span class="stuff-label">finanzwelt &middot; guest columns</span>
       <div class="stuff-grid">
         <a class="stuff-card frame" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta">finanzwelt &middot; 02/2025</p></a>
         <a class="stuff-card frame" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta">finanzwelt &middot; 12/2025</p></a>
-        <a class="stuff-card frame" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta">capinside &middot; 06/2025</p></a>
       </div>
     </div>
 
