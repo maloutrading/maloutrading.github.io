@@ -439,20 +439,23 @@ function mixSvg(trades){
     '<p class="hb-foot">bar = number of trades &middot; then hit rate and average result</p></div>';
 }
 
-function tradeStatsCard(s){
+function tradeRecord(s){
+  s = s || {};
   const num = (v, suf, signed) => typeof v === 'number' && isFinite(v)
     ? {txt: (signed && v > 0 ? '+' : '') + v + (suf || ''), cls: signed ? (v > 0 ? 'up' : v < 0 ? 'dn' : '') : ''} : null;
   const streak = (typeof s.streak_win === 'number' && typeof s.streak_loss === 'number')
     ? {txt: s.streak_win + ' / ' + s.streak_loss, cls: ''} : null;
   const cells = [
+    ['total return', num(s.total_return_pct, '%', true)], ['max drawdown', num(s.max_drawdown_pct, '%', true)],
     ['trades', num(s.trades)], ['win rate', num(s.win_rate_pct, '%')], ['payoff', num(s.payoff, 'x')],
+    ['expectancy', num(s.expectancy_r, 'R', true)],
     ['avg win', num(s.avg_win_pct, '%', true)], ['avg loss', num(s.avg_loss_pct, '%', true)],
-    ['stop exits', num(s.stop_share_pct, '%')], ['sharpe', num(s.sharpe)], ['sortino', num(s.sortino)],
-    ['streak w / l', streak],
+    ['stop exits', num(s.stop_share_pct, '%')], ['volatility', num(s.volatility_pct, '%')],
+    ['sharpe', num(s.sharpe)], ['sortino', num(s.sortino)], ['streak w / l', streak],
   ].filter(c => c[1]);
-  if (!cells.length) return '';
-  return '<div class="an-card frame"><h5 class="an-h">trade record</h5><div class="tstats">' + cells.map(c =>
-    '<div><b class="' + c[1].cls + '">' + c[1].txt + '</b><span>' + c[0] + '</span></div>').join('') + '</div></div>';
+  if (!cells.length) return svgEmpty('no figures yet');
+  return '<div class="tstats">' + cells.map(c =>
+    '<div><b class="' + c[1].cls + '">' + c[1].txt + '</b><span>' + c[0] + '</span></div>').join('') + '</div>';
 }
 
 function rollingWinSvg(trades){
@@ -489,14 +492,6 @@ function exposureSvg(exp){
     '<path d="' + path(shorts) + '" fill="none" stroke="var(--holz)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>';
 }
 
-function callout(label, t, unit){
-  if (!t || typeof t.r !== 'number') return '';
-  unit = unit || 'R';
-  return '<div class="callout frame"><span class="callout-label">' + label + '</span><b>' + escapeHtml(t.symbol) + '</b>' +
-    '<span class="callout-r ' + (t.r >= 0 ? 'up' : 'dn') + '">' + (t.r >= 0 ? '+' : '') + t.r.toFixed(2) + unit + '</span>' +
-    '<span class="callout-date">' + escapeHtml(String(t.ts || '').slice(0, 10)) + '</span></div>';
-}
-
 function fmtAge(ms){
   if (!ms) return '';
   const s = (Date.now() - ms) / 1000;
@@ -513,7 +508,7 @@ function countUp(el){
   const pre = fin.slice(0, m.index), suf = fin.slice(m.index + m[0].length);
   const t0 = performance.now();
   (function step(t){
-    const p = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - p, 3);
+    const p = Math.min(1, Math.max(0, (t - t0) / 1100)), e = 1 - Math.pow(1 - p, 3);
     el.textContent = pre + (num * e).toFixed(dec) + suf;
     if (p < 1) requestAnimationFrame(step);
   })(t0);
@@ -531,172 +526,71 @@ const drawIO = !reduce && 'IntersectionObserver' in window ? new IntersectionObs
   });
 }), {threshold: .35}) : null;
 
-function bookHtml(d){
+function bookView(d){
   const b = Array.isArray(d.book) ? d.book : [];
+  if (!b.length) return svgEmpty('flat — no open positions');
   const s = d.stats || {};
   const edge = (typeof s.expectancy_r === 'number')
     ? '<span class="book-edge">edge ' + (s.expectancy_r >= 0 ? '+' : '') + s.expectancy_r.toFixed(2) + 'R/trade</span>' : '';
-  const head = '<div class="book-head"><h5 class="an-h">open now' + (b.length ? ' (' + b.length + ')' : '') + '</h5>' + edge + '</div>';
-  if (!b.length) return '<div class="an-card book-card frame">' + head + '<p class="book-empty">flat &mdash; no open positions</p></div>';
   const rows = b.map(p => {
     const up = (p.pnl || 0) >= 0;
     return '<div class="book-row"><span class="book-side ' + (p.side === 'long' ? 'long' : 'short') + '">' +
       (p.side === 'long' ? 'L' : 'S') + '</span><span class="book-sym">' + escapeHtml(p.sym) + '</span>' +
       '<span class="book-pnl ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (p.pnl || 0).toFixed(1) + '%</span></div>';
   }).join('');
-  return '<div class="an-card book-card frame">' + head + '<div class="book-rows">' + rows + '</div></div>';
+  return '<div class="book-head"><span class="book-edge">' + b.length + ' open</span>' + edge + '</div>' +
+    '<div class="book-rows">' + rows + '</div>';
 }
 
-function tradesHtml(d, unit, rows){
-  unit = unit || 'R';
-  const t = Array.isArray(d.trades_detail) ? d.trades_detail.slice(-(rows || 7)).reverse() : [];
-  if (!t.length) return '';
-  const list = t.map(x => {
+function tradesView(d, unit){
+  const t = Array.isArray(d.trades_detail) ? d.trades_detail.slice(-10).reverse() : [];
+  if (!t.length) return svgEmpty('no closed trades yet');
+  return '<div class="trade-rows">' + t.map(x => {
     const up = (x.r || 0) >= 0;
     return '<div class="trade-row"><span class="trade-date">' + escapeHtml(String(x.ts || '').slice(5, 10)) + '</span>' +
       '<span class="trade-side ' + (x.side === 'long' ? 'long' : 'short') + '">' + (x.side === 'long' ? 'L' : 'S') + '</span>' +
       '<span class="trade-sym">' + escapeHtml(x.symbol || '') + '</span>' +
       (typeof x.hold === 'number' ? '<span class="trade-hold">' + x.hold + 'd</span>' : '') +
       '<span class="trade-r ' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '') + (x.r || 0).toFixed(2) + unit + '</span></div>';
-  }).join('');
-  return '<div class="an-card trades-card frame"><h5 class="an-h">recent trades</h5><div class="trade-rows">' + list + '</div></div>';
+  }).join('') + '</div>';
 }
 
-function renderAnalytics(containerId, d, opts){
-  const el = document.getElementById(containerId); if (!el) return;
-  opts = opts || {};
-  const unit = opts.unit || 'R', showBook = opts.showBook !== false, showExposure = opts.showExposure !== false;
-  const showTrades = opts.showTrades !== false, showCallouts = opts.showCallouts !== false;
-  const s = d.stats || {};
-  const card = (title, html) => '<div class="an-card frame"><h5 class="an-h">' + title + '</h5>' + html + '</div>';
-  const hasMonths = Array.isArray(d.monthly) && d.monthly.length > 1;
-  const dd = ((d.series || {}).drawdown) || [];
-  const calloutHtml = (showCallouts && (s.best_trade || s.worst_trade))
-    ? '<div class="an-row an-callouts">' + callout('best trade', s.best_trade, unit) + callout('worst trade', s.worst_trade, unit) + '</div>' : '';
-  const months = hasMonths ? '<div class="an-card mg-card frame"><h5 class="an-h">monthly returns</h5>' + monthGrid(d.monthly) + '</div>' : '';
-  const t = d.trades_detail;
-  const grid = '<div class="an-grid">' +
-    card((unit === '%' ? 'return' : unit + '-multiple') + ' distribution', rHistSvg(t, unit)) +
-    (hasMonths ? card('drawdown', ddSvg(dd)) : card('daily returns', heatGrid((d.series || {}).equity))) +
-    card('trailing hit rate', rollingWinSvg(t)) +
-    (opts.showTrail ? card('trailing avg win / loss', avgWinLossSvg(t)) : '') +
-    (opts.showTrail ? card('trailing payoff vs break-even', payoffSvg(t)) : '') +
-    (opts.showTrail ? card('trade curve', tradeEquitySvg(t)) : '') +
-    (opts.showTrail ? card('edge by holding period', edgeByHoldSvg(t)) : '') +
-    (opts.showTrail ? card('gain concentration', concentrationSvg(t)) : '') +
-    (opts.showTrail ? card('instrument mix', mixSvg(t)) : '') +
-    (showExposure ? card('long / short exposure', exposureSvg(d.exposure)) : '') + '</div>';
-  const trades = showTrades ? tradesHtml(d, unit, opts.tradeRows) : '';
-  const side = showBook ? bookHtml(d) : tradeStatsCard(s);
-  const lead = trades ? '<div class="an-row book-trades">' + side + trades + '</div>' : side;
-  el.innerHTML = lead + calloutHtml + months + grid;
-  if (drawIO) el.querySelectorAll('svg.an-svg').forEach(sv => drawIO.observe(sv));
-}
-
-/* ═══════════════ trade-time chart: metric switch + range switch + real-calendar-time line(s) ═══════════════ */
-const TC_RANGES = [['90d', 90], ['1y', 365], ['all', null]];
-const TC_METRICS = [
-  {key: 'winloss', label: 'avg win / loss', win: 20, dual: true,
-    calc: g => ({a: meanOf(g.filter(t => t.r > 0).map(t => t.r)), b: meanOf(g.filter(t => t.r <= 0).map(t => t.r))})},
-  {key: 'winrate', label: 'win rate (30)', win: 30, dual: false,
-    calc: g => g.filter(t => t.r > 0).length / g.length * 100},
-  {key: 'hold', label: 'avg hold', win: 20, dual: false,
-    calc: g => meanOf(g.map(t => t.hold).filter(v => typeof v === 'number'))},
-  {key: 'edge', label: 'edge over time', win: 20, dual: false,
-    calc: g => meanOf(g.map(t => t.r))},
+/* jede zeile eine dropdown-ansicht des mega-charts; leere ansichten fliegen selbst aus der liste */
+const MEGA_VIEWS = [
+  ['monthly returns', (d) => monthGrid(d.monthly)],
+  ['drawdown', (d) => ddSvg((d.series || {}).drawdown)],
+  ['daily returns', (d) => heatGrid((d.series || {}).equity)],
+  ['result distribution', (d, u) => rHistSvg(d.trades_detail, u)],
+  ['trade curve', (d) => tradeEquitySvg(d.trades_detail)],
+  ['trailing hit rate', (d) => rollingWinSvg(d.trades_detail)],
+  ['trailing avg win / loss', (d) => avgWinLossSvg(d.trades_detail)],
+  ['trailing payoff vs break-even', (d) => payoffSvg(d.trades_detail)],
+  ['edge by holding period', (d) => edgeByHoldSvg(d.trades_detail)],
+  ['gain concentration', (d) => concentrationSvg(d.trades_detail)],
+  ['instrument mix', (d) => mixSvg(d.trades_detail)],
+  ['long / short exposure', (d) => exposureSvg(d.exposure)],
+  ['open positions', (d) => bookView(d)],
+  ['recent trades', (d, u) => tradesView(d, u)],
+  ['all figures', (d) => tradeRecord(d.stats)],
 ];
 
-function tcSeries(list, m){
-  if (list.length < m.win + 2) return null;
-  const out = [];
-  for (let i = m.win - 1; i < list.length; i++){
-    const t = Date.parse(list[i].ts);
-    if (isFinite(t)) out.push([t, m.calc(list.slice(i - m.win + 1, i + 1))]);
-  }
-  return out.length ? out : null;
-}
-
-function tcFmt(m, v, unit){
-  if (v == null || !isFinite(v)) return '–';
-  if (m.key === 'winrate') return Math.round(v) + '%';
-  if (m.key === 'hold') return v.toFixed(1) + 'd';
-  return (v >= 0 ? '+' : '') + v.toFixed(2) + unit;
-}
-
-function drawTc(svg, series, m, unit){
-  const W = 600, H = 220, pad = 8;
-  const t0 = series[0][0], t1 = series[series.length - 1][0];
-  const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : .5) * (W - 2 * pad);
-  const vals = (m.dual ? series.flatMap(p => [p[1].a, p[1].b]) : series.map(p => p[1])).filter(v => v != null);
-  if (!vals.length){ svg.innerHTML = ''; return; }
-  let y0 = m.key === 'winrate' ? 0 : Math.min(...vals), y1 = m.key === 'winrate' ? 100 : Math.max(...vals);
-  if (y0 === y1){ y0 -= 1; y1 += 1; }
-  if (m.key !== 'winrate'){ const p = (y1 - y0) * .12; y0 -= p; y1 += p; }
-  const Y = v => H - pad - (v - y0) / (y1 - y0) * (H - 2 * pad);
-  const path = key => {
-    let d = '', pen = false;
-    series.forEach(p => {
-      const v = m.dual ? p[1][key] : p[1];
-      if (v == null){ pen = false; return; }
-      d += (pen ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(v).toFixed(1) + ' ';
-      pen = true;
-    });
-    return d.trim();
+function renderMega(containerId, d, unit){
+  const el = document.getElementById(containerId); if (!el) return;
+  unit = unit || 'R';
+  const views = MEGA_VIEWS.map(([lab, fn]) => [lab, fn(d, unit)])
+    .filter(v => v[1] && v[1].indexOf('an-empty') < 0);
+  if (!views.length){ el.innerHTML = svgEmpty('live data unavailable — check back shortly'); return; }
+  el.innerHTML = '<div class="mega-head"><h5 class="an-h">analytics</h5>' +
+    '<select class="temp-sel" aria-label="chart">' + views.map((v, i) =>
+      '<option value="' + i + '">' + v[0] + '</option>').join('') + '</select></div>' +
+    '<div class="mega-body"></div>';
+  const body = el.querySelector('.mega-body'), sel = el.querySelector('select');
+  const draw = () => {
+    body.innerHTML = views[+sel.value][1];
+    if (drawIO) body.querySelectorAll('svg.an-svg').forEach(sv => drawIO.observe(sv));
   };
-  const zeroY = m.key === 'winrate' ? 50 : (y0 < 0 && y1 > 0 ? 0 : null);
-  const refLine = zeroY != null ? '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(zeroY).toFixed(1) +
-    '" y2="' + Y(zeroY).toFixed(1) + '" stroke="var(--line)" stroke-dasharray="2 3"/>' : '';
-  const lines = m.dual
-    ? '<path d="' + path('a') + '" fill="none" stroke="' + cv('--gruen') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
-      '<path d="' + path('b') + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>'
-    : '<path d="' + path() + '" fill="none" stroke="' + cv('--gold') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>';
-  svg.innerHTML = refLine + lines +
-    '<line class="tc-x" x1="0" x2="0" y1="' + pad + '" y2="' + (H - pad) + '" stroke="' + cv('--silber') +
-    '" stroke-opacity=".55" stroke-dasharray="2 3" visibility="hidden"/>';
-
-  const box = svg.closest('.tc-body');
-  let tip = box.querySelector('.perf-tip');
-  if (!tip){ tip = document.createElement('div'); tip.className = 'perf-tip'; box.appendChild(tip); }
-  const cross = svg.querySelector('.tc-x');
-  const nearest = t => series.reduce((a, p) => Math.abs(p[0] - t) < Math.abs(a[0] - t) ? p : a);
-  svg.onpointermove = e => {
-    const r = svg.getBoundingClientRect();
-    const t = t0 + Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * (t1 - t0);
-    const p = nearest(t);
-    cross.setAttribute('x1', X(p[0]).toFixed(1)); cross.setAttribute('x2', X(p[0]).toFixed(1));
-    cross.setAttribute('visibility', 'visible');
-    const dateStr = new Date(p[0]).toISOString().slice(0, 10);
-    tip.innerHTML = m.dual
-      ? '<b>' + dateStr + '</b><span><i style="background:' + cv('--gruen') + '"></i>avg win ' + tcFmt(m, p[1].a, unit) + '</span>' +
-        '<span><i style="background:' + cv('--holz') + '"></i>avg loss ' + tcFmt(m, p[1].b, unit) + '</span>'
-      : '<b>' + dateStr + '</b><span>' + tcFmt(m, p[1], unit) + '</span>';
-    const fx = X(p[0]) / W * r.width;
-    tip.style.left = Math.min(r.width - 70, Math.max(70, fx)) + 'px';
-    tip.style.display = 'block';
-  };
-  svg.onpointerleave = () => { tip.style.display = 'none'; cross.setAttribute('visibility', 'hidden'); };
-}
-
-function tcCard(elId, trades, unit){
-  const wrap = document.getElementById(elId); if (!wrap) return;
-  const state = wrap._tcState || (wrap._tcState = {metric: 'winloss', range: 'all'});
-  const m = TC_METRICS.find(x => x.key === state.metric), range = TC_RANGES.find(x => x[0] === state.range);
-
-  const tabs = TC_METRICS.map(x => '<button class="tc-btn' + (state.metric === x.key ? ' active' : '') +
-    '" data-tc-m="' + x.key + '" type="button">' + x.label + '</button>').join('');
-  const ranges = TC_RANGES.map(x => '<button class="tc-btn' + (state.range === x[0] ? ' active' : '') +
-    '" data-tc-r="' + x[0] + '" type="button">' + x[0] + '</button>').join('');
-  wrap.innerHTML = '<div class="tc-head"><h5 class="an-h">performance over time</h5><div class="tc-ranges">' + ranges + '</div></div>' +
-    '<div class="tc-tabs">' + tabs + '</div><div class="tc-body"><svg viewBox="0 0 600 220" preserveAspectRatio="none" class="tc-svg"></svg></div>';
-  wrap.querySelectorAll('[data-tc-m]').forEach(b => b.addEventListener('click', () => { state.metric = b.dataset.tcM; tcCard(elId, trades, unit); }));
-  wrap.querySelectorAll('[data-tc-r]').forEach(b => b.addEventListener('click', () => { state.range = b.dataset.tcR; tcCard(elId, trades, unit); }));
-
-  let list = closedTrades(trades).filter(t => t.ts);
-  if (range[1]){ const cutoff = Date.now() - range[1] * 86400000; list = list.filter(t => Date.parse(t.ts) >= cutoff); }
-  const svg = wrap.querySelector('.tc-svg'), body = wrap.querySelector('.tc-body');
-  const series = tcSeries(list, m);
-  if (!series){ body.innerHTML = svgEmpty('not enough closed trades in this window'); return; }
-  drawTc(svg, series, m, unit);
+  sel.addEventListener('change', draw);
+  draw();
 }
 
 const bust = Math.floor(Date.now() / 9e5);
@@ -797,8 +691,7 @@ function mount(P){
         G(P.k + 'PO', fmtPlain(s.payoff, 'x'));
       }
       spxP.then(spx => drawCompare(P, svg, sanitizeSeries((d.series || {}).equity || []), spx));
-      renderAnalytics(P.an, d, P);
-      if (P.tc) tcCard(P.tc, d.trades_detail, P.unit || 'R');
+      renderMega(P.an, d, P.unit);
     })
     .catch(() => {
       const an = document.getElementById(P.an);
@@ -806,9 +699,8 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', tc:'stTc', url:'websiteData/alpaca.json'});
-mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', tc:'wTc', url:'websiteData/wikifolio.json', freshMs:30*3600*1000,
-  unit:'%', showBook:false, showExposure:false, showTrail:true, showTrades:false, showCallouts:false,
+mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json'});
+mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'websiteData/wikifolio.json', freshMs:30*3600*1000, unit:'%',
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {

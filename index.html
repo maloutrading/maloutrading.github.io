@@ -538,9 +538,6 @@ footer{position:relative;z-index:1}
 .sol-philo-sub{margin:.4rem 0 0;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
 .sol-philo-head::after{content:"";display:block;width:3.2rem;height:1px;margin:.85rem auto 0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pcol) 75%,transparent),transparent)}
 
-.an-block{display:flex;flex-direction:column;gap:clamp(1.4rem,2.6vw,2rem);width:100%}
-.an-row{display:flex;flex-wrap:wrap;gap:clamp(1rem,2.4vw,1.6rem)}
-.an-callouts{width:100%}
 /* R-multiple histogram: counts on the bars, R scale below, tally underneath */
 .rh{flex:1;display:flex;flex-direction:column;gap:.35rem;min-height:0}
 .rh-bars{position:relative;flex:1;display:flex;align-items:flex-end;gap:2px;min-height:78px}
@@ -564,33 +561,28 @@ footer{position:relative;z-index:1}
 .rw-plot .an-svg{min-height:86px}
 .rw-t{position:absolute;right:0;font-family:var(--mono);font-style:normal;font-size:.6rem;color:var(--muted);transform:translateY(-50%)}
 .rw-t[style*="top:0"],.rw-t[style*="bottom"]{transform:none}
-.callout{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));flex:1 1 220px;display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.2rem;border-radius:var(--r-sm)}
-.callout-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.callout b{font-family:var(--sans);font-size:1.15rem;color:var(--ink)}
-.callout-r{font-family:var(--serif);font-size:1.05rem}
-.callout-r.up{color:var(--gruen)}
-.callout-r.dn{color:var(--holz)}
-.callout-date{font-size:.7rem;color:var(--muted);letter-spacing:.04em}
-.an-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1rem,2.4vw,1.6rem);width:100%}
 .an-card{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));border-radius:var(--r-sm);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
 .an-h{margin:0 0 .55rem;font-family:var(--sans);font-weight:400;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .an-svg{flex:1;width:100%;min-height:100px}
-.tc-card{min-height:0}
-.tc-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;margin-bottom:.9rem}
-.tc-tabs,.tc-ranges{display:flex;flex-wrap:wrap;gap:.4rem}
-.tc-btn{font-family:var(--sans);font-size:.72rem;letter-spacing:.03em;padding:.42rem .85rem;border-radius:var(--pill);border:1px solid color-mix(in srgb,var(--pcol) 30%,var(--line));background:color-mix(in srgb,var(--card) 55%,transparent);color:var(--muted);cursor:pointer;transition:.25s var(--ease)}
-.tc-btn:hover{color:var(--ink);border-color:color-mix(in srgb,var(--pcol) 50%,var(--line))}
-.tc-btn.active{color:var(--marine);background:color-mix(in srgb,var(--pcol) 70%,var(--gold));border-color:transparent}
-.tc-body{position:relative;min-height:220px}
-.tc-svg{width:100%;height:220px;display:block}
-@media(max-width:640px){.tc-head{flex-direction:column;align-items:flex-start}}
+/* mega chart: der einzige analytics-block, 1.5x der performance-chart, ansicht per dropdown */
+.mega-card{width:100%;padding:1.2rem 1.3rem 1.1rem}
+.mega-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem;margin-bottom:.9rem}
+.mega-head .an-h{margin:0}
+/* definierte hoehe, nicht min-height: erst dadurch loesen die prozent-hoehen der balken auf */
+.mega-body{position:relative;display:flex;flex-direction:column;height:clamp(345px,45vw,450px);overflow-y:auto}
+.mega-body .an-svg{min-height:0}
+.mega-body .trade-rows,.mega-body .book-rows{flex:1;justify-content:center;gap:.55rem}
+.mega-body .mg{margin:auto 0;gap:4px}
+.mega-body .mg-cell{height:2.2rem;font-size:.7rem}
+.mega-body .mg-lab,.mega-body .mg-tot{font-size:.68rem}
+.mega-body .heat-grid{flex:none;margin:auto 0;gap:5px;grid-template-columns:repeat(auto-fit,minmax(2.4rem,1fr))}
+.mega-body .hb-track{height:.8rem}
+.mega-body .eb,.mega-body .hb{gap:.7rem}
 .an-empty{margin:auto;font-size:.82rem;color:var(--muted);font-style:italic;text-align:center}
 .heat-grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(11px,1fr));gap:3px;align-content:center}
 .heat-cell{aspect-ratio:1;border-radius:2px}
-/* ── live open-book card + data-freshness badge ── */
-.book-card{min-height:0;margin-bottom:clamp(1rem,2.4vw,1.6rem)}
-.book-head{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;flex-wrap:wrap}
-.book-head .an-h{margin:0}
+/* ── live open-book view + data-freshness badge ── */
+.book-head{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.2rem}
 .book-edge{font-size:.72rem;color:var(--muted);letter-spacing:.03em;font-family:var(--serif)}
 .book-rows{display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem}
 .book-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.65rem;font-size:.92rem}
@@ -601,11 +593,6 @@ footer{position:relative;z-index:1}
 .book-pnl{font-family:var(--serif);font-variant-numeric:tabular-nums}
 .book-pnl.up{color:var(--gruen)}
 .book-pnl.dn{color:var(--holz)}
-.book-empty{color:var(--muted);font-size:.85rem;margin:.5rem 0 0;font-style:italic}
-/* open-book + recent-trades side by side */
-.book-trades{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,1.6rem);width:100%;margin-bottom:clamp(1rem,2.4vw,1.6rem);align-items:start}
-.book-trades .book-card{margin-bottom:0}
-.trades-card{min-height:0}
 .trade-rows{display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem}
 .trade-row{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:center;gap:.6rem;font-size:.9rem}
 .trade-hold{font-family:var(--mono);font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -618,7 +605,6 @@ footer{position:relative;z-index:1}
 .trade-r.up{color:var(--gruen)}
 .trade-r.dn{color:var(--holz)}
 /* monat x jahr — die standard-lesart eines mehrjaehrigen track records */
-.mg-card{grid-column:1/-1;min-height:0}
 .mg{display:grid;grid-template-columns:2.6rem repeat(12,1fr) 2.6rem;gap:3px;align-items:center;overflow-x:auto}
 .mg-lab{font-family:var(--mono);font-style:normal;font-size:.6rem;color:var(--muted);text-align:center;letter-spacing:.02em}
 .mg-cell{border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-style:normal;font-size:.62rem;color:var(--ink);height:1.9rem;font-variant-numeric:tabular-nums}
@@ -643,11 +629,11 @@ footer{position:relative;z-index:1}
 .eb-win{font-family:var(--mono);font-size:.74rem;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
 .eb-avg{font-family:var(--mono);font-size:.74rem;font-variant-numeric:tabular-nums;text-align:right}
 .eb-avg.up{color:var(--gruen)}.eb-avg.dn{color:var(--holz)}
-.tstats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem .8rem;margin-top:.5rem}
-.tstats b{display:block;font-family:var(--mono);font-size:1rem;color:var(--ink);font-weight:400;font-variant-numeric:tabular-nums}
+.tstats{flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr));gap:1rem .9rem;align-content:center}
+.tstats b{display:block;font-family:var(--mono);font-size:1.32rem;color:var(--ink);font-weight:400;font-variant-numeric:tabular-nums}
 .tstats b.up{color:var(--gruen)}.tstats b.dn{color:var(--holz)}
-.tstats span{display:block;margin-top:.1rem;font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-@media(max-width:640px){.book-trades{grid-template-columns:1fr}.mg{grid-template-columns:2.2rem repeat(12,1fr) 2.2rem}}
+.tstats span{display:block;margin-top:.15rem;font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:640px){.mg{grid-template-columns:2.2rem repeat(12,1fr) 2.2rem}}
 /* pflicht-risikohinweis unter den ergebnissen */
 .markets-legal{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));max-width:min(820px,94vw);margin:clamp(2.2rem,4vw,3.2rem) auto 0;padding:1rem 1.3rem;border-radius:var(--r-sm);font-family:var(--sans);font-size:.78rem;line-height:1.65;color:var(--muted);text-align:center;text-wrap:balance}
 .markets-legal b{color:var(--ink);font-weight:600}
@@ -655,14 +641,13 @@ footer{position:relative;z-index:1}
 .markets-legal .linklike{background:none;border:0;padding:0;font:inherit;cursor:pointer}
 .fresh-ok{color:var(--gruen)}
 .fresh-stale{color:var(--gold)}
-@media(max-width:640px){.an-grid{grid-template-columns:1fr}}
 /* ── mobile: mehr lesebreite, keine mikroschrift ── */
 @media(max-width:640px){
   .solutions{padding:clamp(3rem,9vw,4rem) 1.1rem}
   .mag{padding:2rem 1.15rem}
   .sol-slogan{padding:1.1rem 1.1rem 1.15rem 1.3rem;height:auto}
   .sol-card{height:auto}
-  .perf-note,.callout-label,.callout-date,.rh-foot,.rh-col b,.rh-axis,.rw-nums,.book-side,.trade-side{font-size:.74rem}
+  .perf-note,.rh-foot,.rh-col b,.rh-axis,.rw-nums,.book-side,.trade-side{font-size:.74rem}
 }
 .lang-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .lang-toggle{display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:1.4rem}
@@ -753,13 +738,11 @@ footer{position:relative;z-index:1}
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/giraffe.mp4" type="video/mp4"></video></div>
 <div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker">philosophy</span><h3 class="sol-philo-title">Pure discretionary macro</h3><p class="sol-philo-sub">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
 <div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="wperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note" id="wperfNote">live &middot; wikifolio</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets"><li><span class="sol-bullet-tx">global macro</span></li><li><span class="sol-bullet-tx">discretionary</span></li><li><span class="sol-bullet-tx">long, short, leveraged</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker">wikifolio</span><h3 class="sol-card-name">alpaca turtle</h3><p class="sol-meta">isin de000ls9syp5 &middot; lang &amp; schwarz &middot; live since nov 2020</p></div><div class="perf-stats"><div><b id="wstRet">–</b><span>since inception</span></div><div><b id="wstYr">–</b><span>12 months</span></div><div><b id="wstPa">–</b><span>p.a.</span></div><div><b id="wstDD">–</b><span>max dd</span></div><div><b id="wstVol">–</b><span>volatility</span></div><div><b id="wstCap">–</b><span>invested</span></div></div></div></div></div>
-<div class="an-card tc-card frame" id="wTc"></div>
-<div class="an-block" id="wAn"></div></div>
+<div class="an-card mega-card frame" id="wAn"></div></div>
 <div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/seagull.mp4" type="video/mp4"></video></div>
 <div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker">philosophy</span><h3 class="sol-philo-title">Buy strength. Ride the trend. Let the stop decide.</h3><p class="sol-philo-sub">turtle-style systematic trend following</p></div><p class="sol-philosophy">Thirty leveraged ETFs, one rule: buy the strongest of the pack the moment it breaks its seven-day high &mdash; at most three positions, each guarded by a stop that only ever tightens. No forecasts, no targets, no opinions: losses are cut small and automatically, winners run until the trend itself ends. The system loses often and small, wins rarely and big &mdash; and when nothing is breaking out, cash is the position.</p></div>
 <div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets"><li><span class="sol-bullet-tx">leveraged us etfs</span></li><li><span class="sol-bullet-tx">algorithmic trend following</span></li><li><span class="sol-bullet-tx">long/short</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker">algorithmic</span><h3 class="sol-card-name">us momentum</h3><p class="sol-meta">leveraged etfs &middot; alpaca markets &middot; turtle-style breakout</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div></div></div></div>
-<div class="an-card tc-card frame" id="stTc"></div>
-<div class="an-block" id="stAn"></div></div>
+<div class="an-card mega-card frame" id="stAn"></div></div>
 </div>
 </div>  </div>
 <p class="markets-legal frame"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
