@@ -44,7 +44,6 @@ body{margin:0;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);
   -webkit-text-size-adjust:100%;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;font-synthesis:none}
-/* grain + vignette — the dark ground stops banding and starts breathing */
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.28;
   background:radial-gradient(120% 90% at 50% 50%,transparent 52%,color-mix(in srgb,black 42%,transparent)),
              url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
@@ -58,7 +57,6 @@ h2{font-size:clamp(2.185rem,4.6vw,2.99rem);margin:0 0 .6em}
 h3{font-size:1.495rem;margin:0 0 .45em}
 a{color:var(--bronze);text-underline-offset:4px;text-decoration-thickness:1px}
 a:hover{color:var(--gold)}
-/* body links: the brass rule draws itself in from the left */
 .text a,.legal a{text-decoration:none;background-image:linear-gradient(90deg,var(--gold),var(--gold));
   background-repeat:no-repeat;background-position:0 100%;background-size:0 1px;
   transition:background-size .35s var(--ease),color .35s}
@@ -169,7 +167,6 @@ main section.tab.show{display:block}
 }
 
 section.tab.sub{padding:0 0 7.5rem;position:relative}
-/* each tab breathes its own colour into the ground */
 section.tab.sub::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(70% 45% at 50% 0%,color-mix(in srgb,var(--accent,var(--gold)) 7%,transparent),transparent 70%)}
 section.tab.sub .wrap{max-width:var(--wide);padding-top:clamp(4.4rem,7.5vw,7rem)}
@@ -210,7 +207,7 @@ picture{display:contents}
 .homage-portrait{width:244px;height:244px;border-radius:50%;overflow:hidden}
 .homage-portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:1.6rem 0 0}
-.spotify-box{flex:1 1 500px;max-width:600px;position:relative;border-radius:var(--r-lg);padding:2.1rem 2.1rem 1.65rem;
+.spotify-box{flex:1 1 500px;max-width:600px;position:relative;border-radius:var(--r-lg);padding:2.5rem 2.1rem 2rem;
   background:linear-gradient(158deg,color-mix(in srgb,var(--card) 80%,transparent),color-mix(in srgb,var(--card) 52%,transparent));
   border:1px solid color-mix(in srgb,var(--gruen) 26%,var(--line));
   box-shadow:0 32px 64px -24px rgba(0,0,0,.66),inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(9px)}
@@ -241,7 +238,6 @@ picture{display:contents}
 .sol-radio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .sol-head{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:none}
 .sol-title{max-width:calc(100% - 2rem);margin:0;padding:.6rem clamp(1.4rem,3vw,2.2rem);background:var(--bg);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.05rem,2.1vw,1.5rem);letter-spacing:.09em;line-height:1.2;color:var(--ink)}
-/* grid statt flex: 1fr-spuren unter max-content geben jedem knopf die breite des breitesten */
 .sol-toggle{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;width:max-content;max-width:100%;margin:0 auto clamp(2rem,4vw,2.8rem);gap:.3rem;padding:.34rem;
   border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--card) 55%,transparent)}
 .sol-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;cursor:pointer;white-space:nowrap;user-select:none;
@@ -400,25 +396,39 @@ picture{display:contents}
   background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 55%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 24%,var(--weiss) 34%,color-mix(in srgb,var(--silber) 92%,var(--weiss)) 44%,var(--silber) 62%,color-mix(in srgb,var(--silber) 55%,var(--marine)) 100%);
   background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:sol-shine 9s linear infinite}
 
-
 .portrait{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .portrait .mono{display:none}
 .portrait.noimg .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-size:3.91rem;letter-spacing:.1em;color:var(--accent,var(--gold));opacity:.55}
 .member{display:grid;grid-template-columns:minmax(160px,240px) 1fr;gap:2.4rem;
-  align-items:stretch;margin:0}
+  align-items:stretch;margin:0;position:relative}
+.member::before{content:"";position:absolute;inset:-9% -6%;z-index:-1;pointer-events:none;
+  background:radial-gradient(58% 58% at 50% 50%,color-mix(in srgb,var(--marine) 55%,transparent),transparent 72%)}
 .member .portrait{aspect-ratio:4/5}
 .member .about-text{display:flex;flex-direction:column}
 .member .about-text h3{margin:0;font-size:1.725rem}
 .member-say{text-transform:none;font-style:italic;color:var(--ink);text-align:center;
   font-size:clamp(1.495rem,3.22vw,2.07rem);margin:0;flex:1;display:flex;align-items:center;justify-content:center}
+.member-say span{--qcol:var(--gold);position:relative;padding:.6rem 1.6rem;border-radius:var(--pill);
+  background:color-mix(in srgb,var(--marine) 44%,transparent);
+  border:1px solid color-mix(in srgb,var(--qcol) 30%,var(--line));
+  -webkit-backdrop-filter:blur(10px) brightness(.85);backdrop-filter:blur(10px) brightness(.85);
+  text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 22px var(--marine)}
+.member+.member .member-say span{--qcol:var(--flieder)}
+.member-say span::before{content:"";position:absolute;left:-5px;top:50%;width:11px;height:11px;
+  transform:translateY(-50%) rotate(45deg);border-radius:2px;
+  background:color-mix(in srgb,var(--marine) 60%,transparent);
+  border-left:1px solid color-mix(in srgb,var(--qcol) 30%,var(--line));
+  border-bottom:1px solid color-mix(in srgb,var(--qcol) 30%,var(--line));
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .member+.member{margin-top:var(--tgap)}
 .socials{display:flex;justify-content:flex-start;gap:1.3rem;margin:1.6rem 0 0}
 .socials a{color:var(--muted);display:inline-flex;transition:color .3s,transform .3s}
 .socials a:hover{color:var(--gold);transform:translateY(-2px)}
 .socials svg{width:20px;height:20px;display:block}
 @media(max-width:560px){
+  .member-say span::before{display:none}
   .member{grid-template-columns:1fr;gap:1.3rem}
   .member .portrait{max-width:220px;margin:0 auto}
   .member .about-text{text-align:center}
@@ -470,17 +480,23 @@ footer{position:relative;z-index:1}
   color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--weiss) 8%,transparent);
   opacity:.6;pointer-events:none;z-index:0}
 .rib-intro>*{position:relative;z-index:1}
-#team .rib-intro{padding:clamp(2.6rem,5.5vw,4rem) clamp(1.8rem,5vw,3.4rem)}
+#team .rib-intro{padding:clamp(2.6rem,5.5vw,4rem) clamp(1.8rem,5vw,3.4rem);
+  --fbg:linear-gradient(0deg,color-mix(in srgb,var(--marine) 46%,transparent),color-mix(in srgb,var(--marine) 46%,transparent))}
+#team .rib-intro::before{content:"";inset:0;left:0;top:0;transform:none;opacity:1;border-radius:inherit;
+  -webkit-backdrop-filter:blur(10px) saturate(1.15) brightness(.72);backdrop-filter:blur(10px) saturate(1.15) brightness(.72)}
+#team .rib-intro::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
+  -webkit-backdrop-filter:blur(17px) brightness(.9);backdrop-filter:blur(17px) brightness(.9);
+  -webkit-mask-image:radial-gradient(72% 64% at 50% 50%,#000 38%,transparent 84%);mask-image:radial-gradient(72% 64% at 50% 50%,#000 38%,transparent 84%)}
 .rib-est{display:inline-block;margin-top:1.6rem;font-size:.9rem;font-weight:300;letter-spacing:.3em;
-  padding:.52rem 1.35rem;background:color-mix(in srgb,var(--card) 55%,transparent);color:var(--accent,var(--gold))}
+  padding:.52rem 1.35rem;background:color-mix(in srgb,var(--marine) 40%,transparent);color:var(--accent,var(--gold));
+  -webkit-backdrop-filter:blur(10px) brightness(.85);backdrop-filter:blur(10px) brightness(.85)}
 
-#team{position:relative;--tgap:clamp(5.5rem,9vw,7.5rem)}
+#team{position:relative;--tgap:clamp(7rem,11vw,9.5rem)}
 #team .rib-intro{margin-bottom:var(--tgap)}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .tabbg,.landing .stage{-webkit-mask-image:linear-gradient(to bottom,#000 56%,transparent 100%);mask-image:linear-gradient(to bottom,#000 56%,transparent 100%)}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
 #team .wrap{position:relative;z-index:1}
-
 
 .trade-quotes{display:block;text-align:center;max-width:var(--w);margin:1.4rem auto clamp(2.4rem,5vw,3.4rem);
   padding:clamp(1.6rem,3.2vw,2.6rem) clamp(1.4rem,3.4vw,2.8rem)}
@@ -522,7 +538,6 @@ footer{position:relative;z-index:1}
 .sol-p-wiki .sol-vid video{transform:scale(1.32);transform-origin:center 6%}
 @media(max-width:640px){.sol-vid{height:150px}}
 
-
 .lib-vid{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;-webkit-mask-image:radial-gradient(115% 105% at 50% 48%,#000 42%,transparent 88%);mask-image:radial-gradient(115% 105% at 50% 48%,#000 42%,transparent 88%)}
 .lib-vid video{width:100%;height:100%;object-fit:cover;filter:saturate(.45) grayscale(.25) contrast(1.12)}
 .library .books{position:relative;z-index:1}
@@ -534,9 +549,6 @@ footer{position:relative;z-index:1}
 
 .lib-vid::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
 
-/* ── trading markets: cross-bot comparison, per-panel slogan, live analytics — shared design language ── */
-
-/* engine plaque: one per market, same shell, small type, accent edge */
 .sol-slogan{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));position:relative;width:100%;max-width:none;margin:0 auto;height:25rem;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:clamp(1.6rem,3.2vw,2.3rem) clamp(2rem,4.4vw,3.1rem);border-radius:var(--r-sm);overflow:hidden}
 .sol-slogan::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pcol) 55%,transparent),transparent)}
 .sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 68%);pointer-events:none}
@@ -549,7 +561,6 @@ footer{position:relative;z-index:1}
 
 .rw-nums b.up{color:var(--gruen)}
 .rw-nums b.dn{color:var(--holz)}
-/* rolling win rate: headline numbers + fixed 0–100 scale */
 .rw{flex:1;display:flex;flex-direction:column;gap:.5rem;min-height:0}
 .rw-nums{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;font-size:.64rem;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
 .rw-nums span{display:flex;align-items:baseline;gap:.3rem}
@@ -562,11 +573,9 @@ footer{position:relative;z-index:1}
 .an-card{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));border-radius:var(--r-sm);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
 .an-h{margin:0 0 .55rem;font-family:var(--sans);font-weight:400;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .an-svg{flex:1;width:100%;min-height:100px}
-/* mega chart: der einzige analytics-block, 1.5x der performance-chart, ansicht per dropdown */
 .mega-card{width:100%;padding:1.2rem 1.3rem 1.1rem}
 .mega-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem;margin-bottom:.9rem}
 .mega-head .an-h{margin:0}
-/* definierte hoehe, nicht min-height: erst dadurch loesen die prozent-hoehen der balken auf */
 .mega-body{position:relative;display:flex;flex-direction:column;height:clamp(345px,45vw,450px);overflow-y:auto}
 .mega-body .an-svg{min-height:0}
 .mega-body .trade-rows,.mega-body .book-rows{flex:1;justify-content:center;gap:.55rem}
@@ -579,7 +588,6 @@ footer{position:relative;z-index:1}
 .an-empty{margin:auto;font-size:.82rem;color:var(--muted);font-style:italic;text-align:center}
 .heat-grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(11px,1fr));gap:3px;align-content:center}
 .heat-cell{aspect-ratio:1;border-radius:2px}
-/* ── live open-book view + data-freshness badge ── */
 .book-head{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.2rem}
 .book-edge{font-size:.72rem;color:var(--muted);letter-spacing:.03em;font-family:var(--serif)}
 .book-rows{display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem}
@@ -602,14 +610,12 @@ footer{position:relative;z-index:1}
 .trade-r{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:.86rem}
 .trade-r.up{color:var(--gruen)}
 .trade-r.dn{color:var(--holz)}
-/* monat x jahr — die standard-lesart eines mehrjaehrigen track records */
 .mg{display:grid;grid-template-columns:2.6rem repeat(12,1fr) 2.6rem;gap:3px;align-items:center;overflow-x:auto}
 .mg-lab{font-family:var(--mono);font-style:normal;font-size:.6rem;color:var(--muted);text-align:center;letter-spacing:.02em}
 .mg-cell{border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-style:normal;font-size:.62rem;color:var(--ink);height:1.9rem;font-variant-numeric:tabular-nums}
 .mg-void{background:color-mix(in srgb,var(--line) 24%,transparent)}
 .mg-tot{font-family:var(--mono);font-style:normal;font-size:.62rem;text-align:center;font-variant-numeric:tabular-nums;color:var(--muted)}
 .mg-tot.up{color:var(--gruen)}.mg-tot.dn{color:var(--holz)}
-/* haltedauer: der messbare beweis fuer "cut losses fast, let winners run" */
 .hb{flex:1;display:flex;flex-direction:column;justify-content:center;gap:.7rem}
 .hb-row{display:grid;grid-template-columns:4.2rem 1fr 2.2rem 2.4rem;align-items:center;gap:.5rem}
 .hb-lab{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -620,7 +626,6 @@ footer{position:relative;z-index:1}
 .hb-val{font-family:var(--mono);font-size:.82rem;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
 .hb-n{font-family:var(--mono);font-size:.64rem;color:var(--muted);text-align:right}
 .hb-foot{margin:.2rem 0 0;font-size:.66rem;letter-spacing:.03em;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--line) 70%,transparent);padding-top:.45rem}
-/* edge je bucket / instrumenten-mix: balken = anzahl, dann trefferquote und schnitt */
 .eb{flex:1;display:flex;flex-direction:column;justify-content:center;gap:.5rem}
 .eb-row{display:grid;grid-template-columns:4.4rem 1fr 2.1rem 3.1rem 2.4rem;align-items:center;gap:.45rem}
 .eb-lab{font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -632,14 +637,12 @@ footer{position:relative;z-index:1}
 .tstats b.up{color:var(--gruen)}.tstats b.dn{color:var(--holz)}
 .tstats span{display:block;margin-top:.15rem;font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 @media(max-width:640px){.mg{grid-template-columns:2.2rem repeat(12,1fr) 2.2rem}}
-/* pflicht-risikohinweis unter den ergebnissen */
 .markets-legal{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));max-width:min(820px,94vw);margin:clamp(2.2rem,4vw,3.2rem) auto 0;padding:1rem 1.3rem;border-radius:var(--r-sm);font-family:var(--sans);font-size:.78rem;line-height:1.65;color:var(--muted);text-align:center;text-wrap:balance}
 .markets-legal b{color:var(--ink);font-weight:600}
 .markets-legal a,.markets-legal .linklike{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
 .markets-legal .linklike{background:none;border:0;padding:0;font:inherit;cursor:pointer}
 .fresh-ok{color:var(--gruen)}
 .fresh-stale{color:var(--gold)}
-/* ── mobile: mehr lesebreite, keine mikroschrift ── */
 @media(max-width:640px){
   .solutions{padding:clamp(3rem,9vw,4rem) 1.1rem}
   .mag{padding:2rem 1.15rem}
@@ -688,7 +691,6 @@ footer{position:relative;z-index:1}
 
 <main id="main">
 
-
 <section class="tab show" id="home">
   <div class="landing">
     <div class="left">
@@ -712,7 +714,6 @@ footer{position:relative;z-index:1}
     </div>
   </div>
 </section>
-
 
 <section class="tab sub" id="trade">
   <div class="topvid" aria-hidden="true">
@@ -893,7 +894,7 @@ footer{position:relative;z-index:1}
       </figure>
       <div class="about-text">
         <h3>Benjamin Suermann</h3>
-        <p class="member-say">"Moin."</p>
+        <p class="member-say"><span>"Moin."</span></p>
         <div class="socials" aria-label="profile benjamin suermann">
           <a href="https://www.linkedin.com/in/benjamin-suermann-107062316" target="_blank" rel="noopener" aria-label="linkedin">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.2V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>
@@ -909,7 +910,7 @@ footer{position:relative;z-index:1}
       </figure>
       <div class="about-text">
         <h3>Claude</h3>
-        <p class="member-say">"Bonjour."</p>
+        <p class="member-say"><span>"Bonjour."</span></p>
         <div class="socials" aria-label="claude">
           <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener" aria-label="anthropic">
             <svg viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></g></svg>
@@ -917,7 +918,6 @@ footer{position:relative;z-index:1}
         </div>
       </div>
     </div>
-
 
     <div class="team-bottom">
       <div class="spotify-box">
@@ -938,7 +938,6 @@ footer{position:relative;z-index:1}
     <div class="library frame"><div class="lib-vid" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="shortVids/cat.mp4" type="video/mp4"></video></div><div class="books"><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Reminiscences<br>of a Stock<br>Operator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10086;</span><i></i></span><span class="bc-author">Edwin Lef&egrave;vre</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">Zen in the<br>Art of<br>Archery</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#9675;</span><i></i></span><span class="bc-author">Eugen Herrigel</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article><article class="book"><div class="book-cover"><div class="bc-spine" aria-hidden="true"></div><div class="bc-face"><div class="bc-body"><span class="bc-title">The Education<br>of a<br>Speculator</span><span class="bc-rule" aria-hidden="true"><i></i><span class="bc-leaf">&#10087;</span><i></i></span><span class="bc-author">Victor Niederhoffer</span></div></div><i class="bc-pages-r" aria-hidden="true"></i><i class="bc-pages-b" aria-hidden="true"></i></div></article></div></div>
   </div>
 </section>
-
 
 <section class="tab sub legal plain" id="impressum">
   <div class="wrap reveal text">

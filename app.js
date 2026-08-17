@@ -160,10 +160,6 @@ addEventListener('touchend', e => {
 show((location.hash || '#home').slice(1), false);
 apply();
 
-/* ═══════════════ trading markets — live data, charts, analytics ═══════════════
-   one rendering path shared by all three algo bots (JS-template-function, mirrors
-   the "bot = tuning + adapter" unification on the python side). */
-
 function sanitizeSeries(pts){
   if(!Array.isArray(pts)) return [];
   return pts.filter(p => Array.isArray(p) && p.length >= 2
@@ -606,7 +602,6 @@ function tradesView(d, unit){
   }).join('') + '</div>';
 }
 
-/* jede zeile eine dropdown-ansicht des mega-charts; leere ansichten fliegen selbst aus der liste */
 const MEGA_VIEWS = [
   ['monthly returns', (d) => monthGrid(d.monthly || monthlyFromEquity((d.series || {}).equity))],
   ['daily returns', (d) => heatGrid((d.series || {}).equity)],
@@ -779,8 +774,6 @@ document.addEventListener('click', e => {
   row.classList.add('loaded');
   row.replaceChildren(f);
 });
-
-/* ═══════════════ stuff · temperature — global risk read, lean subset ═══════════════ */
 
 function sparkPath(vals){
   const w = 100, h = 32, pad = 1;
