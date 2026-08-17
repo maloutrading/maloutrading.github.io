@@ -810,8 +810,7 @@ function renderRisk(){
   const col = (pts, c) => pts.map(p => [p[0], p[c]]);
   const last = pts => pts.length ? pts[pts.length - 1][1] : null;
   let series = [
-    { name: 'GPR daily', pts: col(gpr, 1), color: cv('--flieder'), width: 1.2, opacity: .4, group: 'gpr' },
-    { name: 'GPR 30-day mean', pts: col(gpr, 2), color: cv('--flieder'), width: 2.2, group: 'gpr' },
+    { name: 'geopolitical risk', pts: col(gpr, 1), color: cv('--flieder'), width: 2.2, group: 'gpr' },
     { name: 'policy uncertainty', pts: col(epu, 1), color: cv('--gold'), width: 2.2, group: 'epu' }
   ].filter(s => s.pts.length > 1);
   tempLegend('tempRiskLegend', series.map(s => ({ name: s.name, color: s.color, opacity: s.opacity,
