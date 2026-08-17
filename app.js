@@ -1,15 +1,15 @@
 const hd = document.getElementById('hd'), prog = document.getElementById('prog'),
       body = document.body, docEl = document.documentElement;
-let lastY = 0, ticking = false;
+let ticking = false;
 function apply(){
   const y = scrollY, home = body.classList.contains('home');
   hd.classList.toggle('solid', y > 40 || !home);
-  hd.classList.remove('away');  body.classList.toggle('atbottom', innerHeight + y >= docEl.scrollHeight - 60);
+  body.classList.toggle('atbottom', innerHeight + y >= docEl.scrollHeight - 60);
   const denom = docEl.scrollHeight - innerHeight;
   const frac = denom > 4 ? Math.min(1, y / denom) : 0;
   prog.style.width = frac * 100 + '%';               // progress bar = header's bottom edge
   updateRib(); updateSolVids(); updateTopVid();
-  lastY = y; ticking = false;
+  ticking = false;
 }
 function updateTopVid(){
   const tv = document.querySelector('main .tab.show .topvid video'); if(!tv) return;
@@ -180,7 +180,11 @@ function escapeHtml(s){
 }
 function fmtPct(v){ return (typeof v === 'number' && isFinite(v)) ? (v > 0 ? '+' : '') + v + '%' : '–'; }
 function fmtPlain(v, suf){ return (typeof v === 'number' && isFinite(v)) ? v + (suf || '') : '–'; }
-function cv(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || name; }
+const cvMemo = {};
+function cv(name){
+  if (!(name in cvMemo)) cvMemo[name] = getComputedStyle(document.documentElement).getPropertyValue(name).trim() || name;
+  return cvMemo[name];
+}
 function svgEmpty(msg){ return '<p class="an-empty">' + msg + '</p>'; }
 
 function rHistSvg(trades, unit){
@@ -846,7 +850,7 @@ const tempVal = id => (tempEl(id) || {}).value || '';
 const tempData = {};
 
 function tempCut(pts, days){
-  if (!Array.isArray(pts) || !days) return pts || [];
+  if (!Array.isArray(pts) || !pts.length || !days) return pts || [];
   const from = pts[pts.length - 1][0] - days * 864e5;
   return pts.filter(p => p[0] >= from);
 }
@@ -944,8 +948,8 @@ function renderGates(){
       const med = tempMedian(s.pts.map(p => p[1]));
       return Object.assign({}, s, { group: 'rel', pts: med ? s.pts.map(p => [p[0], p[1] / med * 100]) : s.pts });
     });
-    const span = plotted[0].pts;
-    plotted = plotted.concat([{ name: '', color: cv('--muted'), width: 1, opacity: .5, group: 'rel',
+    const span = (plotted.find(p => p.pts && p.pts.length) || {}).pts;
+    if (span) plotted = plotted.concat([{ name: '', color: cv('--muted'), width: 1, opacity: .5, group: 'rel',
       pts: [[span[0][0], 100], [span[span.length - 1][0], 100]] }]);
   }
   tempPlot('tempGateSvg', 'tempGateAxis', plotted);

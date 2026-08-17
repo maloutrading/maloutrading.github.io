@@ -35,7 +35,6 @@ body.home .progress{opacity:0}
 .stage .corner.tr{top:1.1rem;right:1.1rem;border-top-width:1px;border-right-width:1px}
 .stage .corner.bl{bottom:1.1rem;left:1.1rem;border-bottom-width:1px;border-left-width:1px}
 .stage .corner.br{bottom:1.1rem;right:1.1rem;border-bottom-width:1px;border-right-width:1px}
-.keepcase{text-transform:none}
 
 .stage video,.topvid video{opacity:0;transition:opacity .8s ease}
 .stage video.ready,.topvid video.ready{opacity:1}
@@ -82,7 +81,6 @@ header::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
   background:color-mix(in srgb,var(--holz) 55%,transparent)}
 header.solid{background:color-mix(in srgb,var(--marine) 88%,black);opacity:.93;
   -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);box-shadow:0 1px 0 var(--line)}
-header.away{opacity:0;transform:translateY(-100%);pointer-events:none}
 body.home header{opacity:0;transform:translateY(-100%);pointer-events:none}
 .nav{max-width:var(--wide);margin:0 auto;padding:.9rem 1.5rem;display:flex;
   align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
@@ -758,26 +756,26 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro"><span class="rib-kicker keepcase">tricks of the</span><h2 class="rib-title keepcase">trade</h2></div>
-    <div class="trade-quotes"><p class="trade-quote keepcase">All trading is ultimately discretionary. <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions frame">
+    <div class="rib-intro"><span class="rib-kicker">tricks of the</span><h2 class="rib-title">trade</h2></div>
+    <div class="trade-quotes"><p class="trade-quote">All trading is ultimately discretionary. <cite>- Ed Seykota</cite></p></div><div class="divider" aria-hidden="true"></div><div class="solutions frame">
 <input class="sol-radio" type="radio" name="sol" id="sol-r-wiki" checked>
 <input class="sol-radio" type="radio" name="sol" id="sol-r-algo">
-<div class="sol-head"><h2 class="sol-title glow-pill keepcase">trading markets</h2></div>
-<div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn keepcase" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label></div>
+<div class="sol-head"><h2 class="sol-title glow-pill">trading markets</h2></div>
+<div class="sol-toggle"><label class="sol-btn" for="sol-r-wiki"><span class="sol-dot"></span>wikifolio</label><label class="sol-btn" for="sol-r-algo"><span class="sol-dot"></span>alpaca</label></div>
 <div class="sol-body">
 <div class="sol-panel sol-p-wiki"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/giraffe.mp4" type="video/mp4"></video></div>
-<div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Pure discretionary macro</h3><p class="sol-philo-sub keepcase">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy keepcase">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
-<div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="wperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="wperfNote">live &middot; wikifolio</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">global macro</span></li><li><span class="sol-bullet-tx">discretionary</span></li><li><span class="sol-bullet-tx">long, short, leveraged</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker keepcase">wikifolio</span><h3 class="sol-card-name keepcase">alpaca turtle</h3><p class="sol-meta keepcase">isin de000ls9syp5 &middot; lang &amp; schwarz &middot; live since nov 2020</p></div><div class="perf-stats"><div><b id="wstRet">–</b><span>since inception</span></div><div><b id="wstYr">–</b><span>12 months</span></div><div><b id="wstPa">–</b><span>p.a.</span></div><div><b id="wstDD">–</b><span>max dd</span></div><div><b id="wstVol">–</b><span>volatility</span></div><div><b id="wstCap">–</b><span>invested</span></div></div></div></div></div>
+<div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker">philosophy</span><h3 class="sol-philo-title">Pure discretionary macro</h3><p class="sol-philo-sub">inspired by Jesse Livermore, Mark Minervini &amp; Ed Seykota</p></div><p class="sol-philosophy">Basically all finance professionals today agree that speculating mostly based on experience and gut feeling is &quot;not how you do it&quot;. Also, they mostly agree that in order to achieve outsized returns one must do something that most others don&rsquo;t. Quant-oriented approaches have dominated Wall Street for the last 50 years and will continue to do so. I think human judgement has gotten a little bit of a bad reputation and since Ed Seykota is right in claiming that all trading is ultimately discretionary, I consider it a feature, not a bug, that the alpaca turtle wikifolio&rsquo;s trading system is pure discretionary global macro.</p></div>
+<div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="wperfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note" id="wperfNote">live &middot; wikifolio</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets"><li><span class="sol-bullet-tx">global macro</span></li><li><span class="sol-bullet-tx">discretionary</span></li><li><span class="sol-bullet-tx">long, short, leveraged</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker">wikifolio</span><h3 class="sol-card-name">alpaca turtle</h3><p class="sol-meta">isin de000ls9syp5 &middot; lang &amp; schwarz &middot; live since nov 2020</p></div><div class="perf-stats"><div><b id="wstRet">–</b><span>since inception</span></div><div><b id="wstYr">–</b><span>12 months</span></div><div><b id="wstPa">–</b><span>p.a.</span></div><div><b id="wstDD">–</b><span>max dd</span></div><div><b id="wstVol">–</b><span>volatility</span></div><div><b id="wstCap">–</b><span>invested</span></div></div></div></div></div>
 <div class="an-card tc-card frame" id="wTc"></div>
 <div class="an-block" id="wAn"></div></div>
 <div class="sol-panel sol-p-algo"><div class="sol-vid"><video autoplay muted loop playsinline preload="none"><source src="shortVids/seagull.mp4" type="video/mp4"></video></div>
-<div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker keepcase">philosophy</span><h3 class="sol-philo-title keepcase">Buy strength. Ride the trend. Let the stop decide.</h3><p class="sol-philo-sub keepcase">turtle-style systematic trend following</p></div><p class="sol-philosophy keepcase">Thirty leveraged ETFs, one rule: buy the strongest of the pack the moment it breaks its seven-day high &mdash; at most three positions, each guarded by a stop that only ever tightens. No forecasts, no targets, no opinions: losses are cut small and automatically, winners run until the trend itself ends. The system loses often and small, wins rarely and big &mdash; and when nothing is breaking out, cash is the position.</p></div>
-<div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg keepcase"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note keepcase" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets keepcase"><li><span class="sol-bullet-tx">leveraged us etfs</span></li><li><span class="sol-bullet-tx">algorithmic trend following</span></li><li><span class="sol-bullet-tx">long/short</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker keepcase">algorithmic</span><h3 class="sol-card-name keepcase">us momentum</h3><p class="sol-meta keepcase">leveraged etfs &middot; alpaca markets &middot; turtle-style breakout</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div></div></div></div>
+<div class="sol-slogan frame"><div class="sol-philo-head"><span class="sol-philo-kicker">philosophy</span><h3 class="sol-philo-title">Buy strength. Ride the trend. Let the stop decide.</h3><p class="sol-philo-sub">turtle-style systematic trend following</p></div><p class="sol-philosophy">Thirty leveraged ETFs, one rule: buy the strongest of the pack the moment it breaks its seven-day high &mdash; at most three positions, each guarded by a stop that only ever tightens. No forecasts, no targets, no opinions: losses are cut small and automatically, winners run until the trend itself ends. The system loses often and small, wins rarely and big &mdash; and when nothing is breaking out, cash is the position.</p></div>
+<div class="sol-two"><div class="sol-chart frame"><div class="perf"><div class="perf-top"><span class="perf-leg"><i class="lg-a"></i>strategy<i class="lg-b"></i>s&amp;p 500</span></div><svg class="perf-svg" id="perfSvg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true"></svg><span class="perf-note" id="perfNote">live · alpaca</span></div></div><div class="sol-text"><div class="sol-card frame"><ul class="sol-bullets"><li><span class="sol-bullet-tx">leveraged us etfs</span></li><li><span class="sol-bullet-tx">algorithmic trend following</span></li><li><span class="sol-bullet-tx">long/short</span></li></ul></div><div class="sol-card frame"><div class="sol-cap"><span class="wiki-kicker">algorithmic</span><h3 class="sol-card-name">us momentum</h3><p class="sol-meta">leveraged etfs &middot; alpaca markets &middot; turtle-style breakout</p></div><div class="perf-stats"><div><b id="stRet">–</b><span>return</span></div><div><b id="stWin">–</b><span>win rate</span></div><div><b id="stTr">–</b><span>trades</span></div><div><b id="stDD">–</b><span>max dd</span></div><div><b id="stAW">–</b><span>avg win</span></div><div><b id="stPO">–</b><span>payoff</span></div></div></div></div></div>
 <div class="an-card tc-card frame" id="stTc"></div>
 <div class="an-block" id="stAn"></div></div>
 </div>
 </div>  </div>
-<p class="markets-legal keepcase frame"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
+<p class="markets-legal frame"><b>High risk of loss.</b> Trading financial instruments is highly risky and can lead to total loss. All figures document a private proprietary trading account, serve information only and are no investment advice, recommendation or solicitation to buy or sell financial instruments. Past performance is no reliable indicator of future results. More in the <button class="linklike" data-nav="impressum">legal notice</button> and the <button class="linklike" data-nav="datenschutz">privacy policy</button>.</p>
 </section>
 
 <section class="tab sub" id="stuff">
@@ -788,79 +786,79 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro"><span class="rib-kicker keepcase">written elsewhere</span><h2 class="rib-title keepcase">stuff</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <div class="rib-intro"><span class="rib-kicker">written elsewhere</span><h2 class="rib-title">stuff</h2></div><div class="trade-quotes"><p class="trade-quote">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
 
     <div class="stuff-toggle">
       <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-markets" checked>
       <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-articles">
       <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-services">
-      <div class="sol-toggle"><label class="sol-btn keepcase" for="sol-r-markets"><span class="sol-dot"></span>markets</label><label class="sol-btn keepcase" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn keepcase" for="sol-r-services"><span class="sol-dot"></span>services</label></div>
+      <div class="sol-toggle"><label class="sol-btn" for="sol-r-markets"><span class="sol-dot"></span>markets</label><label class="sol-btn" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn" for="sol-r-services"><span class="sol-dot"></span>services</label></div>
       <div class="sol-body">
         <div class="sol-panel sol-p-markets">
           <div class="temp-card frame">
-            <div class="temp-head"><div><h4 class="keepcase">the words &mdash; what the press is afraid of</h4><p class="temp-sub keepcase">geopolitical risk and policy uncertainty on one canvas &middot; daily newspaper text analysis</p></div>
+            <div class="temp-head"><div><h4>the words &mdash; what the press is afraid of</h4><p class="temp-sub">geopolitical risk and policy uncertainty on one canvas &middot; daily newspaper text analysis</p></div>
               <div class="temp-ctl">
-                <select class="temp-sel keepcase" id="tempRiskRange" aria-label="time range"><option value="1">1 year</option><option value="3" selected>3 years</option><option value="5">5 years</option></select>
-                <select class="temp-sel keepcase" id="tempRiskScale" aria-label="scaling"><option value="own">own scale</option><option value="pct">percentile</option></select>
+                <select class="temp-sel" id="tempRiskRange" aria-label="time range"><option value="1">1 year</option><option value="3" selected>3 years</option><option value="5">5 years</option></select>
+                <select class="temp-sel" id="tempRiskScale" aria-label="scaling"><option value="own">own scale</option><option value="pct">percentile</option></select>
               </div></div>
             <div class="temp-legend" id="tempRiskLegend"></div>
             <svg class="temp-svg" id="tempRiskSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg>
             <div class="temp-axis" id="tempRiskAxis"></div>
-            <p class="temp-src keepcase">GPR: Caldara/Iacoviello &middot; matteoiacoviello.com &nbsp;|&nbsp; EPU: Baker/Bloom/Davis &middot; policyuncertainty.com</p>
+            <p class="temp-src">GPR: Caldara/Iacoviello &middot; matteoiacoviello.com &nbsp;|&nbsp; EPU: Baker/Bloom/Davis &middot; policyuncertainty.com</p>
           </div>
           <div class="temp-card frame">
-            <div class="temp-head"><div><h4 class="keepcase">the ships &mdash; what actually passes the gates</h4><p class="temp-sub keepcase">daily transits through the world's chokepoints &middot; 7-day mean &middot; ground truth, not headline</p></div>
+            <div class="temp-head"><div><h4>the ships &mdash; what actually passes the gates</h4><p class="temp-sub">daily transits through the world's chokepoints &middot; 7-day mean &middot; ground truth, not headline</p></div>
               <div class="temp-ctl">
-                <select class="temp-sel keepcase" id="tempGateSel" aria-label="chokepoint"></select>
-                <select class="temp-sel keepcase" id="tempGateRange" aria-label="time range"><option value="90">3 months</option><option value="365" selected>12 months</option><option value="0">all</option></select>
+                <select class="temp-sel" id="tempGateSel" aria-label="chokepoint"></select>
+                <select class="temp-sel" id="tempGateRange" aria-label="time range"><option value="90">3 months</option><option value="365" selected>12 months</option><option value="0">all</option></select>
               </div></div>
             <div class="temp-legend" id="tempGateLegend"></div>
             <svg class="temp-svg" id="tempGateSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg>
             <div class="temp-axis" id="tempGateAxis"></div>
-            <p class="temp-stat keepcase" id="tempGateStat"></p>
-            <p class="temp-src keepcase">IMF PortWatch &middot; portwatch.imf.org &middot; AIS vessel tracking, ~2 days lag</p>
+            <p class="temp-stat" id="tempGateStat"></p>
+            <p class="temp-src">IMF PortWatch &middot; portwatch.imf.org &middot; AIS vessel tracking, ~2 days lag</p>
           </div>
           <div class="temp-card frame">
-            <div class="temp-head"><div><h4 class="keepcase">the money &mdash; what capital already paid for</h4><p class="temp-sub keepcase">volatility and risk assets &mdash; prices, not opinions</p></div>
+            <div class="temp-head"><div><h4>the money &mdash; what capital already paid for</h4><p class="temp-sub">volatility and risk assets &mdash; prices, not opinions</p></div>
               <div class="temp-ctl">
-                <select class="temp-sel keepcase" id="tempMktWin" aria-label="change window"><option value="22">1 month</option><option value="66" selected>3 months</option><option value="252">1 year</option></select>
-                <select class="temp-sel keepcase" id="tempMktSort" aria-label="order"><option value="def">by theme</option><option value="mov">biggest movers</option></select>
+                <select class="temp-sel" id="tempMktWin" aria-label="change window"><option value="22">1 month</option><option value="66" selected>3 months</option><option value="252">1 year</option></select>
+                <select class="temp-sel" id="tempMktSort" aria-label="order"><option value="def">by theme</option><option value="mov">biggest movers</option></select>
               </div></div>
             <div class="temp-mkt-grid" id="tempMktGrid"></div>
-            <p class="temp-src keepcase">Yahoo Finance &middot; daily closes</p>
+            <p class="temp-src">Yahoo Finance &middot; daily closes</p>
           </div>
           <div class="temp-card frame">
-            <div class="temp-head"><div><h4 class="keepcase">the odds &mdash; what real capital bets on next</h4><p class="temp-sub keepcase">implied yes-probability &middot; money at risk, not a survey</p></div>
+            <div class="temp-head"><div><h4>the odds &mdash; what real capital bets on next</h4><p class="temp-sub">implied yes-probability &middot; money at risk, not a survey</p></div>
               <div class="temp-ctl">
-                <select class="temp-sel keepcase" id="tempPredSrc" aria-label="venue"><option value="all">both venues</option><option value="poly">Polymarket</option><option value="kalshi">Kalshi</option></select>
-                <select class="temp-sel keepcase" id="tempPredSort" aria-label="order"><option value="vol">by volume</option><option value="p">by probability</option><option value="chg">by 24h move</option></select>
+                <select class="temp-sel" id="tempPredSrc" aria-label="venue"><option value="all">both venues</option><option value="poly">Polymarket</option><option value="kalshi">Kalshi</option></select>
+                <select class="temp-sel" id="tempPredSort" aria-label="order"><option value="vol">by volume</option><option value="p">by probability</option><option value="chg">by 24h move</option></select>
               </div></div>
             <div id="tempPred"></div>
-            <p class="temp-src keepcase">Polymarket gamma-api &middot; Kalshi trade-api (CFTC-regulated)</p>
+            <p class="temp-src">Polymarket gamma-api &middot; Kalshi trade-api (CFTC-regulated)</p>
           </div>
-          <p class="temp-stale keepcase" id="tempUpdated"></p>
+          <p class="temp-stale" id="tempUpdated"></p>
         </div>
         <div class="sol-panel sol-p-articles">
 
     <div class="stuff-group">
-      <span class="stuff-label keepcase">guest columns &amp; webinars</span>
+      <span class="stuff-label">guest columns &amp; webinars</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta keepcase">finanzwelt &middot; 02/2025</p></a>
-        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta keepcase">finanzwelt &middot; 12/2025</p></a>
-        <a class="stuff-card frame" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta keepcase">capinside &middot; 06/2025</p></a>
+        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta">finanzwelt &middot; 02/2025</p></a>
+        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta">finanzwelt &middot; 12/2025</p></a>
+        <a class="stuff-card frame" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta">capinside &middot; 06/2025</p></a>
       </div>
     </div>
 
     <div class="stuff-group">
-      <span class="stuff-label keepcase">anlegerplus &middot; funds &amp; equities</span>
+      <span class="stuff-label">anlegerplus &middot; funds &amp; equities</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="https://anlegerplus.de/in-asien-investieren-pragmatismus-schlaegt-dogma/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">In Asien investieren: Pragmatismus schl&auml;gt Dogma</h3><p class="stuff-meta keepcase">anlegerplus &middot; 02/2026</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/nahrungsmittelindustrie-gesaettigter-markt-oder-chancenreiches-umfeld/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Nahrungsmittelindustrie: ges&auml;ttigter Markt oder chancenreiches Umfeld?</h3><p class="stuff-meta keepcase">anlegerplus &middot; 12/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/mit-einem-etf-in-genomik-investieren/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Mit einem ETF in Genomik investieren</h3><p class="stuff-meta keepcase">anlegerplus &middot; 10/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/lifecycle-etfs-altersvorsorge-im-autopilot/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Lifecycle-ETFs: Altersvorsorge im Autopilot</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta keepcase">anlegerplus &middot; 06/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta keepcase">anlegerplus &middot; 09/2024</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head keepcase">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta keepcase">anlegerplus &middot; 07/2024</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/in-asien-investieren-pragmatismus-schlaegt-dogma/" target="_blank" rel="noopener"><h3 class="stuff-head">In Asien investieren: Pragmatismus schl&auml;gt Dogma</h3><p class="stuff-meta">anlegerplus &middot; 02/2026</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/nahrungsmittelindustrie-gesaettigter-markt-oder-chancenreiches-umfeld/" target="_blank" rel="noopener"><h3 class="stuff-head">Nahrungsmittelindustrie: ges&auml;ttigter Markt oder chancenreiches Umfeld?</h3><p class="stuff-meta">anlegerplus &middot; 12/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/mit-einem-etf-in-genomik-investieren/" target="_blank" rel="noopener"><h3 class="stuff-head">Mit einem ETF in Genomik investieren</h3><p class="stuff-meta">anlegerplus &middot; 10/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/lifecycle-etfs-altersvorsorge-im-autopilot/" target="_blank" rel="noopener"><h3 class="stuff-head">Lifecycle-ETFs: Altersvorsorge im Autopilot</h3><p class="stuff-meta">anlegerplus &middot; 07/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta">anlegerplus &middot; 06/2025</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta">anlegerplus &middot; 09/2024</p></a>
+        <a class="stuff-card frame" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta">anlegerplus &middot; 07/2024</p></a>
       </div>
     </div>
 
@@ -868,10 +866,10 @@ footer{position:relative;z-index:1}
         <div class="sol-panel sol-p-services">
 
     <div class="stuff-group">
-      <span class="stuff-label keepcase">work with me</span>
+      <span class="stuff-label">work with me</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Website%20Anfrage"><h3 class="stuff-head keepcase">Website &amp; Design</h3><p class="stuff-desc keepcase">Need help with your website? I design and build sites like this one &mdash; clean, fast, no bloat.</p><p class="stuff-meta keepcase">write me &rarr;</p></a>
-        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Hallo"><h3 class="stuff-head keepcase">Get in Touch</h3><p class="stuff-desc keepcase">Got a question, an idea, or just want to say hi? Send me a message directly.</p><p class="stuff-meta keepcase">write me &rarr;</p></a>
+        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Website%20Anfrage"><h3 class="stuff-head">Website &amp; Design</h3><p class="stuff-desc">Need help with your website? I design and build sites like this one &mdash; clean, fast, no bloat.</p><p class="stuff-meta">write me &rarr;</p></a>
+        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Hallo"><h3 class="stuff-head">Get in Touch</h3><p class="stuff-desc">Got a question, an idea, or just want to say hi? Send me a message directly.</p><p class="stuff-meta">write me &rarr;</p></a>
       </div>
     </div>
 
@@ -889,19 +887,19 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro"><span class="rib-kicker keepcase">file the</span><h2 class="rib-title keepcase">news</h2></div><div class="trade-quotes"><p class="trade-quote keepcase">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <div class="rib-intro"><span class="rib-kicker">file the</span><h2 class="rib-title">news</h2></div><div class="trade-quotes"><p class="trade-quote">The stock market is never obvious. It is designed to fool most of the people, most of the time. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
     <div class="mag">
-<p class="mag-kicker keepcase">dailyIntel &middot; free daily newsletter &middot; PDF only</p>
+<p class="mag-kicker">dailyIntel &middot; free daily newsletter &middot; PDF only</p>
 <!-- auto:report -->
 <p class="mag-claim">daily AI generated news &amp; intelligence &middot; designed for continuous learning and unbiased intel</p>
 <!-- /auto:report -->
 <a class="dl-box" href="reports/briefing.pdf" download>
   <span class="dl-icon" aria-hidden="true">&#8595;</span>
-  <span class="dl-text"><b class="keepcase">download today's briefing</b><small class="keepcase">PDF &middot; free &middot; no signup</small></span>
+  <span class="dl-text"><b>download today's briefing</b><small>PDF &middot; free &middot; no signup</small></span>
 </a>
 <a class="dl-box" href="mailto:maloutrading&#64;web.de?subject=dailyIntel%20abonnieren&amp;body=Bitte%20schicken%20Sie%20mir%20den%20dailyIntel%20Newsletter%20taeglich%20als%20PDF.">
   <span class="dl-icon" aria-hidden="true">&#9993;</span>
-  <span class="dl-text"><b class="keepcase">get it every morning</b><small class="keepcase">free &middot; one PDF a day &middot; unsubscribe anytime</small></span>
+  <span class="dl-text"><b>get it every morning</b><small>free &middot; one PDF a day &middot; unsubscribe anytime</small></span>
 </a>
 </div>
   </div>
@@ -914,7 +912,7 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro frame"><h2 class="rib-title keepcase">team</h2><p class="rib-lead rib-est glow-pill keepcase">malou trading - est. 2024</p><p class="rib-lead">we do code, designs &amp; finance</p></div>
+    <div class="rib-intro frame"><h2 class="rib-title">team</h2><p class="rib-lead rib-est glow-pill">malou trading - est. 2024</p><p class="rib-lead">we do code, designs &amp; finance</p></div>
     <div class="member">
       <figure class="portrait noimg frame">
         <img class="port-img" src="pics/hickory.webp" alt="benjamin suermann" width="480" height="320" style="object-position:62% 42%"
@@ -922,8 +920,8 @@ footer{position:relative;z-index:1}
         <span class="mono">bs</span>
       </figure>
       <div class="about-text">
-        <h3 class="keepcase">Benjamin Suermann</h3>
-        <p class="member-say keepcase">"Moin."</p>
+        <h3>Benjamin Suermann</h3>
+        <p class="member-say">"Moin."</p>
         <div class="socials" aria-label="profile benjamin suermann">
           <a href="https://www.linkedin.com/in/benjamin-suermann-107062316" target="_blank" rel="noopener" aria-label="linkedin">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.2V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>
@@ -938,8 +936,8 @@ footer{position:relative;z-index:1}
         <span class="mono">c</span>
       </figure>
       <div class="about-text">
-        <h3 class="keepcase">Claude</h3>
-        <p class="member-say keepcase">"Bonjour."</p>
+        <h3>Claude</h3>
+        <p class="member-say">"Bonjour."</p>
         <div class="socials" aria-label="claude">
           <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener" aria-label="anthropic">
             <svg viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></g></svg>
@@ -951,9 +949,9 @@ footer{position:relative;z-index:1}
 
     <div class="team-bottom">
       <div class="spotify-box">
-        <div class="spotify-track" data-track="4gldqByzAgQB2TeOjdvyw4"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b class="keepcase">Afon Colhuw</b><small class="keepcase">Huw Marc Bennett</small></span><button class="sp-load keepcase" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/4gldqByzAgQB2TeOjdvyw4" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
-        <div class="spotify-track" data-track="3usbbmpFd1sx1UQQOGgc8A"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b class="keepcase">Part III</b><small class="keepcase">I Am An Instrument</small></span><button class="sp-load keepcase" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/3usbbmpFd1sx1UQQOGgc8A" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
-        <div class="spotify-track" data-track="4wk9PCZ3ZysvUapP8G86aV"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b class="keepcase">Bario Alto</b><small class="keepcase">Thievery Corporation</small></span><button class="sp-load keepcase" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/4wk9PCZ3ZysvUapP8G86aV" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
+        <div class="spotify-track" data-track="4gldqByzAgQB2TeOjdvyw4"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b>Afon Colhuw</b><small>Huw Marc Bennett</small></span><button class="sp-load" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/4gldqByzAgQB2TeOjdvyw4" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
+        <div class="spotify-track" data-track="3usbbmpFd1sx1UQQOGgc8A"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b>Part III</b><small>I Am An Instrument</small></span><button class="sp-load" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/3usbbmpFd1sx1UQQOGgc8A" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
+        <div class="spotify-track" data-track="4wk9PCZ3ZysvUapP8G86aV"><i class="sp-art" aria-hidden="true">♪</i><span class="t"><b>Bario Alto</b><small>Thievery Corporation</small></span><button class="sp-load" type="button">play</button><a class="sp-out" href="https://open.spotify.com/track/4wk9PCZ3ZysvUapP8G86aV" target="_blank" rel="noopener" aria-label="open on Spotify">&#8599;</a></div>
 <a class="sp-brand" href="https://open.spotify.com" target="_blank" rel="noopener"><img src="pics/spotifyLogo.svg" alt="Spotify" width="88" height="24" loading="lazy"></a>
       </div>
       <figure class="homage">
@@ -961,7 +959,7 @@ footer{position:relative;z-index:1}
           <img src="pics/malou.webp" alt="malou" width="768" height="1024" loading="lazy" decoding="async">
         </div>
         <figcaption class="homage-text">
-          <h3 class="homage-name keepcase">Malou</h3>
+          <h3 class="homage-name">Malou</h3>
         </figcaption>
       </figure>
     </div>
@@ -974,7 +972,7 @@ footer{position:relative;z-index:1}
   <div class="wrap reveal text">
     <input class="lang-radio" type="radio" name="langImp" id="impDe" checked>
     <input class="lang-radio" type="radio" name="langImp" id="impEn">
-    <div class="lang-toggle keepcase"><label for="impDe">de</label><label for="impEn">en</label></div>
+    <div class="lang-toggle"><label for="impDe">de</label><label for="impEn">en</label></div>
     <div class="lang-de">
     <h2>Impressum</h2>
     <p>Angaben gem&auml;&szlig; &sect; 5 DDG</p>
@@ -1037,7 +1035,7 @@ footer{position:relative;z-index:1}
   <div class="wrap reveal text">
     <input class="lang-radio" type="radio" name="langDs" id="dsDe" checked>
     <input class="lang-radio" type="radio" name="langDs" id="dsEn">
-    <div class="lang-toggle keepcase"><label for="dsDe">de</label><label for="dsEn">en</label></div>
+    <div class="lang-toggle"><label for="dsDe">de</label><label for="dsEn">en</label></div>
     <div class="lang-de">
     <h2>Datenschutzerkl&auml;rung</h2>
     <h3>1. Verantwortlicher</h3>
