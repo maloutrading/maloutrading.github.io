@@ -10,17 +10,17 @@
 :root{
   /* ── THE SEVEN RAW COLOURS. The only hex in the whole system. ── */
   --marine:#070B18;   /* midnight slate — the ground everything stands on */
-  --ton:#B4653A;      /* terracotta — ribbon 1, and the warm tone of a loss */
-  --petrol:#2F7D8C;   /* petrol blue — ribbon 2 */
-  --smaragd:#3E8C72;  /* emerald — ribbon 3, and the cool tone of a gain */
+  --ton:#8D3541;      /* wine red — ribbon 3, and the warm tone of a loss */
+  --petrol:#79ADC8;   /* baby blue — ribbon 1 */
+  --smaragd:#3E8C72;  /* emerald — ribbon 2, and the cool tone of a gain */
   --indigo:#6A72C4;   /* indigo — ribbon 4 */
   --ocker:#C2A36B;    /* ochre — ribbon 5, and every metal line and frame */
   --weiss:#EDE8DC;    /* bone white — the ink */
 
   /* ── THE FIVE RIBBON ACCENTS, in nav order. Lifted until each clears 4.5:1 on --marine. ── */
-  --rib1:color-mix(in srgb,var(--ton) 76%,var(--weiss));      /* team */
-  --rib2:color-mix(in srgb,var(--petrol) 74%,var(--weiss));   /* news */
-  --rib3:color-mix(in srgb,var(--smaragd) 88%,var(--weiss));  /* trade */
+  --rib1:color-mix(in srgb,var(--petrol) 74%,var(--weiss));   /* team */
+  --rib2:color-mix(in srgb,var(--smaragd) 88%,var(--weiss));  /* news */
+  --rib3:color-mix(in srgb,var(--ton) 64%,var(--weiss));      /* trade */
   --rib4:color-mix(in srgb,var(--indigo) 82%,var(--weiss));   /* stuff */
   --rib5:var(--ocker);                                        /* reserved for the next ribbon */
 
@@ -29,8 +29,8 @@
   --gold:color-mix(in srgb,var(--ocker) 72%,var(--weiss));
   --bronze:var(--ocker);
   --gruen:var(--smaragd);   /* gains rise */
-  --ab:var(--rib1);         /* losses fall */
-  --holz:var(--rib1);
+  --ab:var(--ton);          /* losses fall */
+  --holz:var(--ton);
   --flieder:var(--rib4);
   --glow-a:color-mix(in srgb,color-mix(in srgb,var(--indigo) 52%,var(--smaragd)) 62%,var(--weiss));
   --glow-b:var(--flieder);  /* the one glow tone, shared by every pill edge */
