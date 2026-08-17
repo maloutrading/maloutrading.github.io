@@ -203,15 +203,14 @@ picture{display:contents}
 .rib-title{font-family:var(--sans);font-weight:600;font-size:clamp(2.15rem,4.8vw,3.5rem);letter-spacing:-.02em;line-height:1;margin:0}
 .rib-title::after{margin-left:auto;margin-right:auto}
 .rib-lead{color:var(--silber);font-style:italic;text-transform:none;font-size:clamp(1.2rem,2.5vw,1.48rem);margin:1.75rem auto 0;max-width:52ch}
-.team-bottom{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
-  gap:clamp(1.6rem,3.5vw,3rem);max-width:var(--w);
-  margin:calc(clamp(5.6rem,9vw,7.5rem) + 2.4cm) auto 0;
-  padding:calc(clamp(4rem,6.5vw,5.6rem) + 2cm) 0 0}
+.team-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;
+  gap:clamp(2.2rem,5vw,4.5rem);max-width:var(--wide);
+  margin:var(--tgap) auto 0;padding:0}
 .homage{display:flex;flex-direction:column;align-items:center;text-align:center;margin:0}
 .homage-portrait{width:244px;height:244px;border-radius:50%;overflow:hidden}
 .homage-portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .homage-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:1.6rem 0 0}
-.spotify-box{flex:0 1 488px;max-width:488px;position:relative;border-radius:var(--r-lg);padding:2.1rem 2.1rem 1.65rem;
+.spotify-box{flex:1 1 500px;max-width:600px;position:relative;border-radius:var(--r-lg);padding:2.1rem 2.1rem 1.65rem;
   background:linear-gradient(158deg,color-mix(in srgb,var(--card) 80%,transparent),color-mix(in srgb,var(--card) 52%,transparent));
   border:1px solid color-mix(in srgb,var(--gruen) 26%,var(--line));
   box-shadow:0 32px 64px -24px rgba(0,0,0,.66),inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(9px)}
@@ -229,7 +228,7 @@ picture{display:contents}
 .spotify-track:hover .go{opacity:1;transform:translateX(0)}
 .spotify-track:hover .t b{color:var(--gruen)}
 @media(max-width:640px){.spotify-box{max-width:none}.homage{margin:1.5rem auto 0}}
-.library{--pcol:var(--indigo);max-width:var(--wide);margin:clamp(7rem,12vw,10rem) auto clamp(3.5rem,7vw,5rem);
+.library{--pcol:var(--indigo);max-width:var(--wide);margin:var(--tgap) auto clamp(3.5rem,7vw,5rem);
   padding:clamp(3rem,6vw,4.6rem) clamp(2rem,5vw,4rem) clamp(3.4rem,6vw,5rem)}
 .library::before{content:"";position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--pcol) 15%,transparent);border-radius:1px;pointer-events:none}
 .library::after{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:clamp(70px,18%,150px);height:2px;background:linear-gradient(90deg,transparent,var(--pcol),transparent)}
@@ -399,13 +398,13 @@ picture{display:contents}
 .portrait.noimg .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-size:3.91rem;letter-spacing:.1em;color:var(--accent,var(--gold));opacity:.55}
 .member{display:grid;grid-template-columns:minmax(160px,240px) 1fr;gap:2.4rem;
-  align-items:stretch;margin:2rem 0 0}
+  align-items:stretch;margin:0}
 .member .portrait{aspect-ratio:4/5}
 .member .about-text{display:flex;flex-direction:column}
 .member .about-text h3{margin:0;font-size:1.725rem}
 .member-say{text-transform:none;font-style:italic;color:var(--ink);text-align:center;
   font-size:clamp(1.495rem,3.22vw,2.07rem);margin:0;flex:1;display:flex;align-items:center;justify-content:center}
-.member+.member{margin-top:3.4rem;padding-top:3.4rem}
+.member+.member{margin-top:var(--tgap)}
 .socials{display:flex;justify-content:flex-start;gap:1.3rem;margin:1.6rem 0 0}
 .socials a{color:var(--muted);display:inline-flex;transition:color .3s,transform .3s}
 .socials a:hover{color:var(--gold);transform:translateY(-2px)}
@@ -466,7 +465,8 @@ footer{position:relative;z-index:1}
 .rib-est{display:inline-block;margin-top:1.6rem;font-size:.9rem;font-weight:300;letter-spacing:.3em;
   padding:.52rem 1.35rem;background:color-mix(in srgb,var(--card) 55%,transparent);color:var(--accent,var(--gold))}
 
-#team{position:relative}
+#team{position:relative;--tgap:clamp(5.5rem,9vw,7.5rem)}
+#team .rib-intro{margin-bottom:var(--tgap)}
 .tabbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .tabbg,.landing .stage{-webkit-mask-image:linear-gradient(to bottom,#000 56%,transparent 100%);mask-image:linear-gradient(to bottom,#000 56%,transparent 100%)}
 .tabbg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
