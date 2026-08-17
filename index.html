@@ -475,16 +475,19 @@ footer{position:relative;z-index:1}
   color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--weiss) 8%,transparent);
   opacity:.6;pointer-events:none;z-index:0}
 .rib-intro>*{position:relative;z-index:1}
-#team .rib-intro{padding:clamp(2.6rem,5.5vw,4rem) clamp(1.8rem,5vw,3.4rem);
+#team .rib-intro{padding:clamp(2.4rem,4.6vw,3.4rem) clamp(1.8rem,5vw,3.4rem);
   --fbg:linear-gradient(0deg,color-mix(in srgb,var(--marine) 46%,transparent),color-mix(in srgb,var(--marine) 46%,transparent))}
 #team .rib-intro::before{content:"";inset:0;left:0;top:0;transform:none;opacity:1;border-radius:inherit;
   -webkit-backdrop-filter:blur(10px) saturate(1.15) brightness(.72);backdrop-filter:blur(10px) saturate(1.15) brightness(.72)}
 #team .rib-intro::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
   -webkit-backdrop-filter:blur(17px) brightness(.9);backdrop-filter:blur(17px) brightness(.9);
   -webkit-mask-image:radial-gradient(72% 64% at 50% 50%,#000 38%,transparent 84%);mask-image:radial-gradient(72% 64% at 50% 50%,#000 38%,transparent 84%)}
-.rib-est{display:inline-block;margin-top:1.6rem;font-size:.9rem;font-weight:300;letter-spacing:.3em;
+.rib-est{display:inline-block;margin-top:0;font-size:.9rem;font-weight:300;letter-spacing:.3em;
   padding:.52rem 1.35rem;background:color-mix(in srgb,var(--marine) 40%,transparent);color:var(--accent,var(--gold));
   -webkit-backdrop-filter:blur(10px) brightness(.85);backdrop-filter:blur(10px) brightness(.85)}
+.team-rule{display:block;width:56px;height:1px;background:color-mix(in srgb,var(--accent,var(--gold)) 75%,transparent);
+  margin:clamp(1.3rem,2.5vw,1.8rem) auto}
+.team-claim{margin:0;font-size:clamp(1.3rem,2.7vw,1.65rem);color:var(--weiss)}
 
 #team{position:relative;--tgap:clamp(7rem,11vw,9.5rem)}
 #team .rib-intro{margin-bottom:var(--tgap)}
@@ -843,7 +846,7 @@ footer{position:relative;z-index:1}
     </video>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro frame"><h2 class="rib-title">team</h2><p class="rib-lead rib-est glow-pill">malou trading - est. 2024</p><p class="rib-lead">we do code, designs &amp; finance</p></div>
+    <div class="rib-intro frame"><p class="rib-lead rib-est glow-pill">malou trading &middot; est. 2024</p><i class="team-rule" aria-hidden="true"></i><p class="rib-lead team-claim">we do code, designs &amp; finance</p></div>
     <div class="member">
       <figure class="portrait noimg frame">
         <img class="port-img" src="pics/hickory.webp" alt="benjamin suermann" width="480" height="320" style="object-position:62% 42%"
