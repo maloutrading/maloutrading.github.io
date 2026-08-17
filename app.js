@@ -827,9 +827,10 @@ function renderPredictions(){
   const all = tag(tempData.polymarket, 'Polymarket').concat(tag(tempData.kalshi, 'Kalshi'))
     .sort((a, b) => (b.vol || 0) - (a.vol || 0));
   const rows = [], topics = [];
+  const overlap = (a, b) => [...a].some(w => [...b].some(v => v.startsWith(w) || w.startsWith(v)));
   for (const m of all){
     const t = predTopic(m.question || m.title);
-    if (topics.some(s => [...t].some(w => s.has(w)))) continue;
+    if (topics.some(s => overlap(t, s))) continue;
     rows.push(m); topics.push(t);
     if (rows.length === 7) break;
   }

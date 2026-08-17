@@ -4,12 +4,6 @@ from pathlib import Path
 
 UA = {'User-Agent': 'Mozilla/5.0'}
 
-MARKETS = [
-    ('^OVX', 'OVX · oil vol'), ('^MOVE', 'MOVE · rates vol'), ('^VIX', 'VIX · equity vol'),
-    ('BZ=F', 'brent'), ('TTF=F', 'ttf · eu gas'), ('GC=F', 'gold'),
-    ('DX-Y.NYB', 'dxy'), ('ZW=F', 'wheat'), ('HG=F', 'copper'),
-]
-
 def get(url, params=None, timeout=45):
     if params:
         url = url + '?' + urllib.parse.urlencode(params)
@@ -60,21 +54,6 @@ def fetchEpu():
         if rows[i][0] >= cutoff:
             pts.append([int(rows[i][0].timestamp() * 1000), round(sum(window) / len(window), 1)])
     return downsample(pts)
-
-def fetchMarkets():
-    out = []
-    for ticker, name in MARKETS:
-        try:
-            data = json.loads(get('https://query1.finance.yahoo.com/v8/finance/chart/' + urllib.parse.quote(ticker, safe=''),
-                                   {'range': '1y', 'interval': '1d'}))
-            r = data['chart']['result'][0]
-            closes = r['indicators']['quote'][0]['close']
-            pts = [[t * 1000, round(c, 2)] for t, c in zip(r['timestamp'], closes) if isinstance(c, (int, float))]
-            if len(pts) > 20:
-                out.append({'key': ticker, 'name': name, 'series': pts})
-        except Exception:
-            continue
-    return out
 
 CHOKEPOINTS = [
     ('chokepoint6', 'hormuz'), ('chokepoint4', 'bab el-mandeb'), ('chokepoint1', 'suez'),
@@ -186,8 +165,7 @@ def fetchKalshi():
     return out[:8]
 
 out = {'updated': int(time.time() * 1000)}
-for key, fn in (('gpr', fetchGpr), ('epu', fetchEpu), ('markets', fetchMarkets),
-                ('chokepoints', fetchChokepoints),
+for key, fn in (('gpr', fetchGpr), ('epu', fetchEpu), ('chokepoints', fetchChokepoints),
                 ('polymarket', fetchPolymarket), ('kalshi', fetchKalshi)):
     try:
         out[key] = fn()
