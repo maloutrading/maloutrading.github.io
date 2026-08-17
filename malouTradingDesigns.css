@@ -10,7 +10,7 @@
 :root{
   /* ── THE SEVEN RAW COLOURS. The only hex in the whole system. ── */
   --marine:#070B18;   /* midnight slate — the ground everything stands on */
-  --ton:#721D2B;      /* deep wine red — ribbon 4, and the warm tone of a loss */
+  --ton:#8B1822;      /* deep wine red — ribbon 4, and the warm tone of a loss */
   --petrol:#79ADC8;   /* baby blue — ribbon 2 */
   --smaragd:#3E8C72;  /* emerald — ribbon 3, and the cool tone of a gain */
   --indigo:#6A72C4;   /* indigo — ribbon 1 */
@@ -21,7 +21,7 @@
   --rib1:color-mix(in srgb,var(--indigo) 82%,var(--weiss));   /* team — lavendel */
   --rib2:color-mix(in srgb,var(--petrol) 74%,var(--weiss));   /* news — blue */
   --rib3:color-mix(in srgb,var(--smaragd) 88%,var(--weiss));  /* trade — smaragd */
-  --rib4:color-mix(in srgb,var(--ton) 64%,var(--weiss));      /* stuff — red */
+  --rib4:color-mix(in srgb,var(--ton) 74%,var(--weiss));      /* stuff — red */
   --rib5:var(--ocker);                                        /* reserved for the next ribbon */
 
   /* ── derived: semantic slots, never a raw hex again ── */
