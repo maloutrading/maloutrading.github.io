@@ -692,18 +692,6 @@ document.addEventListener('click', e => {
   row.replaceChildren(f);
 });
 
-function sparkPath(vals){
-  const w = 100, h = 32, pad = 1;
-  const lo = Math.min(...vals), hi = Math.max(...vals);
-  const X = i => pad + i / (vals.length - 1) * (w - 2 * pad);
-  const Y = v => h - pad - (hi > lo ? (v - lo) / (hi - lo) : .5) * (h - 2 * pad);
-  return vals.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
-}
-function sparkSvg(vals){
-  if (!Array.isArray(vals) || vals.length < 2) return '';
-  return '<svg class="temp-spark" viewBox="0 0 100 32" preserveAspectRatio="none"><path d="' + sparkPath(vals) +
-    '" fill="none" stroke="' + cv('--flieder') + '" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>';
-}
 const tempEl = id => document.getElementById(id);
 const tempVal = id => (tempEl(id) || {}).value || '';
 const tempData = {};
@@ -825,34 +813,26 @@ function renderGates(){
     med.toFixed(0) + ' ships/day median of the period before.';
 }
 
-function renderMarkets(){
-  const grid = tempEl('tempMktGrid');
-  if (!grid) return;
-  const win = +tempVal('tempMktWin') || 66;
-  const cards = (tempData.markets || []).map(m => {
-    const vals = (m.series || []).map(p => p[1]);
-    if (vals.length < 2) return null;
-    const last = vals[vals.length - 1], prev = vals[Math.max(0, vals.length - 1 - win)];
-    return { m: m, last: last, chg: prev ? (last / prev - 1) * 100 : 0, vals: vals.slice(-win) };
-  }).filter(Boolean);
-  if (tempVal('tempMktSort') === 'mov') cards.sort((a, b) => Math.abs(b.chg) - Math.abs(a.chg));
-  grid.innerHTML = cards.map(c =>
-    '<div class="temp-mkt"><div class="temp-mkt-name keepcase">' + escapeHtml(c.m.name) + '</div>' +
-    '<div class="temp-mkt-val">' + c.last.toFixed(2) + '</div>' + sparkSvg(c.vals) +
-    '<span class="temp-delta ' + (c.chg >= 0 ? 'up' : 'dn') + '">' + (c.chg >= 0 ? '▲' : '▼') + ' ' +
-    Math.abs(c.chg).toFixed(1) + '%</span></div>').join('') || svgEmpty('no data');
-}
-
+const predStop = new Set(['will', 'when', 'what', 'which', 'before', 'after', 'above', 'below', 'under', 'over',
+  'reach', 'price', 'market', 'than', 'this', 'that', 'with', 'from', 'into', 'during', 'between', 'there',
+  'more', 'less', 'many', 'much', 'other', 'some', 'have', 'been', 'were', 'make', 'made', 'next', 'first',
+  'high', 'higher', 'year', 'month', 'week', 'close', 'value', 'wins', 'january', 'february', 'march', 'april',
+  'june', 'july', 'august', 'september', 'october', 'november', 'december', '2025', '2026', '2027']);
+const predTopic = q => new Set((q || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/)
+  .filter(w => w.length >= 4 && !predStop.has(w)));
 function renderPredictions(){
   const box = tempEl('tempPred');
   if (!box) return;
-  const src = tempVal('tempPredSrc') || 'all', sort = tempVal('tempPredSort') || 'vol';
   const tag = (list, venue) => (list || []).map(m => Object.assign({ venue: venue }, m));
-  let rows = src === 'poly' ? tag(tempData.polymarket, 'Polymarket')
-    : src === 'kalshi' ? tag(tempData.kalshi, 'Kalshi')
-    : tag(tempData.polymarket, 'Polymarket').concat(tag(tempData.kalshi, 'Kalshi'));
-  const key = sort === 'p' ? m => m.p || 0 : sort === 'chg' ? m => Math.abs(m.chg || 0) : m => m.vol || 0;
-  rows = rows.sort((a, b) => key(b) - key(a)).slice(0, 12);
+  const all = tag(tempData.polymarket, 'Polymarket').concat(tag(tempData.kalshi, 'Kalshi'))
+    .sort((a, b) => (b.vol || 0) - (a.vol || 0));
+  const rows = [], topics = [];
+  for (const m of all){
+    const t = predTopic(m.question || m.title);
+    if (topics.some(s => [...t].some(w => s.has(w)))) continue;
+    rows.push(m); topics.push(t);
+    if (rows.length === 7) break;
+  }
   if (!rows.length){ box.innerHTML = svgEmpty('no data'); return; }
   box.innerHTML = rows.map(m => {
     const pct = Math.round((m.p || 0) * 100), chg = (m.chg || 0) * 100;
@@ -870,12 +850,11 @@ function renderPredictions(){
 
 function renderTemperature(d){
   Object.assign(tempData, d);
-  renderRisk(); renderGates(); renderMarkets(); renderPredictions();
+  renderRisk(); renderGates(); renderPredictions();
   const upd = tempEl('tempUpdated');
   if (upd) upd.textContent = d.updated ? 'updated ' + fmtAge(d.updated) : '';
 }
-[['tempRiskRange', renderRisk], ['tempRiskScale', renderRisk], ['tempGateSel', renderGates], ['tempGateRange', renderGates],
- ['tempMktWin', renderMarkets], ['tempMktSort', renderMarkets], ['tempPredSrc', renderPredictions], ['tempPredSort', renderPredictions]]
+[['tempRiskRange', renderRisk], ['tempRiskScale', renderRisk], ['tempGateSel', renderGates], ['tempGateRange', renderGates]]
   .forEach(([id, fn]) => { const el = tempEl(id); if (el) el.addEventListener('change', fn); });
 fetchT('websiteData/temperature.json?' + bust, 10000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
