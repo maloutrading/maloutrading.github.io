@@ -37,6 +37,7 @@
   --wiki:var(--rib3);
   --alp:var(--rib5);
   --grau:color-mix(in srgb,color-mix(in srgb,var(--marine) 88%,var(--weiss)) 78%,transparent);
+  --card-solid:color-mix(in srgb,color-mix(in srgb,var(--marine) 88%,var(--weiss)) 78%,var(--marine)); /* --grau, opaque — for solid fills like --fbg that must fully back a frame's interior */
   --bg:var(--marine); --card:var(--grau); --ink:var(--weiss); --muted:var(--silber);
   --line:color-mix(in srgb,var(--silber) 42%,var(--marine));
 
