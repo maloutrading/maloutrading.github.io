@@ -723,6 +723,8 @@ function mount(P){
   fetchT(P.url + '?' + bust, 8000)
     .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
     .then(d => {
+      d.trades_detail = (d.trades_detail || []).map(t =>
+        t.r == null && t.pnlPct != null ? Object.assign({}, t, {r: t.pnlPct}) : t);
       const s = d.stats || {}, G = (id, v) => { const e = document.getElementById(id); if (!e) return;
         e.textContent = v;
         e.classList.toggle('up', /^\+/.test(v));
