@@ -47,7 +47,7 @@ document.querySelectorAll('.stage video,.topvid video').forEach(v => {
   v.readyState >= 2 ? ready() : v.addEventListener('loadeddata', ready, {once:true});
 });
 
-const TITLES = {home:'malou trading', team:'team - malou trading', trade:'trade - malou trading', news:'news - malou trading', stuff:'stuff - malou trading'};
+const TITLES = {home:'malou trading', team:'team - malou trading', trade:'trade - malou trading', news:'news - malou trading', world:'world - malou trading'};
 function show(id, push){
   if (!document.getElementById(id)) id = 'home';
   document.querySelectorAll('main .tab').forEach(s => s.classList.remove('show'));
@@ -134,7 +134,7 @@ const fetchT = (u, ms) => Promise.race([fetch(u), new Promise((_, r) => setTimeo
   })();
 })();
 
-const SWIPE = ['home','team','news','trade','stuff'];
+const SWIPE = ['home','team','news','trade','world'];
 function swipeTo(dir){
   const cur = document.querySelector('main .tab.show'); if(!cur) return;
   const i = SWIPE.indexOf(cur.id); if(i < 0) return;

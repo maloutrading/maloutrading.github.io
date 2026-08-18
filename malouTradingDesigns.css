@@ -33,7 +33,7 @@
 #team{--accent:var(--rib1)}
 #news{--accent:var(--rib2)}
 #trade{--accent:var(--rib3)}
-#stuff{--accent:var(--rib4)}
+#world{--accent:var(--rib4)}
 #impressum,#datenschutz{--accent:var(--rib1)}
 
 .sol-toggle label[for="sol-r-markets"],.sol-p-markets{--accent:var(--rib1)}
@@ -43,7 +43,7 @@
 nav.tabs button[data-t="team"]{--accent:var(--rib1)}
 nav.tabs button[data-t="news"]{--accent:var(--rib2)}
 nav.tabs button[data-t="trade"]{--accent:var(--rib3)}
-nav.tabs button[data-t="stuff"]{--accent:var(--rib4)}
+nav.tabs button[data-t="world"]{--accent:var(--rib4)}
 
 .menu button:nth-child(1){--accent:var(--rib1)}
 .menu button:nth-child(2){--accent:var(--rib2)}
