@@ -243,6 +243,7 @@ function distSvg(vals, unit, lab){
     zero + bars + '<path d="' + curve + '" fill="none" stroke="' + cv('--silber') +
     '" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
     '<i class="rw-t" style="top:0">' + Math.round(yMax) + '</i><i class="rw-t" style="bottom:0">0</i></div>' +
+    xRow([lo, (lo + hi) / 2, hi].map(v => (v > 0 ? '+' : '') + v.toFixed(1) + unit)) +
     '<p class="hb-foot">bars = observed ' + lab + ' &middot; curve = normal fit &middot; heavier tails than the curve = fat-tail risk</p></div>';
 }
 
@@ -447,8 +448,11 @@ function winLossSvg(S){
     [(last(l) || 0).toFixed(2) + '%', 'avg loss', 'dn'],
     [ratio != null ? ratio.toFixed(2) + 'x' : '–', 'gain ÷ loss', ratio >= 1 ? 'up' : 'dn'],
     [S.win + 'd', 'window']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: g, col: cv('--gruen')}, {vals: l, col: cv('--holz')}], y0, y1, 0, {u: '%', names: ['avg gain', 'avg loss'], x: S.labels}) +
-    '<i class="rw-t" style="top:0">+' + y1.toFixed(1) + '%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '%</i></div>' +
+    '<div class="rw-plot">' + trailPlot([{vals: g, col: cv('--gruen'), fill: true}, {vals: l, col: cv('--holz'), fill: true}], y0, y1, 0,
+      {u: '%', names: ['avg gain', 'avg loss'], x: S.labels, fmt: v => (v > 0 ? '+' : '') + v.toFixed(1) + '%'}) +
+    '<i class="rw-t" style="top:0">+' + y1.toFixed(1) + '%</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '%</i>' +
+    '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '%</i></div>' +
+    xRow(dateTicks(S.labels)) +
     '<p class="hb-foot">average up day vs average down day &middot; the gap between the lines is the engine of return</p></div>';
 }
 
@@ -474,8 +478,11 @@ function payoffSvg(S){
     [Math.round(beat / (both || 1) * 100) + '%', 'time above'],
     [S.win + 'd', 'window']]) +
     '<div class="rw-plot">' + trailPlot([{vals: need, col: cv('--silber'), w: 1.2, dash: true},
-      {vals: ratio, col: cv('--gruen')}], y0, y1, null, {u: 'x', names: ['break-even', 'payoff'], x: S.labels}) +
-    '<i class="rw-t" style="top:0">' + y1.toFixed(0) + 'x</i><i class="rw-t" style="bottom:0">0x</i></div>' +
+      {vals: ratio, col: cv('--gruen'), fill: true}], y0, y1, null,
+      {u: 'x', names: ['break-even', 'payoff'], x: S.labels, fmt: v => v.toFixed(2) + 'x'}) +
+    '<i class="rw-t" style="top:0">' + y1.toFixed(0) + 'x</i><i class="rw-t" style="top:50%">' + (y1 / 2).toFixed(1) + 'x</i>' +
+    '<i class="rw-t" style="bottom:0">0x</i></div>' +
+    xRow(dateTicks(S.labels)) +
     '<p class="hb-foot">solid = avg gain &divide; avg loss &middot; dashed = the payoff this hit ratio needs to break even</p></div>';
 }
 
@@ -495,8 +502,11 @@ function sharpeSvg(S){
     [avg.toFixed(2), 'average'],
     [Math.round(share) + '%', 'time above 1'],
     [S.win + 'd', 'window']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: sr, col: cv('--gruen'), w: 2}], y0, y1, 0, {u: '', names: ['sharpe'], x: S.labels}) +
-    '<i class="rw-t" style="top:0">' + y1.toFixed(1) + '</i><i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '</i></div>' +
+    '<div class="rw-plot">' + trailPlot([{vals: sr, col: cv('--gruen'), w: 2, fill: true}], y0, y1, 0,
+      {u: '', names: ['sharpe'], x: S.labels, fmt: v => v.toFixed(2)}) +
+    '<i class="rw-t" style="top:0">' + y1.toFixed(1) + '</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '</i>' +
+    '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '</i></div>' +
+    xRow(dateTicks(S.labels)) +
     '<p class="hb-foot">return per unit of risk, annualized &middot; above 1 = strong, below 0 = losing</p></div>';
 }
 
@@ -564,8 +574,8 @@ function tradesView(d, unit){
 }
 
 const MEGA_VIEWS = [
-  ['monthly returns', (d) => monthGrid(d.monthly || monthlyFromEquity((d.series || {}).equity))],
   ['daily returns', (d) => distSvg(eqReturns(d, t => Math.floor(t / 864e5)), '%', 'days')],
+  ['monthly returns', (d) => monthGrid(d.monthly || monthlyFromEquity((d.series || {}).equity))],
   ['drawdown', (d) => drawdownSvg((d.series || {}).equity)],
   ['hit ratio', (d) => hitRatioSvg(dayStats(d))],
   ['gain vs loss', (d) => winLossSvg(dayStats(d))],
