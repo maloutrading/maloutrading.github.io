@@ -759,6 +759,14 @@ document.querySelectorAll('.sol-radio').forEach(r => {
   });
 });
 
+const contactForm = document.getElementById('contactForm');
+if (contactForm) contactForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const f = new FormData(contactForm);
+  location.href = 'mailto:maloutrading@web.de?subject=' + encodeURIComponent('Message from ' + f.get('name')) +
+    '&body=' + encodeURIComponent(f.get('msg') + '\n\n— ' + f.get('name') + ' · ' + f.get('email'));
+});
+
 document.addEventListener('click', e => {
   const btn = e.target.closest('.sp-load'); if (!btn) return;
   const row = btn.closest('.spotify-track'), id = row && row.dataset.track;
