@@ -753,18 +753,6 @@ function tempSmooth(pts, n){
     return [p[0], win.reduce((s, q) => s + q[1], 0) / win.length];
   });
 }
-function tempPctRank(pts){
-  const sorted = pts.map(p => p[1]).slice().sort((a, b) => a - b);
-  return pts.map(p => {
-    let lo = 0, hi = sorted.length;
-    while (lo < hi){ const m = (lo + hi) >> 1; if (sorted[m] < p[1]) lo = m + 1; else hi = m; }
-    return [p[0], lo / Math.max(1, sorted.length - 1) * 100];
-  });
-}
-function tempOrdinal(n){
-  const t = n % 100, d = n % 10;
-  return n + (t > 10 && t < 20 ? 'th' : d === 1 ? 'st' : d === 2 ? 'nd' : d === 3 ? 'rd' : 'th');
-}
 function tempMedian(vals){
   const s = vals.slice().sort((a, b) => a - b);
   return s.length ? s[Math.floor(s.length / 2)] : 0;
@@ -776,29 +764,82 @@ function tempAxis(el, t0, t1){
   el.innerHTML = [0, .25, .5, .75, 1].map(f => '<span style="left:' + (f * 100) + '%">' +
     axisDate(t0 + (t1 - t0) * f, t1 - t0) + '</span>').join('');
 }
-function tempPlot(svgId, axisId, series){
+function tempPlot(svgId, axisId, series, unit){
   const svg = tempEl(svgId);
   if (!svg) return;
+  const wrap = svg.parentElement;
+  const ylabs = wrap.classList.contains('temp-plot') ? wrap.querySelectorAll('.temp-ylab') : [];
   const live = series.filter(s => Array.isArray(s.pts) && s.pts.length > 1);
-  if (!live.length){ svg.innerHTML = ''; tempAxis(tempEl(axisId), Date.now(), Date.now()); return; }
+  if (!live.length){ svg.innerHTML = ''; svg._tip = null; ylabs.forEach(el => el.innerHTML = '');
+    tempAxis(tempEl(axisId), Date.now(), Date.now()); return; }
   const W = 600, H = 220, pad = 10;
   const t0 = Math.min(...live.map(s => s.pts[0][0])), t1 = Math.max(...live.map(s => s.pts[s.pts.length - 1][0]));
   const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : 0) * (W - 2 * pad);
   const grid = [0, .25, .5, .75, 1].map(f => { const y = (pad + f * (H - 2 * pad)).toFixed(1);
     return '<line x1="0" x2="' + W + '" y1="' + y + '" y2="' + y + '" stroke="' + cv('--line') + '" stroke-opacity=".3" vector-effect="non-scaling-stroke"/>'; }).join('');
+  const gkey = s => s.group || 's' + live.indexOf(s);
+  const doms = new Map();
+  live.forEach(s => {
+    if (!doms.has(gkey(s))) doms.set(gkey(s), { vals: [], color: s.color });
+    doms.get(gkey(s)).vals.push(...s.pts.map(p => p[1]));
+  });
+  doms.forEach(d => {
+    const lo = Math.min(...d.vals), hi = Math.max(...d.vals), room = (hi - lo) * .07 || 1;
+    d.lo = lo - room; d.hi = hi + room;
+  });
   const body = live.map(s => {
-    const peers = s.group ? live.filter(x => x.group === s.group) : [s];
-    const vals = peers.flatMap(x => x.pts.map(p => p[1]));
-    let lo = Math.min(...vals), hi = Math.max(...vals);
-    const room = (hi - lo) * .07 || 1;
-    lo -= room; hi += room;
-    const Y = v => H - pad - (v - lo) / (hi - lo) * (H - 2 * pad);
+    const d = doms.get(gkey(s));
+    const Y = v => H - pad - (v - d.lo) / (d.hi - d.lo) * (H - 2 * pad);
     return '<path d="' + s.pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ') +
       '" fill="none" stroke="' + s.color + '" stroke-width="' + (s.width || 2) + '" stroke-opacity="' + (s.opacity || 1) +
       '" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>';
   }).join('');
   svg.innerHTML = grid + body;
   tempAxis(tempEl(axisId), t0, t1);
+  const dlist = [...doms.values()];
+  const fmtY = v => Math.abs(v) >= 100 ? Math.round(v) : +v.toFixed(1);
+  [0, 1].forEach(k => { const el = ylabs[k]; if (!el) return;
+    const d = dlist[k];
+    el.innerHTML = d ? [0, .25, .5, .75, 1].map(f => '<span style="top:' + ((pad + f * (H - 2 * pad)) / H * 100).toFixed(1) + '%' +
+      (dlist.length > 1 ? ';color:' + d.color : '') + '">' + fmtY(d.hi - f * (d.hi - d.lo)) + '</span>').join('') : '';
+  });
+  const cross = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  cross.setAttribute('y1', pad); cross.setAttribute('y2', H - pad);
+  cross.setAttribute('stroke', cv('--silber')); cross.setAttribute('stroke-opacity', '.55');
+  cross.setAttribute('stroke-dasharray', '2 3'); cross.setAttribute('vector-effect', 'non-scaling-stroke');
+  cross.setAttribute('visibility', 'hidden');
+  svg.appendChild(cross);
+  svg._cross = cross;
+  const N = Math.min(100, Math.max(...live.map(s => s.pts.length)));
+  const gridT = Array.from({ length: N }, (_, i) => t0 + (t1 - t0) * (N > 1 ? i / (N - 1) : 0));
+  const tol = (t1 - t0) / Math.max(1, N) * 2;
+  const samp = s => { let j = 0; return gridT.map(t => {
+    while (j < s.pts.length - 1 && Math.abs(s.pts[j + 1][0] - t) <= Math.abs(s.pts[j][0] - t)) j++;
+    return Math.abs(s.pts[j][0] - t) > tol ? null : +s.pts[j][1].toFixed(1); }); };
+  svg._tip = { u: unit || '',
+    x: gridT.map(t => new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })),
+    s: live.filter(s => s.name).map(s => ({ n: s.name, c: s.color, v: samp(s) })) };
+  if (!svg._hover){
+    svg._hover = true;
+    let tip = wrap.querySelector('.perf-tip');
+    if (!tip){ tip = document.createElement('div'); tip.className = 'perf-tip'; wrap.appendChild(tip); }
+    svg.addEventListener('pointermove', e => {
+      const td = svg._tip;
+      if (!td || !td.s.length) return;
+      const r = svg.getBoundingClientRect();
+      const frac = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      const n = td.x.length;
+      const i = Math.round(Math.min(1, Math.max(0, (frac * W - pad) / (W - 2 * pad))) * (n - 1));
+      const x = pad + (n > 1 ? i / (n - 1) : 0) * (W - 2 * pad);
+      svg._cross.setAttribute('x1', x.toFixed(1)); svg._cross.setAttribute('x2', x.toFixed(1));
+      svg._cross.setAttribute('visibility', 'visible');
+      tip.innerHTML = '<b>' + escapeHtml(td.x[i] || '') + '</b>' + td.s.map(s => s.v[i] == null ? '' :
+        '<span><i style="background:' + escapeHtml(s.c) + '"></i>' + escapeHtml(s.n) + ' ' + s.v[i] + escapeHtml(td.u) + '</span>').join('');
+      tip.style.left = Math.min(r.width - 60, Math.max(60, frac * r.width)) + 'px';
+      tip.style.display = 'block';
+    });
+    svg.addEventListener('pointerleave', () => { tip.style.display = 'none'; if (svg._cross) svg._cross.setAttribute('visibility', 'hidden'); });
+  }
 }
 function tempLegend(id, items){
   const el = tempEl(id);
