@@ -61,17 +61,17 @@ def invert(pts):
     return [[t, 1 / v] for t, v in pts if v]
 
 MARKETS = [
-    ('gold', 'gold', 'paxg/usd', ' usd', 2, 'Kraken public API &middot; gold-backed token, tracks spot',
+    ('gold', 'gold', 'paxg/usd', ' usd', 2, 'Kraken public API · gold-backed token, tracks spot',
      lambda: kraken('PAXGUSD')),
-    ('us10y', 'us 10y yield', 'dgs10', ' %', 2, 'FRED &middot; US Treasury constant maturity',
+    ('us10y', 'us 10y yield', 'dgs10', ' %', 2, 'FRED · US Treasury constant maturity',
      lambda: fred('DGS10')),
-    ('usdeur', 'usd/eur', 'euro per dollar', ' eur', 4, 'FRED &middot; ECB reference rate, inverted',
+    ('usdeur', 'usd/eur', 'euro per dollar', ' eur', 4, 'FRED · ECB reference rate, inverted',
      lambda: invert(fred('DEXUSEU'))),
-    ('spx', 's&p 500', 'spx index', '', 2, 'FRED &middot; S&amp;P Dow Jones Indices',
+    ('spx', 's&p 500', 'spx index', '', 2, 'FRED · S&P Dow Jones Indices',
      lambda: fred('SP500')),
-    ('hype', 'hype', 'hype/usd', ' usd', 3, 'Hyperliquid API &middot; daily candles',
+    ('hype', 'hype', 'hype/usd', ' usd', 3, 'Hyperliquid API · daily candles',
      lambda: hyperliquid('HYPE')),
-    ('zec', 'zcash', 'zec/usd', ' usd', 2, 'Kraken public API &middot; daily candles',
+    ('zec', 'zcash', 'zec/usd', ' usd', 2, 'Kraken public API · daily candles',
      lambda: kraken('XZECZUSD')),
 ]
 

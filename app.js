@@ -906,19 +906,20 @@ function tempMedian(vals){
 }
 const axisDate = (t, spanMs) => new Date(t).toLocaleDateString('en-US',
   spanMs > 3 * 365 * 864e5 ? { year: 'numeric' } : { month: 'short', year: 'numeric' });
-function tempAxis(el, t0, t1){
+function tempAxis(el, t0, t1, ticks){
   if (!el) return;
-  el.innerHTML = [0, .25, .5, .75, 1].map(f => '<span style="left:' + (f * 100) + '%">' +
+  const n = ticks || 5;
+  el.innerHTML = Array.from({ length: n }, (_, i) => i / (n - 1)).map(f => '<span style="left:' + (f * 100) + '%">' +
     axisDate(t0 + (t1 - t0) * f, t1 - t0) + '</span>').join('');
 }
-function tempPlot(svgId, axisId, series, unit){
+function tempPlot(svgId, axisId, series, unit, ticks){
   const svg = tempEl(svgId);
   if (!svg) return;
   const wrap = svg.parentElement;
   const ylabs = wrap.classList.contains('temp-plot') ? wrap.querySelectorAll('.temp-ylab') : [];
   const live = series.filter(s => Array.isArray(s.pts) && s.pts.length > 1);
   if (!live.length){ svg.innerHTML = ''; svg._tip = null; ylabs.forEach(el => el.innerHTML = '');
-    tempAxis(tempEl(axisId), Date.now(), Date.now()); return; }
+    tempAxis(tempEl(axisId), Date.now(), Date.now(), ticks); return; }
   const W = 600, H = 220, pad = 10;
   const t0 = Math.min(...live.map(s => s.pts[0][0])), t1 = Math.max(...live.map(s => s.pts[s.pts.length - 1][0]));
   const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : 0) * (W - 2 * pad);
@@ -931,7 +932,7 @@ function tempPlot(svgId, axisId, series, unit){
   });
   doms.forEach(d => {
     const lo = Math.min(...d.vals), hi = Math.max(...d.vals), room = (hi - lo) * .07 || 1;
-    d.lo = lo - room; d.hi = hi + room;
+    d.lo = lo >= 0 ? Math.max(0, lo - room) : lo - room; d.hi = hi + room;
   });
   const body = live.map(s => {
     const d = doms.get(gkey(s));
@@ -941,9 +942,10 @@ function tempPlot(svgId, axisId, series, unit){
       '" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>';
   }).join('');
   svg.innerHTML = grid + body;
-  tempAxis(tempEl(axisId), t0, t1);
+  tempAxis(tempEl(axisId), t0, t1, ticks);
   const dlist = [...doms.values()];
-  const fmtY = v => Math.abs(v) >= 100 ? Math.round(v) : +v.toFixed(1);
+  const fine = v => Math.abs(v) < 10 ? 2 : 1;
+  const fmtY = v => Math.abs(v) >= 100 ? Math.round(v) : +v.toFixed(fine(v));
   [0, 1].forEach(k => { const el = ylabs[k]; if (!el) return;
     const d = dlist[k];
     el.innerHTML = d ? [0, .25, .5, .75, 1].map(f => '<span style="top:' + ((pad + f * (H - 2 * pad)) / H * 100).toFixed(1) + '%' +
@@ -961,7 +963,7 @@ function tempPlot(svgId, axisId, series, unit){
   const tol = (t1 - t0) / Math.max(1, N) * 2;
   const samp = s => { let j = 0; return gridT.map(t => {
     while (j < s.pts.length - 1 && Math.abs(s.pts[j + 1][0] - t) <= Math.abs(s.pts[j][0] - t)) j++;
-    return Math.abs(s.pts[j][0] - t) > tol ? null : +s.pts[j][1].toFixed(1); }); };
+    return Math.abs(s.pts[j][0] - t) > tol ? null : +s.pts[j][1].toFixed(fine(s.pts[j][1])); }); };
   svg._tip = { u: unit || '',
     x: gridT.map(t => new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })),
     s: live.filter(s => s.name).map(s => ({ n: s.name, c: s.color, v: samp(s) })) };
@@ -1070,6 +1072,46 @@ function renderPredictions(){
       '<div class="temp-pred-p">' + pct + '%</div></div>';
   }).join('');
 }
+
+const marketData = {};
+const mkFmt = v => v.toLocaleString('en-US', { maximumFractionDigits: Math.abs(v) < 10 ? 4 : 2 });
+function drawMarkets(){
+  const days = +tempVal('mkRange') || 0;
+  (marketData.series || []).forEach(s => {
+    const pts = tempCut(s.pts, days);
+    if (pts.length < 2) return;
+    const first = pts[0][1], last = pts[pts.length - 1][1], chg = first ? (last / first - 1) * 100 : 0;
+    const val = tempEl('mkVal-' + s.key), delta = tempEl('mkChg-' + s.key);
+    if (val) val.textContent = mkFmt(last) + s.unit;
+    if (delta){
+      delta.textContent = (chg >= 0 ? '▲ +' : '▼ ') + chg.toFixed(1) + '%';
+      delta.className = 'temp-delta ' + (chg >= 0 ? 'up' : 'dn');
+    }
+    tempPlot('mkSvg-' + s.key, 'mkAxis-' + s.key, [{ name: s.name, pts: pts, color: cv('--gold'), width: 2 }], s.unit, 3);
+  });
+}
+function renderMarkets(d){
+  const box = tempEl('mkGrid');
+  if (!box) return;
+  Object.assign(marketData, d);
+  const live = (d.series || []).filter(s => Array.isArray(s.pts) && s.pts.length > 1);
+  if (!live.length){ box.innerHTML = svgEmpty('live data unavailable — check back shortly'); return; }
+  box.innerHTML = live.map(s => '<div class="mk-tile"><div class="mk-head"><span class="mk-name">' +
+    escapeHtml(s.name) + '</span><span class="mk-sym">' + escapeHtml(s.sym) + '</span></div>' +
+    '<div class="mk-val"><b id="mkVal-' + s.key + '">–</b><span id="mkChg-' + s.key + '"></span></div>' +
+    '<div class="temp-plot"><i class="temp-ylab temp-yl"></i>' +
+    '<svg class="temp-svg mk-svg" id="mkSvg-' + s.key + '" viewBox="0 0 600 220" preserveAspectRatio="none"></svg></div>' +
+    '<div class="temp-axis" id="mkAxis-' + s.key + '"></div>' +
+    '<p class="temp-src mk-src">' + escapeHtml(s.src) + '</p></div>').join('');
+  drawMarkets();
+}
+const mkSel = tempEl('mkRange');
+if (mkSel) mkSel.addEventListener('change', drawMarkets);
+fetchT('websiteData/markets.json?' + bust, 10000)
+  .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
+  .then(renderMarkets)
+  .catch(() => { const box = tempEl('mkGrid');
+    if (box) box.innerHTML = svgEmpty('live data unavailable — check back shortly'); });
 
 function renderTemperature(d){
   Object.assign(tempData, d);

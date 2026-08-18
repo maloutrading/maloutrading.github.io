@@ -1,0 +1,27 @@
+name: marketsStats
+
+on:
+  schedule:
+    - cron: "40 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: marketsStats
+
+jobs:
+  scrape:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python websiteData/markets.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add websiteData/markets.json
+          git diff --cached --quiet || (git commit -m "markets stats" && (git push || (git pull --rebase origin main && git push)))

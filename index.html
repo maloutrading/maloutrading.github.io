@@ -377,6 +377,17 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
 .temp-card h4{margin:0 0 .3rem;font-family:var(--sans);font-size:.98rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,var(--gold))}
 .temp-sub{margin:0 0 1rem;font-size:.9rem;color:var(--muted)}
 .temp-svg{width:100%;height:230px}
+.mk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.6rem,3vw,2.4rem) clamp(1.8rem,3.4vw,2.8rem);margin-top:.4rem}
+@media(max-width:1000px){.mk-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.mk-grid{grid-template-columns:1fr}}
+.mk-tile{--tgut:2.4rem;padding-top:1.15rem;border-top:1px solid var(--line)}
+.mk-head{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.mk-name{font-family:var(--sans);font-size:.86rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,var(--gold))}
+.mk-sym{font-size:.74rem;letter-spacing:.05em;color:color-mix(in srgb,var(--muted) 72%,transparent)}
+.mk-val{display:flex;align-items:baseline;gap:.75rem;margin:.35rem 0 .95rem}
+.mk-val b{font-family:var(--serif);font-size:1.55rem;font-weight:400;line-height:1;color:var(--ink)}
+.mk-svg{height:132px}
+.mk-src{margin:.55rem 0 0;text-align:left}
 .temp-pred-row{display:flex;padding:.6rem 0;border-bottom:1px solid var(--line);gap:.8rem;align-items:center}
 .temp-pred-row:last-child{border-bottom:none}
 .temp-pred-q{flex:1 1 0;font-size:1.05rem;color:var(--ink)}
@@ -791,6 +802,13 @@ footer{position:relative;z-index:1}
       <div class="sol-toggle"><label class="sol-btn" for="sol-r-markets"><span class="sol-dot"></span>markets</label><label class="sol-btn" for="sol-r-articles"><span class="sol-dot"></span>articles</label><label class="sol-btn" for="sol-r-services"><span class="sol-dot"></span>contact</label></div>
       <div class="sol-body">
         <div class="sol-panel sol-p-markets">
+          <div class="temp-card frame">
+            <div class="temp-head"><div><h4>the tape &mdash; six markets, one glance</h4><p class="temp-sub">daily closes &middot; metal, rates, dollar, equities, crypto &middot; free public data, source under every chart</p></div>
+              <div class="temp-ctl">
+                <select class="temp-sel" id="mkRange" aria-label="time range"><option value="90">3 months</option><option value="365" selected>12 months</option><option value="0">all</option></select>
+              </div></div>
+            <div class="mk-grid" id="mkGrid"></div>
+          </div>
           <div class="temp-card frame">
             <div class="temp-head"><div><h4>the words &mdash; daily newspaper text analysis</h4><p class="temp-sub">share of articles on war, tensions and policy doubt &middot; daily indices &middot; higher = louder alarm</p></div>
               <div class="temp-ctl">
