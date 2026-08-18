@@ -28,6 +28,9 @@
   --r:10px; --r-xs:6px; --r-sm:9px; --r-md:11px; --r-lg:13px; --pill:999px;
   --ease:cubic-bezier(.2,.75,.2,1);
   --w:960px; --wt:64ch; --wide:min(1120px,90vw);
+
+  --chart-grid:color-mix(in srgb,var(--silber) 28%,transparent);
+  --chart-tick:.66rem;
 }
 
 #team{--accent:var(--rib1)}

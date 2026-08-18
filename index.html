@@ -360,14 +360,16 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
 .temp-legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin:.2rem 0 .7rem;font-size:.76rem;color:var(--muted)}
 .temp-leg i{display:inline-block;width:15px;height:2px;vertical-align:middle;margin-right:.5rem;border-radius:1px}
 .temp-leg b{font-family:var(--serif);font-size:.99rem;font-weight:400;color:var(--ink);margin-left:.45rem}
-.temp-axis{position:relative;height:1rem;font-size:.66rem;letter-spacing:.05em;color:var(--muted);margin:0 var(--tgut)}
+.temp-axis{position:relative;height:1rem;font-size:.66rem;letter-spacing:.05em;color:var(--muted);margin:0 .8rem 0 var(--tgut)}
+.temp-axis.temp-dual{margin-left:calc(var(--tgut) + 2.3rem)}
 .temp-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
 .temp-axis span:first-child{transform:none}.temp-axis span:last-child{transform:translateX(-100%)}
-.temp-plot{position:relative;padding:0 var(--tgut)}
-.temp-ylab{position:absolute;top:0;bottom:0;width:0;font-size:.66rem;letter-spacing:.04em;color:var(--muted);pointer-events:none}
+.temp-plot{position:relative;padding:0 .8rem 0 var(--tgut)}
+.temp-plot.temp-dual{padding-left:calc(var(--tgut) + 2.3rem)}
+.temp-ylab{position:absolute;top:0;bottom:0;width:0;font-size:var(--chart-tick);letter-spacing:.04em;color:var(--muted);pointer-events:none}
 .temp-ylab span{position:absolute;transform:translateY(-50%);white-space:nowrap}
 .temp-yl{left:.15rem}.temp-yl span{left:0}
-.temp-yr{right:.15rem}.temp-yr span{right:0}
+.temp-yr{left:2.5rem}.temp-yr span{left:0}
 .temp-src{margin:1rem 0 0;text-align:right;font-size:.72rem;letter-spacing:.05em;color:color-mix(in srgb,var(--muted) 62%,transparent)}
 .temp-card{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));--tgut:2.7rem;border-radius:var(--r-sm);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
 .temp-card h4{margin:0 0 .3rem;font-family:var(--sans);font-size:.98rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,var(--gold))}
@@ -566,7 +568,8 @@ footer{position:relative;z-index:1}
 .perf-tip i{display:inline-block;width:10px;height:2px;border-radius:2px}
 .perf-tip .tip-alpha{margin-top:.18rem;padding-top:.18rem;border-top:1px solid color-mix(in srgb,var(--silber) 25%,transparent);color:var(--muted)}
 .perf-tip .tip-alpha i{background:transparent}
-.perf-svg{flex:1;width:100%;min-height:210px}
+.perf-svg{flex:1;width:calc(100% - 2.3rem);margin-left:2.3rem;min-height:210px}
+.perf-ylab{position:absolute;left:1.1rem;top:1rem;bottom:1.6rem;width:0;pointer-events:none}
 .perf-note{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:color-mix(in srgb,var(--accent,var(--gold)) 60%,var(--muted));margin-top:.35rem}
 .perf-stats{grid-row:3;align-self:end;padding-top:1.25rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem .8rem}
 .perf-stats div{border-top:1px solid color-mix(in srgb,var(--silber) 16%,transparent);padding-top:.55rem}
@@ -606,13 +609,13 @@ footer{position:relative;z-index:1}
 .rw-nums{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;font-size:.7rem;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
 .rw-nums span{display:flex;align-items:baseline;gap:.3rem}
 .rw-nums b{font-family:var(--mono);font-weight:400;font-size:.98rem;color:var(--ink);letter-spacing:0;text-transform:none}
-.rw-plot{position:relative;flex:1;min-height:86px;padding-right:2.1rem}
+.rw-plot{position:relative;flex:1;min-height:86px;padding-left:2.1rem}
 .rw-plot .perf-tip{top:.5rem}
-.rw-plot .an-svg{min-height:86px}
-.rw-t{position:absolute;right:0;font-family:var(--mono);font-style:normal;font-size:.66rem;color:var(--muted);transform:translateY(-50%)}
+.rw-plot .an-svg{display:block;height:100%;min-height:86px}
+.rw-t{position:absolute;left:0;font-family:var(--mono);font-style:normal;font-size:var(--chart-tick);color:var(--muted);transform:translateY(-50%)}
 .rw-t[style*="top:0"],.rw-t[style*="bottom"]{transform:none}
-.rw-last{font-size:.68rem}
-.rw-x{display:flex;justify-content:space-between;padding-right:2.1rem;margin-top:.1rem;font-family:var(--mono);font-size:.66rem;color:var(--muted)}
+.rw-last{left:auto;right:0;font-size:.68rem}
+.rw-x{display:flex;justify-content:space-between;padding-left:2.1rem;margin-top:.1rem;font-family:var(--mono);font-size:.66rem;color:var(--muted)}
 .an-card{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));border-radius:var(--r-sm);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
 .an-h{margin:0 0 .55rem;font-family:var(--sans);font-weight:400;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .an-svg{flex:1;width:100%;min-height:100px}
@@ -795,9 +798,9 @@ footer{position:relative;z-index:1}
                 <select class="temp-sel" id="tempRiskRange" aria-label="time range"><option value="1">1 year</option><option value="3" selected>3 years</option><option value="5">5 years</option></select>
               </div></div>
             <div class="temp-legend" id="tempRiskLegend"></div>
-            <div class="temp-plot"><i class="temp-ylab temp-yl"></i><i class="temp-ylab temp-yr"></i>
+            <div class="temp-plot temp-dual"><i class="temp-ylab temp-yl"></i><i class="temp-ylab temp-yr"></i>
               <svg class="temp-svg" id="tempRiskSvg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg></div>
-            <div class="temp-axis" id="tempRiskAxis"></div>
+            <div class="temp-axis temp-dual" id="tempRiskAxis"></div>
             <p class="temp-src">GPR: Caldara/Iacoviello &middot; matteoiacoviello.com &nbsp;|&nbsp; EPU: Baker/Bloom/Davis &middot; policyuncertainty.com</p>
           </div>
           <div class="temp-card frame">
