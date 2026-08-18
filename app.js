@@ -332,16 +332,43 @@ function trailPlot(seriesList, y0, y1, refY, tip){
   const W = 300, H = 120, pad = 5, n = Math.max(...seriesList.map(s => s.vals.length));
   const X = i => pad + (n > 1 ? i / (n - 1) : 0) * (W - 2 * pad);
   const Y = v => H - pad - (v - y0) / ((y1 - y0) || 1) * (H - 2 * pad);
+  const fmt = (tip && tip.fmt) || (v => v.toFixed(2) + ((tip && tip.u) || ''));
+  const lastIdx = s => { let i = s.vals.length - 1; while (i >= 0 && s.vals[i] == null) i--; return i; };
+  const grid = [0.25, 0.5, 0.75].map(f => { const y = (pad + f * (H - 2 * pad)).toFixed(1);
+    return '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)" stroke-opacity=".3"/>'; }).join('');
   const ref = typeof refY === 'number'
     ? '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + Y(refY).toFixed(1) + '" y2="' + Y(refY).toFixed(1) +
       '" stroke="var(--line)" stroke-dasharray="2 3"/>' : '';
+  const baseY = Y(Math.max(y0, Math.min(y1, 0))).toFixed(1);
+  const shapes = seriesList.map(s => {
+    const d = linePath(s.vals, X, Y);
+    if (!d) return '';
+    const i1 = lastIdx(s), i0 = s.vals.findIndex(v => v != null);
+    const area = s.fill && s.vals.slice(i0, i1 + 1).every(v => v != null)
+      ? '<path d="' + d + ' L' + X(i1).toFixed(1) + ' ' + baseY + ' L' + X(i0).toFixed(1) + ' ' + baseY + ' Z" fill="' + s.col + '" fill-opacity=".12"/>' : '';
+    const dot = s.dash ? '' : '<path d="M' + X(i1).toFixed(1) + ' ' + Y(s.vals[i1]).toFixed(1) +
+      ' l.01 0" stroke="' + s.col + '" stroke-width="5" stroke-linecap="round" stroke-dasharray="9 0" vector-effect="non-scaling-stroke"/>';
+    return area + '<path d="' + d + '" fill="none" stroke="' + s.col +
+      '" stroke-width="' + (s.w || 1.8) + '" vector-effect="non-scaling-stroke" stroke-linejoin="round"' +
+      (s.dash ? ' stroke-dasharray="3 3"' : '') + '/>' + dot;
+  }).join('');
+  const lastLabs = seriesList.map(s => {
+    const i1 = lastIdx(s);
+    if (s.dash || i1 < 0) return '';
+    const top = Math.max(7, Math.min(93, (1 - (s.vals[i1] - y0) / ((y1 - y0) || 1)) * 100));
+    return '<i class="rw-t rw-last" style="top:' + top.toFixed(1) + '%;color:' + s.col + '">' + fmt(s.vals[i1]) + '</i>';
+  }).join('');
   const data = tip ? ' data-tip="' + escapeHtml(JSON.stringify({u: tip.u || '', x: tip.x || null,
     s: seriesList.map((s, i) => ({n: (tip.names || [])[i] || '', c: s.col,
       v: s.vals.map(v => v == null ? null : +v.toFixed(2))}))})) + '"' : '';
-  return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg"' + data + '>' + ref +
-    seriesList.map(s => '<path d="' + linePath(s.vals, X, Y) + '" fill="none" stroke="' + s.col +
-      '" stroke-width="' + (s.w || 1.8) + '" vector-effect="non-scaling-stroke" stroke-linejoin="round"' +
-      (s.dash ? ' stroke-dasharray="3 3"' : '') + '/>').join('') + '</svg>';
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg"' + data + '>' +
+    grid + ref + shapes + '</svg>' + lastLabs;
+}
+const xRow = labs => '<div class="rw-x">' + labs.map(l => '<i>' + l + '</i>').join('') + '</div>';
+function dateTicks(labels){
+  if (!labels || labels.length < 2) return ['', '', ''];
+  const f = labels[0].slice(0, 4) !== labels[labels.length - 1].slice(0, 4) ? l => l.slice(0, 7) : l => l.slice(5);
+  return [f(labels[0]), f(labels[Math.floor(labels.length / 2)]), f(labels[labels.length - 1])];
 }
 function numsRow(items){
   return '<div class="rw-nums">' + items.map(i =>
@@ -376,10 +403,17 @@ function drawdownSvg(eq){
     '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg" data-tip="' +
     escapeHtml(JSON.stringify({u: '%', x: dates,
       s: [{n: 'drawdown', c: cv('--holz'), v: dd.map(v => +v.toFixed(1))}]})) + '">' +
+    [0.25, 0.5, 0.75].map(f => { const y = (pad + f * (H - 2 * pad)).toFixed(1);
+      return '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)" stroke-opacity=".3"/>'; }).join('') +
     '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + pad + '" y2="' + pad + '" stroke="var(--line)" stroke-dasharray="2 3"/>' +
     '<path d="' + area + '" fill="' + cv('--holz') + '" fill-opacity=".18"/>' +
-    '<path d="' + line + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
-    '<i class="rw-t" style="top:0">0%</i><i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i></div>' +
+    '<path d="' + line + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
+    '<path d="M' + X(dd.length - 1).toFixed(1) + ' ' + Y(now).toFixed(1) + ' l.01 0" stroke="' + cv('--holz') +
+    '" stroke-width="5" stroke-linecap="round" stroke-dasharray="9 0" vector-effect="non-scaling-stroke"/></svg>' +
+    '<i class="rw-t" style="top:0">0%</i><i class="rw-t" style="top:50%">' + (y0 / 2).toFixed(0) + '%</i>' +
+    '<i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i>' +
+    '<i class="rw-t rw-last" style="top:' + Math.max(7, Math.min(93, now / y0 * 100)).toFixed(1) + '%;color:' + cv('--holz') + '">' + now.toFixed(1) + '%</i></div>' +
+    xRow(dateTicks(dates)) +
     '<p class="hb-foot">distance below the last equity peak &middot; 0 = at a new high</p></div>';
 }
 
@@ -392,8 +426,10 @@ function hitRatioSvg(S){
     [Math.round(avg) + '%', 'average'],
     [Math.round(Math.min(...hit)) + '&ndash;' + Math.round(Math.max(...hit)) + '%', 'range'],
     [S.win + 'd', 'window']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: hit, col: cv('--gruen'), w: 2}], 0, 100, 50, {u: '%', names: ['hit ratio'], x: S.labels}) +
+    '<div class="rw-plot">' + trailPlot([{vals: hit, col: cv('--gruen'), w: 2, fill: true}], 0, 100, 50,
+      {u: '%', names: ['hit ratio'], x: S.labels, fmt: v => Math.round(v) + '%'}) +
     '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
+    xRow(dateTicks(S.labels)) +
     '<p class="hb-foot">share of up days in the rolling window &middot; dashed = coin flip</p></div>';
 }
 
