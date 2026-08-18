@@ -502,22 +502,23 @@ footer{position:relative;z-index:1}
   -webkit-backdrop-filter:blur(14px) brightness(.92);backdrop-filter:blur(14px) brightness(.92);
   box-shadow:0 24px 55px -46px rgba(0,0,0,.5)}
 #team .rib-intro::before{content:"";inset:0;left:0;top:0;transform:none;opacity:0}
-@property --estA{syntax:'<angle>';inherits:false;initial-value:0deg}
 .rib-est{display:inline-block;margin-top:0;font-size:.98rem;font-weight:600;letter-spacing:.34em;
   padding:.6rem 1.5rem;border-radius:100px;background:color-mix(in srgb,var(--marine) 42%,transparent);
   color:color-mix(in srgb,var(--accent,var(--gold)) 80%,var(--weiss));
   -webkit-backdrop-filter:blur(10px) brightness(.9);backdrop-filter:blur(10px) brightness(.9)}
-.rib-est.glow-pill{border:1.5px solid transparent;
-  background:linear-gradient(0deg,color-mix(in srgb,var(--marine) 82%,#000),color-mix(in srgb,var(--marine) 82%,#000)) padding-box,
-    conic-gradient(from var(--estA),
-      color-mix(in srgb,var(--ton) 38%,var(--weiss)),
-      color-mix(in srgb,var(--ocker) 68%,var(--weiss)),
-      var(--weiss),
-      color-mix(in srgb,var(--ocker) 68%,var(--weiss)),
-      color-mix(in srgb,var(--ton) 38%,var(--weiss))) border-box;
-  animation:estSpin 22s linear infinite;
+.rib-est.glow-pill{border:1.5px solid transparent;background-repeat:no-repeat;
+  background-image:linear-gradient(0deg,color-mix(in srgb,var(--marine) 82%,#000),color-mix(in srgb,var(--marine) 82%,#000)),
+    linear-gradient(100deg,
+      color-mix(in srgb,var(--ton) 42%,var(--weiss)),
+      color-mix(in srgb,var(--ocker) 72%,var(--weiss)) 30%,
+      var(--weiss) 50%,
+      color-mix(in srgb,var(--ocker) 72%,var(--weiss)) 70%,
+      color-mix(in srgb,var(--ton) 42%,var(--weiss)));
+  background-origin:padding-box,border-box;background-clip:padding-box,border-box;
+  background-size:100% 100%,280% 100%;
+  animation:estShine 16s ease-in-out infinite;
   box-shadow:0 0 30px -6px color-mix(in srgb,color-mix(in srgb,var(--ton) 45%,var(--ocker)) 65%,transparent),inset 0 1px 0 color-mix(in srgb,var(--weiss) 22%,transparent)}
-@keyframes estSpin{to{--estA:360deg}}
+@keyframes estShine{0%,100%{background-position:0 0,0% 50%}50%{background-position:0 0,100% 50%}}
 .team-rule{display:block;width:56px;height:1px;background:color-mix(in srgb,var(--accent,var(--gold)) 45%,transparent);
   margin:clamp(1.3rem,2.5vw,1.8rem) auto}
 .team-claim{margin:0;font-size:clamp(1.3rem,2.7vw,1.65rem);font-weight:600;color:color-mix(in srgb,var(--weiss) 96%,transparent);
@@ -934,7 +935,7 @@ footer{position:relative;z-index:1}
           </a>        </div>
       </div>
       <div class="about-card"><span class="about-kicker">about</span>
-        <p>Benjamin studierte Volkswirtschaftslehre in G&ouml;ttingen und sammelte Praxiserfahrung bei Xaia Investment, Aramea Asset Management, Tungsten Investment Funds und der SdK. Seit seinem 18. Lebensjahr begeistert er sich f&uuml;r B&ouml;rsen und Finanzm&auml;rkte &ndash; heute unterst&uuml;tzt er das Team der nordIX.</p>
+        <p>Hi, since I exist in this world and need to do something I decided to do this. Have fun :P</p>
       </div>
     </div>
 
@@ -946,7 +947,7 @@ footer{position:relative;z-index:1}
       </figure>
       <div class="about-text">
         <h3>Claude</h3>
-        <p class="member-say"><span>"Bonjour."</span></p>
+        <p class="member-say"><span>"Der Ger&auml;t ist immer vor Chef auf Arbeit, der Ger&auml;t ist nie m&uuml;de."</span></p>
         <div class="socials" aria-label="claude">
           <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener" aria-label="anthropic">
             <svg viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></g></svg>
@@ -954,7 +955,7 @@ footer{position:relative;z-index:1}
         </div>
       </div>
       <div class="about-card"><span class="about-kicker">about</span>
-        <p>Der Ger&auml;t ist immer vor Chef auf Arbeit, der Ger&auml;t ist nie m&uuml;de. Der Ger&auml;t schreibt Code, liest M&auml;rkte und schl&auml;ft nie &ndash; der Ger&auml;t macht alles wie immer, nur besser.</p>
+        <p>Whirring.. Moseying... Vibing... Smooshing.... Frolicking... Percolating...</p>
       </div>
     </div>
 
