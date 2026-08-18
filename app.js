@@ -848,18 +848,17 @@ function tempLegend(id, items){
 }
 
 function renderRisk(){
-  const years = +tempVal('tempRiskRange') || 3, pct = tempVal('tempRiskScale') === 'pct';
+  const years = +tempVal('tempRiskRange') || 3;
   const gpr = tempCut(tempData.gpr, years * 365), epu = tempCut(tempData.epu, years * 365);
   const col = (pts, c) => pts.map(p => [p[0], p[c]]);
   const last = pts => pts.length ? pts[pts.length - 1][1] : null;
-  let series = [
+  const series = [
     { name: 'geopolitical risk', pts: col(gpr, 1), color: cv('--flieder'), width: 2.2, group: 'gpr' },
     { name: 'policy uncertainty', pts: col(epu, 1), color: cv('--gold'), width: 2.2, group: 'epu' }
   ].filter(s => s.pts.length > 1);
-  tempLegend('tempRiskLegend', series.map(s => ({ name: s.name, color: s.color, opacity: s.opacity,
-    value: pct ? tempOrdinal(Math.round(tempPctRank(s.pts)[s.pts.length - 1][1])) : Math.round(last(s.pts)) })));
-  if (pct) series = series.map(s => Object.assign({}, s, { pts: tempPctRank(s.pts), group: 'pct' }));
-  tempPlot('tempRiskSvg', 'tempRiskAxis', series);
+  tempLegend('tempRiskLegend', series.map(s => ({ name: s.name, color: s.color,
+    value: Math.round(last(s.pts)) })));
+  tempPlot('tempRiskSvg', 'tempRiskAxis', series, ' index');
 }
 
 function renderGates(){
@@ -887,17 +886,7 @@ function renderGates(){
     if (span) plotted = plotted.concat([{ name: '', color: cv('--muted'), width: 1, opacity: .5, group: 'rel',
       pts: [[span[0][0], 100], [span[span.length - 1][0], 100]] }]);
   }
-  tempPlot('tempGateSvg', 'tempGateAxis', plotted);
-  const stat = tempEl('tempGateStat');
-  if (!stat) return;
-  if (pick === 'all'){ stat.innerHTML = 'every gate as a share of its own normal &mdash; the flat line is 100%, business as usual. pick a single gate for absolute counts.'; return; }
-  const raw = shown[0].series, recent = raw.slice(-7).reduce((s, p) => s + p[1], 0) / Math.min(7, raw.length);
-  const base = raw.slice(0, Math.max(1, raw.length - 90)).map(p => p[1]).sort((a, b) => a - b);
-  const med = base[Math.floor(base.length / 2)] || 0;
-  const dev = med ? (recent / med - 1) * 100 : 0;
-  stat.innerHTML = '<b>' + recent.toFixed(0) + '</b> ships/day over the last week &middot; <span class="temp-delta ' +
-    (dev >= 0 ? 'up' : 'dn') + '">' + (dev >= 0 ? '▲' : '▼') + ' ' + Math.abs(dev).toFixed(0) + '%</span> versus the ' +
-    med.toFixed(0) + ' ships/day median of the period before.';
+  tempPlot('tempGateSvg', 'tempGateAxis', plotted, pick === 'all' ? '% of normal' : ' ships/day');
 }
 
 const predStop = new Set(['will', 'when', 'what', 'which', 'before', 'after', 'above', 'below', 'under', 'over',
@@ -942,7 +931,7 @@ function renderTemperature(d){
   const upd = tempEl('tempUpdated');
   if (upd) upd.textContent = d.updated ? 'updated ' + fmtAge(d.updated) : '';
 }
-[['tempRiskRange', renderRisk], ['tempRiskScale', renderRisk], ['tempGateSel', renderGates], ['tempGateRange', renderGates]]
+[['tempRiskRange', renderRisk], ['tempGateSel', renderGates], ['tempGateRange', renderGates]]
   .forEach(([id, fn]) => { const el = tempEl(id); if (el) el.addEventListener('change', fn); });
 fetchT('websiteData/temperature.json?' + bust, 10000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
