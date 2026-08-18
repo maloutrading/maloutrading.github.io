@@ -589,13 +589,21 @@ footer{position:relative;z-index:1}
 .rw-t{position:absolute;right:0;font-family:var(--mono);font-style:normal;font-size:.66rem;color:var(--muted);transform:translateY(-50%)}
 .rw-t[style*="top:0"],.rw-t[style*="bottom"]{transform:none}
 .rw-last{font-size:.68rem}
-.rw-x{display:flex;justify-content:space-between;padding-right:2.1rem;margin-top:-.2rem;font-family:var(--mono);font-size:.66rem;color:var(--muted)}
+.rw-x{display:flex;justify-content:space-between;padding-right:2.1rem;margin-top:.1rem;font-family:var(--mono);font-size:.66rem;color:var(--muted)}
 .an-card{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));border-radius:var(--r-sm);padding:1rem 1.1rem .85rem;display:flex;flex-direction:column;min-height:150px}
 .an-h{margin:0 0 .55rem;font-family:var(--sans);font-weight:400;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .an-svg{flex:1;width:100%;min-height:100px}
 .mega-card{width:100%;padding:1.2rem 1.3rem 1.1rem}
 .mega-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.7rem;margin-bottom:.9rem}
 .mega-head .an-h{margin:0}
+.mega-tabs{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:flex-end}
+.mega-tab{font-family:var(--serif);font-style:italic;font-size:.88rem;letter-spacing:.03em;color:var(--muted);background:transparent;
+  border:1px solid color-mix(in srgb,var(--line) 85%,transparent);border-radius:var(--pill);padding:.3rem .85rem;cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s,box-shadow .2s}
+.mega-tab:hover{color:var(--ink);border-color:color-mix(in srgb,var(--pcol,var(--accent,var(--gold))) 40%,var(--line))}
+.mega-tab.on{color:var(--ink);border-color:color-mix(in srgb,var(--pcol,var(--accent,var(--gold))) 60%,transparent);
+  background:color-mix(in srgb,var(--pcol,var(--accent,var(--gold))) 13%,transparent);
+  box-shadow:0 0 16px -7px color-mix(in srgb,var(--pcol,var(--accent,var(--gold))) 55%,transparent)}
 .mega-body{position:relative;display:flex;flex-direction:column;height:clamp(345px,45vw,450px);overflow-y:auto}
 .mega-body .an-svg{min-height:0}
 .mega-body .trade-rows,.mega-body .book-rows{flex:1;justify-content:center;gap:.55rem}
@@ -747,7 +755,7 @@ footer{position:relative;z-index:1}
     <i class="tint"></i>
   </div>
   <div class="wrap reveal">
-    <div class="rib-intro"><span class="rib-kicker">state of the</span><h2 class="rib-title">world</h2></div><div class="trade-quotes"><p class="trade-quote">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
+    <div class="rib-intro"><span class="rib-kicker">watching the</span><h2 class="rib-title">world</h2></div><div class="trade-quotes"><p class="trade-quote">The market is never wrong &ndash; opinions often are. <cite>- Jesse Livermore</cite></p></div><div class="divider" aria-hidden="true"></div>
 
     <div class="stuff-toggle">
       <input class="sol-radio" type="radio" name="stuffSol" id="sol-r-markets" checked>
@@ -871,7 +879,7 @@ footer{position:relative;z-index:1}
     <div class="rib-intro frame"><p class="rib-lead rib-est glow-pill">malou trading &middot; est. 2024</p><i class="team-rule" aria-hidden="true"></i><p class="rib-lead team-claim">we make code, design &amp; finance</p></div>
     <div class="member">
       <figure class="portrait noimg frame">
-        <img class="port-img" src="pics/hickory.webp" alt="benjamin suermann" width="480" height="320" style="object-position:62% 42%"
+        <img class="port-img" src="pics/golf.webp" alt="benjamin suermann" width="480" height="415" style="object-position:47% 40%"
                loading="lazy" decoding="async">
         <span class="mono">bs</span>
       </figure>
