@@ -1015,11 +1015,11 @@ function renderGates(){
       gates.map(g => '<option value="' + g.key + '">' + escapeHtml(g.name) + '</option>').join('');
     sel.value = gates[0].key;
   }
-  const days = +tempVal('tempGateRange') || 0, pick = tempVal('tempGateSel') || 'all';
+  const pick = tempVal('tempGateSel') || 'all';
   const pal = [cv('--flieder'), cv('--gold'), cv('--silber'), cv('--gruen'), cv('--ab'), cv('--muted')];
   const shown = pick === 'all' ? gates : gates.filter(g => g.key === pick);
   const series = shown.map((g, i) => ({ name: g.name, color: pal[i % pal.length], width: 2,
-    pts: tempCut(tempSmooth(g.series, 7), days) }));
+    pts: tempSmooth(g.series, 7) }));
   tempLegend('tempGateLegend', series.map(s => ({ name: s.name, color: s.color,
     value: s.pts.length ? Math.round(s.pts[s.pts.length - 1][1]) : '' })));
   let plotted = series;
@@ -1077,7 +1077,7 @@ function renderTemperature(d){
   const upd = tempEl('tempUpdated');
   if (upd) upd.textContent = d.updated ? 'updated ' + fmtAge(d.updated) : '';
 }
-[['tempRiskRange', renderRisk], ['tempGateSel', renderGates], ['tempGateRange', renderGates]]
+[['tempRiskRange', renderRisk], ['tempGateSel', renderGates]]
   .forEach(([id, fn]) => { const el = tempEl(id); if (el) el.addEventListener('change', fn); });
 fetchT('websiteData/temperature.json?' + bust, 10000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })

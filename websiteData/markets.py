@@ -1,16 +1,25 @@
-import csv, io, json, time, urllib.request
+import csv, io, json, subprocess, time, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
 UA = {'User-Agent': 'Mozilla/5.0'}
 DAYS = 730
 
+def curl(url, body, timeout):
+    cmd = ['curl', '-sSL', '--max-time', str(timeout), url]
+    if body is not None:
+        cmd += ['-H', 'Content-Type: application/json', '-d', json.dumps(body)]
+    return subprocess.run(cmd, capture_output=True, check=True, timeout=timeout + 10).stdout
+
 def get(url, body=None, timeout=45):
     req = urllib.request.Request(url, headers=UA)
     if body is not None:
         req.data = json.dumps(body).encode()
         req.add_header('Content-Type', 'application/json')
-    return urllib.request.urlopen(req, timeout=timeout).read()
+    try:
+        return urllib.request.urlopen(req, timeout=timeout).read()
+    except Exception:
+        return curl(url, body, timeout)
 
 def downsample(pts, cap=600):
     step = max(1, len(pts) // cap)
