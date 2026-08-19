@@ -30,8 +30,16 @@ def downsample(pts, cap=600):
 
 def trim(pts, dec):
     cut = (time.time() - DAYS * 86400) * 1000
-    pts = [[t, round(v, dec)] for t, v in pts if t >= cut]
+    pts = [[p[0]] + [round(v, dec) for v in p[1:]] for p in pts if p[0] >= cut]
     return downsample(pts)
+
+def synthOhlc(pts):
+    out, prev = [], None
+    for t, v in pts:
+        o = prev if prev is not None else v
+        out.append([t, o, max(o, v), min(o, v), v])
+        prev = v
+    return out
 
 def fred(series):
     text = get('https://fred.stlouisfed.org/graph/fredgraph.csv?id=' + series).decode('utf-8', 'replace')
@@ -49,13 +57,13 @@ def kraken(pair):
     if d.get('error'):
         raise RuntimeError(', '.join(d['error']))
     rows = d['result'][[k for k in d['result'] if k != 'last'][0]]
-    return [[int(r[0]) * 1000, float(r[4])] for r in rows]
+    return [[int(r[0]) * 1000, float(r[1]), float(r[2]), float(r[3]), float(r[4])] for r in rows]
 
 def hyperliquid(coin):
     end = int(time.time() * 1000)
     rows = json.loads(get('https://api.hyperliquid.xyz/info', {'type': 'candleSnapshot',
         'req': {'coin': coin, 'interval': '1d', 'startTime': end - DAYS * 86400000, 'endTime': end}}))
-    return [[int(c['t']), float(c['c'])] for c in rows]
+    return [[int(c['t']), float(c['o']), float(c['h']), float(c['l']), float(c['c'])] for c in rows]
 
 def invert(pts):
     return [[t, 1 / v] for t, v in pts if v]
@@ -64,11 +72,11 @@ MARKETS = [
     ('gold', 'gold', 'god\'s money', ' usd', 2, False, 'Kraken public API · gold-backed token, tracks spot',
      lambda: kraken('PAXGUSD')),
     ('us10y', 'us 10y yield', 'time value of money', ' %', 2, True, 'FRED · US Treasury constant maturity',
-     lambda: fred('DGS10')),
+     lambda: synthOhlc(fred('DGS10'))),
     ('usdeur', 'usd/eur', 'fiat fight', ' eur', 4, False, 'FRED · ECB reference rate, inverted',
-     lambda: invert(fred('DEXUSEU'))),
+     lambda: synthOhlc(invert(fred('DEXUSEU')))),
     ('spx', 's&p 500', 'corporate america', '', 2, False, 'FRED · S&P Dow Jones Indices',
-     lambda: fred('SP500')),
+     lambda: synthOhlc(fred('SP500'))),
     ('hype', 'hype', 'marketplace of the future', ' usd', 3, False, 'Hyperliquid API · daily candles',
      lambda: hyperliquid('HYPE')),
     ('zec', 'zcash', 'private money', ' usd', 2, False, 'Kraken public API · daily candles',

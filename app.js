@@ -1086,14 +1086,48 @@ function mkChg(s, from, to){
   const pct = from ? (to / from - 1) * 100 : 0;
   return { txt: (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%', up: pct >= 0 };
 }
+function mkCandles(svgId, axisId, pts){
+  const svg = tempEl(svgId);
+  if (!svg) return;
+  const ylab = svg.parentElement.querySelector('.temp-ylab');
+  if (!pts || pts.length < 2){
+    svg.innerHTML = ''; if (ylab) ylab.innerHTML = '';
+    tempAxis(tempEl(axisId), Date.now(), Date.now(), 3); return;
+  }
+  const W = 600, H = 220, pad = 6;
+  const t0 = pts[0][0], t1 = pts[pts.length - 1][0];
+  const X = t => pad + (t1 > t0 ? (t - t0) / (t1 - t0) : 0) * (W - 2 * pad);
+  const lo = Math.min(...pts.map(p => p[3])), hi = Math.max(...pts.map(p => p[2]));
+  const room = (hi - lo) * .08 || 1, domLo = lo >= 0 ? Math.max(0, lo - room) : lo - room, domHi = hi + room;
+  const Y = v => H - pad - (v - domLo) / (domHi - domLo) * (H - 2 * pad);
+  const stepX = (W - 2 * pad) / (pts.length - 1);
+  const bw = Math.max(.6, Math.min(5, stepX * .62));
+  const col = cv('--gold');
+  let body = gridSvg(W, H, pad);
+  pts.forEach(p => {
+    const x = X(p[0]), o = p[1], h = p[2], l = p[3], c = p[4];
+    body += '<line x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="' + Y(h).toFixed(1) + '" y2="' + Y(l).toFixed(1) +
+      '" stroke="' + col + '" stroke-width="1" vector-effect="non-scaling-stroke"/>';
+    const yTop = Y(Math.max(o, c)), yBot = Y(Math.min(o, c));
+    body += '<rect x="' + (x - bw / 2).toFixed(1) + '" y="' + yTop.toFixed(1) + '" width="' + bw.toFixed(1) +
+      '" height="' + Math.max(.6, yBot - yTop).toFixed(1) + '" fill="none" stroke="' + col +
+      '" stroke-width="1" vector-effect="non-scaling-stroke"/>';
+  });
+  svg.innerHTML = body;
+  tempAxis(tempEl(axisId), t0, t1, 3);
+  if (ylab){
+    const fmt = v => Math.abs(v) >= 100 ? Math.round(v) : +v.toFixed(Math.abs(v) < 10 ? 2 : 1);
+    ylab.innerHTML = [0, .5, 1].map(f => '<span style="top:' + ((pad + f * (H - 2 * pad)) / H * 100).toFixed(1) + '%">' +
+      fmt(domHi - f * (domHi - domLo)) + '</span>').join('');
+  }
+}
 function drawMarkets(){
-  const days = +tempVal('mkRange') || 0;
   const ytdFrom = Date.UTC(new Date().getUTCFullYear(), 0, 1);
   (marketData.series || []).forEach(s => {
-    const pts = tempCut(s.pts, days);
-    if (pts.length < 2) return;
-    const last = pts[pts.length - 1][1];
-    const range = mkChg(s, pts[0][1], last);
+    const pts = s.pts;
+    if (!pts || pts.length < 2) return;
+    const last = pts[pts.length - 1][4];
+    const range = mkChg(s, pts[0][4], last);
     const val = tempEl('mkVal-' + s.key), delta = tempEl('mkChg-' + s.key), ytd = tempEl('mkYtd-' + s.key);
     if (val) val.textContent = mkFmt(last) + s.unit;
     if (delta){
@@ -1101,12 +1135,12 @@ function drawMarkets(){
       delta.className = 'temp-delta ' + (range.up ? 'up' : 'dn');
     }
     if (ytd){
-      const yearPts = s.pts.filter(p => p[0] >= ytdFrom);
-      const ySeries = yearPts.length > 1 ? yearPts : s.pts.slice(-2);
-      const y = mkChg(s, ySeries[0][1], ySeries[ySeries.length - 1][1]);
+      const yearPts = pts.filter(p => p[0] >= ytdFrom);
+      const ySeries = yearPts.length > 1 ? yearPts : pts.slice(-2);
+      const y = mkChg(s, ySeries[0][4], ySeries[ySeries.length - 1][4]);
       ytd.innerHTML = '(YTD <span class="' + (y.up ? 'up' : 'dn') + '">' + y.txt + '</span>)';
     }
-    tempPlot('mkSvg-' + s.key, 'mkAxis-' + s.key, [{ name: s.name, pts: pts, color: cv('--gold'), width: 2 }], s.unit, 3);
+    mkCandles('mkSvg-' + s.key, 'mkAxis-' + s.key, pts);
   });
 }
 function renderMarkets(d){
@@ -1125,8 +1159,6 @@ function renderMarkets(d){
     '<p class="temp-src mk-src">' + escapeHtml(s.src) + '</p></div>').join('');
   drawMarkets();
 }
-const mkSel = tempEl('mkRange');
-if (mkSel) mkSel.addEventListener('change', drawMarkets);
 fetchT('websiteData/markets.json?' + bust, 10000)
   .then(r => { if (!r.ok) throw new Error('http'); return r.json(); })
   .then(renderMarkets)
