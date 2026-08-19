@@ -380,7 +380,9 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
 .temp-yl{left:.15rem}.temp-yl span{left:0}
 .temp-yr{left:2.5rem}.temp-yr span{left:0}
 .temp-src{margin:1rem 0 0;text-align:right;font-size:.72rem;letter-spacing:.05em;color:color-mix(in srgb,var(--muted) 62%,transparent)}
-.temp-card{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));--tgut:2.7rem;border-radius:var(--r-sm);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
+.temp-card{--cbg:color-mix(in srgb,var(--card-solid) 94%,var(--weiss));--fbg:linear-gradient(0deg,var(--cbg),var(--cbg));
+  --ink:color-mix(in srgb,var(--weiss) 86%,var(--marine));--muted:color-mix(in srgb,var(--silber) 88%,var(--marine));
+  --tgut:2.7rem;border-radius:var(--r-sm);padding:1.2rem 1.3rem;margin-bottom:1.6rem}
 .temp-card h4{margin:0 0 .3rem;font-family:var(--sans);font-size:.98rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent,var(--gold))}
 .temp-sub{margin:0 0 1rem;font-size:.9rem;color:var(--muted)}
 .temp-svg{width:100%;height:230px}
@@ -389,8 +391,13 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
 @media(max-width:640px){.mk-grid{grid-template-columns:1fr}}
 .mk-tile{--tgut:2.4rem;padding-top:1.15rem;border-top:1px solid var(--line)}
 .mk-head{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
-.mk-name{font-family:var(--sans);font-size:.86rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,var(--gold))}
-.mk-tag{font-style:italic;font-size:.74rem;letter-spacing:.02em;color:color-mix(in srgb,var(--muted) 72%,transparent)}
+.mk-name{font-family:var(--sans);font-size:.86rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,var(--gold));
+  -webkit-text-stroke:.4px color-mix(in srgb,var(--accent,var(--gold)) 45%,#000);paint-order:stroke fill}
+.mk-tag{font-style:italic;font-size:.84rem;letter-spacing:.03em;color:color-mix(in srgb,var(--silber) 62%,var(--marine));
+  background-image:linear-gradient(100deg,color-mix(in srgb,var(--silber) 34%,var(--marine)) 0%,color-mix(in srgb,var(--silber) 62%,var(--marine)) 24%,color-mix(in srgb,var(--silber) 96%,var(--weiss)) 34%,color-mix(in srgb,var(--silber) 62%,var(--marine)) 46%,color-mix(in srgb,var(--silber) 34%,var(--marine)) 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-text-stroke:.35px color-mix(in srgb,var(--silber) 30%,#000);paint-order:stroke fill;
+  text-shadow:0 1px 2px rgba(0,0,0,.45);animation:sol-shine 9s linear infinite}
 .mk-val{display:flex;align-items:baseline;gap:.75rem;margin:.35rem 0 0}
 .mk-val b{font-family:var(--serif);font-size:1.55rem;font-weight:400;line-height:1;color:var(--ink)}
 .mk-ytd{margin:.3rem 0 .95rem;font-size:.74rem;letter-spacing:.02em;color:color-mix(in srgb,var(--muted) 82%,transparent)}
