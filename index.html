@@ -383,9 +383,12 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
 .mk-tile{--tgut:2.4rem;padding-top:1.15rem;border-top:1px solid var(--line)}
 .mk-head{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
 .mk-name{font-family:var(--sans);font-size:.86rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent,var(--gold))}
-.mk-sym{font-size:.74rem;letter-spacing:.05em;color:color-mix(in srgb,var(--muted) 72%,transparent)}
-.mk-val{display:flex;align-items:baseline;gap:.75rem;margin:.35rem 0 .95rem}
+.mk-tag{font-style:italic;font-size:.74rem;letter-spacing:.02em;color:color-mix(in srgb,var(--muted) 72%,transparent)}
+.mk-val{display:flex;align-items:baseline;gap:.75rem;margin:.35rem 0 0}
 .mk-val b{font-family:var(--serif);font-size:1.55rem;font-weight:400;line-height:1;color:var(--ink)}
+.mk-ytd{margin:.3rem 0 .95rem;font-size:.74rem;letter-spacing:.02em;color:color-mix(in srgb,var(--muted) 82%,transparent)}
+.mk-ytd .up{color:var(--gruen)}
+.mk-ytd .dn{color:var(--ab)}
 .mk-svg{height:132px}
 .mk-src{margin:.55rem 0 0;text-align:left}
 .temp-pred-row{display:flex;padding:.6rem 0;border-bottom:1px solid var(--line);gap:.8rem;align-items:center}
@@ -808,7 +811,7 @@ footer{position:relative;z-index:1}
       <div class="sol-body">
         <div class="sol-panel sol-p-markets">
           <div class="temp-card frame">
-            <div class="temp-head"><div><h4>the tape &mdash; six markets, one glance</h4><p class="temp-sub">daily closes &middot; metal, rates, dollar, equities, crypto &middot; free public data, source under every chart</p></div>
+            <div class="temp-head"><div><h4>the tape &mdash; six markets, one glance</h4><p class="temp-sub">daily closes &middot; free public data, source under every chart</p></div>
               <div class="temp-ctl">
                 <select class="temp-sel" id="mkRange" aria-label="time range"><option value="90">3 months</option><option value="365" selected>12 months</option><option value="0">all</option></select>
               </div></div>

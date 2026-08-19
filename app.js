@@ -1078,17 +1078,33 @@ function renderPredictions(){
 
 const marketData = {};
 const mkFmt = v => v.toLocaleString('en-US', { maximumFractionDigits: Math.abs(v) < 10 ? 4 : 2 });
+function mkChg(s, from, to){
+  if (s.bp){
+    const bp = Math.round((to - from) * 100);
+    return { txt: (bp >= 0 ? '+' : '') + bp + 'bp', up: bp >= 0 };
+  }
+  const pct = from ? (to / from - 1) * 100 : 0;
+  return { txt: (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%', up: pct >= 0 };
+}
 function drawMarkets(){
   const days = +tempVal('mkRange') || 0;
+  const ytdFrom = Date.UTC(new Date().getUTCFullYear(), 0, 1);
   (marketData.series || []).forEach(s => {
     const pts = tempCut(s.pts, days);
     if (pts.length < 2) return;
-    const first = pts[0][1], last = pts[pts.length - 1][1], chg = first ? (last / first - 1) * 100 : 0;
-    const val = tempEl('mkVal-' + s.key), delta = tempEl('mkChg-' + s.key);
+    const last = pts[pts.length - 1][1];
+    const range = mkChg(s, pts[0][1], last);
+    const val = tempEl('mkVal-' + s.key), delta = tempEl('mkChg-' + s.key), ytd = tempEl('mkYtd-' + s.key);
     if (val) val.textContent = mkFmt(last) + s.unit;
     if (delta){
-      delta.textContent = (chg >= 0 ? '▲ +' : '▼ ') + chg.toFixed(1) + '%';
-      delta.className = 'temp-delta ' + (chg >= 0 ? 'up' : 'dn');
+      delta.textContent = (range.up ? '▲ ' : '▼ ') + range.txt;
+      delta.className = 'temp-delta ' + (range.up ? 'up' : 'dn');
+    }
+    if (ytd){
+      const yearPts = s.pts.filter(p => p[0] >= ytdFrom);
+      const ySeries = yearPts.length > 1 ? yearPts : s.pts.slice(-2);
+      const y = mkChg(s, ySeries[0][1], ySeries[ySeries.length - 1][1]);
+      ytd.innerHTML = '(YTD <span class="' + (y.up ? 'up' : 'dn') + '">' + y.txt + '</span>)';
     }
     tempPlot('mkSvg-' + s.key, 'mkAxis-' + s.key, [{ name: s.name, pts: pts, color: cv('--gold'), width: 2 }], s.unit, 3);
   });
@@ -1100,8 +1116,9 @@ function renderMarkets(d){
   const live = (d.series || []).filter(s => Array.isArray(s.pts) && s.pts.length > 1);
   if (!live.length){ box.innerHTML = svgEmpty('live data unavailable — check back shortly'); return; }
   box.innerHTML = live.map(s => '<div class="mk-tile"><div class="mk-head"><span class="mk-name">' +
-    escapeHtml(s.name) + '</span><span class="mk-sym">' + escapeHtml(s.sym) + '</span></div>' +
+    escapeHtml(s.name) + '</span><span class="mk-tag">' + escapeHtml(s.tag) + '</span></div>' +
     '<div class="mk-val"><b id="mkVal-' + s.key + '">–</b><span id="mkChg-' + s.key + '"></span></div>' +
+    '<div class="mk-ytd" id="mkYtd-' + s.key + '"></div>' +
     '<div class="temp-plot"><i class="temp-ylab temp-yl"></i>' +
     '<svg class="temp-svg mk-svg" id="mkSvg-' + s.key + '" viewBox="0 0 600 220" preserveAspectRatio="none"></svg></div>' +
     '<div class="temp-axis" id="mkAxis-' + s.key + '"></div>' +

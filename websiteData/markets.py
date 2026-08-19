@@ -61,27 +61,27 @@ def invert(pts):
     return [[t, 1 / v] for t, v in pts if v]
 
 MARKETS = [
-    ('gold', 'gold', 'paxg/usd', ' usd', 2, 'Kraken public API · gold-backed token, tracks spot',
+    ('gold', 'gold', 'god\'s money', ' usd', 2, False, 'Kraken public API · gold-backed token, tracks spot',
      lambda: kraken('PAXGUSD')),
-    ('us10y', 'us 10y yield', 'dgs10', ' %', 2, 'FRED · US Treasury constant maturity',
+    ('us10y', 'us 10y yield', 'time value of money', ' %', 2, True, 'FRED · US Treasury constant maturity',
      lambda: fred('DGS10')),
-    ('usdeur', 'usd/eur', 'euro per dollar', ' eur', 4, 'FRED · ECB reference rate, inverted',
+    ('usdeur', 'usd/eur', 'fiat fight', ' eur', 4, False, 'FRED · ECB reference rate, inverted',
      lambda: invert(fred('DEXUSEU'))),
-    ('spx', 's&p 500', 'spx index', '', 2, 'FRED · S&P Dow Jones Indices',
+    ('spx', 's&p 500', 'corporate america', '', 2, False, 'FRED · S&P Dow Jones Indices',
      lambda: fred('SP500')),
-    ('hype', 'hype', 'hype/usd', ' usd', 3, 'Hyperliquid API · daily candles',
+    ('hype', 'hype', 'marketplace of the future', ' usd', 3, False, 'Hyperliquid API · daily candles',
      lambda: hyperliquid('HYPE')),
-    ('zec', 'zcash', 'zec/usd', ' usd', 2, 'Kraken public API · daily candles',
+    ('zec', 'zcash', 'private money', ' usd', 2, False, 'Kraken public API · daily candles',
      lambda: kraken('XZECZUSD')),
 ]
 
 out = {'updated': int(time.time() * 1000), 'series': []}
-for key, name, sym, unit, dec, src, fn in MARKETS:
+for key, name, tag, unit, dec, bp, src, fn in MARKETS:
     try:
         pts = trim(fn(), dec)
         if len(pts) < 2:
             raise RuntimeError('too few points')
-        out['series'].append({'key': key, 'name': name, 'sym': sym, 'unit': unit, 'src': src, 'pts': pts})
+        out['series'].append({'key': key, 'name': name, 'tag': tag, 'unit': unit, 'bp': bp, 'src': src, 'pts': pts})
     except Exception as ex:
         print(key, 'failed:', ex)
 
