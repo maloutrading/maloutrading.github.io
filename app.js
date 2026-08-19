@@ -253,7 +253,7 @@ function distSvg(vals, unit, lab){
     '" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
     '<i class="rw-t" style="top:0">' + Math.round(yMax) + '</i><i class="rw-t" style="bottom:0">0</i></div>' +
     xRow([lo, (lo + hi) / 2, hi].map(v => (v > 0 ? '+' : '') + v.toFixed(1) + unit)) +
-    '<p class="hb-foot">bars = observed ' + lab + ' &middot; curve = normal fit &middot; heavier tails than the curve = fat-tail risk</p></div>';
+    '<p class="hb-foot">bars = observed ' + lab + ' &middot; curve = normal fit &middot; fatter tails than the curve = tail risk</p></div>';
 }
 
 function chartTips(scope){
@@ -426,7 +426,7 @@ function drawdownSvg(eq){
     '<i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i>' +
     '<i class="rw-t rw-last" style="top:' + Math.max(7, Math.min(93, now / y0 * 100)).toFixed(1) + '%;color:' + cv('--holz') + '">' + now.toFixed(1) + '%</i></div>' +
     xRow(dateTicks(dates)) +
-    '<p class="hb-foot">distance below the last equity peak &middot; 0 = at a new high</p></div>';
+    '<p class="hb-foot">distance below the last peak &middot; 0 = new high</p></div>';
 }
 
 function hitRatioSvg(S){
@@ -443,7 +443,7 @@ function hitRatioSvg(S){
        bands: [{from: 50, to: 100, col: cv('--gruen')}, {from: 0, to: 50, col: cv('--holz')}]}) +
     '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
     xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">share of up days in the rolling window &middot; dashed = coin flip</p></div>';
+    '<p class="hb-foot">share of up days, rolling &middot; dashed = coin flip</p></div>';
 }
 
 function winLossSvg(eq){
@@ -487,7 +487,7 @@ function winLossSvg(eq){
     '<i class="rw-t" style="top:0">+' + y1.toFixed(1) + '%</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '%</i>' +
     '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '%</i></div>' +
     xRow([mo[0].k, mo[Math.floor(n / 2)].k, lastM.k]) +
-    '<p class="hb-foot">per month: average up day (green, up) vs average down day (red, down)</p></div>';
+    '<p class="hb-foot">per month: average up day vs average down day</p></div>';
 }
 
 function payoffSvg(S){
@@ -517,7 +517,7 @@ function payoffSvg(S){
     '<i class="rw-t" style="top:0">' + y1.toFixed(0) + 'x</i><i class="rw-t" style="top:50%">' + (y1 / 2).toFixed(1) + 'x</i>' +
     '<i class="rw-t" style="bottom:0">0x</i></div>' +
     xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">solid = avg gain &divide; avg loss &middot; dashed = the payoff this hit ratio needs to break even</p></div>';
+    '<p class="hb-foot">solid = avg gain &divide; avg loss &middot; dashed = break-even for this hit ratio</p></div>';
 }
 
 function sharpeSvg(S){
@@ -552,7 +552,7 @@ function sharpeSvg(S){
     '<i class="rw-t" style="top:0">' + y1.toFixed(1) + '</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '</i>' +
     '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '</i></div>' +
     xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">return per unit of risk, annualized &middot; dashed = sortino, penalizing only downside &middot; above 1 = strong</p></div>';
+    '<p class="hb-foot">return per unit of risk &middot; dashed = sortino, downside only &middot; above 1 = strong</p></div>';
 }
 
 function calmarSvg(S){
@@ -583,7 +583,7 @@ function calmarSvg(S){
     '<i class="rw-t" style="top:0">' + y1.toFixed(1) + '</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '</i>' +
     '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '</i></div>' +
     xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">annualized return &divide; worst drawdown in the window &middot; dashed = 1, the gain pays for the pain &middot; capped at &plusmn;' + CAP + '</p></div>';
+    '<p class="hb-foot">return &divide; worst drawdown &middot; dashed = 1, gain pays for pain &middot; capped at &plusmn;' + CAP + '</p></div>';
 }
 
 function edgeMapSvg(eq){
@@ -629,7 +629,7 @@ function edgeMapSvg(eq){
     dots + dot(last, 12, cv('--gold'), '.45') + dot(last, 6, last.ret >= 0 ? cv('--gruen') : cv('--holz'), '1') + '</svg>' +
     '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
     xRow(['0x', (pMax / 2).toFixed(1) + 'x', pMax.toFixed(1) + 'x']) +
-    '<p class="hb-foot">each dot = one month, hit rate vs payoff &middot; dashed frontier = break-even &middot; above it the mix earns &middot; gold halo = latest</p></div>';
+    '<p class="hb-foot">each dot = one month &middot; dashed = break-even &middot; above it the mix earns &middot; gold halo = latest</p></div>';
 }
 
 function fmtAge(ms){
@@ -700,8 +700,8 @@ function tradesView(d, unit){
 }
 
 const MEGA_VIEWS = [
-  ['daily returns', (d) => distSvg(eqReturns(d, t => Math.floor(t / 864e5)), '%', 'days')],
   ['monthly returns', (d) => monthGrid(d.monthly || monthlyFromEquity((d.series || {}).equity))],
+  ['daily returns', (d) => distSvg(eqReturns(d, t => Math.floor(t / 864e5)), '%', 'days')],
   ['drawdown', (d) => drawdownSvg((d.series || {}).equity)],
   ['hit ratio', (d) => hitRatioSvg(dayStats(d))],
   ['gain vs loss', (d) => winLossSvg((d.series || {}).equity)],
@@ -721,19 +721,18 @@ function renderMega(containerId, d, unit, hide){
     .filter(v => v[1] && v[1].indexOf('an-empty') < 0);
   if (!views.length){ el.innerHTML = svgEmpty('live data unavailable — check back shortly'); return; }
   el.innerHTML = '<div class="mega-head"><h5 class="an-h">analytics</h5>' +
-    '<div class="mega-tabs" role="tablist">' + views.map((v, i) =>
-      '<button class="mega-tab" role="tab" data-i="' + i + '">' + v[0] + '</button>').join('') + '</div></div>' +
+    '<select class="temp-sel mega-sel" aria-label="statistic">' + views.map((v, i) =>
+      '<option value="' + i + '">' + v[0] + '</option>').join('') + '</select></div>' +
     '<div class="mega-body"></div>';
-  const body = el.querySelector('.mega-body'), tabs = el.querySelectorAll('.mega-tab');
+  const body = el.querySelector('.mega-body'), sel = el.querySelector('.mega-sel');
   const draw = i => {
-    tabs.forEach((t, k) => t.classList.toggle('on', k === i));
     body.innerHTML = views[i][1];
+    const nums = body.querySelector('.rw-nums'), foot = body.querySelector('.hb-foot');
+    if (nums && foot) foot.appendChild(nums);
     chartTips(body);
     if (drawIO) body.querySelectorAll('svg.an-svg').forEach(sv => drawIO.observe(sv));
   };
-  el.querySelector('.mega-tabs').addEventListener('click', e => {
-    const b = e.target.closest('.mega-tab'); if (b) draw(+b.dataset.i);
-  });
+  sel.addEventListener('change', () => draw(+sel.value));
   draw(0);
 }
 
