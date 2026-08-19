@@ -71,16 +71,16 @@ def invert(pts):
 MARKETS = [
     ('gold', 'gold', 'god\'s money', ' usd', 2, False, 'Kraken public API · gold-backed token, tracks spot',
      lambda: kraken('PAXGUSD')),
+    ('zec', 'zcash', 'private money', ' usd', 2, False, 'Kraken public API · daily candles',
+     lambda: kraken('XZECZUSD')),
+    ('hype', 'hype', 'new marketplace', ' usd', 3, False, 'Hyperliquid API · daily candles',
+     lambda: hyperliquid('HYPE')),
     ('us10y', 'us 10y yield', 'time value of money', ' %', 2, True, 'FRED · US Treasury constant maturity',
      lambda: synthOhlc(fred('DGS10'))),
     ('usdeur', 'usd/eur', 'fiat fight', ' eur', 4, False, 'FRED · ECB reference rate, inverted',
      lambda: synthOhlc(invert(fred('DEXUSEU')))),
     ('spx', 's&p 500', 'corporate america', '', 2, False, 'FRED · S&P Dow Jones Indices',
      lambda: synthOhlc(fred('SP500'))),
-    ('hype', 'hype', 'marketplace of the future', ' usd', 3, False, 'Hyperliquid API · daily candles',
-     lambda: hyperliquid('HYPE')),
-    ('zec', 'zcash', 'private money', ' usd', 2, False, 'Kraken public API · daily candles',
-     lambda: kraken('XZECZUSD')),
 ]
 
 out = {'updated': int(time.time() * 1000), 'series': []}
