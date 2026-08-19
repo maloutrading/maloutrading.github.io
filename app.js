@@ -240,20 +240,19 @@ function distSvg(vals, unit, lab){
   }).join(' ');
   const zero = (lo < 0 && hi > 0)
     ? '<line x1="' + X(0).toFixed(1) + '" x2="' + X(0).toFixed(1) + '" y1="' + pad + '" y2="' + (H - pad) + '" stroke="var(--line)" stroke-dasharray="2 3"/>' : '';
-  const tipAttr = ' data-tip="' + escapeHtml(JSON.stringify({u: '', x: bins.map((_, i) => {
+  const tip = {u: '', x: bins.map((_, i) => {
       const c = lo + (i + 0.5) * bw; return 'around ' + (c >= 0 ? '+' : '') + c.toFixed(2) + unit;
     }),
-    s: [{n: 'observed', c: cv('--gruen'), v: bins}, {n: 'normal fit', c: cv('--silber'), v: fit.map(v => +v.toFixed(1))}]})) + '"';
+    s: [{n: 'observed', c: cv('--gruen'), v: bins}, {n: 'normal fit', c: cv('--silber'), v: fit.map(v => +v.toFixed(1))}]};
   const wins = vals.filter(v => v > 0).length;
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     [n, lab], [(mean >= 0 ? '+' : '') + mean.toFixed(2) + unit, 'mean', mean >= 0 ? 'up' : 'dn'],
-    ['±' + sd.toFixed(2) + unit, 'σ'], [Math.round(wins / n * 100) + '%', 'positive']]) +
-    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg"' + tipAttr + '>' +
-    gridSvg(W, H, pad) + zero + bars + '<path d="' + curve + '" fill="none" stroke="' + cv('--silber') +
-    '" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
-    '<i class="rw-t" style="top:0">' + Math.round(yMax) + '</i><i class="rw-t" style="bottom:0">0</i></div>' +
-    xRow([lo, (lo + hi) / 2, hi].map(v => (v > 0 ? '+' : '') + v.toFixed(1) + unit)) +
-    '<p class="hb-foot">bars = observed ' + lab + ' &middot; curve = normal fit &middot; fatter tails than the curve = tail risk</p></div>';
+    ['±' + sd.toFixed(2) + unit, 'σ'], [Math.round(wins / n * 100) + '%', 'positive']],
+    svgWrap(W, H, gridSvg(W, H, pad) + zero + bars + '<path d="' + curve + '" fill="none" stroke="' + cv('--silber') +
+      '" stroke-width="1.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>', tip),
+    [Math.round(yMax), 0],
+    [lo, (lo + hi) / 2, hi].map(v => (v > 0 ? '+' : '') + v.toFixed(1) + unit),
+    'bars = observed ' + lab + ' &middot; curve = normal fit &middot; fatter tails than the curve = tail risk');
 }
 
 function chartTips(scope){
@@ -371,11 +370,10 @@ function trailPlot(seriesList, y0, y1, refY, tip){
     const top = Math.max(7, Math.min(93, (1 - (s.vals[i1] - y0) / ((y1 - y0) || 1)) * 100));
     return '<i class="rw-t rw-last" style="top:' + top.toFixed(1) + '%;color:' + s.col + '">' + fmt(s.vals[i1]) + '</i>';
   }).join('');
-  const data = tip ? ' data-tip="' + escapeHtml(JSON.stringify({u: tip.u || '', x: tip.x || null,
+  const data = tip && {u: tip.u || '', x: tip.x || null,
     s: seriesList.filter(s => !s.noLine).map((s, i) => ({n: (tip.names || [])[i] || '', c: s.col,
-      v: s.vals.map(v => v == null ? null : +v.toFixed(2))}))})) + '"' : '';
-  return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg"' + data + '>' +
-    bands + grid + ref + shapes + '</svg>' + lastLabs;
+      v: s.vals.map(v => v == null ? null : +v.toFixed(2))}))};
+  return svgWrap(W, H, bands + grid + ref + shapes, data) + lastLabs;
 }
 const xRow = labs => '<div class="rw-x">' + labs.map(l => '<i>' + l + '</i>').join('') + '</div>';
 const axisDate = (t, spanMs) => new Date(t).toLocaleDateString('en-US',
@@ -392,6 +390,13 @@ function numsRow(items){
   return '<div class="rw-nums">' + items.map(i =>
     '<span><b class="' + (i[2] || '') + '">' + i[0] + '</b>' + i[1] + '</span>').join('') + '</div>';
 }
+const svgWrap = (W, H, body, tip) => '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg"' +
+  (tip ? ' data-tip="' + escapeHtml(JSON.stringify(tip)) + '"' : '') + '>' + body + '</svg>';
+const yTicks = labs => (labs.length === 2 ? ['top:0', 'bottom:0'] : ['top:0', 'top:50%', 'bottom:0'])
+  .map((pos, i) => '<i class="rw-t" style="' + pos + '">' + labs[i] + '</i>').join('');
+const rwCard = (nums, plot, yLabs, xLabs, foot, extra) =>
+  '<div class="rw">' + numsRow(nums) + '<div class="rw-plot">' + plot + yTicks(yLabs) + (extra || '') +
+  '</div>' + xRow(xLabs) + '<p class="hb-foot">' + foot + '</p></div>';
 
 function drawdownSvg(eq){
   const pts = sanitizeEquity(eq || []).filter(p => p[1] > 0);
@@ -413,42 +418,38 @@ function drawdownSvg(eq){
     longest = Math.max(longest, p[0] - start);
   });
   const under = dd.filter(v => v < -1e-9).length / dd.length * 100;
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     [now.toFixed(1) + '%', 'now', now >= -0.5 ? 'up' : 'dn'],
     [deep.toFixed(1) + '%', 'deepest', 'dn'],
     [Math.round(longest / 864e5) + 'd', 'longest stretch'],
-    [Math.round(under) + '%', 'time under water']]) +
-    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg" data-tip="' +
-    escapeHtml(JSON.stringify({u: '%', x: dates,
-      s: [{n: 'drawdown', c: cv('--holz'), v: dd.map(v => +v.toFixed(1))}]})) + '">' +
-    gridSvg(W, H, pad) +
-    '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + pad + '" y2="' + pad + '" stroke="var(--line)" stroke-dasharray="2 3"/>' +
-    '<path d="' + area + '" fill="' + cv('--holz') + '" fill-opacity=".18"/>' +
-    '<path d="' + line + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
-    '<path d="M' + X(dd.length - 1).toFixed(1) + ' ' + Y(now).toFixed(1) + ' l.01 0" stroke="' + cv('--holz') +
-    '" stroke-width="5" stroke-linecap="round" stroke-dasharray="9 0" vector-effect="non-scaling-stroke"/></svg>' +
-    '<i class="rw-t" style="top:0">0%</i><i class="rw-t" style="top:50%">' + (y0 / 2).toFixed(0) + '%</i>' +
-    '<i class="rw-t" style="bottom:0">' + y0.toFixed(0) + '%</i>' +
-    '<i class="rw-t rw-last" style="top:' + Math.max(7, Math.min(93, now / y0 * 100)).toFixed(1) + '%;color:' + cv('--holz') + '">' + now.toFixed(1) + '%</i></div>' +
-    xRow(dateTicks(dates)) +
-    '<p class="hb-foot">distance below the last peak &middot; 0 = new high</p></div>';
+    [Math.round(under) + '%', 'time under water']],
+    svgWrap(W, H, gridSvg(W, H, pad) +
+      '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + pad + '" y2="' + pad + '" stroke="var(--line)" stroke-dasharray="2 3"/>' +
+      '<path d="' + area + '" fill="' + cv('--holz') + '" fill-opacity=".18"/>' +
+      '<path d="' + line + '" fill="none" stroke="' + cv('--holz') + '" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
+      '<path d="M' + X(dd.length - 1).toFixed(1) + ' ' + Y(now).toFixed(1) + ' l.01 0" stroke="' + cv('--holz') +
+      '" stroke-width="5" stroke-linecap="round" stroke-dasharray="9 0" vector-effect="non-scaling-stroke"/>',
+      {u: '%', x: dates, s: [{n: 'drawdown', c: cv('--holz'), v: dd.map(v => +v.toFixed(1))}]}),
+    ['0%', (y0 / 2).toFixed(0) + '%', y0.toFixed(0) + '%'],
+    dateTicks(dates),
+    'distance below the last peak &middot; 0 = new high',
+    '<i class="rw-t rw-last" style="top:' + Math.max(7, Math.min(93, now / y0 * 100)).toFixed(1) + '%;color:' + cv('--holz') + '">' + now.toFixed(1) + '%</i>');
 }
 
 function hitRatioSvg(S){
   if (S.vals.length < S.win + 4) return svgEmpty('not enough days yet');
   const hit = trailSeries(S.vals, S.win, s => s.filter(v => v > 0).length / s.length * 100);
   const now = hit[hit.length - 1], avg = meanOf(hit);
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     [Math.round(now) + '%', 'now', now >= 50 ? 'up' : 'dn'],
     [Math.round(avg) + '%', 'average'],
     [Math.round(Math.min(...hit)) + '&ndash;' + Math.round(Math.max(...hit)) + '%', 'range'],
-    [S.win + 'd', 'window']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: hit, col: cv('--gruen')}], 0, 100, 50,
+    [S.win + 'd', 'window']],
+    trailPlot([{vals: hit, col: cv('--gruen')}], 0, 100, 50,
       {u: '%', names: ['hit ratio'], x: S.labels, fmt: v => Math.round(v) + '%',
-       bands: [{from: 50, to: 100, col: cv('--gruen')}, {from: 0, to: 50, col: cv('--holz')}]}) +
-    '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
-    xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">share of up days, rolling &middot; dashed = coin flip</p></div>';
+       bands: [{from: 50, to: 100, col: cv('--gruen')}, {from: 0, to: 50, col: cv('--holz')}]}),
+    ['100%', '50%', '0%'], dateTicks(S.labels),
+    'share of up days, rolling &middot; dashed = coin flip');
 }
 
 function winLossSvg(eq){
@@ -478,21 +479,19 @@ function winLossSvg(eq){
   const aG = meanOf(allDays.filter(v => v > 0)), aL = meanOf(allDays.filter(v => v <= 0));
   const ratio = aL ? -aG / aL : null;
   const lastM = mo[mo.length - 1];
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     ['+' + (lastM.g || 0).toFixed(2) + '%', 'avg gain now', 'up'],
     [(lastM.l || 0).toFixed(2) + '%', 'avg loss now', 'dn'],
     [ratio != null ? ratio.toFixed(2) + 'x' : '–', 'gain ÷ loss all time', ratio >= 1 ? 'up' : 'dn'],
-    [n, 'months']]) +
-    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg" data-tip="' +
-    escapeHtml(JSON.stringify({u: '%', x: mo.map(x => x.k),
-      s: [{n: 'avg gain', c: cv('--gruen'), v: mo.map(x => x.g == null ? null : +x.g.toFixed(2))},
-        {n: 'avg loss', c: cv('--holz'), v: mo.map(x => x.l == null ? null : +x.l.toFixed(2))}]})) + '">' +
-    grid + bars +
-    '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + z.toFixed(1) + '" y2="' + z.toFixed(1) + '" stroke="var(--line)" stroke-dasharray="2 3"/></svg>' +
-    '<i class="rw-t" style="top:0">+' + y1.toFixed(1) + '%</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '%</i>' +
-    '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '%</i></div>' +
-    xRow([mo[0].k, mo[Math.floor(n / 2)].k, lastM.k]) +
-    '<p class="hb-foot">per month: average up day vs average down day</p></div>';
+    [n, 'months']],
+    svgWrap(W, H, grid + bars +
+      '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + z.toFixed(1) + '" y2="' + z.toFixed(1) + '" stroke="var(--line)" stroke-dasharray="2 3"/>',
+      {u: '%', x: mo.map(x => x.k),
+        s: [{n: 'avg gain', c: cv('--gruen'), v: mo.map(x => x.g == null ? null : +x.g.toFixed(2))},
+          {n: 'avg loss', c: cv('--holz'), v: mo.map(x => x.l == null ? null : +x.l.toFixed(2))}]}),
+    ['+' + y1.toFixed(1) + '%', ((y0 + y1) / 2).toFixed(1) + '%', y0.toFixed(1) + '%'],
+    [mo[0].k, mo[Math.floor(n / 2)].k, lastM.k],
+    'per month: average up day vs average down day');
 }
 
 function payoffSvg(S){
@@ -511,18 +510,16 @@ function payoffSvg(S){
   const last = a => [...a].reverse().find(v => v != null);
   const beat = ratio.filter((v, i) => v != null && need[i] != null && v > need[i]).length;
   const both = ratio.filter((v, i) => v != null && need[i] != null).length;
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     [(last(ratio) || 0).toFixed(2) + 'x', 'payoff now', last(ratio) > last(need) ? 'up' : 'dn'],
     [(last(need) || 0).toFixed(2) + 'x', 'break-even'],
     [Math.round(beat / (both || 1) * 100) + '%', 'time above'],
-    [S.win + 'd', 'window']]) +
-    '<div class="rw-plot">' + trailPlot([{vals: need, col: cv('--silber'), dash: true},
+    [S.win + 'd', 'window']],
+    trailPlot([{vals: need, col: cv('--silber'), dash: true},
       {vals: ratio, col: cv('--gruen'), fill: true}], y0, y1, null,
-      {u: 'x', names: ['break-even', 'payoff'], x: S.labels, fmt: v => v.toFixed(2) + 'x'}) +
-    '<i class="rw-t" style="top:0">' + y1.toFixed(0) + 'x</i><i class="rw-t" style="top:50%">' + (y1 / 2).toFixed(1) + 'x</i>' +
-    '<i class="rw-t" style="bottom:0">0x</i></div>' +
-    xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">solid = avg gain &divide; avg loss &middot; dashed = break-even for this hit ratio</p></div>';
+      {u: 'x', names: ['break-even', 'payoff'], x: S.labels, fmt: v => v.toFixed(2) + 'x'}),
+    [y1.toFixed(0) + 'x', (y1 / 2).toFixed(1) + 'x', '0x'], dateTicks(S.labels),
+    'solid = avg gain &divide; avg loss &middot; dashed = break-even for this hit ratio');
 }
 
 function sharpeSvg(S){
@@ -543,21 +540,19 @@ function sharpeSvg(S){
   const now = [...sr].reverse().find(v => v != null);
   const soNow = [...so].reverse().find(v => v != null);
   const share = all.filter(v => v > 1).length / all.length * 100;
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     [now.toFixed(2), 'now', now >= 1 ? 'up' : now < 0 ? 'dn' : ''],
     [soNow != null ? soNow.toFixed(2) : '&ndash;', 'sortino'],
     [Math.round(share) + '%', 'time above 1'],
-    [S.win + 'd', 'window']]) +
-    '<div class="rw-plot">' + trailPlot([
+    [S.win + 'd', 'window']],
+    trailPlot([
       {vals: sr.map(v => v == null ? null : Math.max(0, v)), col: cv('--gruen'), fill: true, noLine: true},
       {vals: sr.map(v => v == null ? null : Math.min(0, v)), col: cv('--holz'), fill: true, noLine: true},
       {vals: so, col: cv('--silber'), dash: true},
       {vals: sr, col: cv('--gruen')}], y0, y1, 0,
-      {u: '', names: ['sortino', 'sharpe'], x: S.labels, fmt: v => v.toFixed(2)}) +
-    '<i class="rw-t" style="top:0">' + y1.toFixed(1) + '</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '</i>' +
-    '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '</i></div>' +
-    xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">return per unit of risk &middot; dashed = sortino, downside only &middot; above 1 = strong</p></div>';
+      {u: '', names: ['sortino', 'sharpe'], x: S.labels, fmt: v => v.toFixed(2)}),
+    [y1.toFixed(1), ((y0 + y1) / 2).toFixed(1), y0.toFixed(1)], dateTicks(S.labels),
+    'return per unit of risk &middot; dashed = sortino, downside only &middot; above 1 = strong');
 }
 
 function calmarSvg(S){
@@ -575,20 +570,18 @@ function calmarSvg(S){
   const now = [...cm].reverse().find(v => v != null), avg = meanOf(all);
   const share = all.filter(v => v > 1).length / all.length * 100;
   const fmt = v => (Math.abs(v) >= CAP ? (v > 0 ? '&ge;' : '&le;') : '') + v.toFixed(2);
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     [fmt(now), 'now', now >= 1 ? 'up' : now < 0 ? 'dn' : ''],
     [avg.toFixed(2), 'average'],
     [Math.round(share) + '%', 'time above 1'],
-    [S.win + 'd', 'window']]) +
-    '<div class="rw-plot">' + trailPlot([
+    [S.win + 'd', 'window']],
+    trailPlot([
       {vals: cm.map(v => v == null ? null : Math.max(0, v)), col: cv('--gruen'), fill: true, noLine: true},
       {vals: cm.map(v => v == null ? null : Math.min(0, v)), col: cv('--holz'), fill: true, noLine: true},
       {vals: cm, col: cv('--gruen')}], y0, y1, 1,
-      {u: '', names: ['calmar'], x: S.labels, fmt: v => v.toFixed(2)}) +
-    '<i class="rw-t" style="top:0">' + y1.toFixed(1) + '</i><i class="rw-t" style="top:50%">' + ((y0 + y1) / 2).toFixed(1) + '</i>' +
-    '<i class="rw-t" style="bottom:0">' + y0.toFixed(1) + '</i></div>' +
-    xRow(dateTicks(S.labels)) +
-    '<p class="hb-foot">return &divide; worst drawdown &middot; dashed = 1, gain pays for pain &middot; capped at &plusmn;' + CAP + '</p></div>';
+      {u: '', names: ['calmar'], x: S.labels, fmt: v => v.toFixed(2)}),
+    [y1.toFixed(1), ((y0 + y1) / 2).toFixed(1), y0.toFixed(1)], dateTicks(S.labels),
+    'return &divide; worst drawdown &middot; dashed = 1, gain pays for pain &middot; capped at &plusmn;' + CAP);
 }
 
 function edgeMapSvg(eq){
@@ -623,18 +616,16 @@ function edgeMapSvg(eq){
   const last = mo[mo.length - 1];
   const dots = mo.map(m => dot(m, 6, m.ret >= 0 ? cv('--gruen') : cv('--holz'), '.8')).join('');
   const up = mo.filter(m => m.ret >= 0).length;
-  return '<div class="rw">' + numsRow([
+  return rwCard([
     [Math.round(last.hit) + '%', 'hit now'],
     [last.pay.toFixed(2) + 'x', 'payoff now', last.hit / 100 > 1 / (1 + last.pay) ? 'up' : 'dn'],
     [Math.round(up / mo.length * 100) + '%', 'months up', up / mo.length >= 0.5 ? 'up' : 'dn'],
-    [mo.length, 'months']]) +
-    '<div class="rw-plot"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" class="an-svg">' +
-    gridSvg(W, H, pad) +
-    '<path d="' + curve + '" fill="none" stroke="var(--line)" stroke-width="1.2" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>' +
-    dots + dot(last, 12, cv('--gold'), '.45') + dot(last, 6, last.ret >= 0 ? cv('--gruen') : cv('--holz'), '1') + '</svg>' +
-    '<i class="rw-t" style="top:0">100%</i><i class="rw-t" style="top:50%">50%</i><i class="rw-t" style="bottom:0">0%</i></div>' +
-    xRow(['0x', (pMax / 2).toFixed(1) + 'x', pMax.toFixed(1) + 'x']) +
-    '<p class="hb-foot">each dot = one month &middot; dashed = break-even &middot; above it the mix earns &middot; gold halo = latest</p></div>';
+    [mo.length, 'months']],
+    svgWrap(W, H, gridSvg(W, H, pad) +
+      '<path d="' + curve + '" fill="none" stroke="var(--line)" stroke-width="1.2" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>' +
+      dots + dot(last, 12, cv('--gold'), '.45') + dot(last, 6, last.ret >= 0 ? cv('--gruen') : cv('--holz'), '1')),
+    ['100%', '50%', '0%'], ['0x', (pMax / 2).toFixed(1) + 'x', pMax.toFixed(1) + 'x'],
+    'each dot = one month &middot; dashed = break-even &middot; above it the mix earns &middot; gold halo = latest');
 }
 
 function fmtAge(ms){
