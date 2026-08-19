@@ -1146,6 +1146,7 @@ function drawMarkets(){
 function renderMarkets(d){
   const box = tempEl('mkGrid');
   if (!box) return;
+  (d.series || []).forEach(s => s.pts = (s.pts || []).map(p => [p[0] * 864e5, p[1], p[2], p[3], p[4]]));
   Object.assign(marketData, d);
   const live = (d.series || []).filter(s => Array.isArray(s.pts) && s.pts.length > 1);
   if (!live.length){ box.innerHTML = svgEmpty('live data unavailable — check back shortly'); return; }

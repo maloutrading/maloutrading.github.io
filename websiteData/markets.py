@@ -30,7 +30,7 @@ def downsample(pts, cap=600):
 
 def trim(pts, dec):
     cut = (time.time() - DAYS * 86400) * 1000
-    pts = [[p[0]] + [round(v, dec) for v in p[1:]] for p in pts if p[0] >= cut]
+    pts = [[p[0] // 86400000] + [round(v, dec) for v in p[1:]] for p in pts if p[0] >= cut]
     return downsample(pts)
 
 def synthOhlc(pts):
@@ -93,5 +93,5 @@ for key, name, tag, unit, dec, bp, src, fn in MARKETS:
     except Exception as ex:
         print(key, 'failed:', ex)
 
-Path(__file__).with_name('markets.json').write_text(json.dumps(out) + '\n')
+Path(__file__).with_name('markets.json').write_text(json.dumps(out, separators=(',', ':')) + '\n')
 print('markets.json:', {s['key']: len(s['pts']) for s in out['series']})
