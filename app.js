@@ -552,7 +552,7 @@ function sharpeSvg(S){
       {vals: sr, col: cv('--gruen')}], y0, y1, 0,
       {u: '', names: ['sortino', 'sharpe'], x: S.labels, fmt: v => v.toFixed(2)}),
     [y1.toFixed(1), ((y0 + y1) / 2).toFixed(1), y0.toFixed(1)], dateTicks(S.labels),
-    'return per unit of risk &middot; dashed = sortino, downside only &middot; above 1 = strong');
+    'return per unit of risk &middot; dashed = sortino, downside only');
 }
 
 function calmarSvg(S){
