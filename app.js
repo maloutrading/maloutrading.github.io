@@ -713,10 +713,11 @@ const MEGA_VIEWS = [
   ['recent trades', (d, u) => tradesView(d, u)],
 ];
 
-function renderMega(containerId, d, unit){
+function renderMega(containerId, d, unit, hide){
   const el = document.getElementById(containerId); if (!el) return;
   unit = unit || 'R';
-  const views = MEGA_VIEWS.map(([lab, fn]) => [lab, fn(d, unit)])
+  const views = MEGA_VIEWS.filter(([lab]) => !hide || hide.indexOf(lab) < 0)
+    .map(([lab, fn]) => [lab, fn(d, unit)])
     .filter(v => v[1] && v[1].indexOf('an-empty') < 0);
   if (!views.length){ el.innerHTML = svgEmpty('live data unavailable — check back shortly'); return; }
   el.innerHTML = '<div class="mega-head"><h5 class="an-h">analytics</h5>' +
@@ -844,7 +845,7 @@ function mount(P){
         G(P.k + 'PO', fmtPlain(s.payoff, 'x'));
       }
       spxP.then(spx => drawCompare(P, svg, sanitizeSeries((d.series || {}).equity || []), spx));
-      renderMega(P.an, d, P.unit);
+      renderMega(P.an, d, P.unit, P.hideMega);
     })
     .catch(() => {
       const an = document.getElementById(P.an);
@@ -852,8 +853,10 @@ function mount(P){
       if (note) note.textContent = 'data unavailable';
     });
 }
-mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json', unit:'%'});
+mount({svg:'perfSvg', note:'perfNote', k:'st', an:'stAn', url:'websiteData/alpaca.json', unit:'%',
+  hideMega:['open positions','recent trades']});
 mount({svg:'wperfSvg', note:'wperfNote', k:'wst', an:'wAn', url:'websiteData/wikifolio.json', freshMs:30*3600*1000, unit:'%',
+  hideMega:['edge map'],
   rows:[['Ret','total_return_pct','pct'],['Yr','one_year_pct','pct'],['Pa','annualized_pct','pct'],['DD','max_drawdown_pct','pct'],['Vol','volatility_pct','plain','%'],['Cap','invested_keur','plain','k€']]});
 
 document.querySelectorAll('.sol-radio').forEach(r => {
