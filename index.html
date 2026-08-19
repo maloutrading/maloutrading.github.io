@@ -434,25 +434,21 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
 .member .about-text{display:flex;flex-direction:column}
 .member .about-text h3{margin:0;font-size:1.725rem}
 .member-say{text-transform:none;font-style:italic;font-weight:400;color:var(--ink);text-align:center;
-  font-size:clamp(.92rem,1.5vw,1.08rem);margin:0;flex:1;display:flex;align-items:center;justify-content:center}
-.member-say span{position:relative;width:100%;box-sizing:border-box;padding:.6rem 1.6rem;border-radius:var(--pill);
+  font-size:clamp(1.05rem,1.7vw,1.22rem);margin:0;flex:1;display:flex;align-items:center;justify-content:center}
+.member-say span{position:relative;width:100%;box-sizing:border-box;min-height:clamp(4.4rem,7vw,5rem);
+  display:flex;align-items:center;justify-content:center;line-height:1.45;
+  padding:.6rem 1.8rem;border-radius:var(--pill);
   font-weight:400;background:color-mix(in srgb,var(--marine) 30%,transparent);
   border:1px solid color-mix(in srgb,var(--mcol) 26%,var(--line));
   -webkit-backdrop-filter:blur(12px) brightness(.9);backdrop-filter:blur(12px) brightness(.9);
   text-shadow:0 1px 2px rgba(0,0,0,.45),0 0 22px var(--marine)}
-.member-say span::before{content:"";position:absolute;left:-5px;top:50%;width:11px;height:11px;
-  transform:translateY(-50%) rotate(45deg);border-radius:2px;
-  background:color-mix(in srgb,var(--marine) 42%,transparent);
-  border-left:1px solid color-mix(in srgb,var(--mcol) 26%,var(--line));
-  border-bottom:1px solid color-mix(in srgb,var(--mcol) 26%,var(--line));
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .about-card{align-self:center;padding:clamp(1.25rem,2.3vw,1.75rem) clamp(1.3rem,2.5vw,1.85rem);border-radius:var(--r-sm);
   border:1px solid color-mix(in srgb,var(--weiss) 12%,transparent);
   background:color-mix(in srgb,var(--marine) 24%,transparent);
   -webkit-backdrop-filter:blur(14px) brightness(.92);backdrop-filter:blur(14px) brightness(.92)}
 .about-kicker{display:block;font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;margin:0 0 .75rem;
   color:color-mix(in srgb,var(--mcol) 70%,var(--weiss))}
-.about-card p{margin:0;font-size:1.02rem;line-height:1.72;color:color-mix(in srgb,var(--ink) 90%,transparent)}
+.about-card p{margin:0;font-size:1.1rem;line-height:1.72;color:color-mix(in srgb,var(--ink) 90%,transparent)}
 .socials{display:flex;justify-content:flex-start;gap:1.3rem;margin:1.6rem 0 0}
 .socials a{color:var(--muted);display:inline-flex;transition:color .3s,transform .3s}
 .socials a:hover{color:var(--gold);transform:translateY(-2px)}
@@ -462,7 +458,6 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
   .about-card{grid-column:1/-1;align-self:stretch}
 }
 @media(max-width:560px){
-  .member-say span::before{display:none}
   .member{grid-template-columns:1fr;gap:1.3rem}
   .member .portrait{max-width:220px;margin:0 auto}
   .member .about-text{text-align:center}
