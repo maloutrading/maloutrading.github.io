@@ -336,13 +336,19 @@ picture{display:contents}
 .stuff-group{margin:0 0 calc(clamp(2.6rem,5vw,3.8rem) + 1cm)}
 .stuff-label{display:block;font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,var(--gold));margin:0 0 1.4rem}
 .stuff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:clamp(1.1rem,2.4vw,1.7rem)}
-.stuff-card{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));display:block;text-decoration:none;color:var(--ink);padding:clamp(1.3rem,2.6vw,1.8rem);border-radius:var(--r-sm);transition:transform .3s var(--ease)}
-.stuff-card:hover{color:var(--ink);transform:translateY(-3px)}
+.stuff-card{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);box-sizing:border-box;
+  padding:clamp(1.3rem,2.6vw,1.8rem);border-radius:var(--r-sm);
+  border:1px solid color-mix(in srgb,var(--accent,var(--gold)) 34%,var(--line));
+  background:color-mix(in srgb,var(--accent,var(--gold)) 8%,transparent);
+  transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.stuff-card:hover{color:var(--ink);transform:translateY(-3px);
+  border-color:color-mix(in srgb,var(--accent,var(--gold)) 60%,transparent)}
 .stuff-head{font-family:var(--sans);font-weight:600;font-size:1.16rem;line-height:1.32;letter-spacing:-.01em;margin:0 0 .8rem}
 .stuff-desc{font-family:var(--sans);font-style:italic;color:var(--silber);font-size:.99rem;line-height:1.5;margin:0 0 .9rem}
-.stuff-meta{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;color:var(--muted);margin:0}
-.sol-p-services .stuff-card{display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;min-height:220px}
+.stuff-meta{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;color:var(--muted);margin:auto 0 0}
+.sol-p-services .stuff-card{align-items:center;text-align:center;min-height:220px}
+.sol-p-services .stuff-head{flex:none}
+.sol-p-services .stuff-desc{flex:1;display:flex;align-items:center;justify-content:center;margin:0}
 .sol-p-services .stuff-head{font-size:1.34rem}
 .sol-p-services .stuff-desc{font-size:1.12rem;line-height:1.6;margin:0}
 .cf{display:flex;flex-direction:column;gap:.85rem;max-width:680px;padding:clamp(1.3rem,2.6vw,1.8rem);border-radius:var(--r-sm);--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid))}
@@ -838,29 +844,29 @@ footer{position:relative;z-index:1}
     <div class="stuff-group">
       <span class="stuff-label">webinars</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="https://www.youtube.com/watch?v=FTteIuRz9Ys" target="_blank" rel="noopener"><h3 class="stuff-head">Hamburger Anleihe-Boutique fokussiert Nischen-Investments und sichert Zins-Sensitivit&auml;t ab</h3><p class="stuff-meta">fundview &middot; 07/2026</p></a>
-        <a class="stuff-card frame" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta">capinside &middot; 06/2025</p></a>
+        <a class="stuff-card" href="https://www.youtube.com/watch?v=FTteIuRz9Ys" target="_blank" rel="noopener"><h3 class="stuff-head">Hamburger Anleihe-Boutique fokussiert Nischen-Investments und sichert Zins-Sensitivit&auml;t ab</h3><p class="stuff-meta">fundview &middot; 07/2026</p></a>
+        <a class="stuff-card" href="https://events.capinside.com/capinside/Trump-Z-lle-Geopolitik-und-Wahlen" target="_blank" rel="noopener"><h3 class="stuff-head">Jahresausblick 2025: Trump, Z&ouml;lle, Geopolitik und Wahlen</h3><p class="stuff-meta">capinside &middot; 06/2025</p></a>
       </div>
     </div>
 
     <div class="stuff-group">
       <span class="stuff-label">finanzwelt &middot; guest columns</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta">finanzwelt &middot; 02/2025</p></a>
-        <a class="stuff-card frame" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta">finanzwelt &middot; 12/2025</p></a>
+        <a class="stuff-card" href="https://www.finanzwelt.de/post/das-europaeische-investment-grade-anleihe-universum-2" target="_blank" rel="noopener"><h3 class="stuff-head">Das europ&auml;ische Investment-Grade-Anleihe-Universum</h3><p class="stuff-meta">finanzwelt &middot; 02/2025</p></a>
+        <a class="stuff-card" href="https://www.finanzwelt.de/post/die-staatsschuldenkrise-wie-ernst-ist-die-lage" target="_blank" rel="noopener"><h3 class="stuff-head">Die Staatsschuldenkrise: Wie ernst ist die Lage?</h3><p class="stuff-meta">finanzwelt &middot; 12/2025</p></a>
       </div>
     </div>
 
     <div class="stuff-group">
       <span class="stuff-label">anlegerplus &middot; funds &amp; equities</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="https://anlegerplus.de/in-asien-investieren-pragmatismus-schlaegt-dogma/" target="_blank" rel="noopener"><h3 class="stuff-head">In Asien investieren: Pragmatismus schl&auml;gt Dogma</h3><p class="stuff-meta">anlegerplus &middot; 02/2026</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/nahrungsmittelindustrie-gesaettigter-markt-oder-chancenreiches-umfeld/" target="_blank" rel="noopener"><h3 class="stuff-head">Nahrungsmittelindustrie: ges&auml;ttigter Markt oder chancenreiches Umfeld?</h3><p class="stuff-meta">anlegerplus &middot; 12/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/mit-einem-etf-in-genomik-investieren/" target="_blank" rel="noopener"><h3 class="stuff-head">Mit einem ETF in Genomik investieren</h3><p class="stuff-meta">anlegerplus &middot; 10/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/lifecycle-etfs-altersvorsorge-im-autopilot/" target="_blank" rel="noopener"><h3 class="stuff-head">Lifecycle-ETFs: Altersvorsorge im Autopilot</h3><p class="stuff-meta">anlegerplus &middot; 07/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta">anlegerplus &middot; 06/2025</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta">anlegerplus &middot; 09/2024</p></a>
-        <a class="stuff-card frame" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta">anlegerplus &middot; 07/2024</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/in-asien-investieren-pragmatismus-schlaegt-dogma/" target="_blank" rel="noopener"><h3 class="stuff-head">In Asien investieren: Pragmatismus schl&auml;gt Dogma</h3><p class="stuff-meta">anlegerplus &middot; 02/2026</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/nahrungsmittelindustrie-gesaettigter-markt-oder-chancenreiches-umfeld/" target="_blank" rel="noopener"><h3 class="stuff-head">Nahrungsmittelindustrie: ges&auml;ttigter Markt oder chancenreiches Umfeld?</h3><p class="stuff-meta">anlegerplus &middot; 12/2025</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/mit-einem-etf-in-genomik-investieren/" target="_blank" rel="noopener"><h3 class="stuff-head">Mit einem ETF in Genomik investieren</h3><p class="stuff-meta">anlegerplus &middot; 10/2025</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/lifecycle-etfs-altersvorsorge-im-autopilot/" target="_blank" rel="noopener"><h3 class="stuff-head">Lifecycle-ETFs: Altersvorsorge im Autopilot</h3><p class="stuff-meta">anlegerplus &middot; 07/2025</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/pan-africa-etf/" target="_blank" rel="noopener"><h3 class="stuff-head">Pan Africa ETF: Afrikas M&auml;rkte im Blick</h3><p class="stuff-meta">anlegerplus &middot; 06/2025</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/etf-strategie-momentum-benchmark/" target="_blank" rel="noopener"><h3 class="stuff-head">ETF-Strategie: Benchmark schl&auml;gt Momentum</h3><p class="stuff-meta">anlegerplus &middot; 09/2024</p></a>
+        <a class="stuff-card" href="https://anlegerplus.de/circus-se-kocht-mit-ki/" target="_blank" rel="noopener"><h3 class="stuff-head">Circus SE kocht mit KI-gesteuerten Robotern</h3><p class="stuff-meta">anlegerplus &middot; 07/2024</p></a>
       </div>
     </div>
 
@@ -882,8 +888,8 @@ footer{position:relative;z-index:1}
     <div class="stuff-group">
       <span class="stuff-label">services</span>
       <div class="stuff-grid">
-        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Website%20%26%20Design"><h3 class="stuff-head">Website &amp; Design</h3><p class="stuff-desc">Need help with your website? I design and build sites like this one &mdash; clean, fast, no bloat.</p></a>
-        <a class="stuff-card frame" href="mailto:maloutrading@web.de?subject=Trade%20Bot%20Consulting"><h3 class="stuff-head">Trade-Bot Consulting</h3><p class="stuff-desc">One-on-one guidance on building autonomous trading bots &mdash; strategy, backtesting, broker APIs, risk and cloud deployment.</p></a>
+        <a class="stuff-card" href="mailto:maloutrading@web.de?subject=Website%20%26%20Design"><h3 class="stuff-head">Website &amp; Design</h3><p class="stuff-desc">Need help with your website? I design and build sites like this one &mdash; clean, fast, no bloat.</p></a>
+        <a class="stuff-card" href="mailto:maloutrading@web.de?subject=Trade%20Bot%20Consulting"><h3 class="stuff-head">Trade-Bot Consulting</h3><p class="stuff-desc">One-on-one guidance on building autonomous trading bots &mdash; strategy, backtesting, broker APIs, risk and cloud deployment.</p></a>
       </div>
     </div>
 
