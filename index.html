@@ -434,7 +434,7 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
 .member .about-text{display:flex;flex-direction:column}
 .member .about-text h3{margin:0;font-size:1.725rem}
 .member-say{text-transform:none;font-style:italic;font-weight:400;color:var(--ink);text-align:center;
-  font-size:clamp(1.05rem,1.7vw,1.22rem);margin:0;flex:1;display:flex;align-items:center;justify-content:center}
+  font-size:clamp(1.14rem,1.85vw,1.32rem);margin:0;flex:1;display:flex;align-items:stretch;justify-content:center}
 .member-say span{position:relative;width:100%;box-sizing:border-box;min-height:clamp(4.4rem,7vw,5rem);
   display:flex;align-items:center;justify-content:center;line-height:1.45;
   padding:.6rem 1.8rem;border-radius:var(--pill);
@@ -442,13 +442,14 @@ textarea.cf-in{resize:vertical;min-height:7.5rem}
   border:1px solid color-mix(in srgb,var(--mcol) 26%,var(--line));
   -webkit-backdrop-filter:blur(12px) brightness(.9);backdrop-filter:blur(12px) brightness(.9);
   text-shadow:0 1px 2px rgba(0,0,0,.45),0 0 22px var(--marine)}
-.about-card{align-self:center;padding:clamp(1.25rem,2.3vw,1.75rem) clamp(1.3rem,2.5vw,1.85rem);border-radius:var(--r-sm);
+.about-card{display:flex;flex-direction:column;justify-content:center;text-align:center;
+  padding:clamp(1.25rem,2.3vw,1.75rem) clamp(1.3rem,2.5vw,1.85rem);border-radius:var(--r-sm);
   border:1px solid color-mix(in srgb,var(--weiss) 12%,transparent);
   background:color-mix(in srgb,var(--marine) 24%,transparent);
   -webkit-backdrop-filter:blur(14px) brightness(.92);backdrop-filter:blur(14px) brightness(.92)}
 .about-kicker{display:block;font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;margin:0 0 .75rem;
   color:color-mix(in srgb,var(--mcol) 70%,var(--weiss))}
-.about-card p{margin:0;font-size:1.1rem;line-height:1.72;color:color-mix(in srgb,var(--ink) 90%,transparent)}
+.about-card p{margin:0;font-size:1.16rem;line-height:1.72;color:color-mix(in srgb,var(--ink) 90%,transparent)}
 .socials{display:flex;justify-content:flex-start;gap:1.3rem;margin:1.6rem 0 0}
 .socials a{color:var(--muted);display:inline-flex;transition:color .3s,transform .3s}
 .socials a:hover{color:var(--gold);transform:translateY(-2px)}
@@ -509,7 +510,7 @@ footer{position:relative;z-index:1}
   color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--weiss) 8%,transparent);
   opacity:.6;pointer-events:none;z-index:0}
 .rib-intro>*{position:relative;z-index:1}
-#team .rib-intro{width:fit-content;max-width:min(92vw,var(--wt));padding:clamp(1.9rem,3.4vw,2.6rem) clamp(2.2rem,5vw,3.6rem) clamp(2.1rem,3.6vw,2.8rem);border:1px solid color-mix(in srgb,var(--weiss) 22%,transparent);border-radius:clamp(2.2rem,4.4vw,3.2rem);background:color-mix(in srgb,var(--marine) 26%,transparent);-webkit-backdrop-filter:blur(16px) brightness(.9);backdrop-filter:blur(16px) brightness(.9);box-shadow:0 34px 70px -54px rgba(0,0,0,.65),inset 0 1px 0 color-mix(in srgb,var(--weiss) 10%,transparent)}
+#team .rib-intro{width:fit-content;max-width:min(92vw,var(--wt))}
 #team .rib-intro::before{content:"";inset:0;left:0;top:0;transform:none;opacity:0}
 .rib-est{display:inline-block;margin-top:0;font-size:1.14rem;font-weight:600;letter-spacing:.34em;
   padding:.6rem 1.5rem;border-radius:100px;background:color-mix(in srgb,var(--marine) 42%,transparent);
@@ -531,7 +532,7 @@ footer{position:relative;z-index:1}
 .team-rule{display:block;width:56px;height:1px;background:color-mix(in srgb,var(--accent,var(--gold)) 45%,transparent);
   margin:clamp(1.3rem,2.5vw,1.8rem) auto}
 .team-claim{display:block;margin:0;font-size:clamp(1.28rem,2.6vw,1.62rem);font-weight:400;
-  color:color-mix(in srgb,var(--weiss) 96%,transparent);text-shadow:0 1px 14px rgba(0,0,0,.45)}
+  color:var(--bg);text-shadow:0 1px 3px color-mix(in srgb,var(--weiss) 55%,transparent),0 0 30px color-mix(in srgb,var(--weiss) 32%,transparent)}
 
 #team{position:relative;--tgap:clamp(7rem,11vw,9.5rem)}
 #team .rib-intro{margin-bottom:var(--tgap)}
