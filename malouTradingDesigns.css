@@ -8,6 +8,7 @@
   --marine:#070B18;  --ton:#8B1822;  --petrol:#79ADC8;  --smaragd:#3E8C72;  --indigo:#6A72C4;  --ocker:#C2A36B;  --weiss:#EDE8DC;
   --rib1:color-mix(in srgb,var(--indigo) 82%,var(--weiss));  --rib2:color-mix(in srgb,var(--petrol) 74%,var(--weiss));  --rib3:color-mix(in srgb,var(--smaragd) 88%,var(--weiss));  --rib4:color-mix(in srgb,var(--ton) 74%,var(--weiss));  --rib5:var(--ocker);
   --silber:color-mix(in srgb,var(--weiss) 62%,var(--marine));
+  --silberdunkel:color-mix(in srgb,var(--silber) 40%,var(--marine));
   --gold:color-mix(in srgb,var(--ocker) 72%,var(--weiss));
   --bronze:var(--ocker);
   --gruen:var(--smaragd);  --ab:var(--ton);  --holz:var(--ton);
@@ -58,7 +59,7 @@ nav.tabs button[data-t="world"]{--accent:var(--rib4)}
 .frame{--fcol:var(--pcol,var(--accent,var(--silber)));position:relative;border:1px solid transparent;border-radius:var(--r-lg);
   --fbg:linear-gradient(155deg,color-mix(in srgb,var(--marine) 85%,#000) 0%,#000 55%,color-mix(in srgb,var(--marine) 80%,#000) 100%);
   background:radial-gradient(135% 95% at 50% -12%,color-mix(in srgb,var(--fcol) 11%,transparent),transparent 62%) padding-box,radial-gradient(110% 120% at 50% 118%,color-mix(in srgb,var(--fcol) 6%,transparent),transparent 58%) padding-box,var(--fbg) padding-box,linear-gradient(100deg,color-mix(in srgb,var(--silber) 46%,transparent) 0%,color-mix(in srgb,var(--silber) 72%,var(--weiss)) 22%,var(--weiss) 32%,color-mix(in srgb,var(--silber) 70%,var(--weiss)) 42%,color-mix(in srgb,var(--silber) 44%,transparent) 64%,color-mix(in srgb,var(--silber) 66%,transparent) 100%) border-box;background-size:auto,auto,auto,300% 100%;background-position:0 0,0 0,0 0,34% 0;
-  box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.05)}
+  box-shadow:0 34px 70px -46px rgba(0,0,0,.85),inset 0 1px 0 color-mix(in srgb,var(--weiss) 5%,transparent)}
 
 .glow-pill{border:1px solid color-mix(in srgb,var(--glow-a) 42%,transparent);border-radius:100px;
   box-shadow:0 0 18px -8px color-mix(in srgb,var(--glow-a) 38%,transparent)}
