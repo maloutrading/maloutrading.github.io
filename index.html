@@ -605,10 +605,10 @@ footer button:hover::after{transform:scaleX(1)}
 
 .lib-vid::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
 
-.sol-slogan{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));position:relative;width:100%;max-width:none;margin:0 auto;height:25rem;display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box;padding:clamp(1.6rem,3.2vw,2.3rem) clamp(2rem,4.4vw,3.1rem);border-radius:var(--r-sm);overflow:hidden}
+.sol-slogan{--fbg:linear-gradient(0deg,var(--card-solid),var(--card-solid));position:relative;width:100%;max-width:none;margin:0 auto;min-height:25rem;display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box;padding:clamp(1.6rem,3.2vw,2.3rem) clamp(2rem,4.4vw,3.1rem);border-radius:var(--r-sm);overflow:hidden}
 .sol-slogan::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pcol) 55%,transparent),transparent)}
 .sol-slogan::after{content:"";position:absolute;left:-20%;top:-70%;width:55%;height:240%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--pcol) 6%,transparent),transparent 68%);pointer-events:none}
-.sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.12rem,1.65vw,1.36rem);line-height:1.78;letter-spacing:.014em;color:color-mix(in srgb,var(--ink) 82%,transparent);max-width:min(68ch,100%);margin:0 auto;text-align:center;text-wrap:pretty}
+.sol-philosophy{position:relative;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.02rem,1.35vw,1.22rem);line-height:1.62;letter-spacing:.014em;color:color-mix(in srgb,var(--ink) 82%,transparent);max-width:min(76ch,100%);margin:0 auto;text-align:center;text-wrap:pretty}
 .sol-philo-head{text-align:center;margin-bottom:1.05rem;min-height:6.4rem}
 .sol-philo-kicker{display:block;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:color-mix(in srgb,var(--pcol) 72%,var(--muted))}
 .sol-philo-title{margin:.5rem 0 0;font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.28rem,2.2vw,1.68rem);line-height:1.25;color:var(--ink)}
@@ -689,7 +689,7 @@ footer button:hover::after{transform:scaleX(1)}
 @media(max-width:640px){
   .solutions{padding:clamp(3rem,9vw,4rem) 1.1rem}
   .mag{padding:2rem 1.15rem}
-  .sol-slogan{padding:1.1rem 1.1rem 1.15rem 1.3rem;height:auto}
+  .sol-slogan{padding:1.1rem 1.1rem 1.15rem 1.3rem;min-height:0}
   .sol-card{height:auto}
   .perf-note,.rw-nums,.book-side,.trade-side{font-size:.8rem}
 }
