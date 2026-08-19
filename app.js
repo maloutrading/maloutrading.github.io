@@ -378,9 +378,14 @@ function trailPlot(seriesList, y0, y1, refY, tip){
     bands + grid + ref + shapes + '</svg>' + lastLabs;
 }
 const xRow = labs => '<div class="rw-x">' + labs.map(l => '<i>' + l + '</i>').join('') + '</div>';
+const axisDate = (t, spanMs) => new Date(t).toLocaleDateString('en-US',
+  spanMs > 3 * 365 * 864e5 ? { year: 'numeric' } : { month: 'short', year: 'numeric' });
+const tipDate = t => new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 function dateTicks(labels){
   if (!labels || labels.length < 2) return ['', '', ''];
-  const f = labels[0].slice(0, 4) !== labels[labels.length - 1].slice(0, 4) ? l => l.slice(0, 7) : l => l.slice(5);
+  const ms = l => Date.parse(l + 'T00:00:00Z');
+  const span = ms(labels[labels.length - 1]) - ms(labels[0]);
+  const f = l => axisDate(ms(l), span);
   return [f(labels[0]), f(labels[Math.floor(labels.length / 2)]), f(labels[labels.length - 1])];
 }
 function numsRow(items){
@@ -788,7 +793,7 @@ function drawCompare(P, svg, eq, spxRaw){
     cross.setAttribute('x1', X(ep[0]).toFixed(1)); cross.setAttribute('x2', X(ep[0]).toFixed(1));
     cross.setAttribute('visibility', 'visible');
     const alpha = sp ? ep[1] - sp[1] : null;
-    tip.innerHTML = '<b>' + new Date(ep[0]).toISOString().slice(0, 10) + '</b>' +
+    tip.innerHTML = '<b>' + tipDate(ep[0]) + '</b>' +
       '<span><i style="background:' + col + '"></i>strategy ' + pctTxt(ep[1]) + '</span>' +
       (sp ? '<span><i style="background:' + cv('--silber') + '"></i>s&amp;p 500 ' + pctTxt(sp[1]) + '</span>' +
         '<span class="tip-alpha"><i></i>alpha ' + (alpha >= 0 ? '+' : '') + alpha.toFixed(1) + ' pp</span>' : '');
@@ -906,8 +911,6 @@ function tempMedian(vals){
   const s = vals.slice().sort((a, b) => a - b);
   return s.length ? s[Math.floor(s.length / 2)] : 0;
 }
-const axisDate = (t, spanMs) => new Date(t).toLocaleDateString('en-US',
-  spanMs > 3 * 365 * 864e5 ? { year: 'numeric' } : { month: 'short', year: 'numeric' });
 function tempAxis(el, t0, t1, ticks){
   if (!el) return;
   const n = ticks || 5;
@@ -967,7 +970,7 @@ function tempPlot(svgId, axisId, series, unit, ticks){
     while (j < s.pts.length - 1 && Math.abs(s.pts[j + 1][0] - t) <= Math.abs(s.pts[j][0] - t)) j++;
     return Math.abs(s.pts[j][0] - t) > tol ? null : +s.pts[j][1].toFixed(fine(s.pts[j][1])); }); };
   svg._tip = { u: unit || '',
-    x: gridT.map(t => new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })),
+    x: gridT.map(tipDate),
     s: live.filter(s => s.name).map(s => ({ n: s.name, c: s.color, v: samp(s) })) };
   if (!svg._hover){
     svg._hover = true;
