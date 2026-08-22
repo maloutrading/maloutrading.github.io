@@ -1,0 +1,43 @@
+name: websiteData
+
+on:
+  schedule:
+    - cron: "40 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: websiteData
+
+jobs:
+  scrape:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install "xlrd==2.0.1"
+      - name: temperature
+        if: ${{ !cancelled() }}
+        run: python websiteData/temperature.py
+      - name: markets
+        if: ${{ !cancelled() }}
+        run: python websiteData/markets.py
+      - name: wikifolio
+        if: ${{ !cancelled() }}
+        env:
+          WIKIFOLIO_EMAIL: ${{ secrets.WIKIFOLIO_EMAIL }}
+          WIKIFOLIO_PASSWORD: ${{ secrets.WIKIFOLIO_PASSWORD }}
+        run: |
+          [ "$(date -u +%u)" = 7 ] || [ "${{ github.event_name }}" = workflow_dispatch ] || { echo "kein sonntag, wikifolio uebersprungen"; exit 0; }
+          python websiteData/wikifolio.py
+      - name: commit
+        if: ${{ !cancelled() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add websiteData/*.json
+          git diff --cached --quiet || (git commit -m "website stats" && (git push || (git pull --rebase origin main && git push)))
